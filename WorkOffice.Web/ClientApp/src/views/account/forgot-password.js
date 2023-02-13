@@ -67,7 +67,7 @@ const ForgotPassword = ({
             <p className="white mb-0">
               Please use your e-mail to reset your password. <br />
               If you are not a member, please{' '}
-              <NavLink to="/user/register" className="white">
+              <NavLink to="/account/register" className="white">
                 register
               </NavLink>
               .
@@ -101,8 +101,8 @@ const ForgotPassword = ({
                   </FormGroup>
 
                   <div className="d-flex justify-content-between align-items-center">
-                    <NavLink to="/user/forgot-password">
-                      <IntlMessages id="user.forgot-password-question" />
+                    <NavLink to="/account/login">
+                      <IntlMessages id="user.login-title" />
                     </NavLink>
                     <Button
                       color="primary"

@@ -27,9 +27,9 @@ namespace WorkOffice.Services.Users
     {
         private readonly DataContext _context;
         private readonly IAuditTrailService _auditTrail;
-        private readonly IEmailService _emailService;
+        private readonly IEmailJetService _emailService;
 
-        public UserAccountService(DataContext context, IAuditTrailService auditTrail, IEmailService emailService)
+        public UserAccountService(DataContext context, IAuditTrailService auditTrail, IEmailJetService emailService)
         {
             _context = context;
             _auditTrail = auditTrail;
@@ -826,7 +826,7 @@ namespace WorkOffice.Services.Users
                 count = query.Count();
                 var result = await query.OrderBy(x => x.FirstName).ThenBy(x => x.LastName).Take(pageSize).Skip(offset).ToListAsync();
 
-              
+
                 var response = new SearchReply<UsersListModel>()
                 {
                     TotalCount = count,
@@ -1046,7 +1046,7 @@ namespace WorkOffice.Services.Users
 
         private async Task sendVerificationEmail(User account, string origin)
         {
-            var admin = _context.Users.Where(x => x.Email.ToLower().Contains("skilledally")).FirstOrDefault();
+            var admin = _context.Users.Where(x => x.Email.ToLower().Contains("workoffice")).FirstOrDefault();
             var verifyUrl = $"{origin}/account/verify-email?token={account.VerificationToken}";
             var messageParams = new Dictionary<string, string>(){
                 {"firstName", account.FirstName},
@@ -1054,19 +1054,18 @@ namespace WorkOffice.Services.Users
             };
 
             var mailTitle = $"WorkOffice Account Verification";
-            var emailMessage = new EmailMessage(new string[] { account.Email }, mailTitle, messageParams, "verify-user-account.html", null, null);
             List<SaveNotificationModel> saveNotifications = new List<SaveNotificationModel>();
             var notification = new SaveNotificationModel { SenderId = admin.Id, ReceiverId = account.Id, Title = mailTitle, Body = messageParams.ToString() };
             saveNotifications.Add(notification);
             await _auditTrail.SaveNotification(saveNotifications);
-           await _emailService.SendEmailAsync(emailMessage);
+            await _emailService.VerificationEmail(account, verifyUrl);
 
         }
 
 
         private async Task SendPasswordResetEmail(User user, string origin)
         {
-            var admin = _context.Users.Where(x => x.Email.ToLower().Contains("skilledally")).FirstOrDefault();
+            var admin = _context.Users.Where(x => x.Email.ToLower().Contains("workoffice")).FirstOrDefault();
             var resetUrl = $"{origin}/account/reset-password?token={user.ResetToken}";
             var volunteerMessageParams = new Dictionary<string, string>(){
                 {"firstName", user.FirstName},
@@ -1075,34 +1074,30 @@ namespace WorkOffice.Services.Users
             };
 
             var mailTitle = $"Password Reset Request";
-            var emailMessage = new EmailMessage(new string[] { user.Email }, mailTitle, volunteerMessageParams, "reset-password-email.html", null, null);
             List<SaveNotificationModel> saveNotifications = new List<SaveNotificationModel>();
             var notification = new SaveNotificationModel { SenderId = admin.Id, ReceiverId = user.Id, Title = mailTitle, Body = volunteerMessageParams.ToString() };
             saveNotifications.Add(notification);
             await _auditTrail.SaveNotification(saveNotifications);
 
-            await _emailService.SendEmailAsync(emailMessage);
+            await _emailService.ResetPasswordEmail(user, resetUrl);
 
         }
 
         private async Task sendVerificationSuccessfulEmail(User account, string origin)
         {
-            var admin = _context.Users.Where(x => x.Email.ToLower().Contains("skilledally")).FirstOrDefault();
+            var admin = _context.Users.Where(x => x.Email.ToLower().Contains("workoffice")).FirstOrDefault();
             var loginUrl = $"{origin}/account/login";
             var messageParams = new Dictionary<string, string>(){
                 {"firstName", account.FirstName},
                 {"loginURL", loginUrl},
             };
 
-            var mailTitle = (RolesEnum)account.RoleId == RolesEnum.Volunteer ? "Account Verified. Welcome to WorkOffice" : "Welcome to WorkOffice";
-            var template = (RolesEnum)account.RoleId == RolesEnum.Volunteer ? "verify-volunteer-account-successful.html" : "verify-organization-account-successful.html";
-            var emailMessage = new EmailMessage(new string[] { account.Email }, mailTitle, messageParams, template, null, null);
             List<SaveNotificationModel> saveNotifications = new List<SaveNotificationModel>();
-            var notification = new SaveNotificationModel { SenderId = admin.Id, ReceiverId = account.Id, Title = mailTitle, Body = messageParams.ToString() };
+            var notification = new SaveNotificationModel { SenderId = admin.Id, ReceiverId = account.Id, Title = "Account Verified. Welcome to SkilledAlly", Body = messageParams.ToString() };
             saveNotifications.Add(notification);
             await _auditTrail.SaveNotification(saveNotifications);
 
-            await _emailService.SendEmailAsync(emailMessage);
+            await _emailService.VolunterVerifiedEmail(account, loginUrl);
 
         }
     }

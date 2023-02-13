@@ -25,7 +25,8 @@ import {
   adminRoot,
 } from 'constants/defaultValues';
 import { MobileMenuIcon, MenuIcon } from 'components/svg';
-import { getDirection, setDirection } from 'helpers/Utils';
+import { getDirection, setDirection, getCurrentUser } from 'helpers/Utils';
+
 import {
   setContainerClassnames,
   clickOnMobileMenu,
@@ -200,6 +201,7 @@ const TopNav = ({
   };
 
   const { messages } = intl;
+  const currentUser = getCurrentUser();
   return (
     <nav className="navbar fixed-top">
       <div className="d-flex align-items-center navbar-left">
@@ -299,7 +301,11 @@ const TopNav = ({
         <div className="user d-inline-block">
           <UncontrolledDropdown className="dropdown-menu-right">
             <DropdownToggle className="p-0" color="empty">
-              <span className="name mr-1">Sarah Kortney</span>
+              <span className="name mr-1">
+                {currentUser
+                  ? `${currentUser.firstName} ${currentUser.lastName}`
+                  : ''}
+              </span>
               <span>
                 <img alt="Profile" src="/assets/img/profiles/l-1.jpg" />
               </span>

@@ -60,7 +60,7 @@ const Login = ({ history, loading, error, loginUserAction }) => {
               Please use your credentials to login.
               <br />
               If you are not a member, please{' '}
-              <NavLink to="/user/register" className="white">
+              <NavLink to="/account/register" className="white">
                 register
               </NavLink>
               .

@@ -14,7 +14,7 @@ export const loginUserAccount = (email, password) => {
 
 export const sendPasswordResetEmail = (email) => {
   const data = {
-     email
+    email
   };
 
   return axios.post(
@@ -31,7 +31,7 @@ export const confirmPasswordReset = (token, password, confirmPassword) => {
   };
 
   return axios.post(
-    'https://localhost:44344/api/useraccount/forgot-password',
+    'https://localhost:44344/api/useraccount/reset-password',
     data
   );
 };

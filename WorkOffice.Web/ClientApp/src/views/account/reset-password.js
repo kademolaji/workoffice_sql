@@ -9,23 +9,17 @@ import { resetPassword } from 'redux/actions';
 import { NotificationManager } from 'components/common/react-notifications';
 
 const validateNewPassword = (values) => {
-  const { newPassword, newPasswordAgain } = values;
+  const { newPassword, confirmNewPassword } = values;
   const errors = {};
-  if (newPasswordAgain && newPassword !== newPasswordAgain) {
-    errors.newPasswordAgain = 'Please check your new password';
+  if (confirmNewPassword && newPassword !== confirmNewPassword) {
+    errors.confirmNewPassword = 'Please check your new password';
   }
   return errors;
 };
 
-const ResetPassword = ({
-  location,
-  history,
-  loading,
-  error,
-  resetPasswordAction,
-}) => {
+const ResetPassword = ({ location, loading, error, resetPasswordAction }) => {
   const [newPassword] = useState('');
-  const [newPasswordAgain] = useState('');
+  const [confirmNewPassword] = useState('');
 
   useEffect(() => {
     if (error) {
@@ -51,13 +45,13 @@ const ResetPassword = ({
   const onResetPassword = (values) => {
     if (!loading) {
       const params = new URLSearchParams(location.search);
-      const oobCode = params.get('oobCode');
-      if (oobCode) {
-        if (values.newPassword !== '') {
+      const resetToken = params.get('token');
+      if (resetToken) {
+        if (values.password !== '') {
           resetPasswordAction({
             newPassword: values.newPassword,
-            resetPasswordCode: oobCode,
-            history,
+            confirmNewPassword: values.confirmNewPassword,
+            token: resetToken,
           });
         }
       } else {
@@ -73,7 +67,7 @@ const ResetPassword = ({
     }
   };
 
-  const initialValues = { newPassword, newPasswordAgain };
+  const initialValues = { newPassword, confirmNewPassword };
 
   return (
     <Row className="h-100">
@@ -84,7 +78,7 @@ const ResetPassword = ({
             <p className="white mb-0">
               Please use your e-mail to reset your password. <br />
               If you are not a member, please{' '}
-              <NavLink to="/register" className="white">
+              <NavLink to="/account/register" className="white">
                 register
               </NavLink>
               .
@@ -121,12 +115,12 @@ const ResetPassword = ({
                     </Label>
                     <Field
                       className="form-control"
-                      name="newPasswordAgain"
+                      name="confirmNewPassword"
                       type="password"
                     />
-                    {errors.newPasswordAgain && touched.newPasswordAgain && (
+                    {errors.confirmNewPassword && touched.confirmNewPassword && (
                       <div className="invalid-feedback d-block">
-                        {errors.newPasswordAgain}
+                        {errors.confirmNewPassword}
                       </div>
                     )}
                   </FormGroup>
@@ -137,9 +131,8 @@ const ResetPassword = ({
                     </NavLink>
                     <Button
                       color="primary"
-                      className={`btn-shadow btn-multiple-state ${
-                        loading ? 'show-spinner' : ''
-                      }`}
+                      className={`btn-shadow btn-multiple-state ${loading ? 'show-spinner' : ''
+                        }`}
                       size="lg"
                     >
                       <span className="spinner d-inline-block">
@@ -163,8 +156,8 @@ const ResetPassword = ({
 };
 
 const mapStateToProps = ({ authUser }) => {
-  const { newPassword, resetPasswordCode, loading, error } = authUser;
-  return { newPassword, resetPasswordCode, loading, error };
+  const { newPassword, confirmNewPassword, token, loading, error } = authUser;
+  return { newPassword, confirmNewPassword, token, loading, error };
 };
 
 export default connect(mapStateToProps, {

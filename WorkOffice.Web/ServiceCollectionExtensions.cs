@@ -12,6 +12,7 @@ using WorkOffice.Common.Interfaces;
 using WorkOffice.Contracts.ServicesContracts.Shared;
 using WorkOffice.Contracts.ServicesContracts.Users;
 using WorkOffice.Domain.Helpers;
+using WorkOffice.Services.Email;
 using WorkOffice.Services.Shared;
 using WorkOffice.Services.Users;
 using WorkOffice.Web.Utilities;
@@ -31,7 +32,7 @@ namespace WorkOffice.Web
             services.AddScoped<IAuditTrailService, AuditTrailService>();
             services.AddScoped<IHttpAccessorService, HttpAccessorService>();
             services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
-            services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IEmailJetService, EmailJetService>();
    
             // Configure transcient services
             services.AddScoped<DataContext>();

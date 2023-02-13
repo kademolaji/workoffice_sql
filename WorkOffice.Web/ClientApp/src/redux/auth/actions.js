@@ -40,9 +40,9 @@ export const forgotPasswordError = (message) => ({
   payload: { message },
 });
 
-export const resetPassword = ({ resetPasswordCode, newPassword, history }) => ({
+export const resetPassword = ({ newPassword, confirmNewPassword, token }) => ({
   type: RESET_PASSWORD,
-  payload: { resetPasswordCode, newPassword, history },
+  payload: { newPassword, confirmNewPassword, token },
 });
 export const resetPasswordSuccess = (newPassword) => ({
   type: RESET_PASSWORD_SUCCESS,

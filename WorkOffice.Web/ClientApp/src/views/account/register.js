@@ -18,9 +18,12 @@ import { Colxx } from 'components/common/CustomBootstrap';
 import { adminRoot } from 'constants/defaultValues';
 
 const Register = ({ history }) => {
-  const [email] = useState('demo@gogo.com');
-  const [password] = useState('gogo123');
-  const [name] = useState('Sarah Kortney');
+  const [firstName] = useState('');
+  const [lastName] = useState('');
+  const [email] = useState('');
+  const [password] = useState('');
+  const [confirmPassword] = useState('');
+  const [country] = useState('');
 
   const onUserRegister = () => {
     if (email !== '' && password !== '') {
@@ -54,11 +57,16 @@ const Register = ({ history }) => {
             <Form>
               <FormGroup className="form-group has-float-label  mb-4">
                 <Label>
-                  <IntlMessages id="user.fullname" />
+                  <IntlMessages id="user.firstName" />
                 </Label>
-                <Input type="name" defaultValue={name} />
+                <Input type="name" defaultValue={firstName} />
               </FormGroup>
-
+              <FormGroup className="form-group has-float-label  mb-4">
+                <Label>
+                  <IntlMessages id="user.lastName" />
+                </Label>
+                <Input type="name" defaultValue={lastName} />
+              </FormGroup>
               <FormGroup className="form-group has-float-label  mb-4">
                 <Label>
                   <IntlMessages id="user.email" />
@@ -72,7 +80,21 @@ const Register = ({ history }) => {
                 </Label>
                 <Input type="password" />
               </FormGroup>
-
+              <FormGroup className="form-group has-float-label  mb-4">
+                <Label>
+                  <IntlMessages
+                    id="user.confirmPassword"
+                    defaultValue={confirmPassword}
+                  />
+                </Label>
+                <Input type="password" />
+              </FormGroup>
+              <FormGroup className="form-group has-float-label  mb-4">
+                <Label>
+                  <IntlMessages id="user.country" />
+                </Label>
+                <Input type="text" defaultValue={country} />
+              </FormGroup>
               <div className="d-flex justify-content-end align-items-center">
                 <Button
                   color="primary"
@@ -90,7 +112,7 @@ const Register = ({ history }) => {
     </Row>
   );
 };
-const mapStateToProps = () => {};
+const mapStateToProps = () => { };
 
 export default connect(mapStateToProps, {
   registerUserAction: registerUser,

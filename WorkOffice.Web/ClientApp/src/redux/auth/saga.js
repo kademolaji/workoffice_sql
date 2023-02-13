@@ -44,7 +44,10 @@ function* loginWithEmailPassword({ payload }) {
   try {
     const loginUser = yield call(loginWithEmailPasswordAsync, email, password);
     if (loginUser.data.status) {
-      const item = { uid: loginUser.data.entity.userId, ...currentUser };
+      const item = {
+        uid: loginUser.data.entity.userId,
+        ...loginUser.data.entity,
+      };
       setCurrentUser(item);
       yield put(loginUserSuccess(item));
       history.push(adminRoot);
@@ -122,11 +125,11 @@ const forgotPasswordAsync = async (email) => {
 function* forgotPassword({ payload }) {
   const { email } = payload.forgotUserMail;
   try {
-    const forgotPasswordStatus = yield call(forgotPasswordAsync, email);
-    if (!forgotPasswordStatus) {
+    const forgotPasswordResponse = yield call(forgotPasswordAsync, email);
+    if (forgotPasswordResponse.data.status) {
       yield put(forgotPasswordSuccess('success'));
     } else {
-      yield put(forgotPasswordError(forgotPasswordStatus.message));
+      yield put(forgotPasswordError(forgotPasswordResponse.data.message));
     }
   } catch (error) {
     yield put(forgotPasswordError(error));
@@ -140,23 +143,24 @@ export function* watchResetPassword() {
 
 const resetPasswordAsync = async (token, newPassword, confirmNewPassword) => {
   // eslint-disable-next-line no-return-await
-  return await confirmPasswordReset(token,  newPassword, confirmNewPassword)
+  return await confirmPasswordReset(token, newPassword, confirmNewPassword)
     .then((user) => user)
     .catch((error) => error);
 };
 
 function* resetPassword({ payload }) {
-  const { newPassword, resetPasswordCode } = payload;
+  const { newPassword, confirmNewPassword, token } = payload;
   try {
-    const resetPasswordStatus = yield call(
+    const resetPasswordResponse = yield call(
       resetPasswordAsync,
-      resetPasswordCode,
-      newPassword
+      token,
+      newPassword,
+      confirmNewPassword
     );
-    if (!resetPasswordStatus) {
+    if (resetPasswordResponse.data.status) {
       yield put(resetPasswordSuccess('success'));
     } else {
-      yield put(resetPasswordError(resetPasswordStatus.message));
+      yield put(resetPasswordError(resetPasswordResponse.data.message));
     }
   } catch (error) {
     yield put(resetPasswordError(error));
