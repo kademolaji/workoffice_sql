@@ -319,7 +319,7 @@ namespace WorkOffice.Services.Users
                 var response = new CreateResponse
                 {
                     Status = result,
-                    Id = entity.Id,
+                    Id = entity.UserId,
                     Message = "Record updated successfully"
                 };
 
@@ -418,7 +418,7 @@ namespace WorkOffice.Services.Users
                 var response = new CreateResponse
                 {
                     Status = result,
-                    Id = entity.Id,
+                    Id = entity.UserId,
                     Message = "Record created successfully"
                 };
 
@@ -495,7 +495,7 @@ namespace WorkOffice.Services.Users
                 var response = new CreateResponse
                 {
                     Status = result,
-                    Id = user.Id,
+                    Id = user.UserId,
                     Message = "Record updated successfully"
                 };
 
@@ -556,7 +556,7 @@ namespace WorkOffice.Services.Users
                 var response = new CreateResponse
                 {
                     Status = result,
-                    Id = user.Id,
+                    Id = user.UserId,
                     Message = "Record updated successfully"
                 };
 
@@ -616,7 +616,7 @@ namespace WorkOffice.Services.Users
                 var response = new CreateResponse
                 {
                     Status = result,
-                    Id = user.Id,
+                    Id = user.UserId,
                     Message = "Please check your email for password reset instructions"
                 };
 
@@ -682,7 +682,7 @@ namespace WorkOffice.Services.Users
                 var response = new CreateResponse
                 {
                     Status = result,
-                    Id = user.Id,
+                    Id = user.UserId,
                     Message = "Password reset successful, you can now login"
                 };
 
@@ -727,14 +727,14 @@ namespace WorkOffice.Services.Users
             }
         }
 
-        public async Task<ApiResponse<GetResponse<UserAccountResponse>>> GetUserById(long userId)
+        public async Task<ApiResponse<GetResponse<UserAccountResponse>>> GetUserById(Guid userId)
         {
             try
             {
                 var apiResponse = new ApiResponse<GetResponse<UserAccountResponse>>();
-                var user = await _context.Users.Where(x => x.Id == userId).Select(u => new UserAccountResponse
+                var user = await _context.Users.Where(x => x.UserId == userId).Select(u => new UserAccountResponse
                 {
-                    UserId = u.Id,
+                    UserId = u.UserId,
                     FirstName = u.FirstName,
                     LastName = u.LastName,
                     ProfilePicture = u.ProfilePicture,
@@ -762,12 +762,12 @@ namespace WorkOffice.Services.Users
             }
         }
 
-        public async Task<ApiResponse<GetResponse<AuthenticationResponse>>> GetUserAccountById(long userId)
+        public async Task<ApiResponse<GetResponse<AuthenticationResponse>>> GetUserAccountById(Guid userId)
         {
             try
             {
                 var apiResponse = new ApiResponse<GetResponse<AuthenticationResponse>>();
-                var user = await _context.Users.Where(x => x.Id == userId).FirstOrDefaultAsync();
+                var user = await _context.Users.Where(x => x.UserId == userId).FirstOrDefaultAsync();
 
                 var result = user.ToModel<AuthenticationResponse>();
 
@@ -801,7 +801,7 @@ namespace WorkOffice.Services.Users
                 var apiResponse = new ApiResponse<SearchReply<UsersListModel>>();
                 var query = _context.Users.Select(u => new UsersListModel
                 {
-                    UserId = u.Id,
+                    UserId = u.UserId,
                     FirstName = u.FirstName,
                     LastName = u.LastName,
                     Email = u.Email,
@@ -923,15 +923,19 @@ namespace WorkOffice.Services.Users
 
         }
 
-        public async Task<ApiResponse<CreateResponse>> DisableEnableUser(int userId, long loggedInUserId)
+        public async Task<ApiResponse<CreateResponse>> DisableEnableUser(string rawUserId, string rawLoggedInUserId)
         {
             try
             {
-                if (userId <= 0)
+                var userId = Guid.Empty;
+                var userIdNotEmpty = Guid.TryParse(rawUserId, out userId);
+                if (userIdNotEmpty && userId != Guid.Empty)
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "User Id is required." }, IsSuccess = false };
                 }
-                if (userId == loggedInUserId)
+                var loggedInUserId = Guid.Empty;
+                var loggedInUserIdNotEmpty = Guid.TryParse(rawLoggedInUserId, out userId);
+                if (loggedInUserIdNotEmpty && loggedInUserId != Guid.Empty)
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Logged in user cannot disable/enable his/her self." }, IsSuccess = false };
                 }
@@ -939,7 +943,7 @@ namespace WorkOffice.Services.Users
 
                 var apiResponse = new ApiResponse<CreateResponse>();
                 bool result = false;
-                var entity = await _context.Users.FirstOrDefaultAsync(x => x.Id == userId);
+                var entity = await _context.Users.FirstOrDefaultAsync(x => x.UserId == userId);
                 if (entity == null)
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Record does not exist." }, IsSuccess = false };
@@ -953,7 +957,7 @@ namespace WorkOffice.Services.Users
                         result = await _context.SaveChangesAsync() > 0;
                         if (result)
                         {
-                            var details = $"Enabled/Disabled User Id => {entity.Id}: Name = {entity.FirstName} {entity.LastName}";
+                            var details = $"Enabled/Disabled User Id => {entity.UserId}: Name = {entity.FirstName} {entity.LastName}";
                             await _auditTrail.SaveAuditTrail(details, "User", "Update");
                             trans.Commit();
                         }
@@ -968,7 +972,7 @@ namespace WorkOffice.Services.Users
                 var response = new CreateResponse
                 {
                     Status = result,
-                    Id = entity.Id,
+                    Id = entity.UserId,
                     Message = "Record deleted successfully"
                 };
 
@@ -1055,7 +1059,7 @@ namespace WorkOffice.Services.Users
 
             var mailTitle = $"WorkOffice Account Verification";
             List<SaveNotificationModel> saveNotifications = new List<SaveNotificationModel>();
-            var notification = new SaveNotificationModel { SenderId = admin.Id, ReceiverId = account.Id, Title = mailTitle, Body = messageParams.ToString() };
+            var notification = new SaveNotificationModel { SenderId = admin.UserId, ReceiverId = account.UserId, Title = mailTitle, Body = messageParams.ToString() };
             saveNotifications.Add(notification);
             await _auditTrail.SaveNotification(saveNotifications);
             await _emailService.VerificationEmail(account, verifyUrl);
@@ -1075,7 +1079,7 @@ namespace WorkOffice.Services.Users
 
             var mailTitle = $"Password Reset Request";
             List<SaveNotificationModel> saveNotifications = new List<SaveNotificationModel>();
-            var notification = new SaveNotificationModel { SenderId = admin.Id, ReceiverId = user.Id, Title = mailTitle, Body = volunteerMessageParams.ToString() };
+            var notification = new SaveNotificationModel { SenderId = admin.UserId, ReceiverId = user.UserId, Title = mailTitle, Body = volunteerMessageParams.ToString() };
             saveNotifications.Add(notification);
             await _auditTrail.SaveNotification(saveNotifications);
 
@@ -1093,7 +1097,7 @@ namespace WorkOffice.Services.Users
             };
 
             List<SaveNotificationModel> saveNotifications = new List<SaveNotificationModel>();
-            var notification = new SaveNotificationModel { SenderId = admin.Id, ReceiverId = account.Id, Title = "Account Verified. Welcome to SkilledAlly", Body = messageParams.ToString() };
+            var notification = new SaveNotificationModel { SenderId = admin.UserId, ReceiverId = account.UserId, Title = "Account Verified. Welcome to SkilledAlly", Body = messageParams.ToString() };
             saveNotifications.Add(notification);
             await _auditTrail.SaveNotification(saveNotifications);
 

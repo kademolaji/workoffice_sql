@@ -1,10 +1,14 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WorkOffice.Domain.Entities.Shared
 {
-    public partial class AuditTrail : Entity<long>
+    public partial class AuditTrail : Entity
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]
+        public Guid AuditTrailId { get; set; }
         public DateTime? ActionDate { get; set; }
         [StringLength(50)]
         public string ActionBy { get; set; }

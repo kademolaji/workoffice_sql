@@ -19,10 +19,10 @@ namespace WorkOffice.Contracts.ServicesContracts.Users
 		Task RevokeToken(string token, string ipAddress);
 		Task<ApiResponse<GetResponse<AuthenticationResponse>>> RefreshToken(string token, string ipAddress);
 		Task<ApiResponse<CreateResponse>> ValidateResetToken(ValidateResetTokenRequest model);
-		Task<ApiResponse<GetResponse<UserAccountResponse>>> GetUserById(long userId);
+		Task<ApiResponse<GetResponse<UserAccountResponse>>> GetUserById(Guid userId);
 		Task<ApiResponse<SearchReply<UsersListModel>>> GetAllUsers(SearchCall<SearchUserList> options);
 		Task<ApiResponse<CreateResponse>> CreateAdminUser(CreateAdminUserModel model, string origin);
-		Task<ApiResponse<CreateResponse>> DisableEnableUser(int userId, long loggedInUserId);
-		Task<ApiResponse<GetResponse<AuthenticationResponse>>> GetUserAccountById(long userId);
+		Task<ApiResponse<CreateResponse>> DisableEnableUser(string rawUserId, string rawLoggedInUserId);
+		Task<ApiResponse<GetResponse<AuthenticationResponse>>> GetUserAccountById(Guid userId);
 	}
 }

@@ -7,7 +7,7 @@ namespace WorkOffice.Contracts.Models
 {
     public class UsersListModel
     {
-        public long UserId { get; set; }
+        public Guid UserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string ProfilePicture { get; set; }

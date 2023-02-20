@@ -16,7 +16,7 @@ namespace WorkOffice.Contracts.Mappings
 
             return new T
             {
-                UserId = user.Id,
+                UserId = user.UserId,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Email = user.Email,
@@ -33,7 +33,7 @@ namespace WorkOffice.Contracts.Mappings
 
             return new T
             {
-                Id = user.UserId,
+                UserId = user.UserId,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Email = user.Email,

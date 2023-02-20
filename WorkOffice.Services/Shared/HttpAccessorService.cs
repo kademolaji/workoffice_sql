@@ -16,15 +16,12 @@ namespace WorkOffice.Services.Shared
         }
 
 
-        public long GetCurrentUserId()
+        public string GetCurrentUserId()
         {
             var sub = _httpAccessor.HttpContext.User.Claims
                .FirstOrDefault(x => x.Type == "UserId");
-            if (sub != null)
-            {
-                return long.Parse(sub.Value);
-            }
-            return default(long);
+
+            return sub.ToString();
         }
         public string GetCurrentUserName()
         {

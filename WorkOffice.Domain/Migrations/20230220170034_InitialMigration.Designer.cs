@@ -10,8 +10,8 @@ using WorkOffice.Domain.Helpers;
 namespace WorkOffice.Domain.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221229161301_initial-migration")]
-    partial class initialmigration
+    [Migration("20230220170034_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,10 +23,9 @@ namespace WorkOffice.Domain.Migrations
 
             modelBuilder.Entity("WorkOffice.Domain.Entities.Account.User", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<Guid>("UserId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .HasColumnType("uuid");
 
                     b.Property<bool>("AcceptTerms")
                         .HasColumnType("boolean");
@@ -94,23 +93,44 @@ namespace WorkOffice.Domain.Migrations
                     b.Property<DateTime?>("Verified")
                         .HasColumnType("timestamp without time zone");
 
-                    b.HasKey("Id");
+                    b.HasKey("UserId");
 
                     b.HasIndex("Email");
 
-                    b.HasIndex("Id");
+                    b.HasIndex("UserId");
 
                     b.HasIndex("FirstName", "LastName");
 
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("WorkOffice.Domain.Entities.Admin.UserRole", b =>
+                {
+                    b.Property<Guid>("USerRoleId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("USerRoleId");
+
+                    b.HasIndex("USerRoleId");
+
+                    b.ToTable("UserRoles");
+                });
+
             modelBuilder.Entity("WorkOffice.Domain.Entities.Shared.AuditTrail", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<Guid>("AuditTrailId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .HasColumnType("uuid");
 
                     b.Property<string>("ActionBy")
                         .HasColumnType("character varying(50)")
@@ -145,17 +165,16 @@ namespace WorkOffice.Domain.Migrations
                         .HasColumnType("character varying(100)")
                         .HasMaxLength(100);
 
-                    b.HasKey("Id");
+                    b.HasKey("AuditTrailId");
 
                     b.ToTable("AuditTrails");
                 });
 
             modelBuilder.Entity("WorkOffice.Domain.Entities.Shared.Country", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("CountryId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Code")
                         .HasColumnType("text");
@@ -172,17 +191,16 @@ namespace WorkOffice.Domain.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
-                    b.HasKey("Id");
+                    b.HasKey("CountryId");
 
                     b.ToTable("Countries");
                 });
 
             modelBuilder.Entity("WorkOffice.Domain.Entities.Shared.Notification", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<Guid>("NotificationId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Body")
                         .HasColumnType("text");
@@ -196,16 +214,16 @@ namespace WorkOffice.Domain.Migrations
                     b.Property<bool>("IsRead")
                         .HasColumnType("boolean");
 
-                    b.Property<long>("ReceiverId")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("ReceiverId")
+                        .HasColumnType("uuid");
 
-                    b.Property<long>("SenderId")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("SenderId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Title")
                         .HasColumnType("text");
 
-                    b.HasKey("Id");
+                    b.HasKey("NotificationId");
 
                     b.ToTable("Notifications");
                 });
@@ -214,13 +232,9 @@ namespace WorkOffice.Domain.Migrations
                 {
                     b.OwnsMany("WorkOffice.Domain.Entities.Account.RefreshToken", "RefreshTokens", b1 =>
                         {
-                            b1.Property<long>("UserId")
-                                .HasColumnType("bigint");
-
-                            b1.Property<long>("Id")
+                            b1.Property<Guid>("RefreshTokenId")
                                 .ValueGeneratedOnAdd()
-                                .HasColumnType("bigint")
-                                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                                .HasColumnType("uuid");
 
                             b1.Property<DateTime>("Created")
                                 .HasColumnType("timestamp without time zone");
@@ -249,7 +263,12 @@ namespace WorkOffice.Domain.Migrations
                             b1.Property<string>("Token")
                                 .HasColumnType("text");
 
-                            b1.HasKey("UserId", "Id");
+                            b1.Property<Guid>("UserId")
+                                .HasColumnType("uuid");
+
+                            b1.HasKey("RefreshTokenId");
+
+                            b1.HasIndex("UserId");
 
                             b1.ToTable("RefreshToken");
 

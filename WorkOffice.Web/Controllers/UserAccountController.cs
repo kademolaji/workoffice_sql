@@ -252,10 +252,12 @@ namespace WorkOffice.Web.Controllers
 
         [Authorize]
         [HttpGet("{userId}/user-details")]
-        public async Task<IActionResult> GetUserById(int userId)
+        public async Task<IActionResult> GetUserById(string requestUserId)
         {
             try
             {
+                var userId = Guid.Empty;
+                var userIdExist = Guid.TryParse(requestUserId, out userId);
                 var apiResponse = await _userAccountService.GetUserById(userId);
                 return Ok(apiResponse.ResponseType);
             }
@@ -267,10 +269,12 @@ namespace WorkOffice.Web.Controllers
 
         [Authorize]
         [HttpGet("{userId}/user-account")]
-        public async Task<IActionResult> GetUserAccountById(int userId)
+        public async Task<IActionResult> GetUserAccountById(string requestUserId)
         {
             try
             {
+                var userId = Guid.Empty;
+                var userIdExist = Guid.TryParse(requestUserId, out userId);
                 var apiResponse = await _userAccountService.GetUserAccountById(userId);
                 return Ok(apiResponse.ResponseType);
             }
@@ -300,7 +304,7 @@ namespace WorkOffice.Web.Controllers
         [Route("{id:int}/disable-enable")]
         [ProducesResponseType(201, Type = typeof(CreateResponse))]
         [ProducesResponseType(400, Type = typeof(CreateResponse))]
-        public async Task<IActionResult> DisableEnableUser(int id)
+        public async Task<IActionResult> DisableEnableUser(string id)
         {
             try
             {
