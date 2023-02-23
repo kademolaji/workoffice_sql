@@ -2,16 +2,15 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using WorkOffice.Contracts.Models;
-using WorkOffice.Contracts.Models.Admin;
-using WorkOffice.Contracts.ServicesContracts.Admin;
+using WorkOffice.Contracts.Models.NHS_Setup;
+using WorkOffice.Contracts.ServicesContracts.NHS_Setup;
 using WorkOffice.Contracts.ServicesContracts.Shared;
-using WorkOffice.Domain.Entities.Admin;
+using WorkOffice.Domain.Entities.NHS_Setup;
 using WorkOffice.Domain.Helpers;
 
-namespace WorkOffice.Services.Admin
+namespace WorkOffice.Services.NHS_Setup
 {
-    public class ActivityService: IAdministrationService
+    public class ActivityService: IActivityService
     {
         private readonly DataContext _context;
         private readonly IAuditTrailService _auditTrail;
@@ -21,29 +20,34 @@ namespace WorkOffice.Services.Admin
             _context = context;
             _auditTrail = auditTrail;
         }
-        public async Task<ApiResponse<CreateResponse>> CreateUserRole(CreateUserRoleRequest model)
+        public async Task<ApiResponse<CreateResponse>> CreateActivity(ActivityViewModels model)
         {
             try
             {
+                if (string.IsNullOrEmpty(model.Code))
+                {
+                    return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse { Status = false, Message = "Activity Code is required." }, IsSuccess = false };
+                }
 
                 if (string.IsNullOrEmpty(model.Name))
                 {
-                    return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse { Status = false, Message = "User Role Name is required." }, IsSuccess = false };
+                    return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse { Status = false, Message = "Activity Name is required." }, IsSuccess = false };
                 }
                
 
                 var apiResponse = new ApiResponse<CreateResponse>();
                 bool result = false;
-                UserRole entity = null;
+                Activity entity = null;
                 using (var trans = _context.Database.BeginTransaction())
                 {
                     try
                     {
-                        entity = new UserRole
+                        entity = new Activity
                         {
+                            Code = model.Code,
                             Name = model.Name,
                         };
-                        _context.UserRoles.Add(entity);
+                        _context.Activities.Add(entity);
 
                         result = await _context.SaveChangesAsync() > 0;
                         if (result)
@@ -51,8 +55,8 @@ namespace WorkOffice.Services.Admin
                           
                             _context.SaveChanges();
                          
-                            var details = $"Created new UserRole: Name = {model.Name}";
-                            await _auditTrail.SaveAuditTrail(details, "UserRole", "Create");
+                            var details = $"Created new Activity:Code = {model.Code}, Name = {model.Name}";
+                            await _auditTrail.SaveAuditTrail(details, "Activity", "Create");
                             trans.Commit();
                         }
                     }
@@ -66,9 +70,9 @@ namespace WorkOffice.Services.Admin
                
                 var response = new CreateResponse()
                 {
-                    Id = entity.USerRoleId,
+                    Id = entity.ActivityId,
                     Status = true,
-                    Message = "User role created successfully"
+                    Message = "Activity created successfully"
                 };
 
                 apiResponse.StatusCode = System.Net.HttpStatusCode.OK;

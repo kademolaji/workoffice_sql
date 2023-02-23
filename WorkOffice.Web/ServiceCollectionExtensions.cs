@@ -35,7 +35,7 @@ namespace WorkOffice.Web
             services.AddScoped<IHttpAccessorService, HttpAccessorService>();
             services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
             services.AddScoped<IEmailJetService, EmailJetService>();
-            services.AddScoped<IAdministrationService, AdministrationService>();
+            services.AddScoped<IAdministrationService, ActivityService>();
             // Configure transcient services
             services.AddScoped<DataContext>();
 
