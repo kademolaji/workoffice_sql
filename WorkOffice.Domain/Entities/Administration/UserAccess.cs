@@ -13,9 +13,9 @@ namespace WorkOffice.Domain.Entities
         [Key]
         public Guid UserAccessId { get; set; }
         [ForeignKey("CompanyStructure")]
-        public long CompanyStructureId { get; set; }
+        public Guid CompanyStructureId { get; set; }
         [ForeignKey("UserAccount")]
-        public long UserAccountId { get; set; }
+        public Guid UserAccountId { get; set; }
         public virtual UserAccount UserAccount { get; set; }
         public virtual CompanyStructure CompanyStructure { get; set; }
 

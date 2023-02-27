@@ -10,6 +10,7 @@ namespace WorkOffice.Contracts.Models
         {
             Activities = new List<UserAdditionalActivityModel>();
         }
+        public Guid UserId { get; set; }
         public string UserName { get; set; }
         public string CustomUserCode { get; set; }
         public string Password { get; set; }

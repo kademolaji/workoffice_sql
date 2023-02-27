@@ -41,4 +41,49 @@ namespace WorkOffice.Contracts.Mappings
             };
         }
     }
+
+    public static class AuthenticationMappings
+    {
+        public static T ToModel<T>(this UserAccount user) where T : UserAccountModel, new()
+        {
+            if (user == null)
+                return null;
+
+            return new T
+            {
+                UserId = user.UserId,
+                //UserName = user.UserName,
+                //Status = user.Status,
+                //Role = user.Role,
+                //Name = user.Name,
+                Email = user.Email,
+                CustomUserCode = user.CustomUserCode,
+                LastLogin = user.LastLogin,
+                CurrentLogin = user.CurrentLogin,
+                CanChangePassword = user.CanChangePassword,
+                Accesslevel = user.Accesslevel
+            };
+        }
+
+        public static T ToModel<T>(this UserAccountModel user) where T : UserAccount, new()
+        {
+            if (user == null)
+                return null;
+
+            return new T
+            {
+                UserId = user.UserId,
+                //UserName = user.UserName,
+                //Status = user.Status,
+                //Role = user.Role,
+                //Name = user.Name,
+                Email = user.Email,
+                //CustomUserCode = user.EmployeeId,
+                LastLogin = user.LastLogin,
+                CurrentLogin = user.CurrentLogin,
+                CanChangePassword = user.CanChangePassword,
+                Accesslevel = user.Accesslevel
+            };
+        }
+    }
 }
