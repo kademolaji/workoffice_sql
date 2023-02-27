@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace WorkOffice.Contracts.Models.Shared
+namespace WorkOffice.Contracts.Models
 {
     public class SaveNotificationModel
     {

@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace WorkOffice.Domain.Entities.Shared
+namespace WorkOffice.Domain.Entities
 {
     public partial class AuditTrail : Entity
     {

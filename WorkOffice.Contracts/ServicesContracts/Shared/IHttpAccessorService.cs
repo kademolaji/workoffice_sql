@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace WorkOffice.Contracts.ServicesContracts.Shared
+namespace WorkOffice.Contracts.ServicesContracts
 {
     public interface IHttpAccessorService
     {

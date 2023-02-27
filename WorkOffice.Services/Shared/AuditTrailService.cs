@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WorkOffice.Contracts.Models;
 using WorkOffice.Contracts.ServicesContracts.Shared;
-using WorkOffice.Domain.Entities.Shared;
+using WorkOffice.Domain.Entities;
 using WorkOffice.Domain.Helpers;
 using WorkOffice.Common.Interfaces;
 using WorkOffice.Contracts.Models.Shared;

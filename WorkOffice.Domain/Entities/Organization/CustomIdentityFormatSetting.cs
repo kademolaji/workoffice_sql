@@ -6,13 +6,14 @@ using System.Text;
 
 namespace WorkOffice.Domain.Entities
 {
-    public class Country : Entity
+    public class CustomIdentityFormatSetting : Entity
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
-        public Guid CountryId { get; set; }
-        public string Code { get; set; }
-        public string Name { get; set; }
-        public bool IsAfrica { get; set; }
+        public Guid CustomIdentityFormatSettingId { get; set; }
+        public int Prefix { get; set; }
+        public int Suffix { get; set; }
+        public int Digits { get; set; }
+        public int Company { get; set; }
     }
 }

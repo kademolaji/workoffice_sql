@@ -3,15 +3,21 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
-using WorkOffice.Domain.Entities.Shared;
 
-namespace WorkOffice.Domain.Entities.Account
+namespace WorkOffice.Domain.Entities
 {
-    public class User : Entity
+    public class UserAccount : Entity
     {
+        public UserAccount()
+        {
+            UserAccess = new HashSet<UserAccess>();
+            UserAccountRole = new HashSet<UserAccountRole>();
+            UserAccountAdditionalActivity = new HashSet<UserAccountAdditionalActivity>();
+        }
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public Guid UserId { get; set; }
+        public string CustomUserCode { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
@@ -33,6 +39,27 @@ namespace WorkOffice.Domain.Entities.Account
         public string ResetToken { get; set; }
         public DateTime? ResetTokenExpires { get; set; }
         public DateTime? PasswordReset { get; set; }
+        public bool? EmailConfirmed { get; set; }
+        public string PhoneNumber { get; set; }
+        public bool? PhoneNumberConfirmed { get; set; }
+        public bool TwoFactorEnabled { get; set; }
+        public DateTimeOffset? LockoutEnd { get; set; }
+        public bool IsFirstLoginAttempt { get; set; }
+        [StringLength(256)]
+        public string SecurityQuestion { get; set; }
+        [StringLength(256)]
+        public string SecurityAnswer { get; set; }
+        public DateTime? NextPasswordChangeDate { get; set; }
+        public DateTime? LastLogin { get; set; }
+        public DateTime? CurrentLogin { get; set; }
+        public bool? CanChangePassword { get; set; }
+        public int? Accesslevel { get; set; }
+
+        public virtual ICollection<UserAccess> UserAccess { get; set; }
+
+        public virtual ICollection<UserAccountRole> UserAccountRole { get; set; }
+
+        public virtual ICollection<UserAccountAdditionalActivity> UserAccountAdditionalActivity { get; set; }
         public List<RefreshToken> RefreshTokens { get; set; }
 
         public bool OwnsToken(string token)

@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
-using WorkOffice.Domain.Entities.Shared;
 
-namespace WorkOffice.Domain.Entities.Admin
+namespace WorkOffice.Domain.Entities
 {
-    public class UserRole: Entity
+   public class UserActivityParent : Entity
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
-        public Guid USerRoleId { get; set; }
-        public string Name { get; set; }
-
+        public Guid UserActivityParentId { get; set; }
+        [Required]
+        [StringLength(256)]
+        public string UserActivityParentName { get; set; }
     }
 }
