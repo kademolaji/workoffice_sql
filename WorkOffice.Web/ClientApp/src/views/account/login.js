@@ -31,8 +31,9 @@ const validateEmail = (value) => {
 };
 
 const Login = ({ history, loading, error, loginUserAction }) => {
-  const [email] = useState('demo@workoffice.com');
-  const [password] = useState('workoffice123');
+
+  const [email] = useState('');
+  const [password] = useState('');
 
   useEffect(() => {
     if (error) {
