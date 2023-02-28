@@ -2,21 +2,18 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WorkOffice.Common.Helpers;
 using WorkOffice.Common.Interfaces;
-using WorkOffice.Contracts.ServicesContracts.Admin;
-using WorkOffice.Contracts.ServicesContracts.Shared;
-using WorkOffice.Contracts.ServicesContracts.Users;
+using WorkOffice.Contracts.ServicesContracts;
 using WorkOffice.Domain.Helpers;
-using WorkOffice.Services.Admin;
-using WorkOffice.Services.Email;
-using WorkOffice.Services.Shared;
-using WorkOffice.Services.Users;
+using WorkOffice.Services;
 using WorkOffice.Web.Utilities;
 
 namespace WorkOffice.Web
@@ -35,7 +32,15 @@ namespace WorkOffice.Web
             services.AddScoped<IHttpAccessorService, HttpAccessorService>();
             services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
             services.AddScoped<IEmailJetService, EmailJetService>();
+            services.AddScoped<IStructureDefinitionService, StructureDefinitionService>();
+            services.AddScoped<ICompanyStructureService, CompanyStructureService>();
+            services.AddScoped<IlocationService, LocationService>();
+            services.AddScoped<ICustomIdentityFormatSettingService, CustomIdentityFormatSettingService>();
+            services.AddScoped<IGeneralInformationService, GeneralInformationService>();
+            services.AddScoped<IAuditTrailService, AuditTrailService>();
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<IAdministrationService, AdministrationService>();
+            services.AddScoped<IUserAuthorizationService, UserAuthorizationService>();
             // Configure transcient services
             services.AddScoped<DataContext>();
 
@@ -94,6 +99,66 @@ namespace WorkOffice.Web
                     };
 
                 });
+        }
+
+        public static void ConfigureDocumentationServices(this IServiceCollection services)
+        {
+            services.AddSwaggerGen(c =>
+            {
+                // Register the Swagger generator, defining 1 or more Swagger documents
+                {
+                    c.SwaggerDoc("v1", new OpenApiInfo
+                    {
+                        Version = "v1",
+                        Title = "Workoffice API",
+                        Description = "Workoffice",
+                        TermsOfService = new Uri("https://workoffice.com/terms"),
+                        Contact = new OpenApiContact
+                        {
+                            Name = "Kayode Ademolaji",
+                            Email = "kademolaji@yahoo.com",
+                            Url = new Uri("https://github.com.com/kademolaji"),
+                        },
+                        License = new OpenApiLicense
+                        {
+                            Name = "Use under LICX",
+                            Url = new Uri("https://example.com/license"),
+                        }
+                    });
+                    // Configure Swagger to use the xml documentation file
+                    var xmlFile = Path.ChangeExtension(typeof(Startup).Assembly.Location, ".xml");
+                    c.IncludeXmlComments(xmlFile);
+
+                    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                    {
+                        Description =
+                                "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 12345abcdef\"",
+                        Name = "Authorization",
+                        In = ParameterLocation.Header,
+                        Type = SecuritySchemeType.ApiKey,
+                        Scheme = "Bearer"
+                    });
+
+                    c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+                    {
+                        {
+                            new OpenApiSecurityScheme
+                            {
+                                Reference = new OpenApiReference
+                                {
+                                    Type = ReferenceType.SecurityScheme,
+                                    Id = "Bearer"
+                                },
+                                Scheme = "oauth2",
+                                Name = "Bearer",
+                                In = ParameterLocation.Header,
+
+                            },
+                            new List<string>()
+                        }
+                    });
+                }
+            });
         }
 
     }

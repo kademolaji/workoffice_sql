@@ -4,13 +4,14 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using H2RHRMS.Api.Filters;
-using H2RHRMS.Api.Utilities;
-using H2RHRMS.Core.Interfaces.Services;
-using H2RHRMS.Core.Utilities;
-using H2RHRMS.Domain.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WorkOffice.Common.Enums;
+using WorkOffice.Common.Settings;
+using WorkOffice.Contracts.Models;
+using WorkOffice.Contracts.ServicesContracts;
+using WorkOffice.Web.Filters;
+using WorkOffice.Web.Utilities;
 
 namespace H2RHRMS.Api.Controllers
 {
@@ -21,11 +22,14 @@ namespace H2RHRMS.Api.Controllers
     {
         private readonly IStructureDefinitionService service;
         private readonly IUserAuthorizationService authorized;
-
-        public StructureDefinitionController(IStructureDefinitionService _service, IUserAuthorizationService _userAuthorization)
+        private readonly IHttpAccessorService httpAccessorService;
+        private UserActivitiesList userActivitiesList;
+        public StructureDefinitionController(IStructureDefinitionService _service, IUserAuthorizationService _userAuthorization, IHttpAccessorService _httpAccessorService)
         {
             service = _service;
             authorized = _userAuthorization;
+            httpAccessorService = _httpAccessorService;
+            userActivitiesList = new UserActivitiesList();
         }
         //  POST /api/StructureDefinition/Create
         /// <summary>
@@ -53,8 +57,9 @@ namespace H2RHRMS.Api.Controllers
         {
             try
             {
-                model.ClientId = 1;
-                if (authorized.CanPerformActionOnResource(2, 2, model.ClientId, UserActions.Add))
+                model.ClientId = httpAccessorService.GetCurrentClientId();
+                var userId = httpAccessorService.GetCurrentUserId();
+                if (authorized.CanPerformActionOnResource(userId, userActivitiesList.CreateStructureDefinition, model.ClientId, UserActions.Add))
                 {
                     var apiResponse = await service.Create(model);
                     if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
@@ -98,7 +103,7 @@ namespace H2RHRMS.Api.Controllers
         {
             try
             {
-                var clientId = 1;
+                var clientId  = httpAccessorService.GetCurrentClientId();
                 var apiResponse = await service.GetList(clientId, pageNumber, pageSize);
                 if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
                 {
@@ -136,11 +141,11 @@ namespace H2RHRMS.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetResponse<StructureDefinitionModel>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(GetResponse<ProducesResponseStub>))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(GetResponse<ProducesResponseStub>))]
-        public async Task<IActionResult> Get(long structureDefinitionId)
+        public async Task<IActionResult> Get(Guid structureDefinitionId)
         {
             try
             {
-                var clientId = 1;
+                var clientId = httpAccessorService.GetCurrentClientId();
                 var apiResponse = await service.Get(structureDefinitionId, clientId);
                 if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
                 {
@@ -181,8 +186,9 @@ namespace H2RHRMS.Api.Controllers
         {
             try
             {
-                var clientId = 1;
-                if (authorized.CanPerformActionOnResource(2, 2, clientId, UserActions.View))
+                var clientId = httpAccessorService.GetCurrentClientId();
+                var userId = httpAccessorService.GetCurrentUserId();
+                if (authorized.CanPerformActionOnResource(userId, userActivitiesList.ViewStructureDefinition, clientId, UserActions.View))
                 {
                     var apiResponse = await service.Export(clientId);
                     if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
@@ -231,8 +237,9 @@ namespace H2RHRMS.Api.Controllers
         {
             try
             {
-                var clientId = 1;
-                if (authorized.CanPerformActionOnResource(2, 2, clientId, UserActions.Add))
+                var clientId = httpAccessorService.GetCurrentClientId();
+                var userId = httpAccessorService.GetCurrentUserId();
+                if (authorized.CanPerformActionOnResource(userId, userActivitiesList.CreateStructureDefinition, clientId, UserActions.Add))
                 {
                     var apiResponse = new ApiResponse<CreateResponse>();
 
@@ -298,8 +305,9 @@ namespace H2RHRMS.Api.Controllers
         {
             try
             {
-                var clientId = 1;
-                if (authorized.CanPerformActionOnResource(2, 2, clientId, UserActions.Delete))
+                var clientId = httpAccessorService.GetCurrentClientId();
+                var userId = httpAccessorService.GetCurrentUserId();
+                if (authorized.CanPerformActionOnResource(userId, userActivitiesList.DeleteStructureDefinition, clientId, UserActions.Delete))
                 {
                     var apiResponse = await service.Delete(structureDefinitionId);
                     if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
@@ -348,8 +356,9 @@ namespace H2RHRMS.Api.Controllers
         {
             try
             {
-                var clientId = 1;
-                if (authorized.CanPerformActionOnResource(2, 2, clientId, UserActions.Delete))
+                var clientId = httpAccessorService.GetCurrentClientId();
+                var userId = httpAccessorService.GetCurrentUserId();
+                if (authorized.CanPerformActionOnResource(userId, userActivitiesList.DeleteStructureDefinition, clientId, UserActions.Delete))
                 {
                     var apiResponse = await service.MultipleDelete(model);
                     if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)

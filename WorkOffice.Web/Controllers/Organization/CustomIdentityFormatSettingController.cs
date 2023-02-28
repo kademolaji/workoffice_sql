@@ -2,46 +2,46 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using H2RHRMS.Core.Interfaces.Services;
-using H2RHRMS.Domain.Models;
-using H2RHRMS.Domain.Models.Organization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WorkOffice.Contracts.Models;
+using WorkOffice.Contracts.ServicesContracts;
 
-namespace H2RHRMS.Api.Controllers
+namespace WorkOffice.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EmployeeIdFormatController : ControllerBase
+    public class CustomIdentityFormatSettingController : ControllerBase
     {
-        private readonly IEmployeeIdFormatService service;
-
-        public EmployeeIdFormatController(IEmployeeIdFormatService _service)
+        private readonly ICustomIdentityFormatSettingService service;
+        private readonly IHttpAccessorService httpAccessorService;
+        public CustomIdentityFormatSettingController(ICustomIdentityFormatSettingService _service, IHttpAccessorService _httpAccessorService)
         {
             service = _service;
+            httpAccessorService = _httpAccessorService;
         }
-        //  POST /api/EmployeeIdFormat/Create
+        //  POST /api/customIdentityFormatSetting/Create
         /// <summary>
-        /// Create EmployeeIdFormat
+        /// Create customIdentityFormatSetting
         /// </summary>
         /// <remarks>
         /// Sample request:
         ///
-        ///     POST /api/EmployeeIdFormat/Create
+        ///     POST /api/customIdentityFormatSetting/Create
         /// </remarks>
         /// <param name="model"></param>
         /// <returns>Created success message </returns>
-        /// <response code="201">EmployeeIdFormat Created Successfully</response>
+        /// <response code="201">customIdentityFormatSetting Created Successfully</response>
         /// <response code="400">If an error occur or invalid request payload</response>
         [HttpPost]
         [Route("Create")]
         [ProducesResponseType(201, Type = typeof(CreateResponse))]
         [ProducesResponseType(400, Type = typeof(CreateResponse))]
-        public async Task<IActionResult> Create(EmployeeIdFormatModel model)
+        public async Task<IActionResult> Create(CustomIdentityFormatSettingModel model)
         {
             try
             {
-                model.ClientId = 1;
+                model.ClientId = httpAccessorService.GetCurrentClientId();
                 var apiResponse = await service.Create(model);
                 if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
                 {
@@ -54,9 +54,9 @@ namespace H2RHRMS.Api.Controllers
                 return BadRequest($"Server Error {ex.Message}");
             }
         }
-        // GET api/EmployeeIdFormat/GetList
+        // GET api/customIdentityFormatSetting/GetList
         /// <summary>
-        /// Get list of EmployeeIdFormat
+        /// Get list of customIdentityFormatSetting
         /// </summary>
         /// <remarks>
         /// Sample request:
@@ -64,13 +64,13 @@ namespace H2RHRMS.Api.Controllers
         /// </remarks>
         /// <param name="pageNumber"></param>
         /// <param name="pageSize"></param>
-        /// <returns>List of EmployeeIdFormat</returns>
-        /// <response code="200">Returns list of EmployeeIdFormat</response>
-        /// <response code="404">If list of EmployeeIdFormat is null</response> 
+        /// <returns>List of customIdentityFormatSetting</returns>
+        /// <response code="200">Returns list of customIdentityFormatSetting</response>
+        /// <response code="404">If list of customIdentityFormatSetting is null</response> 
         /// <response code="400">If an error occur or invalid request payload</response> 
         [HttpGet]
         [Route("GetList")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetResponse<List<EmployeeIdFormatModel>>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetResponse<List<CustomIdentityFormatSettingModel>>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(GetResponse<ProducesResponseStub>))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(GetResponse<ProducesResponseStub>))]
         public async Task<IActionResult> GetList(int pageNumber = 1, int pageSize = 10)
@@ -96,29 +96,29 @@ namespace H2RHRMS.Api.Controllers
             }
         }
 
-        // GET api/EmployeeIdFormat/Get
+        // GET api/customIdentityFormatSetting/Get
         /// <summary>
-        /// Get object of EmployeeIdFormat
+        /// Get object of customIdentityFormatSetting
         /// </summary>
         /// <remarks>
         /// Sample request:
         ///
         /// </remarks>
-        /// <param name="employeeIdFormatId"></param>
-        /// <returns>Object of EmployeeIdFormat</returns>
-        /// <response code="200">Returns object of EmployeeIdFormat</response>
-        /// <response code="404">If object of EmployeeIdFormat is null</response> 
+        /// <param name="customIdentityFormatSettingId"></param>
+        /// <returns>Object of customIdentityFormatSetting</returns>
+        /// <response code="200">Returns object of customIdentityFormatSetting</response>
+        /// <response code="404">If object of customIdentityFormatSetting is null</response> 
         /// <response code="400">If an error occur or invalid request payload</response> 
         [HttpGet]
         [Route("Get")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetResponse<EmployeeIdFormatModel>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetResponse<CustomIdentityFormatSettingModel>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(GetResponse<ProducesResponseStub>))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(GetResponse<ProducesResponseStub>))]
-        public async Task<IActionResult> Get(long employeeIdFormatId)
+        public async Task<IActionResult> Get(Guid customIdentityFormatSettingId)
         {
             try
             {
-                var apiResponse = await service.Get(employeeIdFormatId);
+                var apiResponse = await service.Get(customIdentityFormatSettingId);
                 if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
                 {
                     return BadRequest(apiResponse.ResponseType);
@@ -137,31 +137,30 @@ namespace H2RHRMS.Api.Controllers
             }
         }
 
-        // GET api/Location/Get
 
-        // GET api/EmployeeIdFormat/Get
+        // GET api/customIdentityFormatSetting/Get
         /// <summary>
-        /// Delete EmployeeIdFormat
+        /// Delete customIdentityFormatSetting
         /// </summary>
         /// <remarks>
         /// Sample request:
         ///
         /// </remarks>
-        /// <param name="employeeIdFormatId"></param>
-        /// <returns>Object of EmployeeIdFormat</returns>
-        /// <response code="200">Returns object of EmployeeIdFormat</response>
-        /// <response code="404">If object of EmployeeIdFormat is null</response> 
+        /// <param name="customIdentityFormatSettingId"></param>
+        /// <returns>Object of customIdentityFormatSetting</returns>
+        /// <response code="200">Returns object of customIdentityFormatSetting</response>
+        /// <response code="404">If object of customIdentityFormatSetting is null</response> 
         /// <response code="400">If an error occur or invalid request payload</response> 
         [HttpDelete]
         [Route("Delete")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DeleteReply))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(DeleteReply))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(DeleteReply))]
-        public async Task<IActionResult> Delete(long employeeIdFormatId)
+        public async Task<IActionResult> Delete(Guid customIdentityFormatSettingId)
         {
             try
             {
-                var apiResponse = await service.Delete(employeeIdFormatId);
+                var apiResponse = await service.Delete(customIdentityFormatSettingId);
                 if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
                 {
                     return BadRequest(apiResponse.ResponseType);

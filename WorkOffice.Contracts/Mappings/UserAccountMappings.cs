@@ -52,10 +52,8 @@ namespace WorkOffice.Contracts.Mappings
             return new T
             {
                 UserId = user.UserId,
-                //UserName = user.UserName,
-                //Status = user.Status,
-                //Role = user.Role,
-                //Name = user.Name,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
                 Email = user.Email,
                 CustomUserCode = user.CustomUserCode,
                 LastLogin = user.LastLogin,
@@ -73,12 +71,10 @@ namespace WorkOffice.Contracts.Mappings
             return new T
             {
                 UserId = user.UserId,
-                //UserName = user.UserName,
-                //Status = user.Status,
-                //Role = user.Role,
-                //Name = user.Name,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
                 Email = user.Email,
-                //CustomUserCode = user.EmployeeId,
+                CustomUserCode = user.CustomUserCode,
                 LastLogin = user.LastLogin,
                 CurrentLogin = user.CurrentLogin,
                 CanChangePassword = user.CanChangePassword,

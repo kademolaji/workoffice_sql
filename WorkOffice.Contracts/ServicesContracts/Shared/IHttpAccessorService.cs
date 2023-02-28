@@ -6,7 +6,8 @@ namespace WorkOffice.Contracts.ServicesContracts
 {
     public interface IHttpAccessorService
     {
-        string GetCurrentUserId();
+        Guid GetCurrentClientId();
+        Guid GetCurrentUserId();
         string GetCurrentUserName();
         string GetCurrentUserEmail();
         String GetClientIP();

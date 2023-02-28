@@ -2,23 +2,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using H2RHRMS.Core.Interfaces.Services;
-using H2RHRMS.Domain.Models;
-using H2RHRMS.Domain.Models.Organization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WorkOffice.Contracts.Models;
+using WorkOffice.Contracts.ServicesContracts;
+using WorkOffice.Web.Filters;
 
 namespace H2RHRMS.Api.Controllers
 {
     [Route("api/[controller]")]
+    [ServiceFilter(typeof(LogUserActivity))]
     [ApiController]
     public class GeneralInformationController : ControllerBase
     {
         private readonly IGeneralInformationService service;
-
-        public GeneralInformationController(IGeneralInformationService _service)
+        private readonly IHttpAccessorService httpAccessorService;
+        public GeneralInformationController(IGeneralInformationService _service, IHttpAccessorService _httpAccessorService)
         {
             service = _service;
+            httpAccessorService = _httpAccessorService;
         }
         //  POST /api/GeneralInformation/Create
         /// <summary>
@@ -41,7 +43,7 @@ namespace H2RHRMS.Api.Controllers
         {
             try
             {
-                model.ClientId = 1;
+                model.ClientId = httpAccessorService.GetCurrentClientId();
                 var apiResponse = await service.Create(model);
                 if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
                 {
@@ -73,11 +75,11 @@ namespace H2RHRMS.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetResponse<GeneralInformationModel>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(GetResponse<ProducesResponseStub>))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(GetResponse<ProducesResponseStub>))]
-        public async Task<IActionResult> Get(long generalInformationId)
+        public async Task<IActionResult> Get(Guid generalInformationId)
         {
             try
             {
-                var clientId = 1;
+                var clientId = httpAccessorService.GetCurrentClientId();
                 var apiResponse = await service.Get(generalInformationId, clientId);
                 if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
                 {
@@ -116,7 +118,7 @@ namespace H2RHRMS.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DeleteReply))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(DeleteReply))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(DeleteReply))]
-        public async Task<IActionResult> Delete(long generalInformationId)
+        public async Task<IActionResult> Delete(Guid generalInformationId)
         {
             try
             {

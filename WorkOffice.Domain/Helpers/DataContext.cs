@@ -13,6 +13,7 @@ namespace WorkOffice.Domain.Helpers
             // Noop
         }
 
+        public virtual DbSet<Notification> Notifications { get; set; }
         public virtual DbSet<AuditTrail> AuditTrails { get; set; }
         public virtual DbSet<Location> Locations { get; set; }
         public virtual DbSet<GeneralInformation> GeneralInformations { get; set; }

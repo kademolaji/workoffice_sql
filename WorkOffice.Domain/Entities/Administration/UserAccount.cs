@@ -51,6 +51,7 @@ namespace WorkOffice.Domain.Entities
         public string SecurityAnswer { get; set; }
         public DateTime? NextPasswordChangeDate { get; set; }
         public DateTime? LastLogin { get; set; }
+        public DateTime? LastActive { get; set; }
         public DateTime? CurrentLogin { get; set; }
         public bool? CanChangePassword { get; set; }
         public int? Accesslevel { get; set; }

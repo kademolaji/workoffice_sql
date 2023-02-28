@@ -10,7 +10,7 @@ using WorkOffice.Contracts.ServicesContracts;
 using WorkOffice.Domain.Entities;
 using WorkOffice.Domain.Helpers;
 
-namespace H2RHRMS.Core.Services
+namespace WorkOffice.Services
 {
     public class AdministrationService : IAdministrationService
     {

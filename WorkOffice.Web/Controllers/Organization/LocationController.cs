@@ -3,24 +3,27 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using H2RHRMS.Api.Utilities;
-using H2RHRMS.Core.Interfaces.Services;
-using H2RHRMS.Domain.Models;
-using H2RHRMS.Domain.Models.Organization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WorkOffice.Contracts.Models;
+using WorkOffice.Contracts.ServicesContracts;
+using WorkOffice.Web.Filters;
+using WorkOffice.Web.Utilities;
 
 namespace H2RHRMS.Api.Controllers
 {
     [Route("api/[controller]")]
+    [ServiceFilter(typeof(LogUserActivity))]
     [ApiController]
     public class LocationController : ControllerBase
     {
         private readonly IlocationService service;
+        private readonly IHttpAccessorService httpAccessorService;
 
-        public LocationController(IlocationService _service)
+        public LocationController(IlocationService _service, IHttpAccessorService _httpAccessorService)
         {
             service = _service;
+            httpAccessorService = _httpAccessorService;
         }
         //  POST /api/Location/Create
         /// <summary>
@@ -48,7 +51,7 @@ namespace H2RHRMS.Api.Controllers
         {
             try
             {
-                model.ClientId = 1;
+                model.ClientId = httpAccessorService.GetCurrentClientId();
                 var apiResponse = await service.Create(model);
                 if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
                 {
@@ -121,7 +124,7 @@ namespace H2RHRMS.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetResponse<LocationModel>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(GetResponse<ProducesResponseStub>))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(GetResponse<ProducesResponseStub>))]
-        public async Task<IActionResult> Get(long locationId)
+        public async Task<IActionResult> Get(Guid locationId)
         {
             try
             {
@@ -218,7 +221,7 @@ namespace H2RHRMS.Api.Controllers
                 using (var stream = new MemoryStream())
                 {
                     await model.file.CopyToAsync(stream);
-                    apiResponse = await service.Upload(stream.ToArray(), 1);
+                    apiResponse = await service.Upload(stream.ToArray(), httpAccessorService.GetCurrentClientId());
                 }
 
                 if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
@@ -258,7 +261,7 @@ namespace H2RHRMS.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DeleteReply))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(DeleteReply))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(DeleteReply))]
-        public async Task<IActionResult> Delete(long locationId)
+        public async Task<IActionResult> Delete(Guid locationId)
         {
             try
             {

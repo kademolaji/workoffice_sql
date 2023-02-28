@@ -1,20 +1,15 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http.Connections;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using System.Text.Json.Serialization;
-using System;
-using NLog;
-using System.IO;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpOverrides;
 using WorkOffice.Domain.Helpers;
-using WorkOffice.Services.Email;
+using WorkOffice.Services;
+using WorkOffice.Web.Filters;
 
 namespace WorkOffice.Web
 {
@@ -80,7 +75,8 @@ namespace WorkOffice.Web
             });
 
             services.AddSignalR();
-
+            services.ConfigureDocumentationServices();
+            services.AddScoped<LogUserActivity>();
             services.AddControllersWithViews().AddJsonOptions(x =>
             {
                 x.JsonSerializerOptions.IgnoreNullValues = true;
@@ -106,7 +102,12 @@ namespace WorkOffice.Web
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
-
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "WorkOffice API");
+                c.RoutePrefix = "docs";
+            });
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>

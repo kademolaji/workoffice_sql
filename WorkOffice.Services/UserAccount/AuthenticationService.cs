@@ -93,22 +93,22 @@ namespace WorkOffice.Services
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Request is not coming from a valid client" }, IsSuccess = false };
                 }
-                if (string.IsNullOrEmpty(model.Name))
+                if (string.IsNullOrEmpty(model.FirstName))
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Name is required." }, IsSuccess = false };
                 }
-                if (await UserExists(model.UserName, model.UserId))
+                if (await UserExists(model.FirstName, model.UserId))
                 {
-                    return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = $"{model.UserName} already exist." }, IsSuccess = false };
+                    return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = $"{model.Email} already exist." }, IsSuccess = false };
                 }
                 var emailAddress = new EmailAddressAttribute();
                 if (emailAddress.IsValid(model.Email))
                 {
-                    return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = $"Invalid email {model.UserName}." }, IsSuccess = false };
+                    return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = $"Invalid email {model.Email}." }, IsSuccess = false };
                 }
-                if (await EmailExists(model.UserName, model.UserId))
+                if (await EmailExists(model.Email, model.UserId))
                 {
-                    return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = $"{model.UserName} already exist." }, IsSuccess = false };
+                    return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = $"{model.Email} already exist." }, IsSuccess = false };
                 }
                
 
@@ -248,7 +248,7 @@ namespace WorkOffice.Services
                         result = await context.SaveChangesAsync() > 0;
                         if (result)
                         {
-                            var details = $"Created new Uswer: Definition = {model.ClientId}, Description = {model.UserName}, Level = {model.Name} ";
+                            var details = $"Created new Uswer: Definition = {model.ClientId}, FirstName = {model.FirstName}, LastName = {model.LastName} ";
                             await auditTrail.SaveAuditTrail(details, "User", "Create");
                             trans.Commit();
                         }

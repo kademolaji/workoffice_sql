@@ -3,10 +3,7 @@ using Microsoft.Extensions.Options;
 using WorkOffice.Common.Enums;
 using WorkOffice.Contracts.Mappings;
 using WorkOffice.Contracts.Models;
-using WorkOffice.Contracts.ServicesContracts.Shared;
-using WorkOffice.Contracts.ServicesContracts.Users;
 using WorkOffice.Domain.Entities;
-using WorkOffice.Domain.Entities.Shared;
 using WorkOffice.Domain.Helpers;
 using WorkOffice.Services.Email;
 using WorkOffice.Services.Shared;
@@ -18,10 +15,9 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using WorkOffice.Domain.Entities.Account;
-using WorkOffice.Contracts.Models.Shared;
+using WorkOffice.Contracts.ServicesContracts;
 
-namespace WorkOffice.Services.Users
+namespace WorkOffice.Services
 {
     public class UserAccountService : IUserAccountService
     {
@@ -36,9 +32,9 @@ namespace WorkOffice.Services.Users
             _emailService = emailService;
         }
 
-        public void ReactivateAccount(User user)
+        public void ReactivateAccount(UserAccount user)
         {
-            _context.Users.Update(user);
+            _context.UserAccounts.Update(user);
             _context.SaveChanges();
         }
 
@@ -57,7 +53,7 @@ namespace WorkOffice.Services.Users
                 }
                 var apiResponse = new ApiResponse<GetResponse<AuthenticationResponse>>();
 
-                var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == userName && x.Disabled == false);
+                var user = await _context.UserAccounts.FirstOrDefaultAsync(x => x.Email == userName && x.Disabled == false);
 
                 if (user == null)
                 {
@@ -189,14 +185,14 @@ namespace WorkOffice.Services.Users
                 var apiResponse = new ApiResponse<GetResponse<AuthenticationResponse>>();
                 bool result = false;
                 string refreshTokenData = null;
-                User entity = null;
+                UserAccount entity = null;
                 using (var trans = _context.Database.BeginTransaction())
                 {
                     try
                     {
                         byte[] passwordHash, passwordSalt;
                         CreatePasswordHash(password, out passwordHash, out passwordSalt);
-                        entity = new User
+                        entity = new UserAccount
                         {
                             FirstName = model.FirstName,
                             LastName = model.LastName,
@@ -211,12 +207,12 @@ namespace WorkOffice.Services.Users
                             AcceptTerms = model.AcceptTerms,
                             Disabled = false
                         };
-                        _context.Users.Add(entity);
+                        _context.UserAccounts.Add(entity);
 
                         result = await _context.SaveChangesAsync() > 0;
                         if (result)
                         {
-                            var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == entity.Email);
+                            var user = await _context.UserAccounts.FirstOrDefaultAsync(x => x.Email == entity.Email);
                             // authentication successful so generate refresh tokens
                             var refreshToken = generateRefreshToken(ipAddress);
                             refreshTokenData = refreshToken.Token;
@@ -282,14 +278,14 @@ namespace WorkOffice.Services.Users
                 }
                 var apiResponse = new ApiResponse<CreateResponse>();
                 bool result = false;
-                User entity = null;
+                UserAccount entity = null;
                 using (var trans = _context.Database.BeginTransaction())
                 {
                     try
                     {
                         if (model.UserId > 0)
                         {
-                            entity = _context.Users.Find(model.UserId);
+                            entity = _context.UserAccounts.Find(model.UserId);
                             if (entity != null)
                             {
                                 entity.FirstName = model.LastName;
@@ -364,7 +360,7 @@ namespace WorkOffice.Services.Users
                 }
                 var apiResponse = new ApiResponse<CreateResponse>();
                 bool result = false;
-                User entity = null;
+                UserAccount entity = null;
                 using (var trans = _context.Database.BeginTransaction())
                 {
                     try
@@ -372,7 +368,7 @@ namespace WorkOffice.Services.Users
                         byte[] passwordHash, passwordSalt;
                         CreatePasswordHash($"{model.FirstName}{model.LastName}", out passwordHash, out passwordSalt);
 
-                        entity = new User
+                        entity = new UserAccount
                         {
                             FirstName = model.FirstName,
                             LastName = model.LastName,
@@ -387,11 +383,11 @@ namespace WorkOffice.Services.Users
                             AcceptTerms = true,
                             Disabled = false
                         };
-                        _context.Users.Add(entity);
+                        _context.UserAccounts.Add(entity);
                         result = await _context.SaveChangesAsync() > 0;
                         if (result)
                         {
-                            var user = _context.Users.SingleOrDefault(x => x.Email == model.Email);
+                            var user = _context.UserAccounts.SingleOrDefault(x => x.Email == model.Email);
                             user.ResetToken = randomTokenString();
                             user.ResetTokenExpires = DateTime.UtcNow.AddDays(1);
                             // send email
@@ -452,7 +448,7 @@ namespace WorkOffice.Services.Users
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Email  is required." }, IsSuccess = false };
                 }
-                var user = _context.Users.Where(x => x.Email.ToLower().Trim() == model.Email.ToLower().Trim()).FirstOrDefault();
+                var user = _context.UserAccounts.Where(x => x.Email.ToLower().Trim() == model.Email.ToLower().Trim()).FirstOrDefault();
                 if (user == null)
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "User does not exist." }, IsSuccess = false };
@@ -518,7 +514,7 @@ namespace WorkOffice.Services.Users
             try
             {
 
-                var user = _context.Users.SingleOrDefault(x => x.VerificationToken == token);
+                var user = _context.UserAccounts.SingleOrDefault(x => x.VerificationToken == token);
                 if (user == null)
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Verification failed" }, IsSuccess = false };
@@ -533,7 +529,7 @@ namespace WorkOffice.Services.Users
                         user.Verified = DateTime.UtcNow;
                         user.VerificationToken = null;
 
-                        _context.Users.Update(user);
+                        _context.UserAccounts.Update(user);
 
                         result = await _context.SaveChangesAsync() > 0;
                         if (result)
@@ -577,7 +573,7 @@ namespace WorkOffice.Services.Users
         {
             try
             {
-                var user = _context.Users.SingleOrDefault(x => x.Email == model.Email && !x.Disabled);
+                var user = _context.UserAccounts.SingleOrDefault(x => x.Email == model.Email && !x.Disabled);
 
                 if (user == null)
                 {
@@ -594,7 +590,7 @@ namespace WorkOffice.Services.Users
                         user.ResetToken = randomTokenString();
                         user.ResetTokenExpires = DateTime.UtcNow.AddDays(1);
 
-                        _context.Users.Update(user);
+                        _context.UserAccounts.Update(user);
 
                         result = await _context.SaveChangesAsync() > 0;
                         if (result)
@@ -638,7 +634,7 @@ namespace WorkOffice.Services.Users
             try
             {
 
-                var user = _context.Users.SingleOrDefault(x => x.ResetToken == model.Token && x.ResetTokenExpires > DateTime.UtcNow);
+                var user = _context.UserAccounts.SingleOrDefault(x => x.ResetToken == model.Token && x.ResetTokenExpires > DateTime.UtcNow);
                 if (user == null)
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Invalid Token." }, IsSuccess = false };
@@ -662,7 +658,7 @@ namespace WorkOffice.Services.Users
                         user.ResetToken = null;
                         user.ResetTokenExpires = null;
 
-                        _context.Users.Update(user);
+                        _context.UserAccounts.Update(user);
 
                         result = await _context.SaveChangesAsync() > 0;
                         if (result)
@@ -704,7 +700,7 @@ namespace WorkOffice.Services.Users
         {
             try
             {
-                var user = await _context.Users.SingleOrDefaultAsync(x => x.ResetToken == model.Token && x.ResetTokenExpires > DateTime.UtcNow);
+                var user = await _context.UserAccounts.SingleOrDefaultAsync(x => x.ResetToken == model.Token && x.ResetTokenExpires > DateTime.UtcNow);
 
                 var apiResponse = new ApiResponse<CreateResponse>();
                 var response = new CreateResponse
@@ -732,7 +728,7 @@ namespace WorkOffice.Services.Users
             try
             {
                 var apiResponse = new ApiResponse<GetResponse<UserAccountResponse>>();
-                var user = await _context.Users.Where(x => x.UserId == userId).Select(u => new UserAccountResponse
+                var user = await _context.UserAccounts.Where(x => x.UserId == userId).Select(u => new UserAccountResponse
                 {
                     UserId = u.UserId,
                     FirstName = u.FirstName,
@@ -767,7 +763,7 @@ namespace WorkOffice.Services.Users
             try
             {
                 var apiResponse = new ApiResponse<GetResponse<AuthenticationResponse>>();
-                var user = await _context.Users.Where(x => x.UserId == userId).FirstOrDefaultAsync();
+                var user = await _context.UserAccounts.Where(x => x.UserId == userId).FirstOrDefaultAsync();
 
                 var result = user.ToModel<AuthenticationResponse>();
 
@@ -791,43 +787,43 @@ namespace WorkOffice.Services.Users
             }
         }
 
-        public async Task<ApiResponse<SearchReply<UsersListModel>>> GetAllUsers(SearchCall<SearchUserList> options)
+        public async Task<ApiResponse<SearchReply<UserAccountModel>>> GetAllUserAccounts(SearchCall<SearchUserList> options)
         {
             int count = 0;
             int pageNumber = options.From > 0 ? options.From : 1;
             int pageSize = options.PageSize > 0 ? options.PageSize : 10;
             try
             {
-                var apiResponse = new ApiResponse<SearchReply<UsersListModel>>();
-                var query = _context.Users.Select(u => new UsersListModel
+                var apiResponse = new ApiResponse<SearchReply<UserAccountModel>>();
+                var query = _context.UserAccounts.Select(u => new UserAccountModel
                 {
                     UserId = u.UserId,
-                    FirstName = u.FirstName,
-                    LastName = u.LastName,
-                    Email = u.Email,
-                    ProfilePicture = u.ProfilePicture,
-                    Country = u.Country,
-                    Biography = u.Biography,
-                    UserRole = (RolesEnum)u.RoleId,
-                    Status = u.Disabled
+                    //FirstName = u.FirstName,
+                    //LastName = u.LastName,
+                    //Email = u.Email,
+                    //ProfilePicture = u.ProfilePicture,
+                    //Country = u.Country,
+                    //Biography = u.Biography,
+                    //UserRole = (RolesEnum)u.RoleId,
+                    //Status = u.Disabled
                 });
 
-                if (!string.IsNullOrEmpty(options.Parameter.SearchQuery))
-                {
-                    query = query.Where(x => x.FirstName.Contains(options.Parameter.SearchQuery)
-                    || x.LastName.Contains(options.Parameter.SearchQuery)
-                     || x.Email.Contains(options.Parameter.SearchQuery));
-                }
-                if (options.Parameter.UserRole.HasValue)
-                {
-                    query = query.Where(x => x.UserRole.Equals(options.Parameter.UserRole));
-                }
+                //if (!string.IsNullOrEmpty(options.Parameter.SearchQuery))
+                //{
+                //    query = query.Where(x => x.FirstName.Contains(options.Parameter.SearchQuery)
+                //    || x.LastName.Contains(options.Parameter.SearchQuery)
+                //     || x.Email.Contains(options.Parameter.SearchQuery));
+                //}
+                //if (options.Parameter.UserRole.HasValue)
+                //{
+                //    query = query.Where(x => x.UserRole.Equals(options.Parameter.UserRole));
+                //}
                 int offset = (pageNumber - 1) * pageSize;
                 count = query.Count();
-                var result = await query.OrderBy(x => x.FirstName).ThenBy(x => x.LastName).Take(pageSize).Skip(offset).ToListAsync();
+                var result = await query.OrderBy(x => x.Email).ThenBy(x => x.CustomUserCode).Take(pageSize).Skip(offset).ToListAsync();
 
 
-                var response = new SearchReply<UsersListModel>()
+                var response = new SearchReply<UserAccountModel>()
                 {
                     TotalCount = count,
                     Result = result,
@@ -843,13 +839,13 @@ namespace WorkOffice.Services.Users
             }
             catch (Exception ex)
             {
-                return new ApiResponse<SearchReply<UsersListModel>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new SearchReply<UsersListModel>() { TotalCount = count, Result = new List<UsersListModel>() }, IsSuccess = false };
+                return new ApiResponse<SearchReply<UserAccountModel>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new SearchReply<UserAccountModel>() { TotalCount = count, Result = new List<UserAccountModel>() }, IsSuccess = false };
             }
         }
 
         public async Task<bool> EmailExists(string email)
         {
-            if (await _context.Users.AnyAsync(x => x.Email == email))
+            if (await _context.UserAccounts.AnyAsync(x => x.Email == email))
                 return true;
 
             return false;
@@ -923,6 +919,26 @@ namespace WorkOffice.Services.Users
 
         }
 
+
+        public async Task UpdateLastActive(Guid userId)
+        {
+            try
+            {
+                var user = _context.UserAccounts.SingleOrDefault(x => x.UserId == userId);
+                if(user != null)
+                {
+                    user.LastActive = DateTime.Now;
+                    await _context.SaveChangesAsync();
+                }     
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+
+        }
+
         public async Task<ApiResponse<CreateResponse>> DisableEnableUser(string rawUserId, string rawLoggedInUserId)
         {
             try
@@ -943,7 +959,7 @@ namespace WorkOffice.Services.Users
 
                 var apiResponse = new ApiResponse<CreateResponse>();
                 bool result = false;
-                var entity = await _context.Users.FirstOrDefaultAsync(x => x.UserId == userId);
+                var entity = await _context.UserAccounts.FirstOrDefaultAsync(x => x.UserId == userId);
                 if (entity == null)
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Record does not exist." }, IsSuccess = false };
@@ -1012,9 +1028,9 @@ namespace WorkOffice.Services.Users
             }
         }
 
-        private (RefreshToken, User) getRefreshToken(string token)
+        private (RefreshToken, UserAccount) getRefreshToken(string token)
         {
-            var account = _context.Users.SingleOrDefault(u => u.RefreshTokens.Any(t => t.Token == token));
+            var account = _context.UserAccounts.SingleOrDefault(u => u.RefreshTokens.Any(t => t.Token == token));
             if (account == null) throw new Exception("Invalid token");
             var refreshToken = account.RefreshTokens.Single(x => x.Token == token);
             if (!refreshToken.IsActive) throw new Exception("Invalid token");
@@ -1032,7 +1048,7 @@ namespace WorkOffice.Services.Users
             };
         }
 
-        private void removeOldRefreshTokens(User user)
+        private void removeOldRefreshTokens(UserAccount user)
         {
             user.RefreshTokens.RemoveAll(x =>
                 !x.IsActive &&
@@ -1048,9 +1064,9 @@ namespace WorkOffice.Services.Users
             return BitConverter.ToString(randomBytes).Replace("-", "");
         }
 
-        private async Task sendVerificationEmail(User account, string origin)
+        private async Task sendVerificationEmail(UserAccount account, string origin)
         {
-            var admin = _context.Users.Where(x => x.Email.ToLower().Contains("workoffice")).FirstOrDefault();
+            var admin = _context.UserAccounts.Where(x => x.Email.ToLower().Contains("workoffice")).FirstOrDefault();
             var verifyUrl = $"{origin}/account/verify-email?token={account.VerificationToken}";
             var messageParams = new Dictionary<string, string>(){
                 {"firstName", account.FirstName},
@@ -1067,9 +1083,9 @@ namespace WorkOffice.Services.Users
         }
 
 
-        private async Task SendPasswordResetEmail(User user, string origin)
+        private async Task SendPasswordResetEmail(UserAccount user, string origin)
         {
-            var admin = _context.Users.Where(x => x.Email.ToLower().Contains("workoffice")).FirstOrDefault();
+            var admin = _context.UserAccounts.Where(x => x.Email.ToLower().Contains("workoffice")).FirstOrDefault();
             var resetUrl = $"{origin}/account/reset-password?token={user.ResetToken}";
             var volunteerMessageParams = new Dictionary<string, string>(){
                 {"firstName", user.FirstName},
@@ -1087,9 +1103,9 @@ namespace WorkOffice.Services.Users
 
         }
 
-        private async Task sendVerificationSuccessfulEmail(User account, string origin)
+        private async Task sendVerificationSuccessfulEmail(UserAccount account, string origin)
         {
-            var admin = _context.Users.Where(x => x.Email.ToLower().Contains("workoffice")).FirstOrDefault();
+            var admin = _context.UserAccounts.Where(x => x.Email.ToLower().Contains("workoffice")).FirstOrDefault();
             var loginUrl = $"{origin}/account/login";
             var messageParams = new Dictionary<string, string>(){
                 {"firstName", account.FirstName},

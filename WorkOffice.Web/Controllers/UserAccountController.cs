@@ -5,8 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using WorkOffice.Common;
 using WorkOffice.Contracts.Models;
-using WorkOffice.Contracts.ServicesContracts.Shared;
-using WorkOffice.Contracts.ServicesContracts.Users;
 using WorkOffice.Domain.Entities;
 using WorkOffice.Domain.Helpers;
 using WorkOffice.Web.Dtos;
@@ -18,6 +16,7 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using WorkOffice.Contracts.ServicesContracts;
 
 namespace WorkOffice.Web.Controllers
 {
@@ -290,7 +289,7 @@ namespace WorkOffice.Web.Controllers
         {
             try
             {
-                var apiResponse = await _userAccountService.GetAllUsers(options);
+                var apiResponse = await _userAccountService.GetAllUserAccounts(options);
                 return Ok(apiResponse.ResponseType);
             }
             catch (Exception ex)
@@ -309,7 +308,7 @@ namespace WorkOffice.Web.Controllers
             try
             {
                 var loggedInUser = _httpAccessorService.GetCurrentUserId();
-                var apiResponse = await _userAccountService.DisableEnableUser(id, loggedInUser);
+                var apiResponse = await _userAccountService.DisableEnableUser(id, loggedInUser.ToString());
 
                 return Ok(apiResponse.ResponseType);
             }

@@ -2,22 +2,24 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using H2RHRMS.Core.Interfaces;
-using H2RHRMS.Domain.Models;
+
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WorkOffice.Contracts.Models;
+using WorkOffice.Contracts.ServicesContracts;
 
-namespace H2RHRMS.Api.Controllers
+namespace WorkOffice.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class AdministrationController : ControllerBase
     {
         private readonly IAdministrationService service;
-
-        public AdministrationController(IAdministrationService _service)
+        private readonly IHttpAccessorService httpAccessorService;
+        public AdministrationController(IAdministrationService _service, IHttpAccessorService _httpAccessorService)
         {
             service = _service;
+            httpAccessorService = _httpAccessorService;
         }
         //  POST /api/Administration/CreateUserRoleAndActivity
         /// <summary>
@@ -41,7 +43,7 @@ namespace H2RHRMS.Api.Controllers
         {
             try
             {
-                model.ClientId = 1;
+                model.ClientId = httpAccessorService.GetCurrentClientId();
                 var apiResponse = await service.AddUpdateUserRoleAndActivity(model);
                 if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
                 {
@@ -75,7 +77,7 @@ namespace H2RHRMS.Api.Controllers
         {
             try
             {
-                var clientId = 1;
+                var clientId = httpAccessorService.GetCurrentClientId();
                 var apiResponse = await service.GetAllUserRoleDefinitions(clientId);
                 if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
                 {
@@ -114,7 +116,7 @@ namespace H2RHRMS.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DeleteReply))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(DeleteReply))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(DeleteReply))]
-        public async Task<IActionResult> DeleteUserRoleDefinition(long userRoleDefinitionId)
+        public async Task<IActionResult> DeleteUserRoleDefinition(Guid userRoleDefinitionId)
         {
             try
             {
@@ -198,7 +200,7 @@ namespace H2RHRMS.Api.Controllers
         {
             try
             {
-                var clientId = 1;
+                var clientId = httpAccessorService.GetCurrentClientId();
                 var apiResponse = await service.GetActivities(clientId);
                 if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
                 {
@@ -235,11 +237,11 @@ namespace H2RHRMS.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetResponse<List<UserRoleActivitiesModel>>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(GetResponse<ProducesResponseStub>))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(GetResponse<ProducesResponseStub>))]
-        public async Task<IActionResult> GetUserRoleAndActivities(long userRoleId)
+        public async Task<IActionResult> GetUserRoleAndActivities(Guid userRoleId)
         {
             try
             {
-                var clientId = 1;
+                var clientId = httpAccessorService.GetCurrentClientId();
                 var apiResponse = await service.GetUserRoleAndActivities(clientId, userRoleId);
                 if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
                 {
@@ -276,11 +278,11 @@ namespace H2RHRMS.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetResponse<List<UserActivitiesByRoleModel>>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(GetResponse<ProducesResponseStub>))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(GetResponse<ProducesResponseStub>))]
-        public async Task<IActionResult> GetActivitiesByRoleId(int userRoleId)
+        public async Task<IActionResult> GetActivitiesByRoleId(Guid userRoleId)
         {
             try
             {
-                var clientId = 1;
+                var clientId = httpAccessorService.GetCurrentClientId();
                 var apiResponse = await service.GetActivitiesByRoleId(clientId, userRoleId);
                 if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
                 {

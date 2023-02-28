@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using WorkOffice.Contracts.Models;
 
 namespace WorkOffice.Contracts.ServicesContracts
+{ 
   public  interface IlocationService
     {
         Task<ApiResponse<CreateResponse>> Create(LocationModel model);

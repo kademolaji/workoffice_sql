@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WorkOffice.Contracts.Models;
 using WorkOffice.Contracts.ServicesContracts;
-using WorkOffice.Contracts.ServicesContracts.Shared;
 using WorkOffice.Web.Utilities;
 
 namespace WorkOffice.Web.Controllers
@@ -19,10 +18,12 @@ namespace WorkOffice.Web.Controllers
     public class CompanyStructureController : ControllerBase
     {
         private readonly ICompanyStructureService service;
+        private readonly IHttpAccessorService httpAccessorService;
 
-        public CompanyStructureController(ICompanyStructureService _service)
+        public CompanyStructureController(ICompanyStructureService _service, IHttpAccessorService _httpAccessorService)
         {
             service = _service;
+            httpAccessorService = _httpAccessorService;
         }
         //  POST /api/CompanyStructure/Create
         /// <summary>
@@ -46,7 +47,7 @@ namespace WorkOffice.Web.Controllers
         {
             try
             {
-                Guid clientId = Guid.Empty;
+                model.ClientId = httpAccessorService.GetCurrentClientId();
                 var apiResponse = await service.Create(model);
                 if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
                 {
@@ -82,7 +83,7 @@ namespace WorkOffice.Web.Controllers
         {
             try
             {
-                Guid clientId = Guid.Empty;
+                var clientId = httpAccessorService.GetCurrentClientId();
                 var apiResponse = await service.GetList(clientId, pageNumber, pageSize);
                 if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
                 {
@@ -124,7 +125,7 @@ namespace WorkOffice.Web.Controllers
         {
             try
             {
-                Guid clientId = Guid.Empty;
+                var clientId = httpAccessorService.GetCurrentClientId();
                 var apiResponse = await service.Get(companyStructureId, clientId);
                 if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
                 {
@@ -165,7 +166,7 @@ namespace WorkOffice.Web.Controllers
         {
             try
             {
-                Guid clientId = Guid.Empty;
+                var clientId = httpAccessorService.GetCurrentClientId();
                 var apiResponse = await service.Export(clientId);
                 if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
                 {
@@ -206,7 +207,7 @@ namespace WorkOffice.Web.Controllers
         {
             try
             {
-                Guid clientId = Guid.Empty;
+                var clientId = httpAccessorService.GetCurrentClientId();
                 var apiResponse = new ApiResponse<CreateResponse>();
 
                 if (model.file == null || model.file.Length <= 0)

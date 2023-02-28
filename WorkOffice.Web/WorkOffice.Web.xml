@@ -1,0 +1,583 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WorkOffice.Web</name>
+    </assembly>
+    <members>
+        <!-- Badly formed XML comment ignored for member "M:WorkOffice.Web.Controllers.AdministrationController.Create(WorkOffice.Contracts.Models.UserRoleAndActivityModel)" -->
+        <member name="M:WorkOffice.Web.Controllers.AdministrationController.GetAllUserRoleDefinitions">
+             <summary>
+             Get list of UserRoleDefinitions
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <returns>List of UserRoleDefinitions</returns>
+             <response code="200">Returns list of UserRoleDefinitions</response>
+             <response code="404">If list of UserRoleDefinitions is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.AdministrationController.DeleteUserRoleDefinition(System.Guid)">
+             <summary>
+             Delete UserRoleDefinition
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="userRoleDefinitionId"></param>
+             <returns>Object of UserRoleDefinition</returns>
+             <response code="200">Returns object of UserRoleDefinition</response>
+             <response code="404">If object of UserRoleDefinition is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.AdministrationController.DeleteMultipleUserRoleDefinition(WorkOffice.Contracts.Models.MultipleDeleteModel)">
+             <summary>
+             Delete Multiple UserRoleDefinition
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="model"></param>
+             <returns>Object of DeleteMultipleUserRoleDefinition</returns>
+             <response code="200">Returns object of DeleteMultipleUserRoleDefinition</response>
+             <response code="404">If object of DeleteMultipleUserRoleDefinition is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.AdministrationController.GetActivities">
+             <summary>
+             Get list of Activities
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <returns>List of Activities</returns>
+             <response code="200">Returns list of Activities</response>
+             <response code="404">If list of Activities is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.AdministrationController.GetUserRoleAndActivities(System.Guid)">
+             <summary>
+             Get list of UserRoleAndActivities
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <returns>List of UserRole And Activities</returns>
+             <response code="200">Returns list of UserRole And Activities</response>
+             <response code="404">If list of UserRole And Activities is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.AdministrationController.GetActivitiesByRoleId(System.Guid)">
+             <summary>
+             Get list of Activities By RoleId
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <returns>List of Activities By RoleId</returns>
+             <response code="200">Returns list of Activities By RoleId</response>
+             <response code="404">If list of Activities By RoleId is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.CompanyStructureController.Create(WorkOffice.Contracts.Models.CompanyStructureModel)">
+             <summary>
+             Create CompanyStructure
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 POST /api/CompanyStructure/Create
+            
+             </remarks>
+             <param name="model"></param>
+             <returns>Created success message </returns>
+             <response code="201">CompanyStructure Created Successfully</response>
+             <response code="400">If an error occur or invalid request payload</response>
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.CompanyStructureController.GetList(System.Int32,System.Int32)">
+             <summary>
+             Get list of CompanyStructure
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="pageNumber"></param>
+             <param name="pageSize"></param>
+             <returns>List of CompanyStructure</returns>
+             <response code="200">Returns list of CompanyStructure</response>
+             <response code="404">If list of CompanyStructure is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.CompanyStructureController.Get(System.Guid)">
+             <summary>
+             Get object of CompanyStructure
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="companyStructureId"></param>
+             <returns>Object of CompanyStructure</returns>
+             <response code="200">Returns object of CompanyStructure</response>
+             <response code="404">If object of CompanyStructure is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.CompanyStructureController.Export">
+             <summary>
+             Export CompanyStructure
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <returns>Object of CompanyStructure</returns>
+             <response code="200">Returns object of CompanyStructure</response>
+             <response code="404">If object of CompanyStructure is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.CompanyStructureController.Upload(WorkOffice.Web.Utilities.UploadModel)">
+             <summary>
+             Upload CompanyStructure
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <returns>Object of CompanyStructure</returns>
+             <response code="200">Returns object of CompanyStructure</response>
+             <response code="404">If object of CompanyStructure is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.CompanyStructureController.Delete(System.Guid)">
+             <summary>
+             Delete CompanyStructure
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="companyStructureId"></param>
+             <returns>Object of CompanyStructure</returns>
+             <response code="200">Returns object of CompanyStructure</response>
+             <response code="404">If object of CompanyStructure is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.CompanyStructureController.MultipleDelete(WorkOffice.Contracts.Models.MultipleDeleteModel)">
+             <summary>
+             Delete Multiple CompanyStructure
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="model"></param>
+             <returns>Object of CompanyStructure</returns>
+             <response code="200">Returns object of CompanyStructure</response>
+             <response code="404">If object of CompanyStructure is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.CustomIdentityFormatSettingController.Create(WorkOffice.Contracts.Models.CustomIdentityFormatSettingModel)">
+             <summary>
+             Create customIdentityFormatSetting
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 POST /api/customIdentityFormatSetting/Create
+             </remarks>
+             <param name="model"></param>
+             <returns>Created success message </returns>
+             <response code="201">customIdentityFormatSetting Created Successfully</response>
+             <response code="400">If an error occur or invalid request payload</response>
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.CustomIdentityFormatSettingController.GetList(System.Int32,System.Int32)">
+             <summary>
+             Get list of customIdentityFormatSetting
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="pageNumber"></param>
+             <param name="pageSize"></param>
+             <returns>List of customIdentityFormatSetting</returns>
+             <response code="200">Returns list of customIdentityFormatSetting</response>
+             <response code="404">If list of customIdentityFormatSetting is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.CustomIdentityFormatSettingController.Get(System.Guid)">
+             <summary>
+             Get object of customIdentityFormatSetting
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="customIdentityFormatSettingId"></param>
+             <returns>Object of customIdentityFormatSetting</returns>
+             <response code="200">Returns object of customIdentityFormatSetting</response>
+             <response code="404">If object of customIdentityFormatSetting is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.CustomIdentityFormatSettingController.Delete(System.Guid)">
+             <summary>
+             Delete customIdentityFormatSetting
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="customIdentityFormatSettingId"></param>
+             <returns>Object of customIdentityFormatSetting</returns>
+             <response code="200">Returns object of customIdentityFormatSetting</response>
+             <response code="404">If object of customIdentityFormatSetting is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="P:WorkOffice.Web.Utilities.JwtIssuerOptions.Issuer">
+            <summary>
+            "iss" (Issuer) Claim
+            </summary>
+            <remarks>The "iss" (issuer) claim identifies the principal that issued the
+              JWT.  The processing of this claim is generally application specific.
+              The "iss" value is a case-sensitive string containing a StringOrURI
+              value.  Use of this claim is OPTIONAL.</remarks>
+        </member>
+        <member name="P:WorkOffice.Web.Utilities.JwtIssuerOptions.Subject">
+            <summary>
+            "sub" (Subject) Claim
+            </summary>
+            <remarks> The "sub" (subject) claim identifies the principal that is the
+              subject of the JWT.  The claims in a JWT are normally statements
+              about the subject.  The subject value MUST either be scoped to be
+              locally unique in the context of the issuer or be globally unique.
+              The processing of this claim is generally application specific.  The
+              "sub" value is a case-sensitive string containing a StringOrURI
+              value.  Use of this claim is OPTIONAL.</remarks>
+        </member>
+        <member name="P:WorkOffice.Web.Utilities.JwtIssuerOptions.Audience">
+            <summary>
+            "aud" (Audience) Claim
+            </summary>
+            <remarks>The "aud" (audience) claim identifies the recipients that the JWT is
+              intended for.  Each principal intended to process the JWT MUST
+              identify itself with a value in the audience claim.  If the principal
+              processing the claim does not identify itself with a value in the
+              "aud" claim when this claim is present, then the JWT MUST be
+              rejected.  In the general case, the "aud" value is an array of case-
+              sensitive strings, each containing a StringOrURI value.  In the
+              special case when the JWT has one audience, the "aud" value MAY be a
+              single case-sensitive string containing a StringOrURI value.  The
+              interpretation of audience values is generally application specific.
+              Use of this claim is OPTIONAL.</remarks>
+        </member>
+        <member name="P:WorkOffice.Web.Utilities.JwtIssuerOptions.NotBefore">
+            <summary>
+            "nbf" (Not Before) Claim (default is UTC NOW)
+            </summary>
+            <remarks>The "nbf" (not before) claim identifies the time before which the JWT
+              MUST NOT be accepted for processing.  The processing of the "nbf"
+              claim requires that the current date/time MUST be after or equal to
+              the not-before date/time listed in the "nbf" claim.  Implementers MAY
+              provide for some small leeway, usually no more than a few minutes, to
+              account for clock skew.  Its value MUST be a number containing a
+              NumericDate value.  Use of this claim is OPTIONAL.</remarks>
+        </member>
+        <member name="P:WorkOffice.Web.Utilities.JwtIssuerOptions.IssuedAt">
+            <summary>
+            "iat" (Issued At) Claim (default is UTC NOW)
+            </summary>
+            <remarks>The "iat" (issued at) claim identifies the time at which the JWT was
+              issued.  This claim can be used to determine the age of the JWT.  Its
+              value MUST be a number containing a NumericDate value.  Use of this
+              claim is OPTIONAL.</remarks>
+        </member>
+        <member name="P:WorkOffice.Web.Utilities.JwtIssuerOptions.ValidFor">
+            <summary>
+            Set the timespan the token will be valid for (default is 5 min/300 seconds)
+            </summary>
+        </member>
+        <member name="P:WorkOffice.Web.Utilities.JwtIssuerOptions.Expiration">
+            <summary>
+            "exp" (Expiration Time) Claim (returns IssuedAt + ValidFor)
+            </summary>
+            <remarks>The "exp" (expiration time) claim identifies the expiration time on
+              or after which the JWT MUST NOT be accepted for processing.  The
+              processing of the "exp" claim requires that the current date/time
+              MUST be before the expiration date/time listed in the "exp" claim.
+              Implementers MAY provide for some small leeway, usually no more than
+              a few minutes, to account for clock skew.  Its value MUST be a number
+              containing a NumericDate value.  Use of this claim is OPTIONAL.</remarks>
+        </member>
+        <member name="P:WorkOffice.Web.Utilities.JwtIssuerOptions.JtiGenerator">
+            <summary>
+            "jti" (JWT ID) Claim (default ID is a GUID)
+            </summary>
+            <remarks>The "jti" (JWT ID) claim provides a unique identifier for the JWT.
+              The identifier value MUST be assigned in a manner that ensures that
+              there is a negligible probability that the same value will be
+              accidentally assigned to a different data object; if the application
+              uses multiple issuers, collisions MUST be prevented among values
+              produced by different issuers as well.  The "jti" claim can be used
+              to prevent the JWT from being replayed.  The "jti" value is a case-
+              sensitive string.  Use of this claim is OPTIONAL.</remarks>
+        </member>
+        <member name="P:WorkOffice.Web.Utilities.JwtIssuerOptions.SigningCredentials">
+            <summary>
+            The signing key to use when generating tokens.
+            </summary>
+        </member>
+        <member name="M:H2RHRMS.Api.Controllers.GeneralInformationController.Create(WorkOffice.Contracts.Models.GeneralInformationModel)">
+             <summary>
+             Create GeneralInformation
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 POST /api/GeneralInformation/Create
+             </remarks>
+             <param name="model"></param>
+             <returns>Created success message </returns>
+             <response code="201">GeneralInformation Created Successfully</response>
+             <response code="400">If an error occur or invalid request payload</response>
+        </member>
+        <member name="M:H2RHRMS.Api.Controllers.GeneralInformationController.Get(System.Guid)">
+             <summary>
+             Get object of GeneralInformation
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="generalInformationId"></param>
+             <returns>Object of GeneralInformation</returns>
+             <response code="200">Returns object of GeneralInformation</response>
+             <response code="404">If object of GeneralInformation is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:H2RHRMS.Api.Controllers.GeneralInformationController.Delete(System.Guid)">
+             <summary>
+             Delete GeneralInformation
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="generalInformationId"></param>
+             <returns>Object of GeneralInformation</returns>
+             <response code="200">Returns object of GeneralInformation</response>
+             <response code="404">If object of GeneralInformation is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:H2RHRMS.Api.Controllers.LocationController.Create(WorkOffice.Contracts.Models.LocationModel)">
+             <summary>
+             Create Location
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 POST /api/Location/Create
+                 {
+                   "revenueId": 10,
+                   "customerId": 210
+                     }
+            
+             </remarks>
+             <param name="model"></param>
+             <returns>Created success message </returns>
+             <response code="201">Location Created Successfully</response>
+             <response code="400">If an error occur or invalid request payload</response>
+        </member>
+        <member name="M:H2RHRMS.Api.Controllers.LocationController.GetList(System.Int32,System.Int32)">
+             <summary>
+             Get list of Location
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="pageNumber"></param>
+             <param name="pageSize"></param>
+             <returns>List of Location</returns>
+             <response code="200">Returns list of Location</response>
+             <response code="404">If list of Location is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:H2RHRMS.Api.Controllers.LocationController.Get(System.Guid)">
+             <summary>
+             Get object of Location
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="locationId"></param>
+             <returns>Object of Location</returns>
+             <response code="200">Returns object of Location</response>
+             <response code="404">If object of Location is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:H2RHRMS.Api.Controllers.LocationController.GenerateExportStructureDefinition">
+             <summary>
+             Export Location
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <returns>Object of Location</returns>
+             <response code="200">Returns object of Location</response>
+             <response code="404">If object of Location is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:H2RHRMS.Api.Controllers.LocationController.UploadStructureDefinition(WorkOffice.Web.Utilities.UploadModel)">
+             <summary>
+             Upload Location
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <returns>Object of Location</returns>
+             <response code="200">Returns object of Location</response>
+             <response code="404">If object of Location is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:H2RHRMS.Api.Controllers.LocationController.Delete(System.Guid)">
+             <summary>
+             Delete Location
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="locationId"></param>
+             <returns>Object of Location</returns>
+             <response code="200">Returns object of Location</response>
+             <response code="404">If object of Location is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:H2RHRMS.Api.Controllers.LocationController.MultipleDelete(WorkOffice.Contracts.Models.MultipleDeleteModel)">
+             <summary>
+             Delete Multiple Location
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="model"></param>
+             <returns>Object of Location</returns>
+             <response code="200">Returns object of Location</response>
+             <response code="404">If object of Location is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:H2RHRMS.Api.Controllers.StructureDefinitionController.Create(WorkOffice.Contracts.Models.StructureDefinitionModel)">
+             <summary>
+             Create StructureDefinition
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 POST /api/StructureDefinition/Create
+                 {
+                   "revenueId": 10,
+                   "customerId": 210
+                     }
+            
+             </remarks>
+             <param name="model"></param>
+             <returns>Created success message </returns>
+             <response code="201">StructureDefinition Created Successfully</response>
+             <response code="400">If an error occur or invalid request payload</response>
+        </member>
+        <member name="M:H2RHRMS.Api.Controllers.StructureDefinitionController.GetList(System.Int32,System.Int32)">
+             <summary>
+             Get list of StructureDefinition
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="pageNumber"></param>
+             <param name="pageSize"></param>
+             <returns>List of StructureDefinition</returns>
+             <response code="200">Returns list of StructureDefinition</response>
+             <response code="404">If list of StructureDefinition is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:H2RHRMS.Api.Controllers.StructureDefinitionController.Get(System.Guid)">
+             <summary>
+             Get object of StructureDefinition
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="structureDefinitionId"></param>
+             <returns>Object of StructureDefinition</returns>
+             <response code="200">Returns object of StructureDefinition</response>
+             <response code="404">If object of StructureDefinition is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:H2RHRMS.Api.Controllers.StructureDefinitionController.GenerateExportStructureDefinition">
+             <summary>
+             Export StructureDefinition
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <returns>Object of StructureDefinition</returns>
+             <response code="200">Returns object of StructureDefinition</response>
+             <response code="404">If object of StructureDefinition is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:H2RHRMS.Api.Controllers.StructureDefinitionController.UploadStructureDefinition(WorkOffice.Web.Utilities.UploadModel)">
+             <summary>
+             Upload StructureDefinition
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <returns>Object of StructureDefinition</returns>
+             <response code="200">Returns object of StructureDefinition</response>
+             <response code="404">If object of StructureDefinition is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:H2RHRMS.Api.Controllers.StructureDefinitionController.Delete(System.Int64)">
+             <summary>
+             Delete StructureDefinition
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="structureDefinitionId"></param>
+             <returns>Object of StructureDefinition</returns>
+             <response code="200">Returns object of StructureDefinition</response>
+             <response code="404">If object of StructureDefinition is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:H2RHRMS.Api.Controllers.StructureDefinitionController.MultipleDelete(WorkOffice.Contracts.Models.MultipleDeleteModel)">
+             <summary>
+             Delete Multiple StructureDefinition
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="model"></param>
+             <returns>Object of StructureDefinition</returns>
+             <response code="200">Returns object of StructureDefinition</response>
+             <response code="404">If object of StructureDefinition is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+    </members>
+</doc>

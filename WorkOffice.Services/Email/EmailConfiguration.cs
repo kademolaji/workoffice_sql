@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace WorkOffice.Services.Email
+namespace WorkOffice.Services
 {
     public class EmailConfiguration
     {

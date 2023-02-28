@@ -11,11 +11,10 @@ using System.Threading.Tasks;
 using WorkOffice.Contracts.Mappings;
 using WorkOffice.Contracts.Models;
 using WorkOffice.Contracts.ServicesContracts;
-using WorkOffice.Contracts.ServicesContracts.Shared;
 using WorkOffice.Domain.Entities;
 using WorkOffice.Domain.Helpers;
 
-namespace WorkOffice.Core.Services
+namespace WorkOffice.Services
 {
     public class CompanyStructureService : ICompanyStructureService
     {
