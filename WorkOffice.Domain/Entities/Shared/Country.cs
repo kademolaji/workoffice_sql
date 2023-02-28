@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace WorkOffice.Domain.Entities.Shared
+namespace WorkOffice.Domain.Entities
 {
     public class Country : Entity
     {

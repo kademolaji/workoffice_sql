@@ -352,7 +352,9 @@ namespace WorkOffice.Domain.Migrations
                     b.ToTable("Wards");
                 });
 
-            modelBuilder.Entity("WorkOffice.Domain.Entities.Shared.AuditTrail", b =>
+
+            modelBuilder.Entity("WorkOffice.Domain.Entities.AuditTrail", b =>
+
                 {
                     b.Property<Guid>("AuditTrailId")
                         .ValueGeneratedOnAdd()
@@ -368,6 +370,9 @@ namespace WorkOffice.Domain.Migrations
                     b.Property<string>("ActionType")
                         .HasColumnType("character varying(100)")
                         .HasMaxLength(100);
+
+                    b.Property<Guid>("ClientId")
+                        .HasColumnType("uuid");
 
                     b.Property<DateTimeOffset>("CreatedOn")
                         .HasColumnType("timestamp with time zone");
@@ -396,10 +401,74 @@ namespace WorkOffice.Domain.Migrations
                     b.ToTable("AuditTrails");
                 });
 
-            modelBuilder.Entity("WorkOffice.Domain.Entities.Shared.Country", b =>
+            modelBuilder.Entity("WorkOffice.Domain.Entities.CompanyStructure", b =>
+                {
+                    b.Property<Guid>("CompanyStructureId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Address")
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("ClientId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Company")
+                        .HasColumnType("character varying(250)")
+                        .HasMaxLength(250);
+
+                    b.Property<string>("CompanyHead")
+                        .HasColumnType("character varying(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("ContactEmail")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ContactPhone")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Country")
+                        .HasColumnType("character varying(250)")
+                        .HasMaxLength(250);
+
+                    b.Property<DateTimeOffset>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("character varying(250)")
+                        .HasMaxLength(250);
+
+                    b.Property<string>("Parent")
+                        .HasColumnType("character varying(250)")
+                        .HasMaxLength(250);
+
+                    b.Property<Guid?>("ParentID")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("StructureDefinitionId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("StructureTypeID")
+                        .HasColumnType("uuid")
+                        .HasMaxLength(50);
+
+                    b.HasKey("CompanyStructureId");
+
+                    b.HasIndex("StructureDefinitionId");
+
+                    b.ToTable("CompanyStructures");
+                });
+
+            modelBuilder.Entity("WorkOffice.Domain.Entities.Country", b =>
                 {
                     b.Property<Guid>("CountryId")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ClientId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Code")
@@ -422,7 +491,160 @@ namespace WorkOffice.Domain.Migrations
                     b.ToTable("Countries");
                 });
 
-            modelBuilder.Entity("WorkOffice.Domain.Entities.Shared.Notification", b =>
+            modelBuilder.Entity("WorkOffice.Domain.Entities.CustomIdentityFormatSetting", b =>
+                {
+                    b.Property<Guid>("CustomIdentityFormatSettingId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ClientId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Company")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTimeOffset>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("Digits")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("Prefix")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Suffix")
+                        .HasColumnType("integer");
+
+                    b.HasKey("CustomIdentityFormatSettingId");
+
+                    b.ToTable("CustomIdentityFormatSettings");
+                });
+
+            modelBuilder.Entity("WorkOffice.Domain.Entities.GeneralInformation", b =>
+                {
+                    b.Property<Guid>("GeneralInformationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Address1")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Address2")
+                        .HasColumnType("text");
+
+                    b.Property<string>("City")
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("ClientId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Country")
+                        .HasColumnType("text");
+
+                    b.Property<DateTimeOffset>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Currency")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Fax")
+                        .HasColumnType("text");
+
+                    b.Property<byte[]>("ImgLogo")
+                        .HasColumnType("bytea");
+
+                    b.Property<string>("Imgtype")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("Ismulticompany")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Organisationname")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Regno")
+                        .HasColumnType("text");
+
+                    b.Property<string>("State")
+                        .HasColumnType("text");
+
+                    b.Property<int>("Subsidiary_level")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Taxid")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Zipcode")
+                        .HasColumnType("text");
+
+                    b.HasKey("GeneralInformationId");
+
+                    b.ToTable("GeneralInformations");
+                });
+
+            modelBuilder.Entity("WorkOffice.Domain.Entities.Location", b =>
+                {
+                    b.Property<Guid>("LocationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Address")
+                        .HasColumnType("text");
+
+                    b.Property<string>("City")
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("ClientId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Country")
+                        .HasColumnType("text");
+
+                    b.Property<DateTimeOffset>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Fax")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("text");
+
+                    b.Property<string>("State")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ZipCode")
+                        .HasColumnType("text");
+
+                    b.HasKey("LocationId");
+
+                    b.ToTable("Locations");
+                });
+
+            modelBuilder.Entity("WorkOffice.Domain.Entities.Notification", b =>
                 {
                     b.Property<Guid>("NotificationId")
                         .ValueGeneratedOnAdd()
@@ -430,6 +652,9 @@ namespace WorkOffice.Domain.Migrations
 
                     b.Property<string>("Body")
                         .HasColumnType("text");
+
+                    b.Property<Guid>("ClientId")
+                        .HasColumnType("uuid");
 
                     b.Property<DateTimeOffset>("CreatedOn")
                         .HasColumnType("timestamp with time zone");
@@ -454,12 +679,509 @@ namespace WorkOffice.Domain.Migrations
                     b.ToTable("Notifications");
                 });
 
-            modelBuilder.Entity("WorkOffice.Domain.Entities.Account.User", b =>
+            modelBuilder.Entity("WorkOffice.Domain.Entities.State", b =>
                 {
-                    b.OwnsMany("WorkOffice.Domain.Entities.Account.RefreshToken", "RefreshTokens", b1 =>
+                    b.Property<Guid>("StateId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ClientId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("CountryId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("StateId");
+
+                    b.HasIndex("CountryId");
+
+                    b.ToTable("States");
+                });
+
+            modelBuilder.Entity("WorkOffice.Domain.Entities.StructureDefinition", b =>
+                {
+                    b.Property<Guid>("StructureDefinitionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ClientId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Definition")
+                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("character varying(150)")
+                        .HasMaxLength(150);
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("Level")
+                        .HasColumnType("integer");
+
+                    b.HasKey("StructureDefinitionId");
+
+                    b.HasIndex("Definition")
+                        .IsUnique();
+
+                    b.ToTable("StructureDefinitions");
+                });
+
+            modelBuilder.Entity("WorkOffice.Domain.Entities.UserAccess", b =>
+                {
+                    b.Property<Guid>("UserAccessId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ClientId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("CompanyStructureId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid>("UserAccountId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("UserAccessId");
+
+                    b.HasIndex("CompanyStructureId");
+
+                    b.HasIndex("UserAccountId");
+
+                    b.ToTable("UserAccesses");
+                });
+
+            modelBuilder.Entity("WorkOffice.Domain.Entities.UserAccount", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("AcceptTerms")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("Accesslevel")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Biography")
+                        .HasColumnType("text");
+
+                    b.Property<bool?>("CanChangePassword")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid>("ClientId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Country")
+                        .HasColumnType("text");
+
+                    b.Property<DateTimeOffset>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("CurrentLogin")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("CustomUserCode")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("DeletionDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool>("Disabled")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("text");
+
+                    b.Property<bool?>("EmailConfirmed")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsFirstLoginAttempt")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("LastActive")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("LastLogin")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("NextPasswordChangeDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<byte[]>("PasswordHash")
+                        .HasColumnType("bytea");
+
+                    b.Property<DateTime?>("PasswordReset")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<byte[]>("PasswordSalt")
+                        .HasColumnType("bytea");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("text");
+
+                    b.Property<bool?>("PhoneNumberConfirmed")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("ProfilePicture")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ResetToken")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("ResetTokenExpires")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("SecurityAnswer")
+                        .HasColumnType("character varying(256)")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("SecurityQuestion")
+                        .HasColumnType("character varying(256)")
+                        .HasMaxLength(256);
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("VerificationToken")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("Verified")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("UserAccounts");
+                });
+
+            modelBuilder.Entity("WorkOffice.Domain.Entities.UserAccountAdditionalActivity", b =>
+                {
+                    b.Property<Guid>("UserAccountAdditionalActivityId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<bool?>("CanAdd")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool?>("CanApprove")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool?>("CanDelete")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool?>("CanEdit")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool?>("CanView")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid>("ClientId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid>("UserAccountId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("UserActivityId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("UserAccountAdditionalActivityId");
+
+                    b.HasIndex("UserAccountId");
+
+                    b.HasIndex("UserActivityId");
+
+                    b.ToTable("UserAccountAdditionalActivities");
+                });
+
+            modelBuilder.Entity("WorkOffice.Domain.Entities.UserAccountRole", b =>
+                {
+                    b.Property<Guid>("UserAccountRoleId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ClientId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid>("UserAccountId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("UserRoleDefinitionId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("UserAccountRoleId");
+
+                    b.HasIndex("UserAccountId");
+
+                    b.HasIndex("UserRoleDefinitionId");
+
+                    b.ToTable("UserAccountRoles");
+                });
+
+            modelBuilder.Entity("WorkOffice.Domain.Entities.UserAccountSettings", b =>
+                {
+                    b.Property<Guid>("UserAccountSettingsId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<int?>("AllowPasswordUserAfter")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("ClientId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("EnablePasswordReset")
+                        .HasColumnType("boolean");
+
+                    b.Property<int?>("ExpirePasswordAfter")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int?>("MaxPeriodOfUserInactivity")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("MaximumInvalidPasswordAttempts")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("MinimumRequiredPasswordLength")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("SessionTimeout")
+                        .HasColumnType("integer");
+
+                    b.HasKey("UserAccountSettingsId");
+
+                    b.ToTable("UserAccountSettings");
+                });
+
+            modelBuilder.Entity("WorkOffice.Domain.Entities.UserActivity", b =>
+                {
+                    b.Property<Guid>("UserActivityId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ClientId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("UserActivityName")
+                        .IsRequired()
+                        .HasColumnType("character varying(256)")
+                        .HasMaxLength(256);
+
+                    b.Property<Guid>("UserActivityParentId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("UserActivityId");
+
+                    b.HasIndex("UserActivityParentId");
+
+                    b.ToTable("UserActivities");
+                });
+
+            modelBuilder.Entity("WorkOffice.Domain.Entities.UserActivityParent", b =>
+                {
+                    b.Property<Guid>("UserActivityParentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ClientId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("UserActivityParentName")
+                        .IsRequired()
+                        .HasColumnType("character varying(256)")
+                        .HasMaxLength(256);
+
+                    b.HasKey("UserActivityParentId");
+
+                    b.ToTable("UserActivityParents");
+                });
+
+            modelBuilder.Entity("WorkOffice.Domain.Entities.UserRoleActivity", b =>
+                {
+                    b.Property<Guid>("UserRoleActivityId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<bool?>("CanAdd")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool?>("CanApprove")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool?>("CanDelete")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool?>("CanEdit")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool?>("CanView")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid>("ClientId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid>("UserActivityId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("UserRoleDefinitionId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("UserRoleActivityId");
+
+                    b.HasIndex("UserActivityId");
+
+                    b.HasIndex("UserRoleDefinitionId");
+
+                    b.ToTable("UserRoleActivities");
+                });
+
+            modelBuilder.Entity("WorkOffice.Domain.Entities.UserRoleDefinition", b =>
+                {
+                    b.Property<Guid>("UserRoleDefinitionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ClientId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("RoleName")
+                        .IsRequired()
+                        .HasColumnType("character varying(256)")
+                        .HasMaxLength(256);
+
+                    b.HasKey("UserRoleDefinitionId");
+
+                    b.ToTable("UserRoleDefinitions");
+                });
+
+            modelBuilder.Entity("WorkOffice.Domain.Entities.CompanyStructure", b =>
+                {
+                    b.HasOne("WorkOffice.Domain.Entities.StructureDefinition", null)
+                        .WithMany("CompanyStructure")
+                        .HasForeignKey("StructureDefinitionId");
+                });
+
+            modelBuilder.Entity("WorkOffice.Domain.Entities.State", b =>
+                {
+                    b.HasOne("WorkOffice.Domain.Entities.Country", "Country")
+                        .WithMany()
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("WorkOffice.Domain.Entities.UserAccess", b =>
+                {
+                    b.HasOne("WorkOffice.Domain.Entities.CompanyStructure", "CompanyStructure")
+                        .WithMany("UserAccess")
+                        .HasForeignKey("CompanyStructureId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WorkOffice.Domain.Entities.UserAccount", "UserAccount")
+                        .WithMany("UserAccess")
+                        .HasForeignKey("UserAccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("WorkOffice.Domain.Entities.UserAccount", b =>
+                {
+                    b.OwnsMany("WorkOffice.Domain.Entities.RefreshToken", "RefreshTokens", b1 =>
                         {
                             b1.Property<Guid>("RefreshTokenId")
                                 .ValueGeneratedOnAdd()
+                                .HasColumnType("uuid");
+
+                            b1.Property<Guid>("ClientId")
                                 .HasColumnType("uuid");
 
                             b1.Property<DateTime>("Created")
@@ -489,18 +1211,72 @@ namespace WorkOffice.Domain.Migrations
                             b1.Property<string>("Token")
                                 .HasColumnType("text");
 
-                            b1.Property<Guid>("UserId")
+                            b1.Property<Guid>("UserAccountUserId")
                                 .HasColumnType("uuid");
 
                             b1.HasKey("RefreshTokenId");
 
-                            b1.HasIndex("UserId");
+                            b1.HasIndex("UserAccountUserId");
 
                             b1.ToTable("RefreshToken");
 
-                            b1.WithOwner("User")
-                                .HasForeignKey("UserId");
+                            b1.WithOwner("UserAccount")
+                                .HasForeignKey("UserAccountUserId");
                         });
+                });
+
+            modelBuilder.Entity("WorkOffice.Domain.Entities.UserAccountAdditionalActivity", b =>
+                {
+                    b.HasOne("WorkOffice.Domain.Entities.UserAccount", "UserAccount")
+                        .WithMany("UserAccountAdditionalActivity")
+                        .HasForeignKey("UserAccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WorkOffice.Domain.Entities.UserActivity", "UserActivity")
+                        .WithMany()
+                        .HasForeignKey("UserActivityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("WorkOffice.Domain.Entities.UserAccountRole", b =>
+                {
+                    b.HasOne("WorkOffice.Domain.Entities.UserAccount", "UserAccount")
+                        .WithMany("UserAccountRole")
+                        .HasForeignKey("UserAccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WorkOffice.Domain.Entities.UserRoleDefinition", "UserRoleDefinition")
+                        .WithMany()
+                        .HasForeignKey("UserRoleDefinitionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("WorkOffice.Domain.Entities.UserActivity", b =>
+                {
+                    b.HasOne("WorkOffice.Domain.Entities.UserActivityParent", "UserActivityParent")
+                        .WithMany()
+                        .HasForeignKey("UserActivityParentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("WorkOffice.Domain.Entities.UserRoleActivity", b =>
+                {
+                    b.HasOne("WorkOffice.Domain.Entities.UserActivity", "UserActivity")
+                        .WithMany()
+                        .HasForeignKey("UserActivityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WorkOffice.Domain.Entities.UserRoleDefinition", "UserRoleDefinition")
+                        .WithMany("UserRoleActivity")
+                        .HasForeignKey("UserRoleDefinitionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

@@ -5,13 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WorkOffice.Contracts.Models;
-using WorkOffice.Contracts.ServicesContracts.Shared;
-using WorkOffice.Domain.Entities.Shared;
+using WorkOffice.Domain.Entities;
 using WorkOffice.Domain.Helpers;
 using WorkOffice.Common.Interfaces;
-using WorkOffice.Contracts.Models.Shared;
+using WorkOffice.Contracts.ServicesContracts;
 
-namespace WorkOffice.Services.Shared
+namespace WorkOffice.Services
 {
     public class AuditTrailService : IAuditTrailService
     {

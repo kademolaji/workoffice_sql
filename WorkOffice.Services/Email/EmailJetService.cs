@@ -2,16 +2,15 @@
 using Mailjet.Client.Resources;
 using Newtonsoft.Json.Linq;
 using WorkOffice.Domain.Entities;
-using WorkOffice.Services.Email;
 using System.Threading.Tasks;
 
-namespace WorkOffice.Services.Email
+namespace WorkOffice.Services
 {
     public interface IEmailJetService
     {
-        Task VerificationEmail(Domain.Entities.Account.User account, string verifyUrl);
-        Task ResetPasswordEmail(Domain.Entities.Account.User account, string resetUrl);
-        Task VolunterVerifiedEmail(Domain.Entities.Account.User account, string loginUrl);
+        Task VerificationEmail(UserAccount account, string verifyUrl);
+        Task ResetPasswordEmail(UserAccount account, string resetUrl);
+        Task VolunterVerifiedEmail(UserAccount account, string loginUrl);
        
     }
     public class EmailJetService : IEmailJetService
@@ -28,7 +27,7 @@ namespace WorkOffice.Services.Email
 
         }
 
-        public async Task VerificationEmail(Domain.Entities.Account.User account, string verifyUrl)
+        public async Task VerificationEmail(UserAccount account, string verifyUrl)
         {
             MailjetRequest request = new MailjetRequest
             {
@@ -67,7 +66,7 @@ namespace WorkOffice.Services.Email
 
         }
 
-        public async Task ResetPasswordEmail(Domain.Entities.Account.User account, string resetUrl)
+        public async Task ResetPasswordEmail(UserAccount account, string resetUrl)
         {
             MailjetRequest request = new MailjetRequest
             {
@@ -81,7 +80,7 @@ namespace WorkOffice.Services.Email
                   }},
                  {"To", new JArray {
                   new JObject {
-                   {"Email", "kademolaji@yahoo.com"},
+                   {"Email", account.Email},
                    {"Name", $"{account.FirstName} {account.LastName}"}
                    }
                   }},
@@ -106,7 +105,7 @@ namespace WorkOffice.Services.Email
 
         }
 
-        public async Task VolunterVerifiedEmail(Domain.Entities.Account.User account, string loginUrl)
+        public async Task VolunterVerifiedEmail(UserAccount account, string loginUrl)
         {
             MailjetRequest request = new MailjetRequest
             {

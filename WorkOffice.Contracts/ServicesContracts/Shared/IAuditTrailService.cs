@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using WorkOffice.Contracts.Models;
-using WorkOffice.Contracts.Models.Shared;
 
-namespace WorkOffice.Contracts.ServicesContracts.Shared
+namespace WorkOffice.Contracts.ServicesContracts
 {
     public interface IAuditTrailService
     {

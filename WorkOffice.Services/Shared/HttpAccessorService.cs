@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using WorkOffice.Contracts.ServicesContracts.Shared;
+using WorkOffice.Contracts.ServicesContracts;
 
-namespace WorkOffice.Services.Shared
+namespace WorkOffice.Services
 {
     public class HttpAccessorService : IHttpAccessorService
     {
@@ -15,13 +15,25 @@ namespace WorkOffice.Services.Shared
             _httpAccessor = httpContextAccessor;
         }
 
-
-        public string GetCurrentUserId()
+        public Guid GetCurrentClientId()
         {
             var sub = _httpAccessor.HttpContext.User.Claims
-               .FirstOrDefault(x => x.Type == "UserId");
-
-            return sub.ToString();
+               .FirstOrDefault(x => x.Type == "ClientId");
+            if (sub != null)
+            {
+                return Guid.Parse(sub.Value);
+            }
+            return default(Guid);
+        }
+        public Guid GetCurrentUserId()
+        {
+            var sub = _httpAccessor.HttpContext.User.Claims
+             .FirstOrDefault(x => x.Type == "UserId");
+            if (sub != null)
+            {
+                return Guid.Parse(sub.Value);
+            }
+            return default(Guid);
         }
         public string GetCurrentUserName()
         {

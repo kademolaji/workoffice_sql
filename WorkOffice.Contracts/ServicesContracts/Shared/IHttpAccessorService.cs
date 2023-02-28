@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace WorkOffice.Contracts.ServicesContracts.Shared
+namespace WorkOffice.Contracts.ServicesContracts
 {
     public interface IHttpAccessorService
     {
-        string GetCurrentUserId();
+        Guid GetCurrentClientId();
+        Guid GetCurrentUserId();
         string GetCurrentUserName();
         string GetCurrentUserEmail();
         String GetClientIP();

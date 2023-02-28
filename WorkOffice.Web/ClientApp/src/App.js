@@ -27,6 +27,9 @@ const ViewApp = React.lazy(() =>
 const ViewAccount = React.lazy(() =>
   import(/* webpackChunkName: "views-account" */ './views/account')
 );
+const ViewAdmin = React.lazy(() =>
+  import(/* webpackChunkName: "views-account" */ './views/admin')
+);
 const ViewError = React.lazy(() =>
   import(/* webpackChunkName: "views-error" */ './views/error')
 );
@@ -68,6 +71,10 @@ const App = ({ locale }) => {
                   path="/account"
                   render={(props) => <ViewAccount {...props} />}
                 />
+                 <Route
+                  path="/admin"
+                  render={(props) => <ViewAdmin {...props} />}
+                />
                 <Route
                   path="/error"
                   exact
@@ -86,6 +93,11 @@ const App = ({ locale }) => {
                 {/*
                 <Redirect exact from="/" to={adminRoot} />
                 */}
+                 <Route
+                  path="/docs"
+                  exact
+                  re={(props) => <ViewError {...props} />}
+                />
                 <Redirect to="/error" />
               </Switch>
             </Router>
