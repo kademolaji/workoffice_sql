@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WorkOffice.Contracts.Models.NHS_Setup;
 using WorkOffice.Contracts.ServicesContracts.NHS_Setup;
-using WorkOffice.Contracts.ServicesContracts.Shared;
+using WorkOffice.Contracts.ServicesContracts;
 
 namespace WorkOffice.Web.Controllers
 {
