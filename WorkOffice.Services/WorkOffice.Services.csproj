@@ -5,7 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EPPlus" Version="4.5.3.1" />
+    <Compile Remove="Admin\AdministrationService.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EPPlus" Version="6.1.3" />
     <PackageReference Include="Mailjet.Api" Version="1.0.1" />
     <PackageReference Include="MailKit" Version="2.15.0" />
     <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.2.0" />
@@ -17,6 +21,10 @@
     <ProjectReference Include="..\WorkOffice.Common\WorkOffice.Common.csproj" />
     <ProjectReference Include="..\WorkOffice.Contracts\WorkOffice.Contracts.csproj" />
     <ProjectReference Include="..\WorkOffice.Domain\WorkOffice.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Admin\" />
   </ItemGroup>
 
 </Project>

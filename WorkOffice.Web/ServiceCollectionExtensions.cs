@@ -28,10 +28,10 @@ namespace WorkOffice.Web
 
             // Configure DI for application services
             services.AddScoped<IUserAccountService, UserAccountService>();
-            services.AddScoped<IAuditTrailService, AuditTrailService>();
             services.AddScoped<IHttpAccessorService, HttpAccessorService>();
             services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
             services.AddScoped<IEmailJetService, EmailJetService>();
+
             services.AddScoped<IStructureDefinitionService, StructureDefinitionService>();
             services.AddScoped<ICompanyStructureService, CompanyStructureService>();
             services.AddScoped<IlocationService, LocationService>();
@@ -41,7 +41,7 @@ namespace WorkOffice.Web
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<IAdministrationService, AdministrationService>();
             services.AddScoped<IUserAuthorizationService, UserAuthorizationService>();
-            // Configure transcient services
+
             services.AddScoped<DataContext>();
 
             return services;
