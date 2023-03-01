@@ -5,8 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WorkOffice.Contracts.Models.NHS_Setup;
-using WorkOffice.Contracts.ServicesContracts.NHS_Setup;
+using WorkOffice.Contracts.Models;
 using WorkOffice.Contracts.ServicesContracts;
 
 namespace WorkOffice.Web.Controllers
@@ -16,9 +15,9 @@ namespace WorkOffice.Web.Controllers
    // [Authorize]
     public class ActivityController : ControllerBase
     {
-        private readonly IActivityService _ActivityService;
+        private readonly INHSActivityService _ActivityService;
         private readonly IHttpAccessorService _httpAccessorService;
-        public ActivityController(IActivityService ActivityService,
+        public ActivityController(INHSActivityService ActivityService,
             IHttpAccessorService httpAccessorService
            )
         {
@@ -31,7 +30,7 @@ namespace WorkOffice.Web.Controllers
         [Route("activity")]
         [ProducesResponseType(201, Type = typeof(CreateResponse))]
         [ProducesResponseType(400, Type = typeof(CreateResponse))]
-        public async Task<IActionResult> CreateActivity(ActivityViewModels model)
+        public async Task<IActionResult> CreateActivity(NHSActivityViewModels model)
         {
             try
             {

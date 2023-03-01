@@ -19,140 +19,13 @@ namespace WorkOffice.Domain.Migrations
                 .HasAnnotation("ProductVersion", "3.1.30")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            modelBuilder.Entity("WorkOffice.Domain.Entities.Account.User", b =>
-                {
-                    b.Property<Guid>("UserId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<bool>("AcceptTerms")
-                        .HasColumnType("boolean");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Biography")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Country")
-                        .HasColumnType("text");
-
-                    b.Property<DateTimeOffset>("CreatedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<DateTime>("DeletionDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<bool>("Disabled")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("text");
-
-                    b.Property<string>("FirstName")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("boolean");
-
-                    b.Property<byte[]>("PasswordHash")
-                        .HasColumnType("bytea");
-
-                    b.Property<DateTime?>("PasswordReset")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<byte[]>("PasswordSalt")
-                        .HasColumnType("bytea");
-
-                    b.Property<string>("ProfilePicture")
-                        .HasColumnType("text");
-
-                    b.Property<string>("ResetToken")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("ResetTokenExpires")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<int>("RoleId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("VerificationToken")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("Verified")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.HasKey("UserId");
-
-                    b.HasIndex("Email");
-
-                    b.HasIndex("UserId");
-
-                    b.HasIndex("FirstName", "LastName");
-
-                    b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("WorkOffice.Domain.Entities.Admin.UserRole", b =>
-                {
-                    b.Property<Guid>("USerRoleId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTimeOffset>("CreatedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.HasKey("USerRoleId");
-
-                    b.HasIndex("USerRoleId");
-
-                    b.ToTable("UserRoles");
-                });
-
-            modelBuilder.Entity("WorkOffice.Domain.Entities.NHS_Setup.Activity", b =>
-                {
-                    b.Property<Guid>("ActivityId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Code")
-                        .HasColumnType("text");
-
-                    b.Property<DateTimeOffset>("CreatedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.HasKey("ActivityId");
-
-                    b.HasIndex("ActivityId");
-
-                    b.ToTable("Activities");
-                });
-
-            modelBuilder.Entity("WorkOffice.Domain.Entities.NHS_Setup.AppType", b =>
+            modelBuilder.Entity("WorkOffice.Domain.Entities.AppType", b =>
                 {
                     b.Property<Guid>("AppTypeId")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ClientId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Code")
@@ -174,187 +47,7 @@ namespace WorkOffice.Domain.Migrations
                     b.ToTable("AppTypes");
                 });
 
-            modelBuilder.Entity("WorkOffice.Domain.Entities.NHS_Setup.Consultant", b =>
-                {
-                    b.Property<Guid>("ConsultantId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Code")
-                        .HasColumnType("text");
-
-                    b.Property<DateTimeOffset>("CreatedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.HasKey("ConsultantId");
-
-                    b.HasIndex("ConsultantId");
-
-                    b.ToTable("Consultants");
-                });
-
-            modelBuilder.Entity("WorkOffice.Domain.Entities.NHS_Setup.Hospital", b =>
-                {
-                    b.Property<Guid>("HospitalId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Code")
-                        .HasColumnType("text");
-
-                    b.Property<DateTimeOffset>("CreatedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.HasKey("HospitalId");
-
-                    b.HasIndex("HospitalId");
-
-                    b.ToTable("Hospitals");
-                });
-
-            modelBuilder.Entity("WorkOffice.Domain.Entities.NHS_Setup.PathwayStatus", b =>
-                {
-                    b.Property<Guid>("PathwayStatusId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<bool>("AllowClosed")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Code")
-                        .HasColumnType("text");
-
-                    b.Property<DateTimeOffset>("CreatedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.HasKey("PathwayStatusId");
-
-                    b.HasIndex("PathwayStatusId");
-
-                    b.ToTable("PathwayStatuses");
-                });
-
-            modelBuilder.Entity("WorkOffice.Domain.Entities.NHS_Setup.RTT", b =>
-                {
-                    b.Property<Guid>("RTTId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Code")
-                        .HasColumnType("text");
-
-                    b.Property<DateTimeOffset>("CreatedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.HasKey("RTTId");
-
-                    b.HasIndex("RTTId");
-
-                    b.ToTable("RTTs");
-                });
-
-            modelBuilder.Entity("WorkOffice.Domain.Entities.NHS_Setup.Specialty", b =>
-                {
-                    b.Property<Guid>("SpecialtyId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Code")
-                        .HasColumnType("text");
-
-                    b.Property<DateTimeOffset>("CreatedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.HasKey("SpecialtyId");
-
-                    b.HasIndex("SpecialtyId");
-
-                    b.ToTable("Specialties");
-                });
-
-            modelBuilder.Entity("WorkOffice.Domain.Entities.NHS_Setup.WaitingType", b =>
-                {
-                    b.Property<Guid>("WaitingTypeId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Code")
-                        .HasColumnType("text");
-
-                    b.Property<DateTimeOffset>("CreatedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.HasKey("WaitingTypeId");
-
-                    b.HasIndex("WaitingTypeId");
-
-                    b.ToTable("WaitingTypes");
-                });
-
-            modelBuilder.Entity("WorkOffice.Domain.Entities.NHS_Setup.Ward", b =>
-                {
-                    b.Property<Guid>("WardId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Code")
-                        .HasColumnType("text");
-
-                    b.Property<DateTimeOffset>("CreatedOn")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.HasKey("WardId");
-
-                    b.HasIndex("WardId");
-
-                    b.ToTable("Wards");
-                });
-
-
             modelBuilder.Entity("WorkOffice.Domain.Entities.AuditTrail", b =>
-
                 {
                     b.Property<Guid>("AuditTrailId")
                         .ValueGeneratedOnAdd()
@@ -460,6 +153,34 @@ namespace WorkOffice.Domain.Migrations
                     b.HasIndex("StructureDefinitionId");
 
                     b.ToTable("CompanyStructures");
+                });
+
+            modelBuilder.Entity("WorkOffice.Domain.Entities.Consultant", b =>
+                {
+                    b.Property<Guid>("ConsultantId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ClientId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("text");
+
+                    b.Property<DateTimeOffset>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("ConsultantId");
+
+                    b.HasIndex("ConsultantId");
+
+                    b.ToTable("Consultants");
                 });
 
             modelBuilder.Entity("WorkOffice.Domain.Entities.Country", b =>
@@ -597,6 +318,34 @@ namespace WorkOffice.Domain.Migrations
                     b.ToTable("GeneralInformations");
                 });
 
+            modelBuilder.Entity("WorkOffice.Domain.Entities.Hospital", b =>
+                {
+                    b.Property<Guid>("HospitalId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ClientId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("text");
+
+                    b.Property<DateTimeOffset>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("HospitalId");
+
+                    b.HasIndex("HospitalId");
+
+                    b.ToTable("Hospitals");
+                });
+
             modelBuilder.Entity("WorkOffice.Domain.Entities.Location", b =>
                 {
                     b.Property<Guid>("LocationId")
@@ -644,6 +393,34 @@ namespace WorkOffice.Domain.Migrations
                     b.ToTable("Locations");
                 });
 
+            modelBuilder.Entity("WorkOffice.Domain.Entities.NHSActivity", b =>
+                {
+                    b.Property<Guid>("NHSActivityId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ClientId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("text");
+
+                    b.Property<DateTimeOffset>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("NHSActivityId");
+
+                    b.HasIndex("NHSActivityId");
+
+                    b.ToTable("NHSActivities");
+                });
+
             modelBuilder.Entity("WorkOffice.Domain.Entities.Notification", b =>
                 {
                     b.Property<Guid>("NotificationId")
@@ -677,6 +454,93 @@ namespace WorkOffice.Domain.Migrations
                     b.HasKey("NotificationId");
 
                     b.ToTable("Notifications");
+                });
+
+            modelBuilder.Entity("WorkOffice.Domain.Entities.PathwayStatus", b =>
+                {
+                    b.Property<Guid>("PathwayStatusId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("AllowClosed")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid>("ClientId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("text");
+
+                    b.Property<DateTimeOffset>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("PathwayStatusId");
+
+                    b.HasIndex("PathwayStatusId");
+
+                    b.ToTable("PathwayStatuses");
+                });
+
+            modelBuilder.Entity("WorkOffice.Domain.Entities.RTT", b =>
+                {
+                    b.Property<Guid>("RTTId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ClientId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("text");
+
+                    b.Property<DateTimeOffset>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("RTTId");
+
+                    b.HasIndex("RTTId");
+
+                    b.ToTable("RTTs");
+                });
+
+            modelBuilder.Entity("WorkOffice.Domain.Entities.Specialty", b =>
+                {
+                    b.Property<Guid>("SpecialtyId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ClientId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("text");
+
+                    b.Property<DateTimeOffset>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("SpecialtyId");
+
+                    b.HasIndex("SpecialtyId");
+
+                    b.ToTable("Specialties");
                 });
 
             modelBuilder.Entity("WorkOffice.Domain.Entities.State", b =>
@@ -898,6 +762,12 @@ namespace WorkOffice.Domain.Migrations
 
                     b.HasKey("UserId");
 
+                    b.HasIndex("Email");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("FirstName", "LastName");
+
                     b.ToTable("UserAccounts");
                 });
 
@@ -970,6 +840,8 @@ namespace WorkOffice.Domain.Migrations
                     b.HasKey("UserAccountRoleId");
 
                     b.HasIndex("UserAccountId");
+
+                    b.HasIndex("UserAccountRoleId");
 
                     b.HasIndex("UserRoleDefinitionId");
 
@@ -1140,6 +1012,62 @@ namespace WorkOffice.Domain.Migrations
                     b.HasKey("UserRoleDefinitionId");
 
                     b.ToTable("UserRoleDefinitions");
+                });
+
+            modelBuilder.Entity("WorkOffice.Domain.Entities.WaitingType", b =>
+                {
+                    b.Property<Guid>("WaitingTypeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ClientId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("text");
+
+                    b.Property<DateTimeOffset>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("WaitingTypeId");
+
+                    b.HasIndex("WaitingTypeId");
+
+                    b.ToTable("WaitingTypes");
+                });
+
+            modelBuilder.Entity("WorkOffice.Domain.Entities.Ward", b =>
+                {
+                    b.Property<Guid>("WardId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ClientId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("text");
+
+                    b.Property<DateTimeOffset>("CreatedOn")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("WardId");
+
+                    b.HasIndex("WardId");
+
+                    b.ToTable("Wards");
                 });
 
             modelBuilder.Entity("WorkOffice.Domain.Entities.CompanyStructure", b =>

@@ -42,6 +42,16 @@ namespace WorkOffice.Web
             services.AddScoped<IAdministrationService, AdministrationService>();
             services.AddScoped<IUserAuthorizationService, UserAuthorizationService>();
 
+            services.AddScoped<IAppTypeService, AppTypeService>();
+            services.AddScoped<IConsultantService, ConsultantService>();
+            services.AddScoped<IHospitalService, HospitalService>();
+            services.AddScoped<INHSActivityService, NHSActivityService>();
+            services.AddScoped<IPathwayStatusService, PathwayStatusService>();
+            services.AddScoped<IRTTService, RTTService>();
+            services.AddScoped<ISpecialtyService, SpecialtyService>();
+            services.AddScoped<IWaitingTypeService, WaitingTypeService>();
+            services.AddScoped<IWardService, WardService>();
+
             services.AddScoped<DataContext>();
 
             return services;

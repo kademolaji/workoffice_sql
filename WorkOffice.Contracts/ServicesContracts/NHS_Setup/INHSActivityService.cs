@@ -7,8 +7,8 @@ using WorkOffice.Contracts.Models;
 
 namespace WorkOffice.Contracts.ServicesContracts
 {
-    public interface ISpecialtyService
+    public interface INHSActivityService
     {
-        Task<ApiResponse<CreateResponse>> CreateSpecialty(SpecialtyViewModels model);
+        Task<ApiResponse<CreateResponse>> CreateActivity(NHSActivityViewModels model);
     }
 }

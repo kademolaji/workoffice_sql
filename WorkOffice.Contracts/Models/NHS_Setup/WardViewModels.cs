@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace WorkOffice.Contracts.Models.NHS_Setup
+namespace WorkOffice.Contracts.Models
 {
     public class WardViewModels
     {

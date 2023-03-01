@@ -3,10 +3,26 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WorkOffice.Domain.Migrations
 {
-    public partial class AdminMigration : Migration
+    public partial class AdminandNHSSetup : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "AppTypes",
+                columns: table => new
+                {
+                    AppTypeId = table.Column<Guid>(nullable: false),
+                    CreatedOn = table.Column<DateTimeOffset>(nullable: false),
+                    ClientId = table.Column<Guid>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    Code = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AppTypes", x => x.AppTypeId);
+                });
+
             migrationBuilder.CreateTable(
                 name: "AuditTrails",
                 columns: table => new
@@ -26,6 +42,22 @@ namespace WorkOffice.Domain.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AuditTrails", x => x.AuditTrailId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Consultants",
+                columns: table => new
+                {
+                    ConsultantId = table.Column<Guid>(nullable: false),
+                    CreatedOn = table.Column<DateTimeOffset>(nullable: false),
+                    ClientId = table.Column<Guid>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    Code = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Consultants", x => x.ConsultantId);
                 });
 
             migrationBuilder.CreateTable(
@@ -96,6 +128,22 @@ namespace WorkOffice.Domain.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Hospitals",
+                columns: table => new
+                {
+                    HospitalId = table.Column<Guid>(nullable: false),
+                    CreatedOn = table.Column<DateTimeOffset>(nullable: false),
+                    ClientId = table.Column<Guid>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    Code = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Hospitals", x => x.HospitalId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Locations",
                 columns: table => new
                 {
@@ -119,6 +167,22 @@ namespace WorkOffice.Domain.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "NHSActivities",
+                columns: table => new
+                {
+                    NHSActivityId = table.Column<Guid>(nullable: false),
+                    CreatedOn = table.Column<DateTimeOffset>(nullable: false),
+                    ClientId = table.Column<Guid>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    Code = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_NHSActivities", x => x.NHSActivityId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Notifications",
                 columns: table => new
                 {
@@ -135,6 +199,55 @@ namespace WorkOffice.Domain.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Notifications", x => x.NotificationId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PathwayStatuses",
+                columns: table => new
+                {
+                    PathwayStatusId = table.Column<Guid>(nullable: false),
+                    CreatedOn = table.Column<DateTimeOffset>(nullable: false),
+                    ClientId = table.Column<Guid>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    Code = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true),
+                    AllowClosed = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PathwayStatuses", x => x.PathwayStatusId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RTTs",
+                columns: table => new
+                {
+                    RTTId = table.Column<Guid>(nullable: false),
+                    CreatedOn = table.Column<DateTimeOffset>(nullable: false),
+                    ClientId = table.Column<Guid>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    Code = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RTTs", x => x.RTTId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Specialties",
+                columns: table => new
+                {
+                    SpecialtyId = table.Column<Guid>(nullable: false),
+                    CreatedOn = table.Column<DateTimeOffset>(nullable: false),
+                    ClientId = table.Column<Guid>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    Code = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Specialties", x => x.SpecialtyId);
                 });
 
             migrationBuilder.CreateTable(
@@ -252,6 +365,38 @@ namespace WorkOffice.Domain.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserRoleDefinitions", x => x.UserRoleDefinitionId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "WaitingTypes",
+                columns: table => new
+                {
+                    WaitingTypeId = table.Column<Guid>(nullable: false),
+                    CreatedOn = table.Column<DateTimeOffset>(nullable: false),
+                    ClientId = table.Column<Guid>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    Code = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WaitingTypes", x => x.WaitingTypeId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Wards",
+                columns: table => new
+                {
+                    WardId = table.Column<Guid>(nullable: false),
+                    CreatedOn = table.Column<DateTimeOffset>(nullable: false),
+                    ClientId = table.Column<Guid>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    Code = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Wards", x => x.WardId);
                 });
 
             migrationBuilder.CreateTable(
@@ -481,14 +626,49 @@ namespace WorkOffice.Domain.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_AppTypes_AppTypeId",
+                table: "AppTypes",
+                column: "AppTypeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_CompanyStructures_StructureDefinitionId",
                 table: "CompanyStructures",
                 column: "StructureDefinitionId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Consultants_ConsultantId",
+                table: "Consultants",
+                column: "ConsultantId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Hospitals_HospitalId",
+                table: "Hospitals",
+                column: "HospitalId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_NHSActivities_NHSActivityId",
+                table: "NHSActivities",
+                column: "NHSActivityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PathwayStatuses_PathwayStatusId",
+                table: "PathwayStatuses",
+                column: "PathwayStatusId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_RefreshToken_UserAccountUserId",
                 table: "RefreshToken",
                 column: "UserAccountUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RTTs_RTTId",
+                table: "RTTs",
+                column: "RTTId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Specialties_SpecialtyId",
+                table: "Specialties",
+                column: "SpecialtyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_States_CountryId",
@@ -527,9 +707,29 @@ namespace WorkOffice.Domain.Migrations
                 column: "UserAccountId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_UserAccountRoles_UserAccountRoleId",
+                table: "UserAccountRoles",
+                column: "UserAccountRoleId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserAccountRoles_UserRoleDefinitionId",
                 table: "UserAccountRoles",
                 column: "UserRoleDefinitionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserAccounts_Email",
+                table: "UserAccounts",
+                column: "Email");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserAccounts_UserId",
+                table: "UserAccounts",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserAccounts_FirstName_LastName",
+                table: "UserAccounts",
+                columns: new[] { "FirstName", "LastName" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserActivities_UserActivityParentId",
@@ -545,12 +745,28 @@ namespace WorkOffice.Domain.Migrations
                 name: "IX_UserRoleActivities_UserRoleDefinitionId",
                 table: "UserRoleActivities",
                 column: "UserRoleDefinitionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WaitingTypes_WaitingTypeId",
+                table: "WaitingTypes",
+                column: "WaitingTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Wards_WardId",
+                table: "Wards",
+                column: "WardId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "AppTypes");
+
+            migrationBuilder.DropTable(
                 name: "AuditTrails");
+
+            migrationBuilder.DropTable(
+                name: "Consultants");
 
             migrationBuilder.DropTable(
                 name: "CustomIdentityFormatSettings");
@@ -559,13 +775,28 @@ namespace WorkOffice.Domain.Migrations
                 name: "GeneralInformations");
 
             migrationBuilder.DropTable(
+                name: "Hospitals");
+
+            migrationBuilder.DropTable(
                 name: "Locations");
+
+            migrationBuilder.DropTable(
+                name: "NHSActivities");
 
             migrationBuilder.DropTable(
                 name: "Notifications");
 
             migrationBuilder.DropTable(
+                name: "PathwayStatuses");
+
+            migrationBuilder.DropTable(
                 name: "RefreshToken");
+
+            migrationBuilder.DropTable(
+                name: "RTTs");
+
+            migrationBuilder.DropTable(
+                name: "Specialties");
 
             migrationBuilder.DropTable(
                 name: "States");
@@ -584,6 +815,12 @@ namespace WorkOffice.Domain.Migrations
 
             migrationBuilder.DropTable(
                 name: "UserRoleActivities");
+
+            migrationBuilder.DropTable(
+                name: "WaitingTypes");
+
+            migrationBuilder.DropTable(
+                name: "Wards");
 
             migrationBuilder.DropTable(
                 name: "Countries");

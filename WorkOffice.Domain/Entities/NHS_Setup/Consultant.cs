@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 
-namespace WorkOffice.Domain.Entities.NHS_Setup
+namespace WorkOffice.Domain.Entities
 {
     public class Consultant : Entity
     {
