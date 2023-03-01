@@ -147,6 +147,9 @@ module.exports = {
   'menu.layouts': 'Layouts',
   'menu.validations': 'Validations',
   'menu.wizard': 'Wizard',
+  'menu.admin': 'Admin',
+  'menu.admin-settings': 'Admin Settings',
+  'menu.user-role': 'User Role',
 
   /* 04.Dashboards */
   'dashboards.pending-orders': 'Pending Orders',
