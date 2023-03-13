@@ -54,7 +54,18 @@ namespace WorkOffice.Web.Controllers
                     var token = _jwtTokenGenerator.CreateToken(apiResponse.ResponseType.Entity);
                     apiResponse.ResponseType.Entity.Token = token;
                 }
-                return Ok(apiResponse.ResponseType);
+                if (apiResponse.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    return Ok(apiResponse.ResponseType);
+                }
+                else if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    return BadRequest(apiResponse.ResponseType);
+                }
+                else
+                {
+                    return Unauthorized(apiResponse.ResponseType);
+                }
             }
             catch (Exception ex)
             {
@@ -78,6 +89,10 @@ namespace WorkOffice.Web.Controllers
                     var token = _jwtTokenGenerator.CreateToken(apiResponse.ResponseType.Entity);
                     apiResponse.ResponseType.Entity.Token = token;
                 }
+                if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    return BadRequest(apiResponse.ResponseType);
+                }
                 return Ok(apiResponse.ResponseType);
             }
             catch (Exception ex)
@@ -96,6 +111,10 @@ namespace WorkOffice.Web.Controllers
             try
             {
                 var apiResponse = await _userAccountService.CreateAdminUser(model, Request.Headers["origin"]);
+                if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    return BadRequest(apiResponse.ResponseType);
+                }
                 return Ok(apiResponse.ResponseType);
             }
             catch (Exception ex)
@@ -114,6 +133,10 @@ namespace WorkOffice.Web.Controllers
             try
             {
                 var apiResponse = await _userAccountService.UpdateUser(model);
+                if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    return BadRequest(apiResponse.ResponseType);
+                }
                 return Ok(apiResponse.ResponseType);
             }
             catch (Exception ex)
@@ -132,6 +155,10 @@ namespace WorkOffice.Web.Controllers
             try
             {
                 var apiResponse = await _userAccountService.ChangePassword(model);
+                if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    return BadRequest(apiResponse.ResponseType);
+                }
                 return Ok(apiResponse.ResponseType);
             }
             catch (Exception ex)
@@ -148,12 +175,16 @@ namespace WorkOffice.Web.Controllers
             {
                 var refreshToken = Request.Cookies["refreshToken"];
                 var apiResponse = await _userAccountService.RefreshToken(refreshToken, ipAddress());
-              
+
                 if (apiResponse.ResponseType.Entity != null)
                 {
                     setTokenCookie(apiResponse.ResponseType.Entity.RefreshToken);
                     var token = _jwtTokenGenerator.CreateToken(apiResponse.ResponseType.Entity);
                     apiResponse.ResponseType.Entity.Token = token;
+                }
+                if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    return BadRequest(apiResponse.ResponseType);
                 }
                 return Ok(apiResponse.ResponseType);
             }
@@ -209,6 +240,10 @@ namespace WorkOffice.Web.Controllers
             try
             {
                 var apiResponse = await _userAccountService.ForgotPassword(model, Request.Headers["origin"]);
+                if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    return BadRequest(apiResponse.ResponseType);
+                }
                 return Ok(apiResponse.ResponseType);
             }
             catch (Exception ex)
@@ -224,7 +259,11 @@ namespace WorkOffice.Web.Controllers
             try
             {
                 var apiResponse = await _userAccountService.ResetPassword(model);
-              
+
+                if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    return BadRequest(apiResponse.ResponseType);
+                }
                 return Ok(apiResponse.ResponseType);
             }
             catch (Exception ex)
@@ -240,8 +279,8 @@ namespace WorkOffice.Web.Controllers
             try
             {
                 var apiResponse = await _userAccountService.ValidateResetToken(model);
-               
-                return Ok(new { status = apiResponse.ResponseType.Status,  message = apiResponse.ResponseType.Message });
+
+                return Ok(new { status = apiResponse.ResponseType.Status, message = apiResponse.ResponseType.Message });
             }
             catch (Exception ex)
             {
@@ -258,6 +297,10 @@ namespace WorkOffice.Web.Controllers
                 var userId = Guid.Empty;
                 var userIdExist = Guid.TryParse(requestUserId, out userId);
                 var apiResponse = await _userAccountService.GetUserById(userId);
+                if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    return BadRequest(apiResponse.ResponseType);
+                }
                 return Ok(apiResponse.ResponseType);
             }
             catch (Exception ex)
@@ -275,6 +318,10 @@ namespace WorkOffice.Web.Controllers
                 var userId = Guid.Empty;
                 var userIdExist = Guid.TryParse(requestUserId, out userId);
                 var apiResponse = await _userAccountService.GetUserAccountById(userId);
+                if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    return BadRequest(apiResponse.ResponseType);
+                }
                 return Ok(apiResponse.ResponseType);
             }
             catch (Exception ex)
@@ -290,6 +337,10 @@ namespace WorkOffice.Web.Controllers
             try
             {
                 var apiResponse = await _userAccountService.GetAllUserAccounts(options);
+                if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    return BadRequest(apiResponse.ResponseType);
+                }
                 return Ok(apiResponse.ResponseType);
             }
             catch (Exception ex)
@@ -310,6 +361,10 @@ namespace WorkOffice.Web.Controllers
                 var loggedInUser = _httpAccessorService.GetCurrentUserId();
                 var apiResponse = await _userAccountService.DisableEnableUser(id, loggedInUser.ToString());
 
+                if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    return BadRequest(apiResponse.ResponseType);
+                }
                 return Ok(apiResponse.ResponseType);
             }
             catch (Exception ex)

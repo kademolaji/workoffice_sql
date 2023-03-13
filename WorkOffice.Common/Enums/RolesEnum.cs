@@ -6,8 +6,9 @@ namespace WorkOffice.Common.Enums
 {
     public enum RolesEnum
     {
-        Volunteer,
-        Organization,
-        Admin
+        All,
+        Admin,
+        Doctor,
+        Patient,
     }
 }
