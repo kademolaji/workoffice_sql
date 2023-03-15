@@ -6,7 +6,7 @@ namespace WorkOffice.Contracts.Models
 {
     public class StructureDefinitionModel 
     {
-        public Guid StructureDefinitionId { get; set; }
+        public string StructureDefinitionId { get; set; }
         public string Definition { get; set; }
         public string Description { get; set; }
         public int Level { get; set; }

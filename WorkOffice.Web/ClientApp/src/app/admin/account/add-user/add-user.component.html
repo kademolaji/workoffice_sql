@@ -1,0 +1,126 @@
+<section class="content">
+  <div class="content-block">
+    <div class="block-header">
+      <!-- breadcrumb -->
+      <app-breadcrumb [title]="'Add new user'" [items]="['Add Users']" [active_item]="'Add User'"></app-breadcrumb>
+    </div>
+    <div class="row clearfix">
+      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="card">
+          <div class="header">
+            <h2><strong> Add New User</strong></h2>
+
+          </div>
+          <div class="body">
+            <form class="m-4" [formGroup]="addUserForm" (ngSubmit)="onSubmit()">
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>First name</mat-label>
+                    <input matInput formControlName="firstName" required>
+                    <mat-error *ngIf="addUserForm.get('firstName')?.hasError('required')">
+                      First name is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Last name</mat-label>
+                    <input matInput formControlName="lastName">
+                    <mat-error *ngIf="addUserForm.get('lastName')?.hasError('required')">
+                      First name is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Email</mat-label>
+                    <input matInput formControlName="email" required>
+                    <mat-error *ngIf="addUserForm.get('email')?.hasError('email') && addUserForm.get('email')?.touched">
+                      Please enter a valid email address
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Select Country</mat-label>
+                    <mat-select formControlName="country" required>
+                      <mat-option [value]="'1'">
+                        Nigeria
+                      </mat-option>
+                      <mat-option [value]="'2'">
+                        Ghana
+                      </mat-option>
+                      <mat-option [value]="'3'">
+                        England
+                      </mat-option>
+                      <mat-option [value]="'4'">
+                        Uganda
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="addUserForm.get('country')?.hasError('required')">
+                      Select country
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Password</mat-label>
+                    <input matInput formControlName="password" type="password" required>
+                    <mat-error *ngIf="addUserForm.get('password')?.hasError('required')">
+                      password is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Re-Enter Password</mat-label>
+                    <input matInput formControlName="confirmPassword" type="password" required>
+                    <mat-error *ngIf="addUserForm.get('confirmPassword')?.hasError('required')">
+                      Re-Enter password is required
+                    </mat-error>
+                    <mat-error *ngIf="addUserForm.get('confirmPassword')?.hasError('mustMatch')">
+                      Passwords must match
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Select Role</mat-label>
+                    <mat-select formControlName="userRole" required>
+                      <mat-option [value]="'Admin'">
+                        Admin
+                      </mat-option>
+                      <mat-option [value]="'Doctor'">
+                        Doctor
+                      </mat-option>
+                      <mat-option [value]="'Patient'">
+                        Patient
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="addUserForm.get('userRole')?.hasError('required')">
+                      Select country
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-3">
+                  <button class="btn-space" [class.auth-spinner]="loading" [disabled]="loading" [disabled]="!addUserForm.valid " mat-raised-button
+                    color="primary">Submit</button>
+                  <button type="button" (click)="cancelForm()" mat-raised-button color="warn">Cancel</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WorkOffice.Common.Enums;
@@ -18,6 +19,7 @@ namespace H2RHRMS.Api.Controllers
     [Route("api/[controller]")]
     [ServiceFilter(typeof(LogUserActivity))]
     [ApiController]
+    [Authorize]
     public class StructureDefinitionController : ControllerBase
     {
         private readonly IStructureDefinitionService service;
@@ -59,21 +61,21 @@ namespace H2RHRMS.Api.Controllers
             {
                 model.ClientId = httpAccessorService.GetCurrentClientId();
                 var userId = httpAccessorService.GetCurrentUserId();
-                if (authorized.CanPerformActionOnResource(userId, userActivitiesList.CreateStructureDefinition, model.ClientId, UserActions.Add))
-                {
+                //if (authorized.CanPerformActionOnResource(userId, userActivitiesList.CreateStructureDefinition, model.ClientId, UserActions.Add))
+                //{
                     var apiResponse = await service.Create(model);
                     if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
                     {
                         return BadRequest(apiResponse.ResponseType);
                     }
                     return Ok(apiResponse.ResponseType);
-                }
+                //}
 
-                else
-                {
-                    return BadRequest(
-                       new { Status = false, Message = $"You do not have enough right to add structure definition" });
-                }
+                //else
+                //{
+                //    return BadRequest(
+                //       new { Status = false, Message = $"You do not have enough right to add structure definition" });
+                //}
             }
             catch (Exception ex)
             {
@@ -301,14 +303,14 @@ namespace H2RHRMS.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DeleteReply))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(DeleteReply))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(DeleteReply))]
-        public async Task<IActionResult> Delete(long structureDefinitionId)
+        public async Task<IActionResult> Delete(string structureDefinitionId)
         {
             try
             {
                 var clientId = httpAccessorService.GetCurrentClientId();
                 var userId = httpAccessorService.GetCurrentUserId();
-                if (authorized.CanPerformActionOnResource(userId, userActivitiesList.DeleteStructureDefinition, clientId, UserActions.Delete))
-                {
+                //if (authorized.CanPerformActionOnResource(userId, userActivitiesList.DeleteStructureDefinition, clientId, UserActions.Delete))
+                //{
                     var apiResponse = await service.Delete(structureDefinitionId);
                     if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
                     {
@@ -321,13 +323,13 @@ namespace H2RHRMS.Api.Controllers
                     }
 
                     return Ok(apiResponse.ResponseType);
-                }
+                //}
 
-                else
-                {
-                    return BadRequest(
-                       new { Status = false, Message = $"You do not have enough right to delete structure definition" });
-                }
+                //else
+                //{
+                //    return BadRequest(
+                //       new { Status = false, Message = $"You do not have enough right to delete structure definition" });
+                //}
             }
             catch (Exception ex)
             {
@@ -347,7 +349,7 @@ namespace H2RHRMS.Api.Controllers
         /// <response code="200">Returns object of StructureDefinition</response>
         /// <response code="404">If object of StructureDefinition is null</response> 
         /// <response code="400">If an error occur or invalid request payload</response> 
-        [HttpDelete]
+        [HttpPost]
         [Route("MultipleDelete")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DeleteReply))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(DeleteReply))]
@@ -358,8 +360,8 @@ namespace H2RHRMS.Api.Controllers
             {
                 var clientId = httpAccessorService.GetCurrentClientId();
                 var userId = httpAccessorService.GetCurrentUserId();
-                if (authorized.CanPerformActionOnResource(userId, userActivitiesList.DeleteStructureDefinition, clientId, UserActions.Delete))
-                {
+                //if (authorized.CanPerformActionOnResource(userId, userActivitiesList.DeleteStructureDefinition, clientId, UserActions.Delete))
+                //{
                     var apiResponse = await service.MultipleDelete(model);
                     if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
                     {
@@ -372,12 +374,12 @@ namespace H2RHRMS.Api.Controllers
                     }
 
                     return Ok(apiResponse.ResponseType);
-                }
-                else
-                {
-                    return BadRequest(
-                       new { Status = false, Message = $"You do not have enough right to delete structure definition" });
-                }
+                //}
+                //else
+                //{
+                //    return BadRequest(
+                //       new { Status = false, Message = $"You do not have enough right to delete structure definition" });
+                //}
             }
             catch (Exception ex)
             {

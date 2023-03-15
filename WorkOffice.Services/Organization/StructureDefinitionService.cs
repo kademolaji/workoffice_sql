@@ -30,7 +30,10 @@ namespace WorkOffice.Services
         {
             try
             {
-                if (model.StructureDefinitionId != Guid.Empty)
+                Guid structureDefinitionId = Guid.Empty;
+
+                var idExist = Guid.TryParse(model.StructureDefinitionId, out structureDefinitionId);
+                if (structureDefinitionId != Guid.Empty)
                 {
                     return await Update(model);
                 }
@@ -107,6 +110,10 @@ namespace WorkOffice.Services
         {
             try
             {
+                Guid structureDefinitionId = Guid.Empty;
+
+                var idExist = Guid.TryParse(model.StructureDefinitionId, out structureDefinitionId);
+
                 if (string.IsNullOrEmpty(model.Definition))
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Definition is required." }, IsSuccess = false };
@@ -120,12 +127,12 @@ namespace WorkOffice.Services
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Request is not coming from a valid client" }, IsSuccess = false };
                 }
                
-                var existingDefinition = context.StructureDefinitions.Any(x => x.Definition == model.Definition && x.StructureDefinitionId != model.StructureDefinitionId && x.ClientId == model.ClientId);
+                var existingDefinition = context.StructureDefinitions.Any(x => x.Definition == model.Definition && x.StructureDefinitionId != structureDefinitionId && x.ClientId == model.ClientId);
                 if (existingDefinition)
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Another Structure Definition already exists with the given definition" }, IsSuccess = false };
                 }
-                var isLevelExist = await context.StructureDefinitions.AnyAsync(x => x.Level == model.Level && x.StructureDefinitionId != model.StructureDefinitionId && x.ClientId == model.ClientId);
+                var isLevelExist = await context.StructureDefinitions.AnyAsync(x => x.Level == model.Level && x.StructureDefinitionId != structureDefinitionId && x.ClientId == model.ClientId);
 
                 if (string.IsNullOrEmpty(model.Definition))
                 {
@@ -134,7 +141,7 @@ namespace WorkOffice.Services
 
                 var apiResponse = new ApiResponse<CreateResponse>();
                 bool result = false;
-                var entity = await context.StructureDefinitions.FindAsync(model.StructureDefinitionId);
+                var entity = await context.StructureDefinitions.FindAsync(structureDefinitionId);
                 if (entity == null)
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Record does not exist." }, IsSuccess = false };
@@ -252,18 +259,21 @@ namespace WorkOffice.Services
             }
         }
 
-        public async Task<ApiResponse<DeleteReply>> Delete(long structureDefinitionId)
+        public async Task<ApiResponse<DeleteReply>> Delete(string structureDefinitionId)
         {
             try
             {
-                if (structureDefinitionId <= 0)
+                Guid newStructureDefinitionId = Guid.Empty;
+
+                var idExist = Guid.TryParse(structureDefinitionId, out newStructureDefinitionId);
+                if (newStructureDefinitionId == Guid.Empty)
                 {
                     return new ApiResponse<DeleteReply>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new DeleteReply { Status = false, Message = "StructureDefinitionId is required." }, IsSuccess = false };
                 }
 
                 var apiResponse = new ApiResponse<DeleteReply>();
 
-                var result = context.StructureDefinitions.Find(structureDefinitionId);
+                var result = context.StructureDefinitions.Find(newStructureDefinitionId);
 
                 if (result == null)
                 {
@@ -283,7 +293,7 @@ namespace WorkOffice.Services
                 apiResponse.ResponseType = response;
 
                 var details = $"Deleted Structure Definition: Definition = {result.Definition}, Description = {result.Description}, Level = {result.Level} ";
-                auditTrail.SaveAuditTrail(details, "Structure Definition", "Delete");
+                await auditTrail.SaveAuditTrail(details, "Structure Definition", "Delete");
 
                 return apiResponse;
             }
@@ -306,7 +316,9 @@ namespace WorkOffice.Services
 
                 foreach (var item in model.targetIds)
                 {
-                    var data = await context.StructureDefinitions.FindAsync(item);
+                    Guid newStructureDefinitionId = Guid.Empty;
+                    var idExist = Guid.TryParse(item, out newStructureDefinitionId);
+                    var data = await context.StructureDefinitions.FindAsync(newStructureDefinitionId);
                     if (data != null)
                     {
                         data.IsDeleted = true;
@@ -348,7 +360,7 @@ namespace WorkOffice.Services
                                         where a.ClientId == clientId && a.IsDeleted == false
                                         select new StructureDefinitionModel
                                         {
-                                            StructureDefinitionId = a.StructureDefinitionId,
+                                            StructureDefinitionId = a.StructureDefinitionId.ToString(),
                                             Level = a.Level,
                                             Definition = a.Definition,
                                             Description = a.Description

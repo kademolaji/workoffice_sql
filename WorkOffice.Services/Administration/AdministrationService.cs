@@ -236,8 +236,10 @@ namespace WorkOffice.Services
                 var apiResponse = new ApiResponse<DeleteReply>();
                 foreach (var item in model.targetIds)
                 {
-                    var user = context.UserRoleDefinitions.Find(item);
-                    var activities = context.UserRoleActivities.Where(x => x.UserRoleDefinitionId == item).ToList();
+                    Guid newId = Guid.Empty;
+                    var idExist = Guid.TryParse(item, out newId);
+                    var user = context.UserRoleDefinitions.Find(newId);
+                    var activities = context.UserRoleActivities.Where(x => x.UserRoleDefinitionId == newId).ToList();
                     if (user != null)
                     {
                         user.IsDeleted = true;

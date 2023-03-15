@@ -1,4 +1,5 @@
-﻿using WorkOffice.Contracts.Models;
+﻿using System;
+using WorkOffice.Contracts.Models;
 using WorkOffice.Domain.Entities;
 
 namespace WorkOffice.Contracts.Mappings
@@ -9,7 +10,7 @@ namespace WorkOffice.Contracts.Mappings
         {
             return new T
             {
-                StructureDefinitionId = entity.StructureDefinitionId,
+                StructureDefinitionId = entity.StructureDefinitionId.ToString(),
                 Definition = entity.Definition,
                 Description = entity.Description,
                 Level = entity.Level,
@@ -21,7 +22,6 @@ namespace WorkOffice.Contracts.Mappings
         {
             return new T
             {
-                StructureDefinitionId = entity.StructureDefinitionId,
                 Definition = entity.Definition,
                 Description = entity.Description,
                 Level = entity.Level,

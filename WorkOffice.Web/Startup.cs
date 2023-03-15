@@ -102,6 +102,10 @@ namespace WorkOffice.Web
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
+            app.UseCors(x => x
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader());
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
@@ -109,7 +113,8 @@ namespace WorkOffice.Web
                 c.RoutePrefix = "docs";
             });
             app.UseRouting();
-
+            app.UseAuthentication();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

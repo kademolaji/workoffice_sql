@@ -798,14 +798,15 @@ namespace WorkOffice.Services
                 var query = _context.UserAccounts.Select(u => new UserAccountModel
                 {
                     UserId = u.UserId,
-                    //FirstName = u.FirstName,
-                    //LastName = u.LastName,
-                    //Email = u.Email,
-                    //ProfilePicture = u.ProfilePicture,
-                    //Country = u.Country,
-                    //Biography = u.Biography,
-                    //UserRole = (RolesEnum)u.RoleId,
-                    //Status = u.Disabled
+                    CustomUserCode = u.CustomUserCode,
+                    FirstName = u.FirstName,
+                    LastName = u.LastName,
+                    Email = u.Email,
+                    ProfilePicture = u.ProfilePicture,
+                    Country = u.Country,
+                    Biography = u.Biography,
+                    Role = u.RoleId.ToString(),
+                    Status = u.Disabled ? "Inactive" : "Active"
                 });
 
                 //if (!string.IsNullOrEmpty(options.Parameter.SearchQuery))

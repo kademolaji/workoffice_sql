@@ -1,0 +1,63 @@
+<section class="content">
+  <div class="content-block">
+    <div class="block-header">
+      <!-- breadcrumb -->
+      <app-breadcrumb *ngIf="isAddMode" [title]="'Add Company Structure Definition'" [items]="['Company Structure Definition']" [active_item]="'Company Structure Definition'"></app-breadcrumb>
+      <app-breadcrumb *ngIf="!isAddMode" [title]="'Edit Company Structure Definition'" [items]="['Company Structure Definition']" [active_item]="'Edit Company Structure Definition'"></app-breadcrumb>
+
+    </div>
+    <div class="row clearfix">
+      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="card">
+          <div class="header">
+            <h2 *ngIf="isAddMode"><strong> Add New Company Structure Definition</strong></h2>
+            <h2 *ngIf="!isAddMode"><strong> Edit Company Structure Definition</strong></h2>
+          </div>
+          <div class="body">
+            <form class="m-4" [formGroup]="structureDefinitionForm" (ngSubmit)="onSubmit()">
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Definition</mat-label>
+                    <input matInput formControlName="definition" required>
+                    <mat-error *ngIf="structureDefinitionForm.get('definition')?.hasError('required')">
+                      Definition is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Description</mat-label>
+                    <input matInput formControlName="description">
+                    <mat-error *ngIf="structureDefinitionForm.get('description')?.hasError('required')">
+                      Description is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Level</mat-label>
+                    <input type="number" matInput formControlName="level" required>
+                    <mat-error *ngIf="structureDefinitionForm.get('level')?.hasError('required')">
+                      Level is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-3">
+                  <button class="btn-space" [class.auth-spinner]="loading" [disabled]="loading" [disabled]="!structureDefinitionForm.valid " mat-raised-button
+                    color="primary">Submit</button>
+                  <button type="button" (click)="cancelForm()" mat-raised-button color="warn">Cancel</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

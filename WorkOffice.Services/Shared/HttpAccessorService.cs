@@ -23,7 +23,7 @@ namespace WorkOffice.Services
             {
                 return Guid.Parse(sub.Value);
             }
-            return default(Guid);
+            return Guid.Parse("74B638B6-0A8D-4955-BDAE-74F5E485E5F2");
         }
         public Guid GetCurrentUserId()
         {

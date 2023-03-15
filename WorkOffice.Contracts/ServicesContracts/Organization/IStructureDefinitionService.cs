@@ -11,7 +11,7 @@ namespace WorkOffice.Contracts.ServicesContracts
         Task<ApiResponse<CreateResponse>> Create(StructureDefinitionModel model);
         Task<ApiResponse<GetResponse<StructureDefinitionModel>>> Get(Guid structureDefinitionId, Guid clientId);
         Task<ApiResponse<GetResponse<List<StructureDefinitionModel>>>> GetList(Guid clientId, int pageNumber = 1, int pageSize = 10);
-        Task<ApiResponse<DeleteReply>> Delete(long structureDefinitionId);
+        Task<ApiResponse<DeleteReply>> Delete(string structureDefinitionId);
         Task<ApiResponse<DeleteReply>> MultipleDelete(MultipleDeleteModel model);
         Task<ApiResponse<GetResponse<byte[]>>> Export(Guid clientId);
         Task<ApiResponse<CreateResponse>> Upload(byte[] record, Guid clientId);

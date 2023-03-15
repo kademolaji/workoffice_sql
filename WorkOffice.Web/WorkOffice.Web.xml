@@ -551,7 +551,7 @@
              <response code="404">If object of StructureDefinition is null</response> 
              <response code="400">If an error occur or invalid request payload</response> 
         </member>
-        <member name="M:H2RHRMS.Api.Controllers.StructureDefinitionController.Delete(System.Int64)">
+        <member name="M:H2RHRMS.Api.Controllers.StructureDefinitionController.Delete(System.String)">
              <summary>
              Delete StructureDefinition
              </summary>
