@@ -61,12 +61,12 @@ export class StructureDefinitionService extends UnsubscribeOnDestroyAdapter {
   }
   deleteStructureDefinition(id: string) {
     return this.httpClient.delete<DeleteReply>(
-      `api/structuredefinition/Delete/${id}`
+      `api/structuredefinition/Delete?=structureDefinitionId=${id}`
     );
   }
   deleteMultipleStructureDefinition(targetIds: string[]) {
     return this.httpClient.post<DeleteReply>(
-      `api/structuredefinition/MultipleDelete`, targetIds
+      `api/structuredefinition/MultipleDelete`, {targetIds: targetIds}
     );
   }
 }

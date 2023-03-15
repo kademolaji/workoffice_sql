@@ -20,6 +20,6 @@ export class DeleteStructureDefinitionDialogComponent {
     this.dialogRef.close();
   }
   confirmDelete(): void {
-    this.structureDefinitionService.deleteStructureDefinition(this.data.structureDefinitionId);
+    this.structureDefinitionService.deleteStructureDefinition(this.data.structureDefinitionId).subscribe();
   }
 }

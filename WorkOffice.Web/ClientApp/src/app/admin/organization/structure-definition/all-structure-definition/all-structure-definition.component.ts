@@ -87,6 +87,7 @@ deleteItem(row: StructureDefinitionModel) {
         if (this.exampleDatabase) {
           this.exampleDatabase.dataChange.value.splice(foundIndex, 1);
         }
+        this.refresh();
         this.refreshTable();
         this.showNotification(
           'snackbar-danger',
@@ -118,23 +119,27 @@ masterToggle() {
 }
 removeSelectedRows() {
   const totalSelect = this.selection.selected.length;
-  this.selection.selected.forEach((item) => {
-    const index = this.dataSource?.renderedData.findIndex((d) => d === item);
-    // console.log(this.dataSource.renderedData.findIndex((d) => d === item));
-    if (index !== undefined) {
-      if (this.exampleDatabase) {
-        this.exampleDatabase.dataChange.value.splice(index, 1);
+  const targetIds = this.selection.selected.map((data)=> data.structureDefinitionId);
+  this.subs.sink = this.structureDefinitionService
+  .deleteMultipleStructureDefinition(targetIds)
+  .subscribe({
+    next: (res) => {
+      if (res.status) {
+        this.refresh();
+        this.refreshTable();
+        this.selection = new SelectionModel<StructureDefinitionModel>(true, []);
+        this.showNotification(
+          'snackbar-danger',
+          totalSelect + ' Record Delete Successfully...!!!',
+          'top', 'right'
+        );
       }
-      this.refreshTable();
-      this.selection = new SelectionModel<StructureDefinitionModel>(true, []);
-    }
+    },
+    error: (error) => {
+      this.showNotification('snackbar-danger', error, 'top', 'right');
+
+    },
   });
-  this.showNotification(
-    'snackbar-danger',
-    totalSelect + ' Record Delete Successfully...!!!',
-    'bottom',
-    'center'
-  );
 }
 public loadData() {
   this.exampleDatabase = new StructureDefinitionService(this.httpClient);
