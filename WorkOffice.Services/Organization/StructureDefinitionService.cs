@@ -126,7 +126,7 @@ namespace WorkOffice.Services
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Request is not coming from a valid client" }, IsSuccess = false };
                 }
-               
+
                 var existingDefinition = context.StructureDefinitions.Any(x => x.Definition == model.Definition && x.StructureDefinitionId != structureDefinitionId && x.ClientId == model.ClientId);
                 if (existingDefinition)
                 {
@@ -188,26 +188,50 @@ namespace WorkOffice.Services
             }
         }
 
-        public async Task<ApiResponse<GetResponse<List<StructureDefinitionModel>>>> GetList(Guid clientId, int pageNumber = 1, int pageSize = 10)
+        public async Task<ApiResponse<SearchReply<StructureDefinitionModel>>> GetList(SearchCall<SearchParameter> options, Guid clientId)
         {
+            int count = 0;
+            int pageNumber = options.From > 0 ? options.From : 0;
+            int pageSize = options.PageSize > 0 ? options.PageSize : 10;
+            string sortOrder = string.IsNullOrEmpty(options.SortOrder) ? "asc" : options.SortOrder;
+            string sortField = string.IsNullOrEmpty(options.SortField) ? "definition" : options.SortField;
+
             try
             {
-                var apiResponse = new ApiResponse<GetResponse<List<StructureDefinitionModel>>>();
+                var apiResponse = new ApiResponse<SearchReply<StructureDefinitionModel>>();
 
-                IQueryable<StructureDefinition> query = context.StructureDefinitions.Where(x=>x.ClientId == clientId);
-                int offset = (pageNumber - 1) * pageSize;
-                var items = await query.Skip(offset).Take(pageSize).ToListAsync();
-                if (items.Count <= 0)
+
+                IQueryable<StructureDefinition> query = context.StructureDefinitions.Where(x => x.ClientId == clientId);
+                int offset = (pageNumber) * pageSize;
+
+                if (!string.IsNullOrEmpty(options.Parameter.SearchQuery))
                 {
-                    return new ApiResponse<GetResponse<List<StructureDefinitionModel>>>() { StatusCode = System.Net.HttpStatusCode.NotFound, ResponseType = new GetResponse<List<StructureDefinitionModel>>() { Status = false, Message = "No record found" }, IsSuccess = false };
+                    query = query.Where(x => x.Definition.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())
+                    || x.Description.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower()));
                 }
-
-
-                var response = new GetResponse<List<StructureDefinitionModel>>()
+                switch (sortField)
                 {
-                    Status = true,
-                    Entity = items.Select(x => x.ToModel<StructureDefinitionModel>()).ToList(),
-                    Message = ""
+                    case "definition":
+                        query = sortOrder == "asc" ? query.OrderBy(s => s.Definition) : query.OrderByDescending(s => s.Definition);
+                        break;
+                    case "description":
+                        query = sortOrder == "asc" ? query.OrderBy(s => s.Description) : query.OrderByDescending(s => s.Description);
+                        break;
+                    case "level":
+                        query = sortOrder == "asc" ? query.OrderBy(s => s.Level) : query.OrderByDescending(s => s.Level);
+                        break;
+                    default:
+                        query = query.OrderBy(s => s.Definition);
+                        break;
+                }
+                count = query.Count();
+                var items = await query.Skip(offset).Take(pageSize).ToListAsync();
+
+
+                var response = new SearchReply<StructureDefinitionModel>()
+                {
+                    TotalCount = count,
+                    Result = items.Select(x => x.ToModel<StructureDefinitionModel>()).ToList(),
                 };
 
                 apiResponse.StatusCode = System.Net.HttpStatusCode.OK;
@@ -218,7 +242,7 @@ namespace WorkOffice.Services
             }
             catch (Exception ex)
             {
-                return new ApiResponse<GetResponse<List<StructureDefinitionModel>>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new GetResponse<List<StructureDefinitionModel>>() { Status = false, Message = $"Error encountered {ex.Message}" }, IsSuccess = false };
+                return new ApiResponse<SearchReply<StructureDefinitionModel>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new SearchReply<StructureDefinitionModel>() { TotalCount = count }, IsSuccess = false };
             }
         }
 
@@ -233,7 +257,7 @@ namespace WorkOffice.Services
 
                 var apiResponse = new ApiResponse<GetResponse<StructureDefinitionModel>>();
 
-                var result = await context.StructureDefinitions.FirstOrDefaultAsync(x=>x.StructureDefinitionId == structureDefinitionId && x.ClientId == clientId);
+                var result = await context.StructureDefinitions.FirstOrDefaultAsync(x => x.StructureDefinitionId == structureDefinitionId && x.ClientId == clientId);
 
                 if (result == null)
                 {
@@ -403,7 +427,7 @@ namespace WorkOffice.Services
                 apiResponse.ResponseType = response;
 
                 var details = $"Downloaded Structure Definition: TotalCount {structures.Count} ";
-                await auditTrail .SaveAuditTrail(details, "Structure Definition", "Download");
+                await auditTrail.SaveAuditTrail(details, "Structure Definition", "Download");
 
                 return apiResponse;
             }
@@ -499,7 +523,7 @@ namespace WorkOffice.Services
                 apiResponse.ResponseType = response;
 
                 var details = $"Uploaded Structure Definition: TotalCount {structures.Count} ";
-               await auditTrail.SaveAuditTrail(details, "Structure Definition", "Upload");
+                await auditTrail.SaveAuditTrail(details, "Structure Definition", "Upload");
 
                 return apiResponse;
 

@@ -6,6 +6,9 @@ import {
   CreateResponse,
   DeleteReply,
   GetResponse,
+  SearchCall,
+  SearchParameter,
+  SearchReply,
 } from 'src/app/core/utilities/api-response';
 import { StructureDefinitionModel } from './structure-definition.model';
 @Injectable()
@@ -26,21 +29,11 @@ export class StructureDefinitionService extends UnsubscribeOnDestroyAdapter {
     return this.dialogData;
   }
 
-  getAllStructureDefinition(pageNumber: number, pageSize: number): void {
-    this.subs.sink = this.httpClient
-      .get<GetResponse<StructureDefinitionModel[]>>(
-        `api/structuredefinition/GetList?pageNumber=${pageNumber}&pageSize=${pageSize}`
-      )
-      .subscribe({
-        next: (data) => {
-          this.isTblLoading = false;
-          this.dataChange.next(data.entity);
-        },
-        error: (error: HttpErrorResponse) => {
-          this.isTblLoading = false;
-          console.log(error.name + ' ' + error.message);
-        },
-      });
+  getAllStructureDefinition(option: SearchCall<SearchParameter>) {
+   return this.httpClient
+      .post<SearchReply<StructureDefinitionModel[]>>(
+        `api/structuredefinition/GetList`, option
+      );
   }
 
   getStructureDefinitionById(id: string) {
@@ -61,7 +54,7 @@ export class StructureDefinitionService extends UnsubscribeOnDestroyAdapter {
   }
   deleteStructureDefinition(id: string) {
     return this.httpClient.delete<DeleteReply>(
-      `api/structuredefinition/Delete?=structureDefinitionId=${id}`
+      `api/structuredefinition/Delete?structureDefinitionId=${id}`
     );
   }
   deleteMultipleStructureDefinition(targetIds: string[]) {

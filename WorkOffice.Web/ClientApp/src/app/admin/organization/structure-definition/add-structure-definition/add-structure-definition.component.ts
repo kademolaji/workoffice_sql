@@ -98,7 +98,7 @@ export class AddStructureDefinitionComponent
               this.loading = false;
               this.showNotification(
                 'snackbar-success',
-                'Company structure definition added successfully...!!!',
+                res.message,
                 'top',
                 'right'
               );

@@ -5,3 +5,4 @@ export interface StructureDefinitionModel {
   description: string;
   level: number;
 }
+

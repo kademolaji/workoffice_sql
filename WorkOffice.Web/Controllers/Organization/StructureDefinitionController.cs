@@ -90,23 +90,22 @@ namespace H2RHRMS.Api.Controllers
         /// Sample request:
         ///
         /// </remarks>
-        /// <param name="pageNumber"></param>
-        /// <param name="pageSize"></param>
+        /// <param name="options"></param>
         /// <returns>List of StructureDefinition</returns>
         /// <response code="200">Returns list of StructureDefinition</response>
         /// <response code="404">If list of StructureDefinition is null</response> 
         /// <response code="400">If an error occur or invalid request payload</response> 
-        [HttpGet]
+        [HttpPost]
         [Route("GetList")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetResponse<List<StructureDefinitionModel>>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(GetResponse<ProducesResponseStub>))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(GetResponse<ProducesResponseStub>))]
-        public async Task<IActionResult> GetList(int pageNumber = 1, int pageSize = 10)
+        public async Task<IActionResult> GetList(SearchCall<SearchParameter> options)
         {
             try
             {
                 var clientId  = httpAccessorService.GetCurrentClientId();
-                var apiResponse = await service.GetList(clientId, pageNumber, pageSize);
+                var apiResponse = await service.GetList(options, clientId);
                 if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
                 {
                     return BadRequest(apiResponse.ResponseType);

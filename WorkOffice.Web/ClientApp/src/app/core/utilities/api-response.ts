@@ -6,9 +6,11 @@ export interface  SearchReply<T>{
 }
 
 export interface  SearchCall<T>{
-  PageSize: number;
-  From: number;
-  Parameter: T;
+  pageSize: number;
+  from: number;
+  parameter: T;
+  sortOrder: string;
+  sortField: string;
 }
 
 export interface  DeleteReply{
@@ -32,4 +34,8 @@ export interface  GetResponse<T>{
   status: boolean;
   entity: T;
   message: string;
+}
+
+export interface SearchParameter {
+  searchQuery: string;
 }

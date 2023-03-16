@@ -40,6 +40,8 @@ namespace WorkOffice.Contracts.ServicesContracts
     {
         public int PageSize { get; set; }
         public int From { get; set; }
+        public string SortOrder { get; set; }
+        public string SortField { get; set; }
         public T Parameter { get; set; }
     }
 
@@ -75,6 +77,11 @@ namespace WorkOffice.Contracts.ServicesContracts
         public bool Status { get; set; }
         public string DownloadUrl { get; set; }
         public string Message { get; set; }
+    }
+
+    public class SearchParameter
+    {
+        public string SearchQuery { get; set; }
     }
     public class ProducesResponseStub
     {

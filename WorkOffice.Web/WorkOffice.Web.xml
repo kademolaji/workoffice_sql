@@ -496,7 +496,7 @@
              <response code="201">StructureDefinition Created Successfully</response>
              <response code="400">If an error occur or invalid request payload</response>
         </member>
-        <member name="M:H2RHRMS.Api.Controllers.StructureDefinitionController.GetList(System.Int32,System.Int32)">
+        <member name="M:H2RHRMS.Api.Controllers.StructureDefinitionController.GetList(WorkOffice.Contracts.ServicesContracts.SearchCall{WorkOffice.Contracts.ServicesContracts.SearchParameter})">
              <summary>
              Get list of StructureDefinition
              </summary>
@@ -504,8 +504,7 @@
              Sample request:
             
              </remarks>
-             <param name="pageNumber"></param>
-             <param name="pageSize"></param>
+             <param name="options"></param>
              <returns>List of StructureDefinition</returns>
              <response code="200">Returns list of StructureDefinition</response>
              <response code="404">If list of StructureDefinition is null</response> 

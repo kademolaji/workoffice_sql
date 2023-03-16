@@ -48,19 +48,36 @@ namespace WorkOffice.Domain.Helpers
         public DbSet<WaitingType> WaitingTypes { get; set; }
         public DbSet<Ward> Wards { get; set; }
 
-      
-        
+
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<StructureDefinition>().HasIndex(x => x.Definition).IsUnique();
             // Here we create the indexes for each entity manually
-            
+
             modelBuilder.Entity<UserAccount>().HasIndex(u => new { u.UserId });
             modelBuilder.Entity<UserAccount>().HasIndex(u => new { u.Email });
             modelBuilder.Entity<UserAccount>().HasIndex(u => new { u.FirstName, u.LastName });
             modelBuilder.Entity<UserAccountRole>().HasIndex(ur => new { ur.UserAccountRoleId });
+            modelBuilder.Entity<Notification>().HasIndex(p => new { p.NotificationId });
+            modelBuilder.Entity<AuditTrail>().HasIndex(p => new { p.AuditTrailId });
+            modelBuilder.Entity<Location>().HasIndex(p => new { p.LocationId });
+            modelBuilder.Entity<GeneralInformation>().HasIndex(p => new { p.GeneralInformationId });
+            modelBuilder.Entity<CompanyStructure>().HasIndex(p => new { p.CompanyStructureId });
+            modelBuilder.Entity<StructureDefinition>().HasIndex(p => new { p.StructureDefinitionId });
+            modelBuilder.Entity<CustomIdentityFormatSetting>().HasIndex(p => new { p.CustomIdentityFormatSettingId });
+            modelBuilder.Entity<UserAccess>().HasIndex(p => new { p.UserAccessId });
+            modelBuilder.Entity<UserAccountAdditionalActivity>().HasIndex(p => new { p.UserAccountAdditionalActivityId });
+            modelBuilder.Entity<UserAccountSettings>().HasIndex(p => new { p.UserAccountSettingsId });
+            modelBuilder.Entity<UserActivity>().HasIndex(p => new { p.UserActivityId });
+            modelBuilder.Entity<UserActivityParent>().HasIndex(p => new { p.UserActivityParentId });
+            modelBuilder.Entity<UserRoleActivity>().HasIndex(p => new { p.UserRoleActivityId });
+            modelBuilder.Entity<UserRoleDefinition>().HasIndex(p => new { p.UserRoleDefinitionId });
+            modelBuilder.Entity<Country>().HasIndex(p => new { p.CountryId });
+            modelBuilder.Entity<State>().HasIndex(p => new { p.StateId });
+
+
             modelBuilder.Entity<NHSActivity>().HasIndex(ur => new { ur.NHSActivityId });
             modelBuilder.Entity<AppType>().HasIndex(ur => new { ur.AppTypeId });
             modelBuilder.Entity<Consultant>().HasIndex(ur => new { ur.ConsultantId });
@@ -77,8 +94,35 @@ namespace WorkOffice.Domain.Helpers
 
         private void FilterQuery(ModelBuilder builder)
         {
+            builder.Entity<Notification>().HasQueryFilter(p => !p.IsDeleted);
             builder.Entity<AuditTrail>().HasQueryFilter(p => !p.IsDeleted);
+            builder.Entity<Location>().HasQueryFilter(p => !p.IsDeleted);
+            builder.Entity<GeneralInformation>().HasQueryFilter(p => !p.IsDeleted);
+            builder.Entity<CompanyStructure>().HasQueryFilter(p => !p.IsDeleted);
             builder.Entity<StructureDefinition>().HasQueryFilter(p => !p.IsDeleted);
+            builder.Entity<CustomIdentityFormatSetting>().HasQueryFilter(p => !p.IsDeleted);
+            builder.Entity<UserAccount>().HasQueryFilter(p => !p.IsDeleted);
+            builder.Entity<UserAccess>().HasQueryFilter(p => !p.IsDeleted);
+            builder.Entity<UserAccountAdditionalActivity>().HasQueryFilter(p => !p.IsDeleted);
+            builder.Entity<UserAccountRole>().HasQueryFilter(p => !p.IsDeleted);
+            builder.Entity<UserAccountSettings>().HasQueryFilter(p => !p.IsDeleted);
+            builder.Entity<UserActivity>().HasQueryFilter(p => !p.IsDeleted);
+            builder.Entity<UserActivityParent>().HasQueryFilter(p => !p.IsDeleted);
+            builder.Entity<UserRoleActivity>().HasQueryFilter(p => !p.IsDeleted);
+            builder.Entity<UserRoleDefinition>().HasQueryFilter(p => !p.IsDeleted);
+            builder.Entity<Country>().HasQueryFilter(p => !p.IsDeleted);
+            builder.Entity<State>().HasQueryFilter(p => !p.IsDeleted);
+
+            builder.Entity<NHSActivity>().HasQueryFilter(p => !p.IsDeleted);
+            builder.Entity<AppType>().HasQueryFilter(p => !p.IsDeleted);
+            builder.Entity<Consultant>().HasQueryFilter(p => !p.IsDeleted);
+            builder.Entity<Hospital>().HasQueryFilter(p => !p.IsDeleted);
+            builder.Entity<PathwayStatus>().HasQueryFilter(p => !p.IsDeleted);
+            builder.Entity<RTT>().HasQueryFilter(p => !p.IsDeleted);
+            builder.Entity<Specialty>().HasQueryFilter(p => !p.IsDeleted);
+            builder.Entity<WaitingType>().HasQueryFilter(p => !p.IsDeleted);
+            builder.Entity<Ward>().HasQueryFilter(p => !p.IsDeleted);
+
         }
     }
 }
