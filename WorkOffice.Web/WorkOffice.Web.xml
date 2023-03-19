@@ -100,7 +100,7 @@
              <response code="201">CompanyStructure Created Successfully</response>
              <response code="400">If an error occur or invalid request payload</response>
         </member>
-        <member name="M:WorkOffice.Web.Controllers.CompanyStructureController.GetList(System.Int32,System.Int32)">
+        <member name="M:WorkOffice.Web.Controllers.CompanyStructureController.GetList(WorkOffice.Contracts.ServicesContracts.SearchCall{WorkOffice.Contracts.ServicesContracts.SearchParameter})">
              <summary>
              Get list of CompanyStructure
              </summary>
@@ -108,14 +108,13 @@
              Sample request:
             
              </remarks>
-             <param name="pageNumber"></param>
-             <param name="pageSize"></param>
+             <param name="options"></param>
              <returns>List of CompanyStructure</returns>
              <response code="200">Returns list of CompanyStructure</response>
              <response code="404">If list of CompanyStructure is null</response> 
              <response code="400">If an error occur or invalid request payload</response> 
         </member>
-        <member name="M:WorkOffice.Web.Controllers.CompanyStructureController.Get(System.Guid)">
+        <member name="M:WorkOffice.Web.Controllers.CompanyStructureController.Get(System.String)">
              <summary>
              Get object of CompanyStructure
              </summary>
@@ -155,7 +154,7 @@
              <response code="404">If object of CompanyStructure is null</response> 
              <response code="400">If an error occur or invalid request payload</response> 
         </member>
-        <member name="M:WorkOffice.Web.Controllers.CompanyStructureController.Delete(System.Guid)">
+        <member name="M:WorkOffice.Web.Controllers.CompanyStructureController.Delete(System.String)">
              <summary>
              Delete CompanyStructure
              </summary>

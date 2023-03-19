@@ -1,3 +1,124 @@
-<p>
-  add-company-structure works!
-</p>
+<section class="content">
+  <div class="content-block">
+    <div class="block-header">
+      <!-- breadcrumb -->
+      <app-breadcrumb *ngIf="isAddMode" [title]="'Add Company Structure'" [items]="['Company Structure']" [active_item]="'Company Structure'"></app-breadcrumb>
+      <app-breadcrumb *ngIf="!isAddMode" [title]="'Edit Company Structure'" [items]="['Company Structure']" [active_item]="'Edit Company Structure'"></app-breadcrumb>
+
+    </div>
+    <div class="row clearfix">
+      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="card">
+          <div class="header">
+            <h2 *ngIf="isAddMode"><strong> Add New Company Structure</strong></h2>
+            <h2 *ngIf="!isAddMode"><strong> Edit Company Structure</strong></h2>
+          </div>
+          <div class="body">
+            <form class="m-4" [formGroup]="companyStructureForm" (ngSubmit)="onSubmit()">
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Name</mat-label>
+                    <input matInput formControlName="name" required>
+                    <mat-error *ngIf="companyStructureForm.get('name')?.hasError('required')">
+                      Name is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Select Structure Type</mat-label>
+                    <mat-select formControlName="structureTypeId" required>
+                      <mat-option  *ngFor="let structureDefinition of structureDefinitionList" [value]="structureDefinition.value">
+                        {{structureDefinition.label}}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="companyStructureForm.get('structureTypeId')?.hasError('required')">
+                      Structure Type is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Select Country</mat-label>
+                    <mat-select formControlName="country" required>
+                      <mat-option  *ngFor="let country of countryList" [value]="country.label">
+                        {{country.label}}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="companyStructureForm.get('country')?.hasError('required')">
+                      Country is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Address</mat-label>
+                    <input matInput formControlName="address">
+                    <mat-error *ngIf="companyStructureForm.get('address')?.hasError('required')">
+                      Address is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Contact Phone</mat-label>
+                    <input matInput formControlName="contactPhone" required>
+                    <mat-error *ngIf="companyStructureForm.get('contactPhone')?.hasError('required')">
+                      Contact Phone is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Contact Email</mat-label>
+                    <input matInput formControlName="contactEmail">
+                    <mat-error *ngIf="companyStructureForm.get('contactEmail')?.hasError('required')">
+                      Contact Email is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Company Head</mat-label>
+                    <input matInput formControlName="companyHead" required>
+                    <mat-error *ngIf="companyStructureForm.get('companyHead')?.hasError('required')">
+                      Company Head is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Select Parent Company</mat-label>
+                    <mat-select formControlName="parentID">
+                      <mat-option  *ngFor="let companyStructureParent of companyStructureParentList" [value]="companyStructureParent.value">
+                        {{companyStructureParent.label}}
+                      </mat-option>
+                    </mat-select>
+                    <!-- <mat-error *ngIf="companyStructureForm.get('parentID')?.hasError('required')">
+                      Parent Company is required
+                    </mat-error> -->
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-3">
+                  <button class="btn-space" [class.auth-spinner]="loading" [disabled]="loading" [disabled]="!companyStructureForm.valid " mat-raised-button
+                    color="primary">Submit</button>
+                  <button type="button" (click)="cancelForm()" mat-raised-button color="warn">Cancel</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -13,16 +13,16 @@ namespace WorkOffice.Contracts.Mappings
         {
             return new T
             {
-                CompanyStructureId = entity.CompanyStructureId,
+                CompanyStructureId = entity.CompanyStructureId.ToString(),
                 Name = entity.Name,
-                StructureTypeId = entity.StructureTypeID,
+                StructureTypeId = entity.StructureTypeID.ToString(),
                 Country = entity.Country,
                 Parent = entity.Parent,
                 Address = entity.Address,
                 ContactEmail = entity.ContactEmail,
                 ContactPhone = entity.ContactPhone,
                 CompanyHead = entity.CompanyHead,
-                ParentID = entity.ParentID,
+                ParentID = entity.ParentID.ToString(),
                 Company = entity.Company,
                 ClientId = entity.ClientId
             };
@@ -32,16 +32,16 @@ namespace WorkOffice.Contracts.Mappings
         {
             return new T
             {
-                CompanyStructureId = entity.CompanyStructureId,
+                CompanyStructureId = Guid.Parse(entity.CompanyStructureId),
                 Name = entity.Name,
-                StructureTypeID = entity.StructureTypeId,
+                StructureTypeID = Guid.Parse(entity.StructureTypeId),
                 Country = entity.Country,
                 Parent = entity.Parent,
                 Address = entity.Address,
                 ContactEmail = entity.ContactEmail,
                 ContactPhone = entity.ContactPhone,
                 CompanyHead = entity.CompanyHead,
-                ParentID = entity.ParentID,
+                ParentID = Guid.Parse(entity.ParentID),
                 Company = entity.Company,
                 ClientId = entity.ClientId
             };

@@ -51,7 +51,8 @@ namespace WorkOffice.Web
             services.AddScoped<ISpecialtyService, SpecialtyService>();
             services.AddScoped<IWaitingTypeService, WaitingTypeService>();
             services.AddScoped<IWardService, WardService>();
-
+            services.AddScoped<IGeneralSettingsService, GeneralSettingsService>();
+            
             services.AddScoped<DataContext>();
 
             return services;

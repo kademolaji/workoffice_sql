@@ -49,14 +49,13 @@ export class StructureDefinitionService extends UnsubscribeOnDestroyAdapter {
       data
     );
   }
-  updateStructureDefinition(data: StructureDefinitionModel): void {
-    this.dialogData = data;
-  }
+
   deleteStructureDefinition(id: string) {
     return this.httpClient.delete<DeleteReply>(
       `api/structuredefinition/Delete?structureDefinitionId=${id}`
     );
   }
+
   deleteMultipleStructureDefinition(targetIds: string[]) {
     return this.httpClient.post<DeleteReply>(
       `api/structuredefinition/MultipleDelete`, {targetIds: targetIds}
