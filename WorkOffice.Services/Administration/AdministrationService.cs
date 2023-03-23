@@ -29,7 +29,7 @@ namespace WorkOffice.Services
             try
             {
 
-                if (model.ClientId == Guid.Empty)
+                if (model.ClientId > 0)
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Request is not coming from a valid client" }, IsSuccess = false };
                 }
@@ -70,7 +70,7 @@ namespace WorkOffice.Services
                             }
                         }
 
-                        if (model.UserRoleAndActivityId != Guid.Empty)
+                        if (model.UserRoleAndActivityId > 0)
                         {
                             definition = context.UserRoleDefinitions.Find(model.UserRoleAndActivityId);
 
@@ -132,7 +132,7 @@ namespace WorkOffice.Services
             }
         }
 
-        public async Task<ApiResponse<GetResponse<List<UserRoleDefinitionModel>>>> GetAllUserRoleDefinitions(Guid clientId)
+        public async Task<ApiResponse<GetResponse<List<UserRoleDefinitionModel>>>> GetAllUserRoleDefinitions(long clientId)
         {
             try
             {
@@ -178,11 +178,11 @@ namespace WorkOffice.Services
             }
         }
 
-        public async Task<ApiResponse<DeleteReply>> DeleteUserRoleDefinition(Guid userRoleDefinitionId)
+        public async Task<ApiResponse<DeleteReply>> DeleteUserRoleDefinition(long userRoleDefinitionId)
         {
             try
             {
-                if (userRoleDefinitionId == Guid.Empty)
+                if (userRoleDefinitionId <= 0)
                 {
                     return new ApiResponse<DeleteReply>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new DeleteReply { Status = false, Message = "UserRoleDefinitionId is required." }, IsSuccess = false };
                 }
@@ -236,10 +236,8 @@ namespace WorkOffice.Services
                 var apiResponse = new ApiResponse<DeleteReply>();
                 foreach (var item in model.targetIds)
                 {
-                    Guid newId = Guid.Empty;
-                    var idExist = Guid.TryParse(item, out newId);
-                    var user = context.UserRoleDefinitions.Find(newId);
-                    var activities = context.UserRoleActivities.Where(x => x.UserRoleDefinitionId == newId).ToList();
+                    var user = context.UserRoleDefinitions.Find(item);
+                    var activities = context.UserRoleActivities.Where(x => x.UserRoleDefinitionId == item).ToList();
                     if (user != null)
                     {
                         user.IsDeleted = true;
@@ -271,7 +269,7 @@ namespace WorkOffice.Services
             }
         }
 
-        public bool UserRoleDefinitionExists(string roleName, Guid userRoleDefinitionId)
+        public bool UserRoleDefinitionExists(string roleName, long userRoleDefinitionId)
         {
             try
             {
@@ -289,7 +287,7 @@ namespace WorkOffice.Services
 
         #region User Role Activities
 
-        public async Task<ApiResponse<GetResponse<List<UserActivityParentModel>>>> GetActivities(Guid clientId)
+        public async Task<ApiResponse<GetResponse<List<UserActivityParentModel>>>> GetActivities(long clientId)
         {
             try
             {
@@ -336,7 +334,7 @@ namespace WorkOffice.Services
             }
         }
 
-        public async Task<ApiResponse<GetResponse<List<UserRoleActivitiesModel>>>> GetUserRoleAndActivities(Guid clientId, Guid userRoleId)
+        public async Task<ApiResponse<GetResponse<List<UserRoleActivitiesModel>>>> GetUserRoleAndActivities(long clientId, long userRoleId)
         {
             try
             {
@@ -348,7 +346,7 @@ namespace WorkOffice.Services
                                   where p.ClientId == clientId
                                   select new UserRoleActivitiesModel
                                   {
-                                      UserRoleDefinitionId = Guid.NewGuid(),
+                                      UserRoleDefinitionId = 1,
                                       UserRoleDefinition = "",
                                       UserActivityParentId = p.UserActivityParentId,
                                       UserActivityParentName = p.UserActivityParentName,
@@ -361,7 +359,7 @@ namespace WorkOffice.Services
                                       CanView = false
                                   }).ToListAsync();
 
-                if (userRoleId != Guid.Empty)
+                if (userRoleId > 0)
                 {
                     var data2 = await (from a in context.UserRoleDefinitions
                                        join b in context.UserRoleActivities on a.UserRoleDefinitionId equals b.UserRoleDefinitionId
@@ -422,7 +420,7 @@ namespace WorkOffice.Services
             }
         }
 
-        public async Task<ApiResponse<GetResponse<List<UserActivitiesByRoleModel>>>> GetActivitiesByRoleId(Guid clientId, Guid userRoleId)
+        public async Task<ApiResponse<GetResponse<List<UserActivitiesByRoleModel>>>> GetActivitiesByRoleId(long clientId, long userRoleId)
         {
             try
             {

@@ -10,10 +10,10 @@ namespace WorkOffice.Domain.Entities
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
-        public Guid CustomIdentityFormatSettingId { get; set; }
-        public int Prefix { get; set; }
-        public int Suffix { get; set; }
+        public long CustomIdentityFormatSettingId { get; set; }
+        public string Prefix { get; set; }
+        public string Suffix { get; set; }
         public int Digits { get; set; }
-        public int Company { get; set; }
+        public string Company { get; set; }
     }
 }

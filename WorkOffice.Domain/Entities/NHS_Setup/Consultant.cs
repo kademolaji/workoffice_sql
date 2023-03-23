@@ -10,7 +10,7 @@ namespace WorkOffice.Domain.Entities
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
-        public Guid ConsultantId { get; set; }
+        public long ConsultantId { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
 

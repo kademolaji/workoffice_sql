@@ -42,7 +42,7 @@ export class AllUsersComponent
   dataSource!: ExampleDataSource;
   selection = new SelectionModel<UserListModel>(true, []);
   index!: number;
-  id!: string;
+  id = 0;
   users!: UserListModel | null;
   constructor(
     public httpClient: HttpClient,
@@ -71,12 +71,12 @@ export class AllUsersComponent
 
 
 
-  editCall(row: { id: string }) {
+  editCall(row: { id: number }) {
     this.id = row.id;
 
   }
 
-  deleteItem(row: { id: string }) {
+  deleteItem(row: { id: number }) {
     this.id = row.id;
     let tempDirection: Direction;
     if (localStorage.getItem('isRtl') === 'true') {

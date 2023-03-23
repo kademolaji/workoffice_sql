@@ -1,6 +1,6 @@
 
 export interface StructureDefinitionModel {
-  structureDefinitionId: string;
+  structureDefinitionId: number;
   definition: string;
   description: string;
   level: number;

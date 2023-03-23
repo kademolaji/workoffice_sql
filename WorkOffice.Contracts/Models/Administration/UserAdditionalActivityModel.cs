@@ -6,8 +6,8 @@ namespace WorkOffice.Contracts.Models
 {
    public class UserAdditionalActivityModel : BaseModel
     {
-        public Guid UserAdditionalActivityId { get; set; }
-        public Guid UserActivityId { get; set; }
+        public long UserAdditionalActivityId { get; set; }
+        public long UserActivityId { get; set; }
 
         public bool? CanEdit { get; set; }
 

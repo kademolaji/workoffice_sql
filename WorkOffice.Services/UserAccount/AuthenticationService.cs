@@ -89,7 +89,7 @@ namespace WorkOffice.Services
         {
             try
             {
-                if (model.ClientId == Guid.Empty)
+                if (model.ClientId <= 0)
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Request is not coming from a valid client" }, IsSuccess = false };
                 }
@@ -168,7 +168,7 @@ namespace WorkOffice.Services
                 {
                     try
                     {
-                        if (model.UserId != Guid.Empty)
+                        if (model.UserId > 0)
                         {
                             entity = context.UserAccounts.Find(model.UserId);
                             if (entity != null)
@@ -289,14 +289,14 @@ namespace WorkOffice.Services
             }
         }
 
-        public async Task<bool> UserExists(string username, Guid userId)
+        public async Task<bool> UserExists(string username, long userId)
         {
             if (await context.UserAccounts.AnyAsync(o => o.Email.ToLower().Equals(username.ToLower()) && o.UserId != userId))
                 return true;
 
             return false;
         }
-        public async Task<bool> EmailExists(string email, Guid userId)
+        public async Task<bool> EmailExists(string email, long userId)
         {
             if (await context.UserAccounts.AnyAsync(x => x.Email == email && x.UserId != userId))
                 return true;
@@ -304,7 +304,7 @@ namespace WorkOffice.Services
             return false;
         }
 
-        public List<string> GetUserActivitiesByUser(Guid userAccountId)
+        public List<string> GetUserActivitiesByUser(long userAccountId)
         {
             List<string> activities = new List<string>();
 

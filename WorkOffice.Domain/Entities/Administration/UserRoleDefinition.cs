@@ -10,7 +10,7 @@ namespace WorkOffice.Domain.Entities
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
-        public Guid UserRoleDefinitionId { get; set; }
+        public long UserRoleDefinitionId { get; set; }
         [Required]
         [StringLength(256)]
         public string RoleName { get; set; }

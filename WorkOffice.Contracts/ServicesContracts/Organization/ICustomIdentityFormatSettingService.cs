@@ -12,7 +12,7 @@ namespace WorkOffice.Contracts.ServicesContracts
         Task<ApiResponse<CreateResponse>> Create(CustomIdentityFormatSettingModel model);
         Task<ApiResponse<CreateResponse>> Update(CustomIdentityFormatSettingModel model);
         Task<ApiResponse<GetResponse<List<CustomIdentityFormatSettingModel>>>> GetList(int pageNumber = 1, int pageSize = 10);
-        Task<ApiResponse<GetResponse<CustomIdentityFormatSettingModel>>> Get(Guid employeeIdFormatId);
-        Task<ApiResponse<DeleteReply>> Delete(Guid employeeIdFormatId);
+        Task<ApiResponse<GetResponse<CustomIdentityFormatSettingModel>>> Get(long employeeIdFormatId);
+        Task<ApiResponse<DeleteReply>> Delete(long employeeIdFormatId);
     }
 }

@@ -10,7 +10,7 @@ namespace WorkOffice.Domain.Entities
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
-        public Guid GeneralInformationId { get; set; }
+        public long GeneralInformationId { get; set; }
         public string Organisationname { get; set; }
         public string Taxid { get; set; }
         public string Regno { get; set; }

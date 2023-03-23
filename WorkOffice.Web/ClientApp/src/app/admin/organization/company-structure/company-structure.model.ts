@@ -1,26 +1,26 @@
 
 export interface CompanyStructureModel {
-  companyStructureId: string;
+  companyStructureId: number;
   name: string;
-  structureTypeId: string;
+  structureTypeId: number;
   structureType: string;
   country: string;
   address: string;
   contactPhone: string;
   contactEmail: string;
   companyHead: string;
-  parentID: string;
+  parentID: number;
   parent: string;
 }
 
 export interface AddCompanyStructureModel {
-  companyStructureId: string;
+  companyStructureId: number;
   name: string;
-  structureTypeId: string;
+  structureTypeId: number;
   country: string;
   address: string;
   contactPhone: string;
   contactEmail: string;
   companyHead: string;
-  parentID: string;
+  parentID: number;
 }

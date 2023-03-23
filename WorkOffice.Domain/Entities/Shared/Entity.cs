@@ -11,7 +11,7 @@ namespace WorkOffice.Domain.Entities
             CreatedOn = DateTimeOffset.Now;
         }
         public DateTimeOffset CreatedOn { get; set; } = DateTimeOffset.Now;
-        public Guid ClientId { get; set; }
+        public long ClientId { get; set; }
         public bool IsDeleted { get; set; }
     }
 }

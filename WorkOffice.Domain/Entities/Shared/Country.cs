@@ -10,7 +10,7 @@ namespace WorkOffice.Domain.Entities
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
-        public Guid CountryId { get; set; }
+        public long CountryId { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
         public bool IsAfrica { get; set; }

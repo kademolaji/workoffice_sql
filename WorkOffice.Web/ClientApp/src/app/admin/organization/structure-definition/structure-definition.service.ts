@@ -36,7 +36,7 @@ export class StructureDefinitionService extends UnsubscribeOnDestroyAdapter {
       );
   }
 
-  getStructureDefinitionById(id: string) {
+  getStructureDefinitionById(id: number) {
     return this.httpClient.get<GetResponse<StructureDefinitionModel>>(
       `api/structuredefinition/Get?structureDefinitionId=${id}`
     );
@@ -50,13 +50,13 @@ export class StructureDefinitionService extends UnsubscribeOnDestroyAdapter {
     );
   }
 
-  deleteStructureDefinition(id: string) {
+  deleteStructureDefinition(id: number) {
     return this.httpClient.delete<DeleteReply>(
       `api/structuredefinition/Delete?structureDefinitionId=${id}`
     );
   }
 
-  deleteMultipleStructureDefinition(targetIds: string[]) {
+  deleteMultipleStructureDefinition(targetIds: number[]) {
     return this.httpClient.post<DeleteReply>(
       `api/structuredefinition/MultipleDelete`, {targetIds: targetIds}
     );

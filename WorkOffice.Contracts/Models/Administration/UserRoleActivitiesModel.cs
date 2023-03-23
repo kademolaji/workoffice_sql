@@ -6,12 +6,12 @@ namespace WorkOffice.Contracts.Models
 {
     public class UserRoleActivitiesModel : BaseModel
     {
-        public Guid UserRoleActivitiesId { get; set; }
-        public Guid UserRoleDefinitionId { get; set; }
+        public long UserRoleActivitiesId { get; set; }
+        public long UserRoleDefinitionId { get; set; }
         public string UserRoleDefinition { get; set; }
-        public Guid UserActivityParentId { get; set; }
+        public long UserActivityParentId { get; set; }
         public string UserActivityParentName { get; set; }
-        public Guid UserActivityId { get; set; }
+        public long UserActivityId { get; set; }
         public string UserActivityName { get; set; }
         public bool CanEdit { get; set; }
         public bool CanAdd { get; set; }

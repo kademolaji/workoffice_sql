@@ -6,9 +6,9 @@ namespace WorkOffice.Contracts.Models
 {
    public class UserActivityModel
     {
-        public Guid UserActivityId { get; set; }
+        public long UserActivityId { get; set; }
         public string UserActivityName { get; set; }
-        public Guid UserActivityParentId { get; set; }
+        public long UserActivityParentId { get; set; }
     }
 }
 

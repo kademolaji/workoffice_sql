@@ -124,7 +124,7 @@ namespace H2RHRMS.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetResponse<LocationModel>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(GetResponse<ProducesResponseStub>))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(GetResponse<ProducesResponseStub>))]
-        public async Task<IActionResult> Get(Guid locationId)
+        public async Task<IActionResult> Get(long locationId)
         {
             try
             {
@@ -261,7 +261,7 @@ namespace H2RHRMS.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DeleteReply))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(DeleteReply))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(DeleteReply))]
-        public async Task<IActionResult> Delete(Guid locationId)
+        public async Task<IActionResult> Delete(long locationId)
         {
             try
             {

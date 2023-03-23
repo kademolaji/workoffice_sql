@@ -9,11 +9,11 @@ namespace WorkOffice.Contracts.ServicesContracts
     public interface IStructureDefinitionService
     {
         Task<ApiResponse<CreateResponse>> Create(StructureDefinitionModel model);
-        Task<ApiResponse<GetResponse<StructureDefinitionModel>>> Get(Guid structureDefinitionId, Guid clientId);
-        Task<ApiResponse<SearchReply<StructureDefinitionModel>>> GetList(SearchCall<SearchParameter> options, Guid clientId);
-        Task<ApiResponse<DeleteReply>> Delete(string structureDefinitionId);
+        Task<ApiResponse<GetResponse<StructureDefinitionModel>>> Get(long structureDefinitionId, long clientId);
+        Task<ApiResponse<SearchReply<StructureDefinitionModel>>> GetList(SearchCall<SearchParameter> options, long clientId);
+        Task<ApiResponse<DeleteReply>> Delete(long structureDefinitionId);
         Task<ApiResponse<DeleteReply>> MultipleDelete(MultipleDeleteModel model);
-        Task<ApiResponse<GetResponse<byte[]>>> Export(Guid clientId);
-        Task<ApiResponse<CreateResponse>> Upload(byte[] record, Guid clientId);
+        Task<ApiResponse<GetResponse<byte[]>>> Export(long clientId);
+        Task<ApiResponse<CreateResponse>> Upload(byte[] record, long clientId);
     }
 }

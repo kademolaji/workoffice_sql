@@ -15,25 +15,25 @@ namespace WorkOffice.Services
             _httpAccessor = httpContextAccessor;
         }
 
-        public Guid GetCurrentClientId()
+        public long GetCurrentClientId()
         {
             var sub = _httpAccessor.HttpContext.User.Claims
                .FirstOrDefault(x => x.Type == "ClientId");
             if (sub != null)
             {
-                return Guid.Parse(sub.Value);
+                return int.Parse(sub.Value);
             }
-            return Guid.Parse("74B638B6-0A8D-4955-BDAE-74F5E485E5F2");
+            return 1;
         }
-        public Guid GetCurrentUserId()
+        public long GetCurrentUserId()
         {
             var sub = _httpAccessor.HttpContext.User.Claims
              .FirstOrDefault(x => x.Type == "UserId");
             if (sub != null)
             {
-                return Guid.Parse(sub.Value);
+                return int.Parse(sub.Value);
             }
-            return default(Guid);
+            return default(long);
         }
         public string GetCurrentUserName()
         {

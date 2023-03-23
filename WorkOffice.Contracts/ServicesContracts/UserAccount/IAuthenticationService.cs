@@ -10,6 +10,6 @@ namespace WorkOffice.Contracts.ServicesContracts
     {
         Task<ApiResponse<GetResponse<UserAccountModel>>> Login(string userName, string password);
         Task<ApiResponse<CreateResponse>> Create(UserAccountModel model, string password);
-        List<string> GetUserActivitiesByUser(Guid userAccountId);
+        List<string> GetUserActivitiesByUser(long userAccountId);
     }
 }

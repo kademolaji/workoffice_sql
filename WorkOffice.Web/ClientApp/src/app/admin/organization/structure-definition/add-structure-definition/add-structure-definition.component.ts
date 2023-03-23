@@ -29,7 +29,7 @@ export class AddStructureDefinitionComponent
   submitted = false;
   loading = false;
   isAddMode = true;
-  id = '';
+  id = 0;
 
   constructor(
     private fb: UntypedFormBuilder,
@@ -46,7 +46,7 @@ export class AddStructureDefinitionComponent
       description: ['', [Validators.required]],
       level: ['', [Validators.required]],
     });
-    this.id = this.route.snapshot.params['id'];
+    this.id = +this.route.snapshot.params['id'];
     this.isAddMode = !this.id;
     if(!this.isAddMode){
       this.subs.sink = this.structureDefinitionService

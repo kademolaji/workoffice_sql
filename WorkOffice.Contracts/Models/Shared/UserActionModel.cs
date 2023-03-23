@@ -6,7 +6,7 @@ namespace WorkOffice.Contracts.Models
 {
    public class UserActionModel
     {
-        public Guid ActivityId { get; set; }
+        public long ActivityId { get; set; }
         public bool CanEdit { get; set; }
         public bool CanAdd { get; set; }
         public bool CanView { get; set; }

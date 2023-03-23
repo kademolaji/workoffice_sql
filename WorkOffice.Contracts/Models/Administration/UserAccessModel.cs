@@ -6,7 +6,7 @@ namespace WorkOffice.Contracts.Models
 {
    public class UserAccessModel : BaseModel
     {
-        public Guid UserAccessId { get; set; }
-        public Guid CompanyStructureId { get; set; }
+        public long  UserAccessId { get; set; }
+        public long CompanyStructureId { get; set; }
     }
 }

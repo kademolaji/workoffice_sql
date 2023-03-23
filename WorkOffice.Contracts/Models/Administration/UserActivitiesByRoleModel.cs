@@ -6,7 +6,7 @@ namespace WorkOffice.Contracts.Models
 {
    public class UserActivitiesByRoleModel
     {
-        public Guid UserActivityId { get; set; }
-        public Guid UserRoleDefinitionId { get; set; }
+        public long UserActivityId { get; set; }
+        public long UserRoleDefinitionId { get; set; }
     }
 }

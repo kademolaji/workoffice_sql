@@ -16,7 +16,7 @@ namespace WorkOffice.Services
         {
             context = appContext;
         }
-        public async Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetCompanyStructureList(Guid clientId)
+        public async Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetCompanyStructureList(long clientId)
         {
             try
             {
@@ -50,7 +50,7 @@ namespace WorkOffice.Services
             }
         }
 
-        public async Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetCountryList(Guid clientId)
+        public async Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetCountryList(long clientId)
         {
             try
             {
@@ -84,7 +84,7 @@ namespace WorkOffice.Services
             }
         }
 
-        public async Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetStructureDefinitionList(Guid clientId)
+        public async Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetStructureDefinitionList(long clientId)
         {
             try
             {

@@ -36,7 +36,7 @@ exampleDatabase!: LocationService | null;
 dataSource!: ExampleDataSource;
 selection = new SelectionModel<LocationModel>(true, []);
 index!: number;
-id!: string;
+id = 0;
 locations!: LocationModel | null;
 constructor(
   public httpClient: HttpClient,
@@ -65,12 +65,12 @@ addNew() {
 
 
 
-editCall(row: { id: string }) {
+editCall(row: { id: number }) {
   this.id = row.id;
 
 }
 
-deleteItem(row: { id: string }) {
+deleteItem(row: { id: number }) {
   this.id = row.id;
   let tempDirection: Direction;
   if (localStorage.getItem('isRtl') === 'true') {

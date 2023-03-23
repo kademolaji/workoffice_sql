@@ -12,7 +12,7 @@ export interface AddEditUserModel {
 }
 
 export interface UserListModel {
-  userId: string;
+  userId: number;
   firstName: string;
   lastName: string;
   email: string;

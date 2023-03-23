@@ -34,7 +34,7 @@ export class AddCompanyStructureComponent
   submitted = false;
   loading = false;
   isAddMode = true;
-  id = '';
+  id = 0;
 
   constructor(
     private fb: UntypedFormBuilder,
@@ -57,7 +57,7 @@ export class AddCompanyStructureComponent
       companyHead: ['', [Validators.required]],
       parentID: ['']
     });
-    this.id = this.route.snapshot.params['id'];
+    this.id = +this.route.snapshot.params['id'];
     this.isAddMode = !this.id;
     if (!this.isAddMode) {
       this.subs.sink = this.companyStructureService
@@ -114,15 +114,15 @@ export class AddCompanyStructureComponent
       return;
     } else {
       const structureDefinition: AddCompanyStructureModel = {
-        companyStructureId: this.id,
+        companyStructureId: this.id ? +this.id : 0,
         name: this.companyStructureForm.value.name,
-        structureTypeId: this.companyStructureForm.value.structureTypeId,
+        structureTypeId: +this.companyStructureForm.value.structureTypeId,
         country: this.companyStructureForm.value.country,
         address: this.companyStructureForm.value.address,
         contactPhone: this.companyStructureForm.value.contactPhone,
         contactEmail: this.companyStructureForm.value.contactEmail,
         companyHead: this.companyStructureForm.value.companyHead,
-        parentID: this.companyStructureForm.value.parentID,
+        parentID: +this.companyStructureForm.value.parentID,
       };
       this.subs.sink = this.companyStructureService
         .addCompanyStructure(structureDefinition)

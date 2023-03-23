@@ -98,7 +98,7 @@ export class AllStructureDefinitionComponent
     this.router.navigate(['admin', 'company', 'add-structure-definition']);
   }
 
-  editCall(row: { structureDefinitionId: string }) {
+  editCall(row: { structureDefinitionId: number }) {
     this.router.navigate([
       'admin',
       'company',

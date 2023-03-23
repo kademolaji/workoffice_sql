@@ -290,12 +290,11 @@ namespace WorkOffice.Web.Controllers
 
         [Authorize]
         [HttpGet("{userId}/user-details")]
-        public async Task<IActionResult> GetUserById(string requestUserId)
+        public async Task<IActionResult> GetUserById(long userId)
         {
             try
             {
-                var userId = Guid.Empty;
-                var userIdExist = Guid.TryParse(requestUserId, out userId);
+             
                 var apiResponse = await _userAccountService.GetUserById(userId);
                 if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
                 {
@@ -311,12 +310,10 @@ namespace WorkOffice.Web.Controllers
 
         [Authorize]
         [HttpGet("{userId}/user-account")]
-        public async Task<IActionResult> GetUserAccountById(string requestUserId)
+        public async Task<IActionResult> GetUserAccountById(long userId)
         {
             try
             {
-                var userId = Guid.Empty;
-                var userIdExist = Guid.TryParse(requestUserId, out userId);
                 var apiResponse = await _userAccountService.GetUserAccountById(userId);
                 if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
                 {
@@ -354,12 +351,12 @@ namespace WorkOffice.Web.Controllers
         [Route("{id:int}/disable-enable")]
         [ProducesResponseType(201, Type = typeof(CreateResponse))]
         [ProducesResponseType(400, Type = typeof(CreateResponse))]
-        public async Task<IActionResult> DisableEnableUser(string id)
+        public async Task<IActionResult> DisableEnableUser(long id)
         {
             try
             {
                 var loggedInUser = _httpAccessorService.GetCurrentUserId();
-                var apiResponse = await _userAccountService.DisableEnableUser(id, loggedInUser.ToString());
+                var apiResponse = await _userAccountService.DisableEnableUser(id, loggedInUser);
 
                 if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
                 {

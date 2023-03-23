@@ -33,24 +33,16 @@ namespace WorkOffice.Services
             {
                 CompanyStructure parentInfo = new CompanyStructure();
 
-                Guid newCompanyStructureId = Guid.Empty;
-                var idExist = Guid.TryParse(model.CompanyStructureId, out newCompanyStructureId);
 
-                Guid newStructureTypeId = Guid.Empty;
-                var idStructureExist = Guid.TryParse(model.StructureTypeId, out newStructureTypeId);
-
-                Guid newParentId = Guid.Empty;
-                var idparentExist = Guid.TryParse(model.ParentID, out newParentId);
-
-                if (newCompanyStructureId != Guid.Empty)
+                if (model.CompanyStructureId > 0)
                 {
                     return await Update(model);
                 }
-                if (newStructureTypeId == Guid.Empty)
+                if (model.StructureTypeId == 0)
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Structure Type is required" }, IsSuccess = false };
                 }
-                if (model.ClientId == Guid.Empty)
+                if (model.ClientId == 0)
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Request is not coming from a valid client" }, IsSuccess = false };
                 }
@@ -67,9 +59,9 @@ namespace WorkOffice.Services
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Address is required." }, IsSuccess = false };
                 }
-                if (newParentId != Guid.Empty)
+                if (model.ParentID  > 0)
                 {
-                    parentInfo = context.CompanyStructures.Find(newParentId);
+                    parentInfo = context.CompanyStructures.Find(model.ParentID);
                 }
 
                 var apiResponse = new ApiResponse<CreateResponse>();
@@ -85,14 +77,14 @@ namespace WorkOffice.Services
                         entity = new CompanyStructure
                         {
                             Name = model.Name,
-                            StructureTypeID = newCompanyStructureId,
+                            StructureTypeID = model.StructureTypeId,
                             Country = model.Country,
                             Parent = model.Parent,
                             Address = model.Address,
                             ContactEmail = model.ContactEmail,
                             ContactPhone = model.ContactPhone,
                             CompanyHead = model.CompanyHead,
-                            ParentID = newParentId,
+                            ParentID = model.ParentID,
                             Company = model.Company,
                             ClientId = model.ClientId
                         };
@@ -139,20 +131,12 @@ namespace WorkOffice.Services
             try
             {
                 CompanyStructure parentInfo = new CompanyStructure();
-                Guid newCompanyStructureId = Guid.Empty;
-                var idExist = Guid.TryParse(model.CompanyStructureId, out newCompanyStructureId);
 
-                Guid newStructureTypeId = Guid.Empty;
-                var idStructureExist = Guid.TryParse(model.StructureTypeId, out newStructureTypeId);
-
-                Guid newParentId = Guid.Empty;
-                var idparentExist = Guid.TryParse(model.ParentID, out newParentId);
-
-                if (newStructureTypeId == Guid.Empty)
+                if (model.StructureTypeId == 0)
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Structure Type is required" }, IsSuccess = false };
                 }
-                if (model.ClientId == Guid.Empty)
+                if (model.ClientId == 0)
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Request is not coming from a valid client" }, IsSuccess = false };
                 }
@@ -160,7 +144,7 @@ namespace WorkOffice.Services
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Name is required." }, IsSuccess = false };
                 }
-                var isExist = await context.CompanyStructures.AnyAsync(x => x.Name == model.Name && x.CompanyStructureId != newCompanyStructureId && x.ClientId == model.ClientId);
+                var isExist = await context.CompanyStructures.AnyAsync(x => x.Name == model.Name && x.CompanyStructureId != model.StructureTypeId && x.ClientId == model.ClientId);
                 if (isExist)
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = $"Another company structure exist with the given name {model.Name}." }, IsSuccess = false };
@@ -169,14 +153,14 @@ namespace WorkOffice.Services
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Address is required." }, IsSuccess = false };
                 }
-                if (newParentId != Guid.Empty)
+                if (model.ParentID != 0)
                 {
                     parentInfo = context.CompanyStructures.Find(model.ParentID);
                 }
 
                 var apiResponse = new ApiResponse<CreateResponse>();
                 bool result = false;
-                var entity = await context.CompanyStructures.FindAsync(newCompanyStructureId);
+                var entity = await context.CompanyStructures.FindAsync(model.CompanyStructureId);
                 if (entity == null)
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Record does not exist." }, IsSuccess = false };
@@ -186,12 +170,12 @@ namespace WorkOffice.Services
                     try
                     {
                         entity.Name = model.Name;
-                        entity.StructureTypeID = newStructureTypeId;
+                        entity.StructureTypeID = model.CompanyStructureId;
                         entity.Country = model.Country;
                         entity.Parent = parentInfo.Name;
                         entity.Address = model.Address;
                         entity.CompanyHead = model.CompanyHead;
-                        entity.ParentID = newParentId;
+                        entity.ParentID = model.ParentID;
                         entity.Company = model.Name;
                         entity.ContactEmail = model.ContactEmail;
                         entity.ContactPhone = model.ContactPhone;
@@ -231,7 +215,7 @@ namespace WorkOffice.Services
             }
         }
 
-        public async Task<ApiResponse<SearchReply<CompanyStructureModel>>> GetList(SearchCall<SearchParameter> options, Guid clientId)
+        public async Task<ApiResponse<SearchReply<CompanyStructureModel>>> GetList(SearchCall<SearchParameter> options, long clientId)
         {
             int count = 0;
             int pageNumber = options.From > 0 ? options.From : 0;
@@ -294,20 +278,19 @@ namespace WorkOffice.Services
             }
         }
 
-        public async Task<ApiResponse<GetResponse<CompanyStructureModel>>> Get(string companyStructureId, Guid clientId)
+        public async Task<ApiResponse<GetResponse<CompanyStructureModel>>> Get(long companyStructureId, long clientId)
         {
             try
             {
-                Guid newStructureDefinitionId = Guid.Empty;
-                var idExist = Guid.TryParse(companyStructureId, out newStructureDefinitionId);
-                if (newStructureDefinitionId == Guid.Empty)
+                
+                if (companyStructureId == 0)
                 {
                     return new ApiResponse<GetResponse<CompanyStructureModel>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new GetResponse<CompanyStructureModel> { Status = false, Entity = null, Message = "CompanyStructureId is required." }, IsSuccess = false };
                 }
 
                 var apiResponse = new ApiResponse<GetResponse<CompanyStructureModel>>();
 
-                var result = await context.CompanyStructures.FirstOrDefaultAsync(x => x.CompanyStructureId == newStructureDefinitionId && x.ClientId == clientId);
+                var result = await context.CompanyStructures.FirstOrDefaultAsync(x => x.CompanyStructureId == companyStructureId && x.ClientId == clientId);
 
                 if (result == null)
                 {
@@ -333,20 +316,19 @@ namespace WorkOffice.Services
             }
         }
 
-        public async Task<ApiResponse<DeleteReply>> Delete(string companyStructureId)
+        public async Task<ApiResponse<DeleteReply>> Delete(long companyStructureId)
         {
             try
             {
-                Guid newStructureDefinitionId = Guid.Empty;
-                var idExist = Guid.TryParse(companyStructureId, out newStructureDefinitionId);
-                if (newStructureDefinitionId == Guid.Empty)
+            
+                if (companyStructureId == 0)
                 {
                     return new ApiResponse<DeleteReply>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new DeleteReply { Status = false, Message = "CompanyStructureId is required." }, IsSuccess = false };
                 }
 
                 var apiResponse = new ApiResponse<DeleteReply>();
 
-                var result = context.CompanyStructures.Find(newStructureDefinitionId);
+                var result = context.CompanyStructures.Find(companyStructureId);
 
                 if (result == null)
                 {
@@ -389,9 +371,8 @@ namespace WorkOffice.Services
 
                 foreach (var item in model.targetIds)
                 {
-                    Guid newStructureDefinitionId = Guid.Empty;
-                    var idExist = Guid.TryParse(item, out newStructureDefinitionId);
-                    var data = await context.CompanyStructures.FindAsync(newStructureDefinitionId);
+                 
+                    var data = await context.CompanyStructures.FindAsync(item);
                     if (data != null)
                     {
                         data.IsDeleted = true;
@@ -419,7 +400,7 @@ namespace WorkOffice.Services
             }
         }
 
-        public async Task<ApiResponse<GetResponse<byte[]>>> Export(Guid clientId)
+        public async Task<ApiResponse<GetResponse<byte[]>>> Export(long clientId)
         {
             try
             {
@@ -441,7 +422,7 @@ namespace WorkOffice.Services
                                         where a.ClientId == clientId && a.IsDeleted == false
                                         select new CompanyStructureModel
                                         {
-                                            CompanyStructureId = a.CompanyStructureId.ToString(),
+                                            CompanyStructureId = a.CompanyStructureId,
                                             Name = a.Name,
                                             //  StructureType = a.StructureType,
                                             Country = a.Country,
@@ -450,7 +431,7 @@ namespace WorkOffice.Services
                                             CompanyHead = a.CompanyHead,
                                             ContactEmail = a.ContactEmail,
                                             ContactPhone = a.ContactPhone,
-                                            ParentID = a.ParentID.ToString(),
+                                            ParentID = a.ParentID,
                                             Company = a.Company,
                                             ClientId = a.ClientId
                                         }).ToListAsync();
@@ -511,7 +492,7 @@ namespace WorkOffice.Services
             }
         }
 
-        public async Task<ApiResponse<CreateResponse>> Upload(byte[] record, Guid clientId)
+        public async Task<ApiResponse<CreateResponse>> Upload(byte[] record, long clientId)
         {
             try
             {
@@ -542,7 +523,7 @@ namespace WorkOffice.Services
                             ContactEmail = workSheet.Cells[i, 6].Value.ToString(),
                             ContactPhone = workSheet.Cells[i, 7].Value.ToString(),
                             CompanyHead = workSheet.Cells[i, 8].Value.ToString(),
-                            ParentID = workSheet.Cells[i, 9].Value.ToString(),
+                            ParentID = int.Parse(workSheet.Cells[i, 9].Value.ToString()),
                             Company = workSheet.Cells[i, 10].Value.ToString(),
                         });
                     }
@@ -555,16 +536,16 @@ namespace WorkOffice.Services
                     {
                         var structure = new CompanyStructure
                         {
-                            CompanyStructureId = Guid.Parse(item.CompanyStructureId),
+                            CompanyStructureId =item.CompanyStructureId,
                             Name = item.Name,
-                            StructureTypeID = Guid.Parse(item.StructureTypeId),
+                            StructureTypeID = item.StructureTypeId,
                             Country = item.Country,
                             Parent = item.Parent,
                             Address = item.Address,
                             ContactEmail = item.ContactEmail,
                             ContactPhone = item.ContactPhone,
                             CompanyHead = item.CompanyHead,
-                            ParentID = Guid.Parse(item.ParentID),
+                            ParentID = item.ParentID,
                             Company = item.Company,
                             IsDeleted = false,
                             ClientId = clientId,

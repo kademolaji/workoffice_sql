@@ -116,7 +116,7 @@ namespace WorkOffice.Web.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DeleteReply))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(DeleteReply))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(DeleteReply))]
-        public async Task<IActionResult> DeleteUserRoleDefinition(Guid userRoleDefinitionId)
+        public async Task<IActionResult> DeleteUserRoleDefinition(long userRoleDefinitionId)
         {
             try
             {
@@ -237,7 +237,7 @@ namespace WorkOffice.Web.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetResponse<List<UserRoleActivitiesModel>>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(GetResponse<ProducesResponseStub>))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(GetResponse<ProducesResponseStub>))]
-        public async Task<IActionResult> GetUserRoleAndActivities(Guid userRoleId)
+        public async Task<IActionResult> GetUserRoleAndActivities(long userRoleId)
         {
             try
             {
@@ -278,7 +278,7 @@ namespace WorkOffice.Web.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetResponse<List<UserActivitiesByRoleModel>>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(GetResponse<ProducesResponseStub>))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(GetResponse<ProducesResponseStub>))]
-        public async Task<IActionResult> GetActivitiesByRoleId(Guid userRoleId)
+        public async Task<IActionResult> GetActivitiesByRoleId(long userRoleId)
         {
             try
             {

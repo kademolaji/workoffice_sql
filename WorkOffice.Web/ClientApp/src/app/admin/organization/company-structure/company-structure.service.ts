@@ -37,7 +37,7 @@ export class CompanyStructureService extends UnsubscribeOnDestroyAdapter {
       );
   }
 
-  getCompanyStructureById(id: string) {
+  getCompanyStructureById(id: number) {
     return this.httpClient.get<GetResponse<CompanyStructureModel>>(
       `api/companystructure/Get?companystructureId=${id}`
     );
@@ -51,12 +51,12 @@ export class CompanyStructureService extends UnsubscribeOnDestroyAdapter {
     );
   }
 
-  deleteCompanyStructure(id: string) {
+  deleteCompanyStructure(id: number) {
     return this.httpClient.delete<DeleteReply>(
       `api/companystructure/Delete?companystructureId=${id}`
     );
   }
-  deleteMultipleCompanyStructure(targetIds: string[]) {
+  deleteMultipleCompanyStructure(targetIds: number[]) {
     return this.httpClient.post<DeleteReply>(
       `api/companystructure/MultipleDelete`, {targetIds: targetIds}
     );
