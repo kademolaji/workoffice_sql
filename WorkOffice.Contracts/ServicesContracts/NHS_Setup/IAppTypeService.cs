@@ -13,10 +13,10 @@ namespace WorkOffice.Contracts.ServicesContracts
         Task<ApiResponse<CreateResponse>> UpdateAppType(AppTypeViewModels model);
         //Task<ApiResponse<GetResponse<List<AppTypeViewModels>>>> GetList(int pageNumber = 1, int pageSize = 10);
         Task<ApiResponse<SearchReply<AppTypeViewModels>>> GetList(SearchCall<SearchParameter> options);
-        Task<ApiResponse<GetResponse<AppTypeViewModels>>> Get(Guid locationId);
-        Task<ApiResponse<DeleteReply>> Delete(Guid locationId);
+        Task<ApiResponse<GetResponse<AppTypeViewModels>>> Get(long appTypeId);
+        Task<ApiResponse<DeleteReply>> Delete(long appTypeId);
         Task<ApiResponse<DeleteReply>> MultipleDelete(MultipleDeleteModel model);
         Task<ApiResponse<GetResponse<byte[]>>> Export();
-        Task<ApiResponse<CreateResponse>> Upload(byte[] record, Guid clientId);
+        Task<ApiResponse<CreateResponse>> Upload(byte[] record, long appTypeId);
     }
 }

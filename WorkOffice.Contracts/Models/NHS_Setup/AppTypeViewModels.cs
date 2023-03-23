@@ -6,7 +6,7 @@ namespace WorkOffice.Contracts.Models
 {
     public class AppTypeViewModels
     {
-        public Guid AppTypeId { get; set; }
+        public long AppTypeId { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
     }

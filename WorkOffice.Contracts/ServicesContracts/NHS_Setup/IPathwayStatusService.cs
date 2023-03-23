@@ -12,10 +12,10 @@ namespace WorkOffice.Contracts.ServicesContracts
         Task<ApiResponse<CreateResponse>> CreatePathwayStatus(PathwayStatusViewModels model);
         Task<ApiResponse<CreateResponse>> UpdatePathwayStatus(PathwayStatusViewModels model);
         Task<ApiResponse<GetResponse<List<PathwayStatusViewModels>>>> GetList(int pageNumber = 1, int pageSize = 10);
-        Task<ApiResponse<GetResponse<PathwayStatusViewModels>>> Get(Guid locationId);
-        Task<ApiResponse<DeleteReply>> Delete(Guid locationId);
+        Task<ApiResponse<GetResponse<PathwayStatusViewModels>>> Get(long pathwayStatusId);
+        Task<ApiResponse<DeleteReply>> Delete(long pathwayStatusId);
         Task<ApiResponse<DeleteReply>> MultipleDelete(MultipleDeleteModel model);
         Task<ApiResponse<GetResponse<byte[]>>> Export();
-        Task<ApiResponse<CreateResponse>> Upload(byte[] record, Guid clientId);
+        Task<ApiResponse<CreateResponse>> Upload(byte[] record, long pathwayStatusId);
     }
 }

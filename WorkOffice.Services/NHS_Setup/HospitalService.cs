@@ -95,7 +95,7 @@ namespace WorkOffice.Services
             try
             {
 
-                if (model.HospitalId == Guid.Empty)
+                if (model.HospitalId <= 0)
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "HospitalId is required" }, IsSuccess = false };
                 }
@@ -192,11 +192,11 @@ namespace WorkOffice.Services
             }
         }
 
-        public async Task<ApiResponse<GetResponse<HospitalViewModels>>> Get(Guid hospitalId)
+        public async Task<ApiResponse<GetResponse<HospitalViewModels>>> Get(long hospitalId)
         {
             try
             {
-                if (hospitalId == Guid.Empty)
+                if (hospitalId <= 0)
                 {
                     return new ApiResponse<GetResponse<HospitalViewModels>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new GetResponse<HospitalViewModels> { Status = false, Entity = null, Message = "LocationId is required." }, IsSuccess = false };
                 }
@@ -229,11 +229,11 @@ namespace WorkOffice.Services
             }
         }
 
-        public async Task<ApiResponse<DeleteReply>> Delete(Guid hospitalId)
+        public async Task<ApiResponse<DeleteReply>> Delete(long hospitalId)
         {
             try
             {
-                if (hospitalId == Guid.Empty)
+                if (hospitalId <= 0)
                 {
                     return new ApiResponse<DeleteReply>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new DeleteReply { Status = false, Message = "HospitalId is required." }, IsSuccess = false };
                 }
@@ -377,7 +377,7 @@ namespace WorkOffice.Services
             }
         }
 
-        public async Task<ApiResponse<CreateResponse>> Upload(byte[] record, Guid hospitalId)
+        public async Task<ApiResponse<CreateResponse>> Upload(byte[] record, long hospitalId)
         {
             try
             {

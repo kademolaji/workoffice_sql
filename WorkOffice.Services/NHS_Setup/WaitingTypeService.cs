@@ -95,7 +95,7 @@ namespace WorkOffice.Services
             try
             {
 
-                if (model.WaitingTypeId == Guid.Empty)
+                if (model.WaitingTypeId <= 0)
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "WaitingTypeId is required" }, IsSuccess = false };
                 }
@@ -192,11 +192,11 @@ namespace WorkOffice.Services
             }
         }
 
-        public async Task<ApiResponse<GetResponse<WaitingTypeViewModels>>> Get(Guid waitingTypeId)
+        public async Task<ApiResponse<GetResponse<WaitingTypeViewModels>>> Get(long waitingTypeId)
         {
             try
             {
-                if (waitingTypeId == Guid.Empty)
+                if (waitingTypeId <= 0)
                 {
                     return new ApiResponse<GetResponse<WaitingTypeViewModels>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new GetResponse<WaitingTypeViewModels> { Status = false, Entity = null, Message = "LocationId is required." }, IsSuccess = false };
                 }
@@ -229,11 +229,11 @@ namespace WorkOffice.Services
             }
         }
 
-        public async Task<ApiResponse<DeleteReply>> Delete(Guid waitingTypeId)
+        public async Task<ApiResponse<DeleteReply>> Delete(long waitingTypeId)
         {
             try
             {
-                if (waitingTypeId == Guid.Empty)
+                if (waitingTypeId <= 0)
                 {
                     return new ApiResponse<DeleteReply>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new DeleteReply { Status = false, Message = "WaitingTypeId is required." }, IsSuccess = false };
                 }
@@ -377,7 +377,7 @@ namespace WorkOffice.Services
             }
         }
 
-        public async Task<ApiResponse<CreateResponse>> Upload(byte[] record, Guid waitingTypeId)
+        public async Task<ApiResponse<CreateResponse>> Upload(byte[] record, long waitingTypeId)
         {
             try
             {

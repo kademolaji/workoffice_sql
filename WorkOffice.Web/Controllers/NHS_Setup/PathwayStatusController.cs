@@ -153,7 +153,7 @@ namespace WorkOffice.Web.Controllers
         /// Sample request:
         ///
         /// </remarks>
-        /// <param name="locationId"></param>
+        /// <param name="pathwayStatusId"></param>
         /// <returns>Object of PathwayStatus</returns>
         /// <response code="200">Returns object of PathwayStatus</response>
         /// <response code="404">If object of PathwayStatus is null</response> 
@@ -163,11 +163,11 @@ namespace WorkOffice.Web.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetResponse<PathwayStatusViewModels>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(GetResponse<ProducesResponseStub>))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(GetResponse<ProducesResponseStub>))]
-        public async Task<IActionResult> Get(Guid locationId)
+        public async Task<IActionResult> Get(long pathwayStatusId)
         {
             try
             {
-                var apiResponse = await service.Get(locationId);
+                var apiResponse = await service.Get(pathwayStatusId);
                 if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
                 {
                     return BadRequest(apiResponse.ResponseType);
@@ -290,7 +290,7 @@ namespace WorkOffice.Web.Controllers
         /// Sample request:
         ///
         /// </remarks>
-        /// <param name="locationId"></param>
+        /// <param name="pathwayStatusId"></param>
         /// <returns>Object of PathwayStatus</returns>
         /// <response code="200">Returns object of PathwayStatus</response>
         /// <response code="404">If object of PathwayStatus is null</response> 
@@ -300,11 +300,11 @@ namespace WorkOffice.Web.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DeleteReply))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(DeleteReply))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(DeleteReply))]
-        public async Task<IActionResult> Delete(Guid locationId)
+        public async Task<IActionResult> Delete(long pathwayStatusId)
         {
             try
             {
-                var apiResponse = await service.Delete(locationId);
+                var apiResponse = await service.Delete(pathwayStatusId);
                 if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
                 {
                     return BadRequest(apiResponse.ResponseType);

@@ -95,7 +95,7 @@ namespace WorkOffice.Services
             try
             {
 
-                if (model.SpecialtyId == Guid.Empty)
+                if (model.SpecialtyId <= 0)
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "SpecialtyId is required" }, IsSuccess = false };
                 }
@@ -192,11 +192,11 @@ namespace WorkOffice.Services
             }
         }
 
-        public async Task<ApiResponse<GetResponse<SpecialtyViewModels>>> Get(Guid specialtyId)
+        public async Task<ApiResponse<GetResponse<SpecialtyViewModels>>> Get(long specialtyId)
         {
             try
             {
-                if (specialtyId == Guid.Empty)
+                if (specialtyId <= 0)
                 {
                     return new ApiResponse<GetResponse<SpecialtyViewModels>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new GetResponse<SpecialtyViewModels> { Status = false, Entity = null, Message = "LocationId is required." }, IsSuccess = false };
                 }
@@ -229,11 +229,11 @@ namespace WorkOffice.Services
             }
         }
 
-        public async Task<ApiResponse<DeleteReply>> Delete(Guid specialtyId)
+        public async Task<ApiResponse<DeleteReply>> Delete(long specialtyId)
         {
             try
             {
-                if (specialtyId == Guid.Empty)
+                if (specialtyId <= 0)
                 {
                     return new ApiResponse<DeleteReply>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new DeleteReply { Status = false, Message = "SpecialtyId is required." }, IsSuccess = false };
                 }
@@ -377,7 +377,7 @@ namespace WorkOffice.Services
             }
         }
 
-        public async Task<ApiResponse<CreateResponse>> Upload(byte[] record, Guid specialtyId)
+        public async Task<ApiResponse<CreateResponse>> Upload(byte[] record, long specialtyId)
         {
             try
             {

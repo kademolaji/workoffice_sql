@@ -6,7 +6,7 @@ namespace WorkOffice.Contracts.Models
 {
     public class ConsultantViewModels
     {
-        public Guid ConsultantId { get; set; }
+        public long ConsultantId { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
     }

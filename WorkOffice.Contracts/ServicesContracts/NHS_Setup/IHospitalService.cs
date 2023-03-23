@@ -12,10 +12,10 @@ namespace WorkOffice.Contracts.ServicesContracts
         Task<ApiResponse<CreateResponse>> CreateHospital(HospitalViewModels model);
         Task<ApiResponse<CreateResponse>> UpdateHospital(HospitalViewModels model);
         Task<ApiResponse<GetResponse<List<HospitalViewModels>>>> GetList(int pageNumber = 1, int pageSize = 10);
-        Task<ApiResponse<GetResponse<HospitalViewModels>>> Get(Guid locationId);
-        Task<ApiResponse<DeleteReply>> Delete(Guid locationId);
+        Task<ApiResponse<GetResponse<HospitalViewModels>>> Get(long hospitalId);
+        Task<ApiResponse<DeleteReply>> Delete(long hospitalId);
         Task<ApiResponse<DeleteReply>> MultipleDelete(MultipleDeleteModel model);
         Task<ApiResponse<GetResponse<byte[]>>> Export();
-        Task<ApiResponse<CreateResponse>> Upload(byte[] record, Guid clientId);
+        Task<ApiResponse<CreateResponse>> Upload(byte[] record, long hospitalId);
     }
 }

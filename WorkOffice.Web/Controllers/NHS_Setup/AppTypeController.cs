@@ -179,7 +179,7 @@ namespace WorkOffice.Web.Controllers
         /// Sample request:
         ///
         /// </remarks>
-        /// <param name="locationId"></param>
+        /// <param name="appTypeId"></param>
         /// <returns>Object of AppType</returns>
         /// <response code="200">Returns object of AppType</response>
         /// <response code="404">If object of AppType is null</response> 
@@ -189,11 +189,11 @@ namespace WorkOffice.Web.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetResponse<AppTypeViewModels>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(GetResponse<ProducesResponseStub>))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(GetResponse<ProducesResponseStub>))]
-        public async Task<IActionResult> Get(Guid locationId)
+        public async Task<IActionResult> Get(long appTypeId)
         {
             try
             {
-                var apiResponse = await service.Get(locationId);
+                var apiResponse = await service.Get(appTypeId);
                 if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
                 {
                     return BadRequest(apiResponse.ResponseType);
@@ -316,7 +316,7 @@ namespace WorkOffice.Web.Controllers
         /// Sample request:
         ///
         /// </remarks>
-        /// <param name="locationId"></param>
+        /// <param name="appTypeId"></param>
         /// <returns>Object of AppType</returns>
         /// <response code="200">Returns object of AppType</response>
         /// <response code="404">If object of AppType is null</response> 
@@ -326,11 +326,11 @@ namespace WorkOffice.Web.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DeleteReply))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(DeleteReply))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(DeleteReply))]
-        public async Task<IActionResult> Delete(Guid locationId)
+        public async Task<IActionResult> Delete(long appTypeId)
         {
             try
             {
-                var apiResponse = await service.Delete(locationId);
+                var apiResponse = await service.Delete(appTypeId);
                 if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
                 {
                     return BadRequest(apiResponse.ResponseType);

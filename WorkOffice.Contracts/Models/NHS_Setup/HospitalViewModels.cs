@@ -6,7 +6,7 @@ namespace WorkOffice.Contracts.Models
 {
     public class HospitalViewModels
     {
-        public Guid HospitalId { get; set; }
+        public long HospitalId { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
     }

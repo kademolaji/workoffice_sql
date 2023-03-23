@@ -12,10 +12,10 @@ namespace WorkOffice.Contracts.ServicesContracts
         Task<ApiResponse<CreateResponse>> CreateWaitingType(WaitingTypeViewModels model);
         Task<ApiResponse<CreateResponse>> UpdateWaitingType(WaitingTypeViewModels model);
         Task<ApiResponse<GetResponse<List<WaitingTypeViewModels>>>> GetList(int pageNumber = 1, int pageSize = 10);
-        Task<ApiResponse<GetResponse<WaitingTypeViewModels>>> Get(Guid locationId);
-        Task<ApiResponse<DeleteReply>> Delete(Guid locationId);
+        Task<ApiResponse<GetResponse<WaitingTypeViewModels>>> Get(long waitingTypeId);
+        Task<ApiResponse<DeleteReply>> Delete(long waitingTypeId);
         Task<ApiResponse<DeleteReply>> MultipleDelete(MultipleDeleteModel model);
         Task<ApiResponse<GetResponse<byte[]>>> Export();
-        Task<ApiResponse<CreateResponse>> Upload(byte[] record, Guid clientId);
+        Task<ApiResponse<CreateResponse>> Upload(byte[] record, long waitingTypeId);
     }
 }

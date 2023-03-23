@@ -95,7 +95,7 @@ namespace WorkOffice.Services
             try
             {
 
-                if (model.WardId == Guid.Empty)
+                if (model.WardId <= 0)
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "WardId is required" }, IsSuccess = false };
                 }
@@ -192,11 +192,11 @@ namespace WorkOffice.Services
             }
         }
 
-        public async Task<ApiResponse<GetResponse<WardViewModels>>> Get(Guid wardId)
+        public async Task<ApiResponse<GetResponse<WardViewModels>>> Get(long wardId)
         {
             try
             {
-                if (wardId == Guid.Empty)
+                if (wardId <= 0)
                 {
                     return new ApiResponse<GetResponse<WardViewModels>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new GetResponse<WardViewModels> { Status = false, Entity = null, Message = "LocationId is required." }, IsSuccess = false };
                 }
@@ -229,11 +229,11 @@ namespace WorkOffice.Services
             }
         }
 
-        public async Task<ApiResponse<DeleteReply>> Delete(Guid wardId)
+        public async Task<ApiResponse<DeleteReply>> Delete(long wardId)
         {
             try
             {
-                if (wardId == Guid.Empty)
+                if (wardId <= 0)
                 {
                     return new ApiResponse<DeleteReply>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new DeleteReply { Status = false, Message = "WardId is required." }, IsSuccess = false };
                 }
@@ -377,7 +377,7 @@ namespace WorkOffice.Services
             }
         }
 
-        public async Task<ApiResponse<CreateResponse>> Upload(byte[] record, Guid wardId)
+        public async Task<ApiResponse<CreateResponse>> Upload(byte[] record, long wardId)
         {
             try
             {

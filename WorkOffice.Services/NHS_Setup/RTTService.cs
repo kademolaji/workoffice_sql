@@ -95,7 +95,7 @@ namespace WorkOffice.Services
             try
             {
 
-                if (model.RTTId == Guid.Empty)
+                if (model.RTTId <= 0)
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "RTTId is required" }, IsSuccess = false };
                 }
@@ -192,11 +192,11 @@ namespace WorkOffice.Services
             }
         }
 
-        public async Task<ApiResponse<GetResponse<RTTViewModels>>> Get(Guid rttId)
+        public async Task<ApiResponse<GetResponse<RTTViewModels>>> Get(long rttId)
         {
             try
             {
-                if (rttId == Guid.Empty)
+                if (rttId <= 0)
                 {
                     return new ApiResponse<GetResponse<RTTViewModels>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new GetResponse<RTTViewModels> { Status = false, Entity = null, Message = "LocationId is required." }, IsSuccess = false };
                 }
@@ -229,11 +229,11 @@ namespace WorkOffice.Services
             }
         }
 
-        public async Task<ApiResponse<DeleteReply>> Delete(Guid rttId)
+        public async Task<ApiResponse<DeleteReply>> Delete(long rttId)
         {
             try
             {
-                if (rttId == Guid.Empty)
+                if (rttId <= 0)
                 {
                     return new ApiResponse<DeleteReply>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new DeleteReply { Status = false, Message = "RTTId is required." }, IsSuccess = false };
                 }
@@ -377,7 +377,7 @@ namespace WorkOffice.Services
             }
         }
 
-        public async Task<ApiResponse<CreateResponse>> Upload(byte[] record, Guid rttId)
+        public async Task<ApiResponse<CreateResponse>> Upload(byte[] record, long rttId)
         {
             try
             {

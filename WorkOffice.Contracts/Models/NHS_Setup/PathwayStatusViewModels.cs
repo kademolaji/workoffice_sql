@@ -6,7 +6,7 @@ namespace WorkOffice.Contracts.Models
 {
     public class PathwayStatusViewModels
     {
-        public Guid PathwayStatusId { get; set; }
+        public long PathwayStatusId { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
         public bool AllowClosed { get; set; }

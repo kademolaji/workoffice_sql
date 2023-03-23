@@ -153,7 +153,7 @@ namespace WorkOffice.Web.Controllers
         /// Sample request:
         ///
         /// </remarks>
-        /// <param name="locationId"></param>
+        /// <param name="waitingTypeId"></param>
         /// <returns>Object of WaitingType</returns>
         /// <response code="200">Returns object of WaitingType</response>
         /// <response code="404">If object of WaitingType is null</response> 
@@ -163,11 +163,11 @@ namespace WorkOffice.Web.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetResponse<WaitingTypeViewModels>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(GetResponse<ProducesResponseStub>))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(GetResponse<ProducesResponseStub>))]
-        public async Task<IActionResult> Get(Guid locationId)
+        public async Task<IActionResult> Get(long waitingTypeId)
         {
             try
             {
-                var apiResponse = await service.Get(locationId);
+                var apiResponse = await service.Get(waitingTypeId);
                 if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
                 {
                     return BadRequest(apiResponse.ResponseType);
@@ -290,7 +290,7 @@ namespace WorkOffice.Web.Controllers
         /// Sample request:
         ///
         /// </remarks>
-        /// <param name="locationId"></param>
+        /// <param name="waitingTypeId"></param>
         /// <returns>Object of WaitingType</returns>
         /// <response code="200">Returns object of WaitingType</response>
         /// <response code="404">If object of WaitingType is null</response> 
@@ -300,11 +300,11 @@ namespace WorkOffice.Web.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DeleteReply))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(DeleteReply))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(DeleteReply))]
-        public async Task<IActionResult> Delete(Guid locationId)
+        public async Task<IActionResult> Delete(long waitingTypeId)
         {
             try
             {
-                var apiResponse = await service.Delete(locationId);
+                var apiResponse = await service.Delete(waitingTypeId);
                 if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
                 {
                     return BadRequest(apiResponse.ResponseType);

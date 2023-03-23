@@ -95,7 +95,7 @@ namespace WorkOffice.Services
             try
             {
 
-                if (model.PathwayStatusId == Guid.Empty)
+                if (model.PathwayStatusId <= 0)
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "PathwayStatusId is required" }, IsSuccess = false };
                 }
@@ -192,11 +192,11 @@ namespace WorkOffice.Services
             }
         }
 
-        public async Task<ApiResponse<GetResponse<PathwayStatusViewModels>>> Get(Guid pathwayStatusId)
+        public async Task<ApiResponse<GetResponse<PathwayStatusViewModels>>> Get(long pathwayStatusId)
         {
             try
             {
-                if (pathwayStatusId == Guid.Empty)
+                if (pathwayStatusId <= 0)
                 {
                     return new ApiResponse<GetResponse<PathwayStatusViewModels>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new GetResponse<PathwayStatusViewModels> { Status = false, Entity = null, Message = "LocationId is required." }, IsSuccess = false };
                 }
@@ -229,11 +229,11 @@ namespace WorkOffice.Services
             }
         }
 
-        public async Task<ApiResponse<DeleteReply>> Delete(Guid pathwayStatusId)
+        public async Task<ApiResponse<DeleteReply>> Delete(long pathwayStatusId)
         {
             try
             {
-                if (pathwayStatusId == Guid.Empty)
+                if (pathwayStatusId <= 0)
                 {
                     return new ApiResponse<DeleteReply>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new DeleteReply { Status = false, Message = "PathwayStatusId is required." }, IsSuccess = false };
                 }
@@ -377,7 +377,7 @@ namespace WorkOffice.Services
             }
         }
 
-        public async Task<ApiResponse<CreateResponse>> Upload(byte[] record, Guid pathwayStatusId)
+        public async Task<ApiResponse<CreateResponse>> Upload(byte[] record, long pathwayStatusId)
         {
             try
             {

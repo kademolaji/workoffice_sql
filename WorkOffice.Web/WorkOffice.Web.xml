@@ -138,7 +138,7 @@
              <response code="404">If list of Activity is null</response> 
              <response code="400">If an error occur or invalid request payload</response> 
         </member>
-        <member name="M:WorkOffice.Web.Controllers.ActivityController.Get(System.Guid)">
+        <member name="M:WorkOffice.Web.Controllers.ActivityController.Get(System.Int64)">
              <summary>
              Get object of Activity
              </summary>
@@ -146,7 +146,7 @@
              Sample request:
             
              </remarks>
-             <param name="locationId"></param>
+             <param name="nhsActivityId"></param>
              <returns>Object of Activity</returns>
              <response code="200">Returns object of Activity</response>
              <response code="404">If object of Activity is null</response> 
@@ -178,7 +178,7 @@
              <response code="404">If object of Activity is null</response> 
              <response code="400">If an error occur or invalid request payload</response> 
         </member>
-        <member name="M:WorkOffice.Web.Controllers.ActivityController.Delete(System.Guid)">
+        <member name="M:WorkOffice.Web.Controllers.ActivityController.Delete(System.Int64)">
              <summary>
              Delete Activity
              </summary>
@@ -186,7 +186,7 @@
              Sample request:
             
              </remarks>
-             <param name="locationId"></param>
+             <param name="nhsActivityId"></param>
              <returns>Object of Activity</returns>
              <response code="200">Returns object of Activity</response>
              <response code="404">If object of Activity is null</response> 
@@ -259,7 +259,7 @@
              <response code="404">If list of AppType is null</response> 
              <response code="400">If an error occur or invalid request payload</response> 
         </member>
-        <member name="M:WorkOffice.Web.Controllers.AppTypeController.Get(System.Guid)">
+        <member name="M:WorkOffice.Web.Controllers.AppTypeController.Get(System.Int64)">
              <summary>
              Get object of AppType
              </summary>
@@ -267,7 +267,7 @@
              Sample request:
             
              </remarks>
-             <param name="locationId"></param>
+             <param name="appTypeId"></param>
              <returns>Object of AppType</returns>
              <response code="200">Returns object of AppType</response>
              <response code="404">If object of AppType is null</response> 
@@ -299,7 +299,7 @@
              <response code="404">If object of AppType is null</response> 
              <response code="400">If an error occur or invalid request payload</response> 
         </member>
-        <member name="M:WorkOffice.Web.Controllers.AppTypeController.Delete(System.Guid)">
+        <member name="M:WorkOffice.Web.Controllers.AppTypeController.Delete(System.Int64)">
              <summary>
              Delete AppType
              </summary>
@@ -307,7 +307,7 @@
              Sample request:
             
              </remarks>
-             <param name="locationId"></param>
+             <param name="appTypeId"></param>
              <returns>Object of AppType</returns>
              <response code="200">Returns object of AppType</response>
              <response code="404">If object of AppType is null</response> 
@@ -380,7 +380,7 @@
              <response code="404">If list of Consultant is null</response> 
              <response code="400">If an error occur or invalid request payload</response> 
         </member>
-        <member name="M:WorkOffice.Web.Controllers.ConsultantController.Get(System.Guid)">
+        <member name="M:WorkOffice.Web.Controllers.ConsultantController.Get(System.Int64)">
              <summary>
              Get object of Consultant
              </summary>
@@ -388,7 +388,7 @@
              Sample request:
             
              </remarks>
-             <param name="locationId"></param>
+             <param name="consultantId"></param>
              <returns>Object of Consultant</returns>
              <response code="200">Returns object of Consultant</response>
              <response code="404">If object of Consultant is null</response> 
@@ -420,7 +420,7 @@
              <response code="404">If object of Consultant is null</response> 
              <response code="400">If an error occur or invalid request payload</response> 
         </member>
-        <member name="M:WorkOffice.Web.Controllers.ConsultantController.Delete(System.Guid)">
+        <member name="M:WorkOffice.Web.Controllers.ConsultantController.Delete(System.Int64)">
              <summary>
              Delete Consultant
              </summary>
@@ -428,7 +428,7 @@
              Sample request:
             
              </remarks>
-             <param name="locationId"></param>
+             <param name="consultantId"></param>
              <returns>Object of Consultant</returns>
              <response code="200">Returns object of Consultant</response>
              <response code="404">If object of Consultant is null</response> 
@@ -501,7 +501,7 @@
              <response code="404">If list of Hospital is null</response> 
              <response code="400">If an error occur or invalid request payload</response> 
         </member>
-        <member name="M:WorkOffice.Web.Controllers.HospitalController.Get(System.Guid)">
+        <member name="M:WorkOffice.Web.Controllers.HospitalController.Get(System.Int64)">
              <summary>
              Get object of Hospital
              </summary>
@@ -509,7 +509,7 @@
              Sample request:
             
              </remarks>
-             <param name="locationId"></param>
+             <param name="hospitalId"></param>
              <returns>Object of Hospital</returns>
              <response code="200">Returns object of Hospital</response>
              <response code="404">If object of Hospital is null</response> 
@@ -541,7 +541,7 @@
              <response code="404">If object of Hospital is null</response> 
              <response code="400">If an error occur or invalid request payload</response> 
         </member>
-        <member name="M:WorkOffice.Web.Controllers.HospitalController.Delete(System.Guid)">
+        <member name="M:WorkOffice.Web.Controllers.HospitalController.Delete(System.Int64)">
              <summary>
              Delete Hospital
              </summary>
@@ -549,7 +549,7 @@
              Sample request:
             
              </remarks>
-             <param name="locationId"></param>
+             <param name="hospitalId"></param>
              <returns>Object of Hospital</returns>
              <response code="200">Returns object of Hospital</response>
              <response code="404">If object of Hospital is null</response> 
@@ -622,7 +622,7 @@
              <response code="404">If list of PathwayStatus is null</response> 
              <response code="400">If an error occur or invalid request payload</response> 
         </member>
-        <member name="M:WorkOffice.Web.Controllers.PathwayStatusController.Get(System.Guid)">
+        <member name="M:WorkOffice.Web.Controllers.PathwayStatusController.Get(System.Int64)">
              <summary>
              Get object of PathwayStatus
              </summary>
@@ -630,7 +630,7 @@
              Sample request:
             
              </remarks>
-             <param name="locationId"></param>
+             <param name="pathwayStatusId"></param>
              <returns>Object of PathwayStatus</returns>
              <response code="200">Returns object of PathwayStatus</response>
              <response code="404">If object of PathwayStatus is null</response> 
@@ -662,7 +662,7 @@
              <response code="404">If object of PathwayStatus is null</response> 
              <response code="400">If an error occur or invalid request payload</response> 
         </member>
-        <member name="M:WorkOffice.Web.Controllers.PathwayStatusController.Delete(System.Guid)">
+        <member name="M:WorkOffice.Web.Controllers.PathwayStatusController.Delete(System.Int64)">
              <summary>
              Delete PathwayStatus
              </summary>
@@ -670,7 +670,7 @@
              Sample request:
             
              </remarks>
-             <param name="locationId"></param>
+             <param name="pathwayStatusId"></param>
              <returns>Object of PathwayStatus</returns>
              <response code="200">Returns object of PathwayStatus</response>
              <response code="404">If object of PathwayStatus is null</response> 
@@ -743,7 +743,7 @@
              <response code="404">If list of RTT is null</response> 
              <response code="400">If an error occur or invalid request payload</response> 
         </member>
-        <member name="M:WorkOffice.Web.Controllers.RTTController.Get(System.Guid)">
+        <member name="M:WorkOffice.Web.Controllers.RTTController.Get(System.Int64)">
              <summary>
              Get object of RTT
              </summary>
@@ -751,7 +751,7 @@
              Sample request:
             
              </remarks>
-             <param name="locationId"></param>
+             <param name="rttId"></param>
              <returns>Object of RTT</returns>
              <response code="200">Returns object of RTT</response>
              <response code="404">If object of RTT is null</response> 
@@ -783,7 +783,7 @@
              <response code="404">If object of RTT is null</response> 
              <response code="400">If an error occur or invalid request payload</response> 
         </member>
-        <member name="M:WorkOffice.Web.Controllers.RTTController.Delete(System.Guid)">
+        <member name="M:WorkOffice.Web.Controllers.RTTController.Delete(System.Int64)">
              <summary>
              Delete RTT
              </summary>
@@ -791,7 +791,7 @@
              Sample request:
             
              </remarks>
-             <param name="locationId"></param>
+             <param name="rttId"></param>
              <returns>Object of RTT</returns>
              <response code="200">Returns object of RTT</response>
              <response code="404">If object of RTT is null</response> 
@@ -864,7 +864,7 @@
              <response code="404">If list of Specialty is null</response> 
              <response code="400">If an error occur or invalid request payload</response> 
         </member>
-        <member name="M:WorkOffice.Web.Controllers.SpecialtyController.Get(System.Guid)">
+        <member name="M:WorkOffice.Web.Controllers.SpecialtyController.Get(System.Int64)">
              <summary>
              Get object of Specialty
              </summary>
@@ -872,7 +872,7 @@
              Sample request:
             
              </remarks>
-             <param name="locationId"></param>
+             <param name="specialtyId"></param>
              <returns>Object of Specialty</returns>
              <response code="200">Returns object of Specialty</response>
              <response code="404">If object of Specialty is null</response> 
@@ -904,7 +904,7 @@
              <response code="404">If object of Specialty is null</response> 
              <response code="400">If an error occur or invalid request payload</response> 
         </member>
-        <member name="M:WorkOffice.Web.Controllers.SpecialtyController.Delete(System.Guid)">
+        <member name="M:WorkOffice.Web.Controllers.SpecialtyController.Delete(System.Int64)">
              <summary>
              Delete Specialty
              </summary>
@@ -912,7 +912,7 @@
              Sample request:
             
              </remarks>
-             <param name="locationId"></param>
+             <param name="specialtyId"></param>
              <returns>Object of Specialty</returns>
              <response code="200">Returns object of Specialty</response>
              <response code="404">If object of Specialty is null</response> 
@@ -985,7 +985,7 @@
              <response code="404">If list of WaitingType is null</response> 
              <response code="400">If an error occur or invalid request payload</response> 
         </member>
-        <member name="M:WorkOffice.Web.Controllers.WaitingTypeController.Get(System.Guid)">
+        <member name="M:WorkOffice.Web.Controllers.WaitingTypeController.Get(System.Int64)">
              <summary>
              Get object of WaitingType
              </summary>
@@ -993,7 +993,7 @@
              Sample request:
             
              </remarks>
-             <param name="locationId"></param>
+             <param name="waitingTypeId"></param>
              <returns>Object of WaitingType</returns>
              <response code="200">Returns object of WaitingType</response>
              <response code="404">If object of WaitingType is null</response> 
@@ -1025,7 +1025,7 @@
              <response code="404">If object of WaitingType is null</response> 
              <response code="400">If an error occur or invalid request payload</response> 
         </member>
-        <member name="M:WorkOffice.Web.Controllers.WaitingTypeController.Delete(System.Guid)">
+        <member name="M:WorkOffice.Web.Controllers.WaitingTypeController.Delete(System.Int64)">
              <summary>
              Delete WaitingType
              </summary>
@@ -1033,7 +1033,7 @@
              Sample request:
             
              </remarks>
-             <param name="locationId"></param>
+             <param name="waitingTypeId"></param>
              <returns>Object of WaitingType</returns>
              <response code="200">Returns object of WaitingType</response>
              <response code="404">If object of WaitingType is null</response> 
@@ -1106,7 +1106,7 @@
              <response code="404">If list of Ward is null</response> 
              <response code="400">If an error occur or invalid request payload</response> 
         </member>
-        <member name="M:WorkOffice.Web.Controllers.WardController.Get(System.Guid)">
+        <member name="M:WorkOffice.Web.Controllers.WardController.Get(System.Int64)">
              <summary>
              Get object of Ward
              </summary>
@@ -1114,7 +1114,7 @@
              Sample request:
             
              </remarks>
-             <param name="locationId"></param>
+             <param name="wardId"></param>
              <returns>Object of Ward</returns>
              <response code="200">Returns object of Ward</response>
              <response code="404">If object of Ward is null</response> 
@@ -1146,7 +1146,7 @@
              <response code="404">If object of Ward is null</response> 
              <response code="400">If an error occur or invalid request payload</response> 
         </member>
-        <member name="M:WorkOffice.Web.Controllers.WardController.Delete(System.Guid)">
+        <member name="M:WorkOffice.Web.Controllers.WardController.Delete(System.Int64)">
              <summary>
              Delete Ward
              </summary>
@@ -1154,7 +1154,7 @@
              Sample request:
             
              </remarks>
-             <param name="locationId"></param>
+             <param name="wardId"></param>
              <returns>Object of Ward</returns>
              <response code="200">Returns object of Ward</response>
              <response code="404">If object of Ward is null</response> 

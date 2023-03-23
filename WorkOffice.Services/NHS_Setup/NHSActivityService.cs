@@ -95,7 +95,7 @@ namespace WorkOffice.Services
             try
             {
 
-                if (model.NHSActivityId == Guid.Empty)
+                if (model.NHSActivityId <= 0)
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "NHSActivityId is required" }, IsSuccess = false };
                 }
@@ -192,11 +192,11 @@ namespace WorkOffice.Services
             }
         }
 
-        public async Task<ApiResponse<GetResponse<NHSActivityViewModels>>> Get(Guid nhsActivityId)
+        public async Task<ApiResponse<GetResponse<NHSActivityViewModels>>> Get(long nhsActivityId)
         {
             try
             {
-                if (nhsActivityId == Guid.Empty)
+                if (nhsActivityId <= 0)
                 {
                     return new ApiResponse<GetResponse<NHSActivityViewModels>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new GetResponse<NHSActivityViewModels> { Status = false, Entity = null, Message = "LocationId is required." }, IsSuccess = false };
                 }
@@ -229,11 +229,11 @@ namespace WorkOffice.Services
             }
         }
 
-        public async Task<ApiResponse<DeleteReply>> Delete(Guid nhsActivityId)
+        public async Task<ApiResponse<DeleteReply>> Delete(long nhsActivityId)
         {
             try
             {
-                if (nhsActivityId == Guid.Empty)
+                if (nhsActivityId <= 0)
                 {
                     return new ApiResponse<DeleteReply>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new DeleteReply { Status = false, Message = "NHSActivityId is required." }, IsSuccess = false };
                 }
@@ -377,7 +377,7 @@ namespace WorkOffice.Services
             }
         }
 
-        public async Task<ApiResponse<CreateResponse>> Upload(byte[] record, Guid nhsActivityId)
+        public async Task<ApiResponse<CreateResponse>> Upload(byte[] record, long nhsActivityId)
         {
             try
             {

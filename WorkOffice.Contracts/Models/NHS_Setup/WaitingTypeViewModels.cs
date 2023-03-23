@@ -6,7 +6,7 @@ namespace WorkOffice.Contracts.Models
 {
     public class WaitingTypeViewModels
     {
-        public Guid WaitingTypeId { get; set; }
+        public long WaitingTypeId { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
     }
