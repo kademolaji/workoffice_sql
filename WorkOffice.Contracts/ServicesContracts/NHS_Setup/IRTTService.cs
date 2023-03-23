@@ -10,5 +10,12 @@ namespace WorkOffice.Contracts.ServicesContracts
     public interface IRTTService
     {
         Task<ApiResponse<CreateResponse>> CreateRTT(RTTViewModels model);
+        Task<ApiResponse<CreateResponse>> UpdateRTT(RTTViewModels model);
+        Task<ApiResponse<GetResponse<List<RTTViewModels>>>> GetList(int pageNumber = 1, int pageSize = 10);
+        Task<ApiResponse<GetResponse<RTTViewModels>>> Get(Guid locationId);
+        Task<ApiResponse<DeleteReply>> Delete(Guid locationId);
+        Task<ApiResponse<DeleteReply>> MultipleDelete(MultipleDeleteModel model);
+        Task<ApiResponse<GetResponse<byte[]>>> Export();
+        Task<ApiResponse<CreateResponse>> Upload(byte[] record, Guid clientId);
     }
 }

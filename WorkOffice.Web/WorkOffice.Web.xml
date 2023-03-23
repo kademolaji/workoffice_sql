@@ -85,6 +85,1095 @@
              <response code="404">If list of Activities By RoleId is null</response> 
              <response code="400">If an error occur or invalid request payload</response> 
         </member>
+        <member name="M:WorkOffice.Web.Controllers.ActivityController.CreateActivity(WorkOffice.Contracts.Models.NHSActivityViewModels)">
+             <summary>
+             Create Activity
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 POST /api/Activity/Create
+                 {
+                   "revenueId": 10,
+                   "customerId": 210
+                     }
+            
+             </remarks>
+             <param name="model"></param>
+             <returns>Created success message </returns>
+             <response code="201">Activity Created Successfully</response>
+             <response code="400">If an error occur or invalid request payload</response>
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.ActivityController.UpdateActivity(WorkOffice.Contracts.Models.NHSActivityViewModels)">
+             <summary>
+             Create Activity
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 POST /api/Activity/Create
+                 {
+                   "revenueId": 10,
+                   "customerId": 210
+                     }
+            
+             </remarks>
+             <param name="model"></param>
+             <returns>Created success message </returns>
+             <response code="201">Activity Created Successfully</response>
+             <response code="400">If an error occur or invalid request payload</response>
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.ActivityController.GetList(System.Int32,System.Int32)">
+             <summary>
+             Get list of Activity
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="pageNumber"></param>
+             <param name="pageSize"></param>
+             <returns>List of Activity</returns>
+             <response code="200">Returns list of Activity</response>
+             <response code="404">If list of Activity is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.ActivityController.Get(System.Guid)">
+             <summary>
+             Get object of Activity
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="locationId"></param>
+             <returns>Object of Activity</returns>
+             <response code="200">Returns object of Activity</response>
+             <response code="404">If object of Activity is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.ActivityController.GenerateExportStructureDefinition">
+             <summary>
+             Export Activity
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <returns>Object of Activity</returns>
+             <response code="200">Returns object of Activity</response>
+             <response code="404">If object of Activity is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.ActivityController.UploadStructureDefinition(WorkOffice.Web.Utilities.UploadModel)">
+             <summary>
+             Upload Activity
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <returns>Object of Activity</returns>
+             <response code="200">Returns object of Activity</response>
+             <response code="404">If object of Activity is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.ActivityController.Delete(System.Guid)">
+             <summary>
+             Delete Activity
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="locationId"></param>
+             <returns>Object of Activity</returns>
+             <response code="200">Returns object of Activity</response>
+             <response code="404">If object of Activity is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.ActivityController.MultipleDelete(WorkOffice.Contracts.Models.MultipleDeleteModel)">
+             <summary>
+             Delete Multiple Activity
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="model"></param>
+             <returns>Object of Activity</returns>
+             <response code="200">Returns object of Activity</response>
+             <response code="404">If object of Activity is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.AppTypeController.CreateAppType(WorkOffice.Contracts.Models.AppTypeViewModels)">
+             <summary>
+             Create AppType
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 POST /api/AppType/Create
+                 {
+                   "revenueId": 10,
+                   "customerId": 210
+                     }
+            
+             </remarks>
+             <param name="model"></param>
+             <returns>Created success message </returns>
+             <response code="201">AppType Created Successfully</response>
+             <response code="400">If an error occur or invalid request payload</response>
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.AppTypeController.UpdateAppType(WorkOffice.Contracts.Models.AppTypeViewModels)">
+             <summary>
+             Create AppType
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 POST /api/AppType/Create
+                 {
+                   "revenueId": 10,
+                   "customerId": 210
+                     }
+            
+             </remarks>
+             <param name="model"></param>
+             <returns>Created success message </returns>
+             <response code="201">AppType Created Successfully</response>
+             <response code="400">If an error occur or invalid request payload</response>
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.AppTypeController.GetList(WorkOffice.Contracts.ServicesContracts.SearchCall{WorkOffice.Contracts.ServicesContracts.SearchParameter})">
+             <summary>
+             Get list of AppType
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="pageNumber"></param>
+             <param name="pageSize"></param>
+             <returns>List of AppType</returns>
+             <response code="200">Returns list of AppType</response>
+             <response code="404">If list of AppType is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.AppTypeController.Get(System.Guid)">
+             <summary>
+             Get object of AppType
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="locationId"></param>
+             <returns>Object of AppType</returns>
+             <response code="200">Returns object of AppType</response>
+             <response code="404">If object of AppType is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.AppTypeController.GenerateExportStructureDefinition">
+             <summary>
+             Export AppType
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <returns>Object of AppType</returns>
+             <response code="200">Returns object of AppType</response>
+             <response code="404">If object of AppType is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.AppTypeController.UploadStructureDefinition(WorkOffice.Web.Utilities.UploadModel)">
+             <summary>
+             Upload AppType
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <returns>Object of AppType</returns>
+             <response code="200">Returns object of AppType</response>
+             <response code="404">If object of AppType is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.AppTypeController.Delete(System.Guid)">
+             <summary>
+             Delete AppType
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="locationId"></param>
+             <returns>Object of AppType</returns>
+             <response code="200">Returns object of AppType</response>
+             <response code="404">If object of AppType is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.AppTypeController.MultipleDelete(WorkOffice.Contracts.Models.MultipleDeleteModel)">
+             <summary>
+             Delete Multiple AppType
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="model"></param>
+             <returns>Object of AppType</returns>
+             <response code="200">Returns object of AppType</response>
+             <response code="404">If object of AppType is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.ConsultantController.CreateConsultant(WorkOffice.Contracts.Models.ConsultantViewModels)">
+             <summary>
+             Create Consultant
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 POST /api/Consultant/Create
+                 {
+                   "revenueId": 10,
+                   "customerId": 210
+                     }
+            
+             </remarks>
+             <param name="model"></param>
+             <returns>Created success message </returns>
+             <response code="201">Consultant Created Successfully</response>
+             <response code="400">If an error occur or invalid request payload</response>
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.ConsultantController.UpdateConsultant(WorkOffice.Contracts.Models.ConsultantViewModels)">
+             <summary>
+             Create Consultant
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 POST /api/Consultant/Create
+                 {
+                   "revenueId": 10,
+                   "customerId": 210
+                     }
+            
+             </remarks>
+             <param name="model"></param>
+             <returns>Created success message </returns>
+             <response code="201">Consultant Created Successfully</response>
+             <response code="400">If an error occur or invalid request payload</response>
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.ConsultantController.GetList(System.Int32,System.Int32)">
+             <summary>
+             Get list of Consultant
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="pageNumber"></param>
+             <param name="pageSize"></param>
+             <returns>List of Consultant</returns>
+             <response code="200">Returns list of Consultant</response>
+             <response code="404">If list of Consultant is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.ConsultantController.Get(System.Guid)">
+             <summary>
+             Get object of Consultant
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="locationId"></param>
+             <returns>Object of Consultant</returns>
+             <response code="200">Returns object of Consultant</response>
+             <response code="404">If object of Consultant is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.ConsultantController.GenerateExportStructureDefinition">
+             <summary>
+             Export Consultant
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <returns>Object of Consultant</returns>
+             <response code="200">Returns object of Consultant</response>
+             <response code="404">If object of Consultant is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.ConsultantController.UploadStructureDefinition(WorkOffice.Web.Utilities.UploadModel)">
+             <summary>
+             Upload Consultant
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <returns>Object of Consultant</returns>
+             <response code="200">Returns object of Consultant</response>
+             <response code="404">If object of Consultant is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.ConsultantController.Delete(System.Guid)">
+             <summary>
+             Delete Consultant
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="locationId"></param>
+             <returns>Object of Consultant</returns>
+             <response code="200">Returns object of Consultant</response>
+             <response code="404">If object of Consultant is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.ConsultantController.MultipleDelete(WorkOffice.Contracts.Models.MultipleDeleteModel)">
+             <summary>
+             Delete Multiple Consultant
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="model"></param>
+             <returns>Object of Consultant</returns>
+             <response code="200">Returns object of Consultant</response>
+             <response code="404">If object of Consultant is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.HospitalController.CreateHospital(WorkOffice.Contracts.Models.HospitalViewModels)">
+             <summary>
+             Create Hospital
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 POST /api/Hospital/Create
+                 {
+                   "revenueId": 10,
+                   "customerId": 210
+                     }
+            
+             </remarks>
+             <param name="model"></param>
+             <returns>Created success message </returns>
+             <response code="201">Hospital Created Successfully</response>
+             <response code="400">If an error occur or invalid request payload</response>
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.HospitalController.UpdateHospital(WorkOffice.Contracts.Models.HospitalViewModels)">
+             <summary>
+             Create Hospital
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 POST /api/Hospital/Create
+                 {
+                   "revenueId": 10,
+                   "customerId": 210
+                     }
+            
+             </remarks>
+             <param name="model"></param>
+             <returns>Created success message </returns>
+             <response code="201">Hospital Created Successfully</response>
+             <response code="400">If an error occur or invalid request payload</response>
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.HospitalController.GetList(System.Int32,System.Int32)">
+             <summary>
+             Get list of Hospital
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="pageNumber"></param>
+             <param name="pageSize"></param>
+             <returns>List of Hospital</returns>
+             <response code="200">Returns list of Hospital</response>
+             <response code="404">If list of Hospital is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.HospitalController.Get(System.Guid)">
+             <summary>
+             Get object of Hospital
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="locationId"></param>
+             <returns>Object of Hospital</returns>
+             <response code="200">Returns object of Hospital</response>
+             <response code="404">If object of Hospital is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.HospitalController.GenerateExportStructureDefinition">
+             <summary>
+             Export Hospital
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <returns>Object of Hospital</returns>
+             <response code="200">Returns object of Hospital</response>
+             <response code="404">If object of Hospital is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.HospitalController.UploadStructureDefinition(WorkOffice.Web.Utilities.UploadModel)">
+             <summary>
+             Upload Hospital
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <returns>Object of Hospital</returns>
+             <response code="200">Returns object of Hospital</response>
+             <response code="404">If object of Hospital is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.HospitalController.Delete(System.Guid)">
+             <summary>
+             Delete Hospital
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="locationId"></param>
+             <returns>Object of Hospital</returns>
+             <response code="200">Returns object of Hospital</response>
+             <response code="404">If object of Hospital is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.HospitalController.MultipleDelete(WorkOffice.Contracts.Models.MultipleDeleteModel)">
+             <summary>
+             Delete Multiple Hospital
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="model"></param>
+             <returns>Object of Hospital</returns>
+             <response code="200">Returns object of Hospital</response>
+             <response code="404">If object of Hospital is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.PathwayStatusController.CreatePathwayStatus(WorkOffice.Contracts.Models.PathwayStatusViewModels)">
+             <summary>
+             Create PathwayStatus
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 POST /api/PathwayStatus/Create
+                 {
+                   "revenueId": 10,
+                   "customerId": 210
+                     }
+            
+             </remarks>
+             <param name="model"></param>
+             <returns>Created success message </returns>
+             <response code="201">PathwayStatus Created Successfully</response>
+             <response code="400">If an error occur or invalid request payload</response>
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.PathwayStatusController.UpdatePathwayStatus(WorkOffice.Contracts.Models.PathwayStatusViewModels)">
+             <summary>
+             Create PathwayStatus
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 POST /api/PathwayStatus/Create
+                 {
+                   "revenueId": 10,
+                   "customerId": 210
+                     }
+            
+             </remarks>
+             <param name="model"></param>
+             <returns>Created success message </returns>
+             <response code="201">PathwayStatus Created Successfully</response>
+             <response code="400">If an error occur or invalid request payload</response>
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.PathwayStatusController.GetList(System.Int32,System.Int32)">
+             <summary>
+             Get list of PathwayStatus
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="pageNumber"></param>
+             <param name="pageSize"></param>
+             <returns>List of PathwayStatus</returns>
+             <response code="200">Returns list of PathwayStatus</response>
+             <response code="404">If list of PathwayStatus is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.PathwayStatusController.Get(System.Guid)">
+             <summary>
+             Get object of PathwayStatus
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="locationId"></param>
+             <returns>Object of PathwayStatus</returns>
+             <response code="200">Returns object of PathwayStatus</response>
+             <response code="404">If object of PathwayStatus is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.PathwayStatusController.GenerateExportStructureDefinition">
+             <summary>
+             Export PathwayStatus
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <returns>Object of PathwayStatus</returns>
+             <response code="200">Returns object of PathwayStatus</response>
+             <response code="404">If object of PathwayStatus is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.PathwayStatusController.UploadStructureDefinition(WorkOffice.Web.Utilities.UploadModel)">
+             <summary>
+             Upload PathwayStatus
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <returns>Object of PathwayStatus</returns>
+             <response code="200">Returns object of PathwayStatus</response>
+             <response code="404">If object of PathwayStatus is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.PathwayStatusController.Delete(System.Guid)">
+             <summary>
+             Delete PathwayStatus
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="locationId"></param>
+             <returns>Object of PathwayStatus</returns>
+             <response code="200">Returns object of PathwayStatus</response>
+             <response code="404">If object of PathwayStatus is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.PathwayStatusController.MultipleDelete(WorkOffice.Contracts.Models.MultipleDeleteModel)">
+             <summary>
+             Delete Multiple PathwayStatus
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="model"></param>
+             <returns>Object of PathwayStatus</returns>
+             <response code="200">Returns object of PathwayStatus</response>
+             <response code="404">If object of PathwayStatus is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.RTTController.CreateRTT(WorkOffice.Contracts.Models.RTTViewModels)">
+             <summary>
+             Create RTT
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 POST /api/RTT/Create
+                 {
+                   "revenueId": 10,
+                   "customerId": 210
+                     }
+            
+             </remarks>
+             <param name="model"></param>
+             <returns>Created success message </returns>
+             <response code="201">RTT Created Successfully</response>
+             <response code="400">If an error occur or invalid request payload</response>
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.RTTController.UpdateRTT(WorkOffice.Contracts.Models.RTTViewModels)">
+             <summary>
+             Create RTT
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 POST /api/RTT/Create
+                 {
+                   "revenueId": 10,
+                   "customerId": 210
+                     }
+            
+             </remarks>
+             <param name="model"></param>
+             <returns>Created success message </returns>
+             <response code="201">RTT Created Successfully</response>
+             <response code="400">If an error occur or invalid request payload</response>
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.RTTController.GetList(System.Int32,System.Int32)">
+             <summary>
+             Get list of RTT
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="pageNumber"></param>
+             <param name="pageSize"></param>
+             <returns>List of RTT</returns>
+             <response code="200">Returns list of RTT</response>
+             <response code="404">If list of RTT is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.RTTController.Get(System.Guid)">
+             <summary>
+             Get object of RTT
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="locationId"></param>
+             <returns>Object of RTT</returns>
+             <response code="200">Returns object of RTT</response>
+             <response code="404">If object of RTT is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.RTTController.GenerateExportStructureDefinition">
+             <summary>
+             Export RTT
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <returns>Object of RTT</returns>
+             <response code="200">Returns object of RTT</response>
+             <response code="404">If object of RTT is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.RTTController.UploadStructureDefinition(WorkOffice.Web.Utilities.UploadModel)">
+             <summary>
+             Upload RTT
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <returns>Object of RTT</returns>
+             <response code="200">Returns object of RTT</response>
+             <response code="404">If object of RTT is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.RTTController.Delete(System.Guid)">
+             <summary>
+             Delete RTT
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="locationId"></param>
+             <returns>Object of RTT</returns>
+             <response code="200">Returns object of RTT</response>
+             <response code="404">If object of RTT is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.RTTController.MultipleDelete(WorkOffice.Contracts.Models.MultipleDeleteModel)">
+             <summary>
+             Delete Multiple RTT
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="model"></param>
+             <returns>Object of RTT</returns>
+             <response code="200">Returns object of RTT</response>
+             <response code="404">If object of RTT is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.SpecialtyController.CreateSpecialty(WorkOffice.Contracts.Models.SpecialtyViewModels)">
+             <summary>
+             Create Specialty
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 POST /api/Specialty/Create
+                 {
+                   "revenueId": 10,
+                   "customerId": 210
+                     }
+            
+             </remarks>
+             <param name="model"></param>
+             <returns>Created success message </returns>
+             <response code="201">Specialty Created Successfully</response>
+             <response code="400">If an error occur or invalid request payload</response>
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.SpecialtyController.UpdateSpecialty(WorkOffice.Contracts.Models.SpecialtyViewModels)">
+             <summary>
+             Create Specialty
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 POST /api/Specialty/Create
+                 {
+                   "revenueId": 10,
+                   "customerId": 210
+                     }
+            
+             </remarks>
+             <param name="model"></param>
+             <returns>Created success message </returns>
+             <response code="201">Specialty Created Successfully</response>
+             <response code="400">If an error occur or invalid request payload</response>
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.SpecialtyController.GetList(System.Int32,System.Int32)">
+             <summary>
+             Get list of Specialty
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="pageNumber"></param>
+             <param name="pageSize"></param>
+             <returns>List of Specialty</returns>
+             <response code="200">Returns list of Specialty</response>
+             <response code="404">If list of Specialty is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.SpecialtyController.Get(System.Guid)">
+             <summary>
+             Get object of Specialty
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="locationId"></param>
+             <returns>Object of Specialty</returns>
+             <response code="200">Returns object of Specialty</response>
+             <response code="404">If object of Specialty is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.SpecialtyController.GenerateExportStructureDefinition">
+             <summary>
+             Export Specialty
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <returns>Object of Specialty</returns>
+             <response code="200">Returns object of Specialty</response>
+             <response code="404">If object of Specialty is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.SpecialtyController.UploadStructureDefinition(WorkOffice.Web.Utilities.UploadModel)">
+             <summary>
+             Upload Specialty
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <returns>Object of Specialty</returns>
+             <response code="200">Returns object of Specialty</response>
+             <response code="404">If object of Specialty is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.SpecialtyController.Delete(System.Guid)">
+             <summary>
+             Delete Specialty
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="locationId"></param>
+             <returns>Object of Specialty</returns>
+             <response code="200">Returns object of Specialty</response>
+             <response code="404">If object of Specialty is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.SpecialtyController.MultipleDelete(WorkOffice.Contracts.Models.MultipleDeleteModel)">
+             <summary>
+             Delete Multiple Specialty
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="model"></param>
+             <returns>Object of Specialty</returns>
+             <response code="200">Returns object of Specialty</response>
+             <response code="404">If object of Specialty is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.WaitingTypeController.CreateWaitingType(WorkOffice.Contracts.Models.WaitingTypeViewModels)">
+             <summary>
+             Create WaitingType
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 POST /api/WaitingType/Create
+                 {
+                   "revenueId": 10,
+                   "customerId": 210
+                     }
+            
+             </remarks>
+             <param name="model"></param>
+             <returns>Created success message </returns>
+             <response code="201">WaitingType Created Successfully</response>
+             <response code="400">If an error occur or invalid request payload</response>
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.WaitingTypeController.UpdateWaitingType(WorkOffice.Contracts.Models.WaitingTypeViewModels)">
+             <summary>
+             Create WaitingType
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 POST /api/WaitingType/Create
+                 {
+                   "revenueId": 10,
+                   "customerId": 210
+                     }
+            
+             </remarks>
+             <param name="model"></param>
+             <returns>Created success message </returns>
+             <response code="201">WaitingType Created Successfully</response>
+             <response code="400">If an error occur or invalid request payload</response>
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.WaitingTypeController.GetList(System.Int32,System.Int32)">
+             <summary>
+             Get list of WaitingType
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="pageNumber"></param>
+             <param name="pageSize"></param>
+             <returns>List of WaitingType</returns>
+             <response code="200">Returns list of WaitingType</response>
+             <response code="404">If list of WaitingType is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.WaitingTypeController.Get(System.Guid)">
+             <summary>
+             Get object of WaitingType
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="locationId"></param>
+             <returns>Object of WaitingType</returns>
+             <response code="200">Returns object of WaitingType</response>
+             <response code="404">If object of WaitingType is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.WaitingTypeController.GenerateExportStructureDefinition">
+             <summary>
+             Export WaitingType
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <returns>Object of WaitingType</returns>
+             <response code="200">Returns object of WaitingType</response>
+             <response code="404">If object of WaitingType is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.WaitingTypeController.UploadStructureDefinition(WorkOffice.Web.Utilities.UploadModel)">
+             <summary>
+             Upload WaitingType
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <returns>Object of WaitingType</returns>
+             <response code="200">Returns object of WaitingType</response>
+             <response code="404">If object of WaitingType is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.WaitingTypeController.Delete(System.Guid)">
+             <summary>
+             Delete WaitingType
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="locationId"></param>
+             <returns>Object of WaitingType</returns>
+             <response code="200">Returns object of WaitingType</response>
+             <response code="404">If object of WaitingType is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.WaitingTypeController.MultipleDelete(WorkOffice.Contracts.Models.MultipleDeleteModel)">
+             <summary>
+             Delete Multiple WaitingType
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="model"></param>
+             <returns>Object of WaitingType</returns>
+             <response code="200">Returns object of WaitingType</response>
+             <response code="404">If object of WaitingType is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.WardController.CreateWard(WorkOffice.Contracts.Models.WardViewModels)">
+             <summary>
+             Create Ward
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 POST /api/Ward/Create
+                 {
+                   "revenueId": 10,
+                   "customerId": 210
+                     }
+            
+             </remarks>
+             <param name="model"></param>
+             <returns>Created success message </returns>
+             <response code="201">Ward Created Successfully</response>
+             <response code="400">If an error occur or invalid request payload</response>
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.WardController.UpdateWard(WorkOffice.Contracts.Models.WardViewModels)">
+             <summary>
+             Create Ward
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 POST /api/Ward/Create
+                 {
+                   "revenueId": 10,
+                   "customerId": 210
+                     }
+            
+             </remarks>
+             <param name="model"></param>
+             <returns>Created success message </returns>
+             <response code="201">Ward Created Successfully</response>
+             <response code="400">If an error occur or invalid request payload</response>
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.WardController.GetList(System.Int32,System.Int32)">
+             <summary>
+             Get list of Ward
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="pageNumber"></param>
+             <param name="pageSize"></param>
+             <returns>List of Ward</returns>
+             <response code="200">Returns list of Ward</response>
+             <response code="404">If list of Ward is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.WardController.Get(System.Guid)">
+             <summary>
+             Get object of Ward
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="locationId"></param>
+             <returns>Object of Ward</returns>
+             <response code="200">Returns object of Ward</response>
+             <response code="404">If object of Ward is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.WardController.GenerateExportStructureDefinition">
+             <summary>
+             Export Ward
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <returns>Object of Ward</returns>
+             <response code="200">Returns object of Ward</response>
+             <response code="404">If object of Ward is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.WardController.UploadStructureDefinition(WorkOffice.Web.Utilities.UploadModel)">
+             <summary>
+             Upload Ward
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <returns>Object of Ward</returns>
+             <response code="200">Returns object of Ward</response>
+             <response code="404">If object of Ward is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.WardController.Delete(System.Guid)">
+             <summary>
+             Delete Ward
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="locationId"></param>
+             <returns>Object of Ward</returns>
+             <response code="200">Returns object of Ward</response>
+             <response code="404">If object of Ward is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.WardController.MultipleDelete(WorkOffice.Contracts.Models.MultipleDeleteModel)">
+             <summary>
+             Delete Multiple Ward
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="model"></param>
+             <returns>Object of Ward</returns>
+             <response code="200">Returns object of Ward</response>
+             <response code="404">If object of Ward is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
         <member name="M:WorkOffice.Web.Controllers.CompanyStructureController.Create(WorkOffice.Contracts.Models.CompanyStructureModel)">
              <summary>
              Create CompanyStructure

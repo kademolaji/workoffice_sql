@@ -5,6 +5,7 @@ using System.Text;
 namespace WorkOffice.Contracts.Models
 {
    public class LocationModel : BaseModel
+
     {
         public Guid LocationId { get; set; }
         public string Name { get; set; }
