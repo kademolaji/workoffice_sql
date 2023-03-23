@@ -6,6 +6,6 @@ namespace WorkOffice.Contracts.Models
 {
    public class MultipleDeleteModel
     {
-        public List<String> targetIds { get; set; }
+        public List<long> targetIds { get; set; }
     }
 }

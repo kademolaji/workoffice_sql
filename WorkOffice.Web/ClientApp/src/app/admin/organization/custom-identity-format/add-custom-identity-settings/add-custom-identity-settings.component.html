@@ -1,0 +1,77 @@
+<section class="content">
+  <div class="content-block">
+    <div class="block-header">
+      <!-- breadcrumb -->
+      <app-breadcrumb *ngIf="isAddMode" [title]="'Add Custom Identity Settings'" [items]="['Custom Identity Settings']" [active_item]="'Custom Identity Settings'"></app-breadcrumb>
+      <app-breadcrumb *ngIf="!isAddMode" [title]="'Edit Custom Identity Settings'" [items]="['Custom Identity Settings']" [active_item]="'Edit Custom Identity Settings'"></app-breadcrumb>
+
+    </div>
+    <div class="row clearfix">
+      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="card">
+          <div class="header">
+            <h2 *ngIf="isAddMode"><strong> Add New Custom Identity Settings</strong></h2>
+            <h2 *ngIf="!isAddMode"><strong> Edit Custom Identity Settings</strong></h2>
+          </div>
+          <div class="body">
+            <form class="m-4" [formGroup]="customIdentitySettingsForm" (ngSubmit)="onSubmit()">
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Prefix</mat-label>
+                    <input matInput formControlName="prefix" required>
+                    <mat-error *ngIf="customIdentitySettingsForm.get('prefix')?.hasError('required')">
+                      Prefix is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Suffix</mat-label>
+                    <input matInput formControlName="suffix">
+                    <mat-error *ngIf="customIdentitySettingsForm.get('suffix')?.hasError('required')">
+                      Suffix is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Select Company</mat-label>
+                    <mat-select formControlName="company" required>
+                      <mat-option  *ngFor="let country of companyList" [value]="country.label">
+                        {{country.label}}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="customIdentitySettingsForm.get('company')?.hasError('required')">
+                      Company is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Digits</mat-label>
+                    <input type="number" matInput formControlName="digits" required>
+                    <mat-error *ngIf="customIdentitySettingsForm.get('digits')?.hasError('required')">
+                      Digits is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-3">
+                  <button class="btn-space" [class.auth-spinner]="loading" [disabled]="loading" [disabled]="!customIdentitySettingsForm.valid " mat-raised-button
+                    color="primary">Submit</button>
+                  <button type="button" (click)="cancelForm()" mat-raised-button color="warn">Cancel</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

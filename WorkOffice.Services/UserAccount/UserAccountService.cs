@@ -723,7 +723,7 @@ namespace WorkOffice.Services
             }
         }
 
-        public async Task<ApiResponse<GetResponse<UserAccountResponse>>> GetUserById(Guid userId)
+        public async Task<ApiResponse<GetResponse<UserAccountResponse>>> GetUserById(long userId)
         {
             try
             {
@@ -758,7 +758,7 @@ namespace WorkOffice.Services
             }
         }
 
-        public async Task<ApiResponse<GetResponse<AuthenticationResponse>>> GetUserAccountById(Guid userId)
+        public async Task<ApiResponse<GetResponse<AuthenticationResponse>>> GetUserAccountById(long userId)
         {
             try
             {
@@ -921,7 +921,7 @@ namespace WorkOffice.Services
         }
 
 
-        public async Task UpdateLastActive(Guid userId)
+        public async Task UpdateLastActive(long userId)
         {
             try
             {
@@ -940,19 +940,17 @@ namespace WorkOffice.Services
 
         }
 
-        public async Task<ApiResponse<CreateResponse>> DisableEnableUser(string rawUserId, string rawLoggedInUserId)
+        public async Task<ApiResponse<CreateResponse>> DisableEnableUser(long userId, long loggedInUserId)
         {
             try
             {
-                var userId = Guid.Empty;
-                var userIdNotEmpty = Guid.TryParse(rawUserId, out userId);
-                if (userIdNotEmpty && userId != Guid.Empty)
+              
+                if (userId > 0)
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "User Id is required." }, IsSuccess = false };
                 }
-                var loggedInUserId = Guid.Empty;
-                var loggedInUserIdNotEmpty = Guid.TryParse(rawLoggedInUserId, out userId);
-                if (loggedInUserIdNotEmpty && loggedInUserId != Guid.Empty)
+             
+                if (loggedInUserId > 0)
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Logged in user cannot disable/enable his/her self." }, IsSuccess = false };
                 }

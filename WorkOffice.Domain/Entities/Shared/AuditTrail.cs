@@ -8,7 +8,7 @@ namespace WorkOffice.Domain.Entities
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
-        public Guid AuditTrailId { get; set; }
+        public long AuditTrailId { get; set; }
         public DateTime? ActionDate { get; set; }
         [StringLength(50)]
         public string ActionBy { get; set; }

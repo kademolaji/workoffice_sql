@@ -8,6 +8,6 @@ namespace WorkOffice.Contracts.Models
     public class BaseModel
     {
         [JsonIgnore]
-        public Guid ClientId { get; set; }
+        public long ClientId { get; set; }
     }
 }

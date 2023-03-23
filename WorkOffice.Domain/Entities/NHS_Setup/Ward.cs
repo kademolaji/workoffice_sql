@@ -11,7 +11,7 @@ namespace WorkOffice.Domain.Entities
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
-        public Guid WardId { get; set; }
+        public long WardId { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
     }

@@ -32,7 +32,7 @@ namespace WorkOffice.Contracts.Mappings
         {
             return new T
             {
-                CompanyStructureId = entity.CompanyStructureId,
+                CompanyStructureId =entity.CompanyStructureId,
                 Name = entity.Name,
                 StructureTypeID = entity.StructureTypeId,
                 Country = entity.Country,
@@ -41,7 +41,7 @@ namespace WorkOffice.Contracts.Mappings
                 ContactEmail = entity.ContactEmail,
                 ContactPhone = entity.ContactPhone,
                 CompanyHead = entity.CompanyHead,
-                ParentID = entity.ParentID,
+                ParentID =entity.ParentID,
                 Company = entity.Company,
                 ClientId = entity.ClientId
             };

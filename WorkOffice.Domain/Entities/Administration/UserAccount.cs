@@ -16,7 +16,7 @@ namespace WorkOffice.Domain.Entities
         }
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
-        public Guid UserId { get; set; }
+        public long UserId { get; set; }
         public string CustomUserCode { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

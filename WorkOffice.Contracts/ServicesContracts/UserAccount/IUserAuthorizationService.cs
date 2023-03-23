@@ -7,6 +7,6 @@ namespace WorkOffice.Contracts.ServicesContracts
 {
    public interface IUserAuthorizationService
     {
-        bool CanPerformActionOnResource(Guid userId, Guid activityId, Guid clientId, UserActions action);
+        bool CanPerformActionOnResource(long userId, long activityId, long clientId, UserActions action);
     }
 }

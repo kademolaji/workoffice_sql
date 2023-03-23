@@ -1,9 +1,10 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace WorkOffice.Domain.Migrations
 {
-    public partial class AdminandNHSSetup : Migration
+    public partial class initial_migration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,9 +12,10 @@ namespace WorkOffice.Domain.Migrations
                 name: "AppTypes",
                 columns: table => new
                 {
-                    AppTypeId = table.Column<Guid>(nullable: false),
+                    AppTypeId = table.Column<long>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     CreatedOn = table.Column<DateTimeOffset>(nullable: false),
-                    ClientId = table.Column<Guid>(nullable: false),
+                    ClientId = table.Column<long>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     Code = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true)
@@ -27,9 +29,10 @@ namespace WorkOffice.Domain.Migrations
                 name: "AuditTrails",
                 columns: table => new
                 {
-                    AuditTrailId = table.Column<Guid>(nullable: false),
+                    AuditTrailId = table.Column<long>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     CreatedOn = table.Column<DateTimeOffset>(nullable: false),
-                    ClientId = table.Column<Guid>(nullable: false),
+                    ClientId = table.Column<long>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     ActionDate = table.Column<DateTime>(nullable: true),
                     ActionBy = table.Column<string>(maxLength: 50, nullable: true),
@@ -48,9 +51,10 @@ namespace WorkOffice.Domain.Migrations
                 name: "Consultants",
                 columns: table => new
                 {
-                    ConsultantId = table.Column<Guid>(nullable: false),
+                    ConsultantId = table.Column<long>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     CreatedOn = table.Column<DateTimeOffset>(nullable: false),
-                    ClientId = table.Column<Guid>(nullable: false),
+                    ClientId = table.Column<long>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     Code = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true)
@@ -64,9 +68,10 @@ namespace WorkOffice.Domain.Migrations
                 name: "Countries",
                 columns: table => new
                 {
-                    CountryId = table.Column<Guid>(nullable: false),
+                    CountryId = table.Column<long>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     CreatedOn = table.Column<DateTimeOffset>(nullable: false),
-                    ClientId = table.Column<Guid>(nullable: false),
+                    ClientId = table.Column<long>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     Code = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
@@ -81,9 +86,10 @@ namespace WorkOffice.Domain.Migrations
                 name: "CustomIdentityFormatSettings",
                 columns: table => new
                 {
-                    CustomIdentityFormatSettingId = table.Column<Guid>(nullable: false),
+                    CustomIdentityFormatSettingId = table.Column<long>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     CreatedOn = table.Column<DateTimeOffset>(nullable: false),
-                    ClientId = table.Column<Guid>(nullable: false),
+                    ClientId = table.Column<long>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     Prefix = table.Column<int>(nullable: false),
                     Suffix = table.Column<int>(nullable: false),
@@ -99,9 +105,10 @@ namespace WorkOffice.Domain.Migrations
                 name: "GeneralInformations",
                 columns: table => new
                 {
-                    GeneralInformationId = table.Column<Guid>(nullable: false),
+                    GeneralInformationId = table.Column<long>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     CreatedOn = table.Column<DateTimeOffset>(nullable: false),
-                    ClientId = table.Column<Guid>(nullable: false),
+                    ClientId = table.Column<long>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     Organisationname = table.Column<string>(nullable: true),
                     Taxid = table.Column<string>(nullable: true),
@@ -131,9 +138,10 @@ namespace WorkOffice.Domain.Migrations
                 name: "Hospitals",
                 columns: table => new
                 {
-                    HospitalId = table.Column<Guid>(nullable: false),
+                    HospitalId = table.Column<long>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     CreatedOn = table.Column<DateTimeOffset>(nullable: false),
-                    ClientId = table.Column<Guid>(nullable: false),
+                    ClientId = table.Column<long>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     Code = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true)
@@ -147,9 +155,10 @@ namespace WorkOffice.Domain.Migrations
                 name: "Locations",
                 columns: table => new
                 {
-                    LocationId = table.Column<Guid>(nullable: false),
+                    LocationId = table.Column<long>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     CreatedOn = table.Column<DateTimeOffset>(nullable: false),
-                    ClientId = table.Column<Guid>(nullable: false),
+                    ClientId = table.Column<long>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Country = table.Column<string>(nullable: true),
@@ -170,9 +179,10 @@ namespace WorkOffice.Domain.Migrations
                 name: "NHSActivities",
                 columns: table => new
                 {
-                    NHSActivityId = table.Column<Guid>(nullable: false),
+                    NHSActivityId = table.Column<long>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     CreatedOn = table.Column<DateTimeOffset>(nullable: false),
-                    ClientId = table.Column<Guid>(nullable: false),
+                    ClientId = table.Column<long>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     Code = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true)
@@ -186,12 +196,13 @@ namespace WorkOffice.Domain.Migrations
                 name: "Notifications",
                 columns: table => new
                 {
-                    NotificationId = table.Column<Guid>(nullable: false),
+                    NotificationId = table.Column<long>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     CreatedOn = table.Column<DateTimeOffset>(nullable: false),
-                    ClientId = table.Column<Guid>(nullable: false),
+                    ClientId = table.Column<long>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    SenderId = table.Column<Guid>(nullable: false),
-                    ReceiverId = table.Column<Guid>(nullable: false),
+                    SenderId = table.Column<long>(nullable: false),
+                    ReceiverId = table.Column<long>(nullable: false),
                     Title = table.Column<string>(nullable: true),
                     Body = table.Column<string>(nullable: true),
                     IsRead = table.Column<bool>(nullable: false)
@@ -205,9 +216,10 @@ namespace WorkOffice.Domain.Migrations
                 name: "PathwayStatuses",
                 columns: table => new
                 {
-                    PathwayStatusId = table.Column<Guid>(nullable: false),
+                    PathwayStatusId = table.Column<long>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     CreatedOn = table.Column<DateTimeOffset>(nullable: false),
-                    ClientId = table.Column<Guid>(nullable: false),
+                    ClientId = table.Column<long>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     Code = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
@@ -222,9 +234,10 @@ namespace WorkOffice.Domain.Migrations
                 name: "RTTs",
                 columns: table => new
                 {
-                    RTTId = table.Column<Guid>(nullable: false),
+                    RTTId = table.Column<long>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     CreatedOn = table.Column<DateTimeOffset>(nullable: false),
-                    ClientId = table.Column<Guid>(nullable: false),
+                    ClientId = table.Column<long>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     Code = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true)
@@ -238,9 +251,10 @@ namespace WorkOffice.Domain.Migrations
                 name: "Specialties",
                 columns: table => new
                 {
-                    SpecialtyId = table.Column<Guid>(nullable: false),
+                    SpecialtyId = table.Column<long>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     CreatedOn = table.Column<DateTimeOffset>(nullable: false),
-                    ClientId = table.Column<Guid>(nullable: false),
+                    ClientId = table.Column<long>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     Code = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true)
@@ -254,9 +268,10 @@ namespace WorkOffice.Domain.Migrations
                 name: "StructureDefinitions",
                 columns: table => new
                 {
-                    StructureDefinitionId = table.Column<Guid>(nullable: false),
+                    StructureDefinitionId = table.Column<long>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     CreatedOn = table.Column<DateTimeOffset>(nullable: false),
-                    ClientId = table.Column<Guid>(nullable: false),
+                    ClientId = table.Column<long>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     Definition = table.Column<string>(maxLength: 50, nullable: true),
                     Description = table.Column<string>(maxLength: 150, nullable: true),
@@ -271,9 +286,10 @@ namespace WorkOffice.Domain.Migrations
                 name: "UserAccounts",
                 columns: table => new
                 {
-                    UserId = table.Column<Guid>(nullable: false),
+                    UserId = table.Column<long>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     CreatedOn = table.Column<DateTimeOffset>(nullable: false),
-                    ClientId = table.Column<Guid>(nullable: false),
+                    ClientId = table.Column<long>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     CustomUserCode = table.Column<string>(nullable: true),
                     FirstName = table.Column<string>(nullable: true),
@@ -320,9 +336,10 @@ namespace WorkOffice.Domain.Migrations
                 name: "UserAccountSettings",
                 columns: table => new
                 {
-                    UserAccountSettingsId = table.Column<Guid>(nullable: false),
+                    UserAccountSettingsId = table.Column<long>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     CreatedOn = table.Column<DateTimeOffset>(nullable: false),
-                    ClientId = table.Column<Guid>(nullable: false),
+                    ClientId = table.Column<long>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     EnablePasswordReset = table.Column<bool>(nullable: false),
                     MinimumRequiredPasswordLength = table.Column<int>(nullable: true),
@@ -341,9 +358,10 @@ namespace WorkOffice.Domain.Migrations
                 name: "UserActivityParents",
                 columns: table => new
                 {
-                    UserActivityParentId = table.Column<Guid>(nullable: false),
+                    UserActivityParentId = table.Column<long>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     CreatedOn = table.Column<DateTimeOffset>(nullable: false),
-                    ClientId = table.Column<Guid>(nullable: false),
+                    ClientId = table.Column<long>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     UserActivityParentName = table.Column<string>(maxLength: 256, nullable: false)
                 },
@@ -356,9 +374,10 @@ namespace WorkOffice.Domain.Migrations
                 name: "UserRoleDefinitions",
                 columns: table => new
                 {
-                    UserRoleDefinitionId = table.Column<Guid>(nullable: false),
+                    UserRoleDefinitionId = table.Column<long>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     CreatedOn = table.Column<DateTimeOffset>(nullable: false),
-                    ClientId = table.Column<Guid>(nullable: false),
+                    ClientId = table.Column<long>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     RoleName = table.Column<string>(maxLength: 256, nullable: false)
                 },
@@ -371,9 +390,10 @@ namespace WorkOffice.Domain.Migrations
                 name: "WaitingTypes",
                 columns: table => new
                 {
-                    WaitingTypeId = table.Column<Guid>(nullable: false),
+                    WaitingTypeId = table.Column<long>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     CreatedOn = table.Column<DateTimeOffset>(nullable: false),
-                    ClientId = table.Column<Guid>(nullable: false),
+                    ClientId = table.Column<long>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     Code = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true)
@@ -387,9 +407,10 @@ namespace WorkOffice.Domain.Migrations
                 name: "Wards",
                 columns: table => new
                 {
-                    WardId = table.Column<Guid>(nullable: false),
+                    WardId = table.Column<long>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     CreatedOn = table.Column<DateTimeOffset>(nullable: false),
-                    ClientId = table.Column<Guid>(nullable: false),
+                    ClientId = table.Column<long>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     Code = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true)
@@ -403,13 +424,14 @@ namespace WorkOffice.Domain.Migrations
                 name: "States",
                 columns: table => new
                 {
-                    StateId = table.Column<Guid>(nullable: false),
+                    StateId = table.Column<long>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     CreatedOn = table.Column<DateTimeOffset>(nullable: false),
-                    ClientId = table.Column<Guid>(nullable: false),
+                    ClientId = table.Column<long>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Code = table.Column<string>(nullable: true),
-                    CountryId = table.Column<Guid>(nullable: false)
+                    CountryId = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -426,21 +448,22 @@ namespace WorkOffice.Domain.Migrations
                 name: "CompanyStructures",
                 columns: table => new
                 {
-                    CompanyStructureId = table.Column<Guid>(nullable: false),
+                    CompanyStructureId = table.Column<long>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     CreatedOn = table.Column<DateTimeOffset>(nullable: false),
-                    ClientId = table.Column<Guid>(nullable: false),
+                    ClientId = table.Column<long>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(maxLength: 250, nullable: true),
-                    StructureTypeID = table.Column<Guid>(maxLength: 50, nullable: false),
+                    StructureTypeID = table.Column<long>(maxLength: 50, nullable: false),
                     Country = table.Column<string>(maxLength: 250, nullable: true),
                     Parent = table.Column<string>(maxLength: 250, nullable: true),
                     Address = table.Column<string>(nullable: true),
                     ContactPhone = table.Column<string>(nullable: true),
                     ContactEmail = table.Column<string>(nullable: true),
                     CompanyHead = table.Column<string>(maxLength: 100, nullable: true),
-                    ParentID = table.Column<Guid>(nullable: true),
+                    ParentID = table.Column<long>(nullable: true),
                     Company = table.Column<string>(maxLength: 250, nullable: true),
-                    StructureDefinitionId = table.Column<Guid>(nullable: true)
+                    StructureDefinitionId = table.Column<long>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -457,11 +480,12 @@ namespace WorkOffice.Domain.Migrations
                 name: "RefreshToken",
                 columns: table => new
                 {
-                    RefreshTokenId = table.Column<Guid>(nullable: false),
+                    RefreshTokenId = table.Column<long>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     CreatedOn = table.Column<DateTimeOffset>(nullable: false),
-                    ClientId = table.Column<Guid>(nullable: false),
+                    ClientId = table.Column<long>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    UserAccountUserId = table.Column<Guid>(nullable: false),
+                    UserAccountUserId = table.Column<long>(nullable: false),
                     Token = table.Column<string>(nullable: true),
                     Expires = table.Column<DateTime>(nullable: false),
                     Created = table.Column<DateTime>(nullable: false),
@@ -485,12 +509,13 @@ namespace WorkOffice.Domain.Migrations
                 name: "UserActivities",
                 columns: table => new
                 {
-                    UserActivityId = table.Column<Guid>(nullable: false),
+                    UserActivityId = table.Column<long>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     CreatedOn = table.Column<DateTimeOffset>(nullable: false),
-                    ClientId = table.Column<Guid>(nullable: false),
+                    ClientId = table.Column<long>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     UserActivityName = table.Column<string>(maxLength: 256, nullable: false),
-                    UserActivityParentId = table.Column<Guid>(nullable: false)
+                    UserActivityParentId = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -507,12 +532,13 @@ namespace WorkOffice.Domain.Migrations
                 name: "UserAccountRoles",
                 columns: table => new
                 {
-                    UserAccountRoleId = table.Column<Guid>(nullable: false),
+                    UserAccountRoleId = table.Column<long>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     CreatedOn = table.Column<DateTimeOffset>(nullable: false),
-                    ClientId = table.Column<Guid>(nullable: false),
+                    ClientId = table.Column<long>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    UserAccountId = table.Column<Guid>(nullable: false),
-                    UserRoleDefinitionId = table.Column<Guid>(nullable: false)
+                    UserAccountId = table.Column<long>(nullable: false),
+                    UserRoleDefinitionId = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -535,12 +561,13 @@ namespace WorkOffice.Domain.Migrations
                 name: "UserAccesses",
                 columns: table => new
                 {
-                    UserAccessId = table.Column<Guid>(nullable: false),
+                    UserAccessId = table.Column<long>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     CreatedOn = table.Column<DateTimeOffset>(nullable: false),
-                    ClientId = table.Column<Guid>(nullable: false),
+                    ClientId = table.Column<long>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    CompanyStructureId = table.Column<Guid>(nullable: false),
-                    UserAccountId = table.Column<Guid>(nullable: false)
+                    CompanyStructureId = table.Column<long>(nullable: false),
+                    UserAccountId = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -563,12 +590,13 @@ namespace WorkOffice.Domain.Migrations
                 name: "UserAccountAdditionalActivities",
                 columns: table => new
                 {
-                    UserAccountAdditionalActivityId = table.Column<Guid>(nullable: false),
+                    UserAccountAdditionalActivityId = table.Column<long>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     CreatedOn = table.Column<DateTimeOffset>(nullable: false),
-                    ClientId = table.Column<Guid>(nullable: false),
+                    ClientId = table.Column<long>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    UserAccountId = table.Column<Guid>(nullable: false),
-                    UserActivityId = table.Column<Guid>(nullable: false),
+                    UserAccountId = table.Column<long>(nullable: false),
+                    UserActivityId = table.Column<long>(nullable: false),
                     CanEdit = table.Column<bool>(nullable: true),
                     CanAdd = table.Column<bool>(nullable: true),
                     CanView = table.Column<bool>(nullable: true),
@@ -596,12 +624,13 @@ namespace WorkOffice.Domain.Migrations
                 name: "UserRoleActivities",
                 columns: table => new
                 {
-                    UserRoleActivityId = table.Column<Guid>(nullable: false),
+                    UserRoleActivityId = table.Column<long>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     CreatedOn = table.Column<DateTimeOffset>(nullable: false),
-                    ClientId = table.Column<Guid>(nullable: false),
+                    ClientId = table.Column<long>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    UserRoleDefinitionId = table.Column<Guid>(nullable: false),
-                    UserActivityId = table.Column<Guid>(nullable: false),
+                    UserRoleDefinitionId = table.Column<long>(nullable: false),
+                    UserActivityId = table.Column<long>(nullable: false),
                     CanEdit = table.Column<bool>(nullable: true),
                     CanAdd = table.Column<bool>(nullable: true),
                     CanView = table.Column<bool>(nullable: true),
@@ -631,6 +660,16 @@ namespace WorkOffice.Domain.Migrations
                 column: "AppTypeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AuditTrails_AuditTrailId",
+                table: "AuditTrails",
+                column: "AuditTrailId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CompanyStructures_CompanyStructureId",
+                table: "CompanyStructures",
+                column: "CompanyStructureId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_CompanyStructures_StructureDefinitionId",
                 table: "CompanyStructures",
                 column: "StructureDefinitionId");
@@ -641,14 +680,39 @@ namespace WorkOffice.Domain.Migrations
                 column: "ConsultantId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Countries_CountryId",
+                table: "Countries",
+                column: "CountryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CustomIdentityFormatSettings_CustomIdentityFormatSettingId",
+                table: "CustomIdentityFormatSettings",
+                column: "CustomIdentityFormatSettingId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GeneralInformations_GeneralInformationId",
+                table: "GeneralInformations",
+                column: "GeneralInformationId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Hospitals_HospitalId",
                 table: "Hospitals",
                 column: "HospitalId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Locations_LocationId",
+                table: "Locations",
+                column: "LocationId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_NHSActivities_NHSActivityId",
                 table: "NHSActivities",
                 column: "NHSActivityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Notifications_NotificationId",
+                table: "Notifications",
+                column: "NotificationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PathwayStatuses_PathwayStatusId",
@@ -676,10 +740,14 @@ namespace WorkOffice.Domain.Migrations
                 column: "CountryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_StructureDefinitions_Definition",
+                name: "IX_States_StateId",
+                table: "States",
+                column: "StateId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StructureDefinitions_StructureDefinitionId",
                 table: "StructureDefinitions",
-                column: "Definition",
-                unique: true);
+                column: "StructureDefinitionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserAccesses_CompanyStructureId",
@@ -687,9 +755,19 @@ namespace WorkOffice.Domain.Migrations
                 column: "CompanyStructureId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_UserAccesses_UserAccessId",
+                table: "UserAccesses",
+                column: "UserAccessId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserAccesses_UserAccountId",
                 table: "UserAccesses",
                 column: "UserAccountId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserAccountAdditionalActivities_UserAccountAdditionalActivi~",
+                table: "UserAccountAdditionalActivities",
+                column: "UserAccountAdditionalActivityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserAccountAdditionalActivities_UserAccountId",
@@ -732,8 +810,23 @@ namespace WorkOffice.Domain.Migrations
                 columns: new[] { "FirstName", "LastName" });
 
             migrationBuilder.CreateIndex(
+                name: "IX_UserAccountSettings_UserAccountSettingsId",
+                table: "UserAccountSettings",
+                column: "UserAccountSettingsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserActivities_UserActivityId",
+                table: "UserActivities",
+                column: "UserActivityId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserActivities_UserActivityParentId",
                 table: "UserActivities",
+                column: "UserActivityParentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserActivityParents_UserActivityParentId",
+                table: "UserActivityParents",
                 column: "UserActivityParentId");
 
             migrationBuilder.CreateIndex(
@@ -742,8 +835,18 @@ namespace WorkOffice.Domain.Migrations
                 column: "UserActivityId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_UserRoleActivities_UserRoleActivityId",
+                table: "UserRoleActivities",
+                column: "UserRoleActivityId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserRoleActivities_UserRoleDefinitionId",
                 table: "UserRoleActivities",
+                column: "UserRoleDefinitionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserRoleDefinitions_UserRoleDefinitionId",
+                table: "UserRoleDefinitions",
                 column: "UserRoleDefinitionId");
 
             migrationBuilder.CreateIndex(

@@ -10,7 +10,7 @@ namespace WorkOffice.Domain.Entities
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
-        public Guid UserAccountSettingsId { get; set; }
+        public long UserAccountSettingsId { get; set; }
         public bool EnablePasswordReset { get; set; }
 
         public int? MinimumRequiredPasswordLength { get; set; }

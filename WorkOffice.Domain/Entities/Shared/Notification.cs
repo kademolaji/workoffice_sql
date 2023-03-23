@@ -10,9 +10,9 @@ namespace WorkOffice.Domain.Entities
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
-        public Guid NotificationId { get; set; }
-        public Guid SenderId { get; set; }
-        public Guid ReceiverId { get; set; }
+        public long NotificationId { get; set; }
+        public long SenderId { get; set; }
+        public long ReceiverId { get; set; }
         public string Title { get; set; }
         public string Body { get; set; }
         public bool IsRead { get; set; }

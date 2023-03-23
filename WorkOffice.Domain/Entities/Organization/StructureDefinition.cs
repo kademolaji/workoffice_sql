@@ -14,7 +14,7 @@ namespace WorkOffice.Domain.Entities
         }
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
-        public Guid StructureDefinitionId { get; set; }
+        public long StructureDefinitionId { get; set; }
         [StringLength(50)]
         public string Definition { get; set; }
         [StringLength(150)]

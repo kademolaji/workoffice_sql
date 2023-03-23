@@ -114,7 +114,7 @@ namespace WorkOffice.Web.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetResponse<CustomIdentityFormatSettingModel>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(GetResponse<ProducesResponseStub>))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(GetResponse<ProducesResponseStub>))]
-        public async Task<IActionResult> Get(Guid customIdentityFormatSettingId)
+        public async Task<IActionResult> Get(long customIdentityFormatSettingId)
         {
             try
             {
@@ -156,7 +156,7 @@ namespace WorkOffice.Web.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DeleteReply))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(DeleteReply))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(DeleteReply))]
-        public async Task<IActionResult> Delete(Guid customIdentityFormatSettingId)
+        public async Task<IActionResult> Delete(long customIdentityFormatSettingId)
         {
             try
             {

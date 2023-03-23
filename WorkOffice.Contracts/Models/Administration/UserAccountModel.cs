@@ -10,7 +10,7 @@ namespace WorkOffice.Contracts.Models
         {
             Activities = new List<UserAdditionalActivityModel>();
         }
-        public Guid UserId { get; set; }
+        public long UserId { get; set; }
         public string CustomUserCode { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -36,8 +36,8 @@ namespace WorkOffice.Contracts.Models
         public DateTime? CurrentLogin { get; set; }
         public bool? CanChangePassword { get; set; }
         public int? Accesslevel { get; set; }
-        public Guid[] UserAccessIds { get; set; }
-        public Guid[] UserRoleIds { get; set; }
+        public long[] UserAccessIds { get; set; }
+        public long[] UserRoleIds { get; set; }
         public List<UserAdditionalActivityModel> Activities { get; set; }
 
     }

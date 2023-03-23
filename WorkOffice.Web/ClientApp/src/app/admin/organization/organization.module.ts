@@ -28,14 +28,38 @@ import { StructureDefinitionService } from './structure-definition/structure-def
 import { OrganizationRoutingModule } from './organization-routing.module';
 import { DeleteLocationDialogComponent } from './location/all-location/dialog/delete/delete.component';
 import { DeleteStructureDefinitionDialogComponent } from './structure-definition/all-structure-definition/dialog/delete/delete.component';
+import { AllCompanyStructureComponent } from './company-structure/all-company-structure/all-company-structure.component';
+import { AddCompanyStructureComponent } from './company-structure/add-company-structure/add-company-structure.component';
+import { DeleteCompanyStructureDialogComponent } from './company-structure/all-company-structure/dialog/delete/delete.component';
+import { CompanyStructureService } from './company-structure/company-structure.service';
+import { AddGeneralInformationComponent } from './general-information/add-general-information/add-general-information.component';
+import { AllGeneralInformationComponent } from './general-information/all-general-information/all-general-information.component';
+import { AllCustomIdentitySettingsComponent } from './custom-identity-format/all-custom-identity-settings/all-custom-identity-settings.component';
+import { AddCustomIdentitySettingsComponent } from './custom-identity-format/add-custom-identity-settings/add-custom-identity-settings.component';
+import { DeleteCustomIdentitySettingsDialogComponent } from './custom-identity-format/all-custom-identity-settings/dialog/delete/delete.component';
+import { CustomIdentityFormatService } from './custom-identity-format/custom-identity-format.service';
 
 @NgModule({
   declarations: [AddLocationComponent,
     AllLocationComponent,
+    AddLocationComponent,
+    DeleteLocationDialogComponent,
+
     AddStructureDefinitionComponent,
     AllStructureDefinitionComponent,
     DeleteStructureDefinitionDialogComponent,
-    DeleteLocationDialogComponent
+
+    AllCompanyStructureComponent,
+    AddCompanyStructureComponent,
+    DeleteCompanyStructureDialogComponent,
+
+    AllGeneralInformationComponent,
+    AddGeneralInformationComponent,
+
+    AllCustomIdentitySettingsComponent,
+    AddCustomIdentitySettingsComponent,
+    DeleteCustomIdentitySettingsDialogComponent,
+
   ],
   imports: [
     CommonModule,
@@ -62,6 +86,6 @@ import { DeleteStructureDefinitionDialogComponent } from './structure-definition
     ComponentsModule,
     SharedModule,
   ],
-  providers: [LocationService, StructureDefinitionService],
+  providers: [LocationService, StructureDefinitionService, CompanyStructureService, CustomIdentityFormatService ],
 })
 export class OrganizationModule { }

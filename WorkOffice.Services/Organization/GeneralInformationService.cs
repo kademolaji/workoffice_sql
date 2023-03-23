@@ -13,7 +13,7 @@ using WorkOffice.Domain.Helpers;
 
 namespace WorkOffice.Services
 {
-   public class GeneralInformationService : IGeneralInformationService
+    public class GeneralInformationService : IGeneralInformationService
     {
         private readonly DataContext context;
         private readonly IAuditTrailService auditTrail;
@@ -28,12 +28,12 @@ namespace WorkOffice.Services
         {
             try
             {
-                if (model.GeneralInformationId  != Guid.Empty)
+                if (model.GeneralInformationId > 0)
                 {
                     return await Update(model);
                 }
 
-                if (model.ClientId == Guid.Empty)
+                if (model.ClientId <= 0)
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Request is not coming from a valid client" }, IsSuccess = false };
                 }
@@ -96,7 +96,7 @@ namespace WorkOffice.Services
             try
             {
 
-                if (model.ClientId == Guid.Empty)
+                if (model.ClientId <= 0)
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Request is not coming from a valid client" }, IsSuccess = false };
                 }
@@ -170,18 +170,18 @@ namespace WorkOffice.Services
             }
         }
 
-        public async Task<ApiResponse<GetResponse<GeneralInformationModel>>> Get(Guid generalInformationId, Guid clientId)
+        public async Task<ApiResponse<GetResponse<GeneralInformationModel>>> Get(long generalInformationId, long clientId)
         {
             try
             {
-                if (generalInformationId == Guid.Empty)
+                if (generalInformationId <= 0)
                 {
                     return new ApiResponse<GetResponse<GeneralInformationModel>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new GetResponse<GeneralInformationModel> { Status = false, Entity = null, Message = "GeneralInformationId is required." }, IsSuccess = false };
                 }
 
                 var apiResponse = new ApiResponse<GetResponse<GeneralInformationModel>>();
 
-                var result = await context.GeneralInformations.FirstOrDefaultAsync(x=>x.GeneralInformationId == generalInformationId && x.ClientId == clientId);
+                var result = await context.GeneralInformations.FirstOrDefaultAsync(x => x.GeneralInformationId == generalInformationId && x.ClientId == clientId);
 
                 if (result == null)
                 {
@@ -207,11 +207,11 @@ namespace WorkOffice.Services
             }
         }
 
-        public async Task<ApiResponse<DeleteReply>> Delete(Guid generalInformationId)
+        public async Task<ApiResponse<DeleteReply>> Delete(long generalInformationId)
         {
             try
             {
-                if (generalInformationId == Guid.Empty)
+                if (generalInformationId <= 0)
                 {
                     return new ApiResponse<DeleteReply>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new DeleteReply { Status = false, Message = "LocationId is required." }, IsSuccess = false };
                 }

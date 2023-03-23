@@ -10,7 +10,7 @@ namespace WorkOffice.Contracts.Mappings
         {
             return new T
             {
-                StructureDefinitionId = entity.StructureDefinitionId.ToString(),
+                StructureDefinitionId = entity.StructureDefinitionId,
                 Definition = entity.Definition,
                 Description = entity.Description,
                 Level = entity.Level,

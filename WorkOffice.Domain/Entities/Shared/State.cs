@@ -10,11 +10,11 @@ namespace WorkOffice.Domain.Entities
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
-        public Guid StateId { get; set; }
+        public long StateId { get; set; }
         public string Name { get; set; }
         public string Code { get; set; }
         [ForeignKey("CountryId")]
-        public Guid CountryId { get; set; }
+        public long CountryId { get; set; }
         public virtual Country Country { get; set; }
     }
 }

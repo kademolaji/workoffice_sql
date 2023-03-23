@@ -10,11 +10,11 @@ namespace WorkOffice.Domain.Entities
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
-        public Guid UserAccountAdditionalActivityId { get; set; }
+        public long UserAccountAdditionalActivityId { get; set; }
         [ForeignKey("UserAccount")]
-        public Guid UserAccountId { get; set; }
+        public long UserAccountId { get; set; }
         [ForeignKey("UserActivity")]
-        public Guid UserActivityId { get; set; }
+        public long UserActivityId { get; set; }
 
         public bool? CanEdit { get; set; }
 

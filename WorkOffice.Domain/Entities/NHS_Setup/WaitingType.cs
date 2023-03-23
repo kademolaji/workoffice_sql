@@ -10,7 +10,7 @@ namespace WorkOffice.Domain.Entities
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
-        public Guid WaitingTypeId { get; set; }
+        public long WaitingTypeId { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
     }

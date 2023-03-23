@@ -68,23 +68,22 @@ namespace WorkOffice.Web.Controllers
         /// Sample request:
         ///
         /// </remarks>
-        /// <param name="pageNumber"></param>
-        /// <param name="pageSize"></param>
+        /// <param name="options"></param>
         /// <returns>List of CompanyStructure</returns>
         /// <response code="200">Returns list of CompanyStructure</response>
         /// <response code="404">If list of CompanyStructure is null</response> 
         /// <response code="400">If an error occur or invalid request payload</response> 
-        [HttpGet]
+        [HttpPost]
         [Route("GetList")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetResponse<List<CompanyStructureModel>>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SearchReply<CompanyStructureModel>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(GetResponse<ProducesResponseStub>))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(GetResponse<ProducesResponseStub>))]
-        public async Task<IActionResult> GetList(int pageNumber = 1, int pageSize = 10)
+        public async Task<IActionResult> GetList(SearchCall<SearchParameter> options)
         {
             try
             {
                 var clientId = httpAccessorService.GetCurrentClientId();
-                var apiResponse = await service.GetList(clientId, pageNumber, pageSize);
+                var apiResponse = await service.GetList(options, clientId);
                 if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
                 {
                     return BadRequest(apiResponse.ResponseType);
@@ -121,7 +120,7 @@ namespace WorkOffice.Web.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetResponse<CompanyStructureModel>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(GetResponse<ProducesResponseStub>))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(GetResponse<ProducesResponseStub>))]
-        public async Task<IActionResult> Get(Guid companyStructureId)
+        public async Task<IActionResult> Get(long companyStructureId)
         {
             try
             {
@@ -261,7 +260,7 @@ namespace WorkOffice.Web.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DeleteReply))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(DeleteReply))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(DeleteReply))]
-        public async Task<IActionResult> Delete(Guid companyStructureId)
+        public async Task<IActionResult> Delete(long companyStructureId)
         {
             try
             {
@@ -296,7 +295,7 @@ namespace WorkOffice.Web.Controllers
         /// <response code="200">Returns object of CompanyStructure</response>
         /// <response code="404">If object of CompanyStructure is null</response> 
         /// <response code="400">If an error occur or invalid request payload</response> 
-        [HttpDelete]
+        [HttpPost]
         [Route("MultipleDelete")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DeleteReply))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(DeleteReply))]

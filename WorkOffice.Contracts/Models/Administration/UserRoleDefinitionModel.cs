@@ -6,7 +6,7 @@ namespace WorkOffice.Contracts.Models
 {
    public class UserRoleDefinitionModel : BaseModel
     {
-        public Guid UserRoleDefinitionId { get; set; }
+        public long UserRoleDefinitionId { get; set; }
         public string RoleName { get; set; }
         public int UserCount { get; set; }
 

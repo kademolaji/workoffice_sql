@@ -18,7 +18,7 @@ namespace WorkOffice.Services
         {
             this._context = context;
         }
-        public bool CanPerformActionOnResource(Guid userId, Guid activityId, Guid clientId, UserActions action)
+        public bool CanPerformActionOnResource(long userId, long activityId, long clientId, UserActions action)
         {
             IList<UserActionModel> activities = this.loadUserResources(userId, clientId);
 
@@ -40,7 +40,7 @@ namespace WorkOffice.Services
         }
 
 
-        private IList<UserActionModel> loadUserResources(Guid userId, Guid clientId)
+        private IList<UserActionModel> loadUserResources(long userId, long clientId)
         {
             var userRoles = (from a in _context.UserAccountRoles
                               join b in _context.UserRoleDefinitions on a.UserRoleDefinitionId equals b.UserRoleDefinitionId

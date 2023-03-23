@@ -10,12 +10,12 @@ namespace WorkOffice.Domain.Entities
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
-        public Guid UserActivityId { get; set; }
+        public long UserActivityId { get; set; }
         [Required]
         [StringLength(256)]
         public string UserActivityName { get; set; }
         [ForeignKey("UserActivityParent")]
-        public Guid UserActivityParentId { get; set; }
+        public long UserActivityParentId { get; set; }
         public virtual UserActivityParent UserActivityParent { get; set; }
     }
 }

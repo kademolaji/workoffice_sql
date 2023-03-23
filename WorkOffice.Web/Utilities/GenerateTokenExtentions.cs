@@ -33,7 +33,7 @@ namespace WorkOffice.Web.Utilities
                 //create a identity and add claims to the user which we want to log in
                 ClaimsIdentity claimsIdentity = new ClaimsIdentity(new[]
                 {
-                    new Claim("UserId", Input.UserId != Guid.Empty ? Input.UserId.ToString() : ""),
+                    new Claim("UserId", Input.UserId > 0 ? Input.UserId.ToString() : ""),
                     new Claim("UserName", Input.FullName() != null ? Input.FullName() : ""),
                     new Claim("Email", Input.Email != null ?  Input.Email : ""),
                 });

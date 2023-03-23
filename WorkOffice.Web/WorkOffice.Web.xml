@@ -18,7 +18,7 @@
              <response code="404">If list of UserRoleDefinitions is null</response> 
              <response code="400">If an error occur or invalid request payload</response> 
         </member>
-        <member name="M:WorkOffice.Web.Controllers.AdministrationController.DeleteUserRoleDefinition(System.Guid)">
+        <member name="M:WorkOffice.Web.Controllers.AdministrationController.DeleteUserRoleDefinition(System.Int64)">
              <summary>
              Delete UserRoleDefinition
              </summary>
@@ -59,7 +59,7 @@
              <response code="404">If list of Activities is null</response> 
              <response code="400">If an error occur or invalid request payload</response> 
         </member>
-        <member name="M:WorkOffice.Web.Controllers.AdministrationController.GetUserRoleAndActivities(System.Guid)">
+        <member name="M:WorkOffice.Web.Controllers.AdministrationController.GetUserRoleAndActivities(System.Int64)">
              <summary>
              Get list of UserRoleAndActivities
              </summary>
@@ -72,7 +72,7 @@
              <response code="404">If list of UserRole And Activities is null</response> 
              <response code="400">If an error occur or invalid request payload</response> 
         </member>
-        <member name="M:WorkOffice.Web.Controllers.AdministrationController.GetActivitiesByRoleId(System.Guid)">
+        <member name="M:WorkOffice.Web.Controllers.AdministrationController.GetActivitiesByRoleId(System.Int64)">
              <summary>
              Get list of Activities By RoleId
              </summary>
@@ -1189,7 +1189,7 @@
              <response code="201">CompanyStructure Created Successfully</response>
              <response code="400">If an error occur or invalid request payload</response>
         </member>
-        <member name="M:WorkOffice.Web.Controllers.CompanyStructureController.GetList(System.Int32,System.Int32)">
+        <member name="M:WorkOffice.Web.Controllers.CompanyStructureController.GetList(WorkOffice.Contracts.ServicesContracts.SearchCall{WorkOffice.Contracts.ServicesContracts.SearchParameter})">
              <summary>
              Get list of CompanyStructure
              </summary>
@@ -1197,14 +1197,13 @@
              Sample request:
             
              </remarks>
-             <param name="pageNumber"></param>
-             <param name="pageSize"></param>
+             <param name="options"></param>
              <returns>List of CompanyStructure</returns>
              <response code="200">Returns list of CompanyStructure</response>
              <response code="404">If list of CompanyStructure is null</response> 
              <response code="400">If an error occur or invalid request payload</response> 
         </member>
-        <member name="M:WorkOffice.Web.Controllers.CompanyStructureController.Get(System.Guid)">
+        <member name="M:WorkOffice.Web.Controllers.CompanyStructureController.Get(System.Int64)">
              <summary>
              Get object of CompanyStructure
              </summary>
@@ -1244,7 +1243,7 @@
              <response code="404">If object of CompanyStructure is null</response> 
              <response code="400">If an error occur or invalid request payload</response> 
         </member>
-        <member name="M:WorkOffice.Web.Controllers.CompanyStructureController.Delete(System.Guid)">
+        <member name="M:WorkOffice.Web.Controllers.CompanyStructureController.Delete(System.Int64)">
              <summary>
              Delete CompanyStructure
              </summary>
@@ -1301,7 +1300,7 @@
              <response code="404">If list of customIdentityFormatSetting is null</response> 
              <response code="400">If an error occur or invalid request payload</response> 
         </member>
-        <member name="M:WorkOffice.Web.Controllers.CustomIdentityFormatSettingController.Get(System.Guid)">
+        <member name="M:WorkOffice.Web.Controllers.CustomIdentityFormatSettingController.Get(System.Int64)">
              <summary>
              Get object of customIdentityFormatSetting
              </summary>
@@ -1315,7 +1314,7 @@
              <response code="404">If object of customIdentityFormatSetting is null</response> 
              <response code="400">If an error occur or invalid request payload</response> 
         </member>
-        <member name="M:WorkOffice.Web.Controllers.CustomIdentityFormatSettingController.Delete(System.Guid)">
+        <member name="M:WorkOffice.Web.Controllers.CustomIdentityFormatSettingController.Delete(System.Int64)">
              <summary>
              Delete customIdentityFormatSetting
              </summary>
@@ -1436,7 +1435,7 @@
              <response code="201">GeneralInformation Created Successfully</response>
              <response code="400">If an error occur or invalid request payload</response>
         </member>
-        <member name="M:H2RHRMS.Api.Controllers.GeneralInformationController.Get(System.Guid)">
+        <member name="M:H2RHRMS.Api.Controllers.GeneralInformationController.Get(System.Int64)">
              <summary>
              Get object of GeneralInformation
              </summary>
@@ -1450,7 +1449,7 @@
              <response code="404">If object of GeneralInformation is null</response> 
              <response code="400">If an error occur or invalid request payload</response> 
         </member>
-        <member name="M:H2RHRMS.Api.Controllers.GeneralInformationController.Delete(System.Guid)">
+        <member name="M:H2RHRMS.Api.Controllers.GeneralInformationController.Delete(System.Int64)">
              <summary>
              Delete GeneralInformation
              </summary>
@@ -1498,7 +1497,7 @@
              <response code="404">If list of Location is null</response> 
              <response code="400">If an error occur or invalid request payload</response> 
         </member>
-        <member name="M:H2RHRMS.Api.Controllers.LocationController.Get(System.Guid)">
+        <member name="M:H2RHRMS.Api.Controllers.LocationController.Get(System.Int64)">
              <summary>
              Get object of Location
              </summary>
@@ -1538,7 +1537,7 @@
              <response code="404">If object of Location is null</response> 
              <response code="400">If an error occur or invalid request payload</response> 
         </member>
-        <member name="M:H2RHRMS.Api.Controllers.LocationController.Delete(System.Guid)">
+        <member name="M:H2RHRMS.Api.Controllers.LocationController.Delete(System.Int64)">
              <summary>
              Delete Location
              </summary>
@@ -1599,7 +1598,7 @@
              <response code="404">If list of StructureDefinition is null</response> 
              <response code="400">If an error occur or invalid request payload</response> 
         </member>
-        <member name="M:H2RHRMS.Api.Controllers.StructureDefinitionController.Get(System.Guid)">
+        <member name="M:H2RHRMS.Api.Controllers.StructureDefinitionController.Get(System.Int64)">
              <summary>
              Get object of StructureDefinition
              </summary>
@@ -1639,7 +1638,7 @@
              <response code="404">If object of StructureDefinition is null</response> 
              <response code="400">If an error occur or invalid request payload</response> 
         </member>
-        <member name="M:H2RHRMS.Api.Controllers.StructureDefinitionController.Delete(System.String)">
+        <member name="M:H2RHRMS.Api.Controllers.StructureDefinitionController.Delete(System.Int64)">
              <summary>
              Delete StructureDefinition
              </summary>

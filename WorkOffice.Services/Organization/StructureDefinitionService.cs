@@ -30,10 +30,8 @@ namespace WorkOffice.Services
         {
             try
             {
-                Guid structureDefinitionId = Guid.Empty;
-
-                var idExist = Guid.TryParse(model.StructureDefinitionId, out structureDefinitionId);
-                if (structureDefinitionId != Guid.Empty)
+           
+                if (model.StructureDefinitionId  > 0)
                 {
                     return await Update(model);
                 }
@@ -45,7 +43,7 @@ namespace WorkOffice.Services
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Level cannot be less than or equal to Zero." }, IsSuccess = false };
                 }
-                if (model.ClientId == Guid.Empty)
+                if (model.ClientId <= 0)
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Request is not coming from a valid client" }, IsSuccess = false };
                 }
@@ -110,9 +108,7 @@ namespace WorkOffice.Services
         {
             try
             {
-                Guid structureDefinitionId = Guid.Empty;
-
-                var idExist = Guid.TryParse(model.StructureDefinitionId, out structureDefinitionId);
+               
 
                 if (string.IsNullOrEmpty(model.Definition))
                 {
@@ -122,17 +118,17 @@ namespace WorkOffice.Services
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Level cannot be less than or equal to Zero." }, IsSuccess = false };
                 }
-                if (model.ClientId == Guid.Empty)
+                if (model.ClientId <=0)
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Request is not coming from a valid client" }, IsSuccess = false };
                 }
 
-                var existingDefinition = context.StructureDefinitions.Any(x => x.Definition == model.Definition && x.StructureDefinitionId != structureDefinitionId && x.ClientId == model.ClientId);
+                var existingDefinition = context.StructureDefinitions.Any(x => x.Definition == model.Definition && x.StructureDefinitionId != model.StructureDefinitionId && x.ClientId == model.ClientId);
                 if (existingDefinition)
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Another Structure Definition already exists with the given definition" }, IsSuccess = false };
                 }
-                var isLevelExist = await context.StructureDefinitions.AnyAsync(x => x.Level == model.Level && x.StructureDefinitionId != structureDefinitionId && x.ClientId == model.ClientId);
+                var isLevelExist = await context.StructureDefinitions.AnyAsync(x => x.Level == model.Level && x.StructureDefinitionId != model.StructureDefinitionId && x.ClientId == model.ClientId);
 
                 if (string.IsNullOrEmpty(model.Definition))
                 {
@@ -141,7 +137,7 @@ namespace WorkOffice.Services
 
                 var apiResponse = new ApiResponse<CreateResponse>();
                 bool result = false;
-                var entity = await context.StructureDefinitions.FindAsync(structureDefinitionId);
+                var entity = await context.StructureDefinitions.FindAsync(model.StructureDefinitionId);
                 if (entity == null)
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Record does not exist." }, IsSuccess = false };
@@ -188,7 +184,7 @@ namespace WorkOffice.Services
             }
         }
 
-        public async Task<ApiResponse<SearchReply<StructureDefinitionModel>>> GetList(SearchCall<SearchParameter> options, Guid clientId)
+        public async Task<ApiResponse<SearchReply<StructureDefinitionModel>>> GetList(SearchCall<SearchParameter> options, long clientId)
         {
             int count = 0;
             int pageNumber = options.From > 0 ? options.From : 0;
@@ -246,11 +242,11 @@ namespace WorkOffice.Services
             }
         }
 
-        public async Task<ApiResponse<GetResponse<StructureDefinitionModel>>> Get(Guid structureDefinitionId, Guid clientId)
+        public async Task<ApiResponse<GetResponse<StructureDefinitionModel>>> Get(long structureDefinitionId, long clientId)
         {
             try
             {
-                if (structureDefinitionId == Guid.Empty)
+                if (structureDefinitionId <=0)
                 {
                     return new ApiResponse<GetResponse<StructureDefinitionModel>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new GetResponse<StructureDefinitionModel> { Status = false, Entity = null, Message = "StructureDefinitionId is required." }, IsSuccess = false };
                 }
@@ -283,21 +279,19 @@ namespace WorkOffice.Services
             }
         }
 
-        public async Task<ApiResponse<DeleteReply>> Delete(string structureDefinitionId)
+        public async Task<ApiResponse<DeleteReply>> Delete(long structureDefinitionId)
         {
             try
             {
-                Guid newStructureDefinitionId = Guid.Empty;
-
-                var idExist = Guid.TryParse(structureDefinitionId, out newStructureDefinitionId);
-                if (newStructureDefinitionId == Guid.Empty)
+              
+                if (structureDefinitionId <= 0)
                 {
                     return new ApiResponse<DeleteReply>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new DeleteReply { Status = false, Message = "StructureDefinitionId is required." }, IsSuccess = false };
                 }
 
                 var apiResponse = new ApiResponse<DeleteReply>();
 
-                var result = context.StructureDefinitions.Find(newStructureDefinitionId);
+                var result = context.StructureDefinitions.Find(structureDefinitionId);
 
                 if (result == null)
                 {
@@ -340,9 +334,7 @@ namespace WorkOffice.Services
 
                 foreach (var item in model.targetIds)
                 {
-                    Guid newStructureDefinitionId = Guid.Empty;
-                    var idExist = Guid.TryParse(item, out newStructureDefinitionId);
-                    var data = await context.StructureDefinitions.FindAsync(newStructureDefinitionId);
+                    var data = await context.StructureDefinitions.FindAsync(item);
                     if (data != null)
                     {
                         data.IsDeleted = true;
@@ -370,7 +362,7 @@ namespace WorkOffice.Services
             }
         }
 
-        public async Task<ApiResponse<GetResponse<byte[]>>> Export(Guid clientId)
+        public async Task<ApiResponse<GetResponse<byte[]>>> Export(long clientId)
         {
             try
             {
@@ -384,7 +376,7 @@ namespace WorkOffice.Services
                                         where a.ClientId == clientId && a.IsDeleted == false
                                         select new StructureDefinitionModel
                                         {
-                                            StructureDefinitionId = a.StructureDefinitionId.ToString(),
+                                            StructureDefinitionId = a.StructureDefinitionId,
                                             Level = a.Level,
                                             Definition = a.Definition,
                                             Description = a.Description
@@ -437,7 +429,7 @@ namespace WorkOffice.Services
             }
         }
 
-        public async Task<ApiResponse<CreateResponse>> Upload(byte[] record, Guid clientId)
+        public async Task<ApiResponse<CreateResponse>> Upload(byte[] record, long clientId)
         {
             try
             {
@@ -480,7 +472,7 @@ namespace WorkOffice.Services
                         {
                             return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Level cannot be less than or equal to Zero." }, IsSuccess = false };
                         }
-                        if (clientId == Guid.Empty)
+                        if (clientId <= 0)
                         {
                             return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Request is not coming from a valid client" }, IsSuccess = false };
                         }

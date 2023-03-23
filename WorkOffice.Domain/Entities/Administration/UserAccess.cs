@@ -11,11 +11,11 @@ namespace WorkOffice.Domain.Entities
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
-        public Guid UserAccessId { get; set; }
+        public long UserAccessId { get; set; }
         [ForeignKey("CompanyStructure")]
-        public Guid CompanyStructureId { get; set; }
+        public long CompanyStructureId { get; set; }
         [ForeignKey("UserAccount")]
-        public Guid UserAccountId { get; set; }
+        public long UserAccountId { get; set; }
         public virtual UserAccount UserAccount { get; set; }
         public virtual CompanyStructure CompanyStructure { get; set; }
 

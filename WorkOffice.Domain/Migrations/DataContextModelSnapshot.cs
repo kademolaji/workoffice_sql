@@ -21,12 +21,13 @@ namespace WorkOffice.Domain.Migrations
 
             modelBuilder.Entity("WorkOffice.Domain.Entities.AppType", b =>
                 {
-                    b.Property<Guid>("AppTypeId")
+                    b.Property<long>("AppTypeId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<Guid>("ClientId")
-                        .HasColumnType("uuid");
+                    b.Property<long>("ClientId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Code")
                         .HasColumnType("text");
@@ -49,9 +50,10 @@ namespace WorkOffice.Domain.Migrations
 
             modelBuilder.Entity("WorkOffice.Domain.Entities.AuditTrail", b =>
                 {
-                    b.Property<Guid>("AuditTrailId")
+                    b.Property<long>("AuditTrailId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("ActionBy")
                         .HasColumnType("character varying(50)")
@@ -64,8 +66,8 @@ namespace WorkOffice.Domain.Migrations
                         .HasColumnType("character varying(100)")
                         .HasMaxLength(100);
 
-                    b.Property<Guid>("ClientId")
-                        .HasColumnType("uuid");
+                    b.Property<long>("ClientId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTimeOffset>("CreatedOn")
                         .HasColumnType("timestamp with time zone");
@@ -98,15 +100,16 @@ namespace WorkOffice.Domain.Migrations
 
             modelBuilder.Entity("WorkOffice.Domain.Entities.CompanyStructure", b =>
                 {
-                    b.Property<Guid>("CompanyStructureId")
+                    b.Property<long>("CompanyStructureId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("Address")
                         .HasColumnType("text");
 
-                    b.Property<Guid>("ClientId")
-                        .HasColumnType("uuid");
+                    b.Property<long>("ClientId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Company")
                         .HasColumnType("character varying(250)")
@@ -140,14 +143,14 @@ namespace WorkOffice.Domain.Migrations
                         .HasColumnType("character varying(250)")
                         .HasMaxLength(250);
 
-                    b.Property<Guid?>("ParentID")
-                        .HasColumnType("uuid");
+                    b.Property<long?>("ParentID")
+                        .HasColumnType("bigint");
 
-                    b.Property<Guid?>("StructureDefinitionId")
-                        .HasColumnType("uuid");
+                    b.Property<long?>("StructureDefinitionId")
+                        .HasColumnType("bigint");
 
-                    b.Property<Guid>("StructureTypeID")
-                        .HasColumnType("uuid")
+                    b.Property<long>("StructureTypeID")
+                        .HasColumnType("bigint")
                         .HasMaxLength(50);
 
                     b.HasKey("CompanyStructureId");
@@ -161,12 +164,13 @@ namespace WorkOffice.Domain.Migrations
 
             modelBuilder.Entity("WorkOffice.Domain.Entities.Consultant", b =>
                 {
-                    b.Property<Guid>("ConsultantId")
+                    b.Property<long>("ConsultantId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<Guid>("ClientId")
-                        .HasColumnType("uuid");
+                    b.Property<long>("ClientId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Code")
                         .HasColumnType("text");
@@ -189,12 +193,13 @@ namespace WorkOffice.Domain.Migrations
 
             modelBuilder.Entity("WorkOffice.Domain.Entities.Country", b =>
                 {
-                    b.Property<Guid>("CountryId")
+                    b.Property<long>("CountryId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<Guid>("ClientId")
-                        .HasColumnType("uuid");
+                    b.Property<long>("ClientId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Code")
                         .HasColumnType("text");
@@ -220,12 +225,13 @@ namespace WorkOffice.Domain.Migrations
 
             modelBuilder.Entity("WorkOffice.Domain.Entities.CustomIdentityFormatSetting", b =>
                 {
-                    b.Property<Guid>("CustomIdentityFormatSettingId")
+                    b.Property<long>("CustomIdentityFormatSettingId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<Guid>("ClientId")
-                        .HasColumnType("uuid");
+                    b.Property<long>("ClientId")
+                        .HasColumnType("bigint");
 
                     b.Property<int>("Company")
                         .HasColumnType("integer");
@@ -254,9 +260,10 @@ namespace WorkOffice.Domain.Migrations
 
             modelBuilder.Entity("WorkOffice.Domain.Entities.GeneralInformation", b =>
                 {
-                    b.Property<Guid>("GeneralInformationId")
+                    b.Property<long>("GeneralInformationId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("Address1")
                         .HasColumnType("text");
@@ -267,8 +274,8 @@ namespace WorkOffice.Domain.Migrations
                     b.Property<string>("City")
                         .HasColumnType("text");
 
-                    b.Property<Guid>("ClientId")
-                        .HasColumnType("uuid");
+                    b.Property<long>("ClientId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Country")
                         .HasColumnType("text");
@@ -330,12 +337,13 @@ namespace WorkOffice.Domain.Migrations
 
             modelBuilder.Entity("WorkOffice.Domain.Entities.Hospital", b =>
                 {
-                    b.Property<Guid>("HospitalId")
+                    b.Property<long>("HospitalId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<Guid>("ClientId")
-                        .HasColumnType("uuid");
+                    b.Property<long>("ClientId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Code")
                         .HasColumnType("text");
@@ -358,9 +366,10 @@ namespace WorkOffice.Domain.Migrations
 
             modelBuilder.Entity("WorkOffice.Domain.Entities.Location", b =>
                 {
-                    b.Property<Guid>("LocationId")
+                    b.Property<long>("LocationId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("Address")
                         .HasColumnType("text");
@@ -368,8 +377,8 @@ namespace WorkOffice.Domain.Migrations
                     b.Property<string>("City")
                         .HasColumnType("text");
 
-                    b.Property<Guid>("ClientId")
-                        .HasColumnType("uuid");
+                    b.Property<long>("ClientId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Country")
                         .HasColumnType("text");
@@ -407,12 +416,13 @@ namespace WorkOffice.Domain.Migrations
 
             modelBuilder.Entity("WorkOffice.Domain.Entities.NHSActivity", b =>
                 {
-                    b.Property<Guid>("NHSActivityId")
+                    b.Property<long>("NHSActivityId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<Guid>("ClientId")
-                        .HasColumnType("uuid");
+                    b.Property<long>("ClientId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Code")
                         .HasColumnType("text");
@@ -435,15 +445,16 @@ namespace WorkOffice.Domain.Migrations
 
             modelBuilder.Entity("WorkOffice.Domain.Entities.Notification", b =>
                 {
-                    b.Property<Guid>("NotificationId")
+                    b.Property<long>("NotificationId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("Body")
                         .HasColumnType("text");
 
-                    b.Property<Guid>("ClientId")
-                        .HasColumnType("uuid");
+                    b.Property<long>("ClientId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTimeOffset>("CreatedOn")
                         .HasColumnType("timestamp with time zone");
@@ -454,11 +465,11 @@ namespace WorkOffice.Domain.Migrations
                     b.Property<bool>("IsRead")
                         .HasColumnType("boolean");
 
-                    b.Property<Guid>("ReceiverId")
-                        .HasColumnType("uuid");
+                    b.Property<long>("ReceiverId")
+                        .HasColumnType("bigint");
 
-                    b.Property<Guid>("SenderId")
-                        .HasColumnType("uuid");
+                    b.Property<long>("SenderId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Title")
                         .HasColumnType("text");
@@ -472,15 +483,16 @@ namespace WorkOffice.Domain.Migrations
 
             modelBuilder.Entity("WorkOffice.Domain.Entities.PathwayStatus", b =>
                 {
-                    b.Property<Guid>("PathwayStatusId")
+                    b.Property<long>("PathwayStatusId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<bool>("AllowClosed")
                         .HasColumnType("boolean");
 
-                    b.Property<Guid>("ClientId")
-                        .HasColumnType("uuid");
+                    b.Property<long>("ClientId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Code")
                         .HasColumnType("text");
@@ -503,12 +515,13 @@ namespace WorkOffice.Domain.Migrations
 
             modelBuilder.Entity("WorkOffice.Domain.Entities.RTT", b =>
                 {
-                    b.Property<Guid>("RTTId")
+                    b.Property<long>("RTTId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<Guid>("ClientId")
-                        .HasColumnType("uuid");
+                    b.Property<long>("ClientId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Code")
                         .HasColumnType("text");
@@ -531,12 +544,13 @@ namespace WorkOffice.Domain.Migrations
 
             modelBuilder.Entity("WorkOffice.Domain.Entities.Specialty", b =>
                 {
-                    b.Property<Guid>("SpecialtyId")
+                    b.Property<long>("SpecialtyId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<Guid>("ClientId")
-                        .HasColumnType("uuid");
+                    b.Property<long>("ClientId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Code")
                         .HasColumnType("text");
@@ -559,18 +573,19 @@ namespace WorkOffice.Domain.Migrations
 
             modelBuilder.Entity("WorkOffice.Domain.Entities.State", b =>
                 {
-                    b.Property<Guid>("StateId")
+                    b.Property<long>("StateId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<Guid>("ClientId")
-                        .HasColumnType("uuid");
+                    b.Property<long>("ClientId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Code")
                         .HasColumnType("text");
 
-                    b.Property<Guid>("CountryId")
-                        .HasColumnType("uuid");
+                    b.Property<long>("CountryId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTimeOffset>("CreatedOn")
                         .HasColumnType("timestamp with time zone");
@@ -592,12 +607,13 @@ namespace WorkOffice.Domain.Migrations
 
             modelBuilder.Entity("WorkOffice.Domain.Entities.StructureDefinition", b =>
                 {
-                    b.Property<Guid>("StructureDefinitionId")
+                    b.Property<long>("StructureDefinitionId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<Guid>("ClientId")
-                        .HasColumnType("uuid");
+                    b.Property<long>("ClientId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTimeOffset>("CreatedOn")
                         .HasColumnType("timestamp with time zone");
@@ -625,15 +641,16 @@ namespace WorkOffice.Domain.Migrations
 
             modelBuilder.Entity("WorkOffice.Domain.Entities.UserAccess", b =>
                 {
-                    b.Property<Guid>("UserAccessId")
+                    b.Property<long>("UserAccessId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<Guid>("ClientId")
-                        .HasColumnType("uuid");
+                    b.Property<long>("ClientId")
+                        .HasColumnType("bigint");
 
-                    b.Property<Guid>("CompanyStructureId")
-                        .HasColumnType("uuid");
+                    b.Property<long>("CompanyStructureId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTimeOffset>("CreatedOn")
                         .HasColumnType("timestamp with time zone");
@@ -641,8 +658,8 @@ namespace WorkOffice.Domain.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
-                    b.Property<Guid>("UserAccountId")
-                        .HasColumnType("uuid");
+                    b.Property<long>("UserAccountId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("UserAccessId");
 
@@ -657,9 +674,10 @@ namespace WorkOffice.Domain.Migrations
 
             modelBuilder.Entity("WorkOffice.Domain.Entities.UserAccount", b =>
                 {
-                    b.Property<Guid>("UserId")
+                    b.Property<long>("UserId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<bool>("AcceptTerms")
                         .HasColumnType("boolean");
@@ -676,8 +694,8 @@ namespace WorkOffice.Domain.Migrations
                     b.Property<bool?>("CanChangePassword")
                         .HasColumnType("boolean");
 
-                    b.Property<Guid>("ClientId")
-                        .HasColumnType("uuid");
+                    b.Property<long>("ClientId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Country")
                         .HasColumnType("text");
@@ -790,9 +808,10 @@ namespace WorkOffice.Domain.Migrations
 
             modelBuilder.Entity("WorkOffice.Domain.Entities.UserAccountAdditionalActivity", b =>
                 {
-                    b.Property<Guid>("UserAccountAdditionalActivityId")
+                    b.Property<long>("UserAccountAdditionalActivityId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<bool?>("CanAdd")
                         .HasColumnType("boolean");
@@ -809,8 +828,8 @@ namespace WorkOffice.Domain.Migrations
                     b.Property<bool?>("CanView")
                         .HasColumnType("boolean");
 
-                    b.Property<Guid>("ClientId")
-                        .HasColumnType("uuid");
+                    b.Property<long>("ClientId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTimeOffset>("CreatedOn")
                         .HasColumnType("timestamp with time zone");
@@ -818,11 +837,11 @@ namespace WorkOffice.Domain.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
-                    b.Property<Guid>("UserAccountId")
-                        .HasColumnType("uuid");
+                    b.Property<long>("UserAccountId")
+                        .HasColumnType("bigint");
 
-                    b.Property<Guid>("UserActivityId")
-                        .HasColumnType("uuid");
+                    b.Property<long>("UserActivityId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("UserAccountAdditionalActivityId");
 
@@ -837,12 +856,13 @@ namespace WorkOffice.Domain.Migrations
 
             modelBuilder.Entity("WorkOffice.Domain.Entities.UserAccountRole", b =>
                 {
-                    b.Property<Guid>("UserAccountRoleId")
+                    b.Property<long>("UserAccountRoleId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<Guid>("ClientId")
-                        .HasColumnType("uuid");
+                    b.Property<long>("ClientId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTimeOffset>("CreatedOn")
                         .HasColumnType("timestamp with time zone");
@@ -850,11 +870,11 @@ namespace WorkOffice.Domain.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
-                    b.Property<Guid>("UserAccountId")
-                        .HasColumnType("uuid");
+                    b.Property<long>("UserAccountId")
+                        .HasColumnType("bigint");
 
-                    b.Property<Guid>("UserRoleDefinitionId")
-                        .HasColumnType("uuid");
+                    b.Property<long>("UserRoleDefinitionId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("UserAccountRoleId");
 
@@ -869,15 +889,16 @@ namespace WorkOffice.Domain.Migrations
 
             modelBuilder.Entity("WorkOffice.Domain.Entities.UserAccountSettings", b =>
                 {
-                    b.Property<Guid>("UserAccountSettingsId")
+                    b.Property<long>("UserAccountSettingsId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<int?>("AllowPasswordUserAfter")
                         .HasColumnType("integer");
 
-                    b.Property<Guid>("ClientId")
-                        .HasColumnType("uuid");
+                    b.Property<long>("ClientId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTimeOffset>("CreatedOn")
                         .HasColumnType("timestamp with time zone");
@@ -912,12 +933,13 @@ namespace WorkOffice.Domain.Migrations
 
             modelBuilder.Entity("WorkOffice.Domain.Entities.UserActivity", b =>
                 {
-                    b.Property<Guid>("UserActivityId")
+                    b.Property<long>("UserActivityId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<Guid>("ClientId")
-                        .HasColumnType("uuid");
+                    b.Property<long>("ClientId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTimeOffset>("CreatedOn")
                         .HasColumnType("timestamp with time zone");
@@ -930,8 +952,8 @@ namespace WorkOffice.Domain.Migrations
                         .HasColumnType("character varying(256)")
                         .HasMaxLength(256);
 
-                    b.Property<Guid>("UserActivityParentId")
-                        .HasColumnType("uuid");
+                    b.Property<long>("UserActivityParentId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("UserActivityId");
 
@@ -944,12 +966,13 @@ namespace WorkOffice.Domain.Migrations
 
             modelBuilder.Entity("WorkOffice.Domain.Entities.UserActivityParent", b =>
                 {
-                    b.Property<Guid>("UserActivityParentId")
+                    b.Property<long>("UserActivityParentId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<Guid>("ClientId")
-                        .HasColumnType("uuid");
+                    b.Property<long>("ClientId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTimeOffset>("CreatedOn")
                         .HasColumnType("timestamp with time zone");
@@ -971,9 +994,10 @@ namespace WorkOffice.Domain.Migrations
 
             modelBuilder.Entity("WorkOffice.Domain.Entities.UserRoleActivity", b =>
                 {
-                    b.Property<Guid>("UserRoleActivityId")
+                    b.Property<long>("UserRoleActivityId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<bool?>("CanAdd")
                         .HasColumnType("boolean");
@@ -990,8 +1014,8 @@ namespace WorkOffice.Domain.Migrations
                     b.Property<bool?>("CanView")
                         .HasColumnType("boolean");
 
-                    b.Property<Guid>("ClientId")
-                        .HasColumnType("uuid");
+                    b.Property<long>("ClientId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTimeOffset>("CreatedOn")
                         .HasColumnType("timestamp with time zone");
@@ -999,11 +1023,11 @@ namespace WorkOffice.Domain.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
-                    b.Property<Guid>("UserActivityId")
-                        .HasColumnType("uuid");
+                    b.Property<long>("UserActivityId")
+                        .HasColumnType("bigint");
 
-                    b.Property<Guid>("UserRoleDefinitionId")
-                        .HasColumnType("uuid");
+                    b.Property<long>("UserRoleDefinitionId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("UserRoleActivityId");
 
@@ -1018,12 +1042,13 @@ namespace WorkOffice.Domain.Migrations
 
             modelBuilder.Entity("WorkOffice.Domain.Entities.UserRoleDefinition", b =>
                 {
-                    b.Property<Guid>("UserRoleDefinitionId")
+                    b.Property<long>("UserRoleDefinitionId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<Guid>("ClientId")
-                        .HasColumnType("uuid");
+                    b.Property<long>("ClientId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTimeOffset>("CreatedOn")
                         .HasColumnType("timestamp with time zone");
@@ -1045,12 +1070,13 @@ namespace WorkOffice.Domain.Migrations
 
             modelBuilder.Entity("WorkOffice.Domain.Entities.WaitingType", b =>
                 {
-                    b.Property<Guid>("WaitingTypeId")
+                    b.Property<long>("WaitingTypeId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<Guid>("ClientId")
-                        .HasColumnType("uuid");
+                    b.Property<long>("ClientId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Code")
                         .HasColumnType("text");
@@ -1073,12 +1099,13 @@ namespace WorkOffice.Domain.Migrations
 
             modelBuilder.Entity("WorkOffice.Domain.Entities.Ward", b =>
                 {
-                    b.Property<Guid>("WardId")
+                    b.Property<long>("WardId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<Guid>("ClientId")
-                        .HasColumnType("uuid");
+                    b.Property<long>("ClientId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Code")
                         .HasColumnType("text");
@@ -1134,12 +1161,13 @@ namespace WorkOffice.Domain.Migrations
                 {
                     b.OwnsMany("WorkOffice.Domain.Entities.RefreshToken", "RefreshTokens", b1 =>
                         {
-                            b1.Property<Guid>("RefreshTokenId")
+                            b1.Property<long>("RefreshTokenId")
                                 .ValueGeneratedOnAdd()
-                                .HasColumnType("uuid");
+                                .HasColumnType("bigint")
+                                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                            b1.Property<Guid>("ClientId")
-                                .HasColumnType("uuid");
+                            b1.Property<long>("ClientId")
+                                .HasColumnType("bigint");
 
                             b1.Property<DateTime>("Created")
                                 .HasColumnType("timestamp without time zone");
@@ -1168,8 +1196,8 @@ namespace WorkOffice.Domain.Migrations
                             b1.Property<string>("Token")
                                 .HasColumnType("text");
 
-                            b1.Property<Guid>("UserAccountUserId")
-                                .HasColumnType("uuid");
+                            b1.Property<long>("UserAccountUserId")
+                                .HasColumnType("bigint");
 
                             b1.HasKey("RefreshTokenId");
 

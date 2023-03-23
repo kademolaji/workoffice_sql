@@ -12,7 +12,7 @@ namespace WorkOffice.Domain.Entities
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
-        public Guid RefreshTokenId { get; set; }
+        public long RefreshTokenId { get; set; }
         public UserAccount UserAccount { get; set; }
         public string Token { get; set; }
         public DateTime Expires { get; set; }

@@ -14,11 +14,11 @@ namespace WorkOffice.Domain.Entities
         }
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
-        public Guid CompanyStructureId { get; set; }
+        public long CompanyStructureId { get; set; }
         [StringLength(250)]
         public string Name { get; set; }
         [StringLength(50)]
-        public Guid StructureTypeID { get; set; }
+        public long StructureTypeID { get; set; }
         [StringLength(250)]
         public string Country { get; set; }
         [StringLength(250)]
@@ -28,7 +28,7 @@ namespace WorkOffice.Domain.Entities
         public string ContactEmail { get; set; }
         [StringLength(100)]
         public string CompanyHead { get; set; }
-        public Guid? ParentID { get; set; }
+        public long? ParentID { get; set; }
         [StringLength(250)]
         public string Company { get; set; }
         public virtual ICollection<UserAccess> UserAccess { get; set; }
