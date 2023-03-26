@@ -115,7 +115,7 @@ export const ROUTES: RouteInfo[] = [
           submenu: [],
         },
         {
-          path: '/admin/users/all-user-role',
+          path: '/admin/users/all-user-roles',
           title: 'User Role',
           iconType: '',
           icon: '',

@@ -101,7 +101,7 @@ namespace WorkOffice.Services
                         if (result)
                         {
                             var details = $"Created new UserRoleDefinition: UserRoleDefinition = {model.UserRoleDefinition} ";
-                           await auditTrail.SaveAuditTrail(details, "UserRoleDefinition", "Create");
+                            await auditTrail.SaveAuditTrail(details, "UserRoleDefinition", "Create");
                             trans.Commit();
                         }
                     }
@@ -259,7 +259,7 @@ namespace WorkOffice.Services
                 apiResponse.ResponseType = response;
 
                 var details = $"Deleted Multiple UserRoleDefinition: with Ids {model.targetIds.ToArray()} ";
-               await  auditTrail.SaveAuditTrail(details, "UserRoleDefinition", "Delete");
+                await auditTrail.SaveAuditTrail(details, "UserRoleDefinition", "Delete");
 
                 return apiResponse;
             }
@@ -340,6 +340,7 @@ namespace WorkOffice.Services
             {
                 var apiResponse = new ApiResponse<GetResponse<List<UserRoleActivitiesModel>>>();
                 List<UserRoleActivitiesModel> activitiesModels = new List<UserRoleActivitiesModel>();
+                List<UserRoleActivitiesModel> data2 = new List<UserRoleActivitiesModel>();
                 var data = await (from p in context.UserActivityParents
                                   join q in context.UserActivities on p.UserActivityParentId equals q.UserActivityParentId
                                   orderby p.UserActivityParentName
@@ -361,43 +362,40 @@ namespace WorkOffice.Services
 
                 if (userRoleId > 0)
                 {
-                    var data2 = await (from a in context.UserRoleDefinitions
-                                       join b in context.UserRoleActivities on a.UserRoleDefinitionId equals b.UserRoleDefinitionId
-                                       join q in context.UserActivities on b.UserActivityId equals q.UserActivityId
-                                       where b.UserRoleDefinitionId == userRoleId && b.ClientId == clientId
-                                       orderby q.UserActivityParent.UserActivityParentName
-                                       select new UserRoleActivitiesModel
-                                       {
-                                           UserRoleDefinitionId = a.UserRoleDefinitionId,
-                                           UserRoleDefinition = a.RoleName,
-                                           UserActivityParentId = q.UserActivityParentId,
-                                           UserActivityParentName = q.UserActivityParent.UserActivityParentName,
-                                           UserActivityId = q.UserActivityId,
-                                           UserActivityName = q.UserActivityName,
-                                           CanAdd = (bool)b.CanAdd,
-                                           CanApprove = (bool)b.CanApprove,
-                                           CanDelete = (bool)b.CanDelete,
-                                           CanEdit = (bool)b.CanEdit,
-                                           CanView = (bool)b.CanView
-                                       }).ToListAsync();
-                    if (data2.Any())
-                    {
-                        var data2Ids = data2.Select(a => a.UserActivityId).ToList();
+                    data2 = await (from a in context.UserRoleDefinitions
+                                   join b in context.UserRoleActivities on a.UserRoleDefinitionId equals b.UserRoleDefinitionId
+                                   join q in context.UserActivities on b.UserActivityId equals q.UserActivityId
+                                   where b.UserRoleDefinitionId == userRoleId && b.ClientId == clientId
+                                   orderby q.UserActivityParent.UserActivityParentName
+                                   select new UserRoleActivitiesModel
+                                   {
+                                       UserRoleDefinitionId = a.UserRoleDefinitionId,
+                                       UserRoleDefinition = a.RoleName,
+                                       UserActivityParentId = q.UserActivityParentId,
+                                       UserActivityParentName = q.UserActivityParent.UserActivityParentName,
+                                       UserActivityId = q.UserActivityId,
+                                       UserActivityName = q.UserActivityName,
+                                       CanAdd = (bool)b.CanAdd,
+                                       CanApprove = (bool)b.CanApprove,
+                                       CanDelete = (bool)b.CanDelete,
+                                       CanEdit = (bool)b.CanEdit,
+                                       CanView = (bool)b.CanView
+                                   }).ToListAsync();
 
-                        var result = data2.Concat(data.Where(x => !data2Ids.Contains(x.UserActivityId)));
-
-                        activitiesModels = result.OrderByDescending(x => x.UserRoleDefinitionId).ToList();
-                    }
-                    else
-                    {
-                        activitiesModels = data;
-                    }
 
                 }
 
-                if (activitiesModels.Count <= 0)
+                if (data2.Any())
                 {
-                    return new ApiResponse<GetResponse<List<UserRoleActivitiesModel>>>() { StatusCode = System.Net.HttpStatusCode.NotFound, ResponseType = new GetResponse<List<UserRoleActivitiesModel>>() { Status = false, Message = "No record found" }, IsSuccess = false };
+                    var data2Ids = data2.Select(a => a.UserActivityId).ToList();
+
+                    var result = data2.Concat(data.Where(x => !data2Ids.Contains(x.UserActivityId)));
+
+                    activitiesModels = result.OrderByDescending(x => x.UserRoleDefinitionId).ToList();
+                }
+                else
+                {
+                    activitiesModels = data;
                 }
 
 

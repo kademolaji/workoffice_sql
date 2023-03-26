@@ -28,12 +28,21 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { DeleteDialogComponent } from './all-users/dialog/delete/delete.component';
 import { AccountRoutingModule } from './account-routing.module';
 import { UsersService } from './all-users/users.service';
+import { UserRoleService } from './user-roles/user-role.service';
+import { AddUserRoleComponent } from './user-roles/add-user-role/add-user-role.component';
+import { AllUserRolesComponent } from './user-roles/all-user-roles/all-user-roles.component';
+import { DeleteUserRoleDialogComponent } from './user-roles/all-user-roles/dialog/delete/delete.component';
 
 @NgModule({
   declarations: [
     AllUsersComponent,
     DeleteDialogComponent,
     AddUserComponent,
+
+    AddUserRoleComponent,
+    AllUserRolesComponent,
+    DeleteUserRoleDialogComponent,
+
     UserProfileComponent,
   ],
   imports: [
@@ -61,6 +70,6 @@ import { UsersService } from './all-users/users.service';
     ComponentsModule,
     SharedModule,
   ],
-  providers: [UsersService],
+  providers: [UsersService, UserRoleService],
 })
 export class AccountModule {}

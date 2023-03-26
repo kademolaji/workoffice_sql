@@ -4,6 +4,8 @@ import { Page404Component } from "./../../authentication/page404/page404.compone
 import { AllUsersComponent } from "./all-users/all-users.component";
 import { AddUserComponent } from "./add-user/add-user.component";
 import { UserProfileComponent } from "./user-profile/user-profile.component";
+import { AllUserRolesComponent } from "./user-roles/all-user-roles/all-user-roles.component";
+import { AddUserRoleComponent } from "./user-roles/add-user-role/add-user-role.component";
 const routes: Routes = [
   {
     path: "all-users",
@@ -17,6 +19,18 @@ const routes: Routes = [
   {
     path: "user-profile",
     component: UserProfileComponent,
+  },
+  {
+    path: "all-user-roles",
+    component: AllUserRolesComponent,
+  },
+  {
+    path: "add-user-role",
+    component: AddUserRoleComponent,
+  },
+  {
+    path: "edit-user-role/:id",
+    component: AddUserRoleComponent,
   },
   { path: "**", component: Page404Component },
 ];
