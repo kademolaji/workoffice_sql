@@ -8,7 +8,6 @@ namespace WorkOffice.Domain.Entities
 {
    public class UserActivityParent : Entity
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public long UserActivityParentId { get; set; }
         [Required]

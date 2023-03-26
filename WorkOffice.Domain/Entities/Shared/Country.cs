@@ -8,7 +8,6 @@ namespace WorkOffice.Domain.Entities
 {
     public class Country : Entity
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public long CountryId { get; set; }
         public string Code { get; set; }
