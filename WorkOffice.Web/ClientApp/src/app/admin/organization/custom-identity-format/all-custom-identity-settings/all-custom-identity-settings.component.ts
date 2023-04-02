@@ -115,7 +115,6 @@ deleteItem(row: CustomIdentityFormatModel) {
     }
   );
   this.subs.sink = dialogRef.afterClosed().subscribe((result) => {
-    if (result === 1) {
       this.refresh();
       this.showNotification(
         'snackbar-success',
@@ -123,7 +122,6 @@ deleteItem(row: CustomIdentityFormatModel) {
         'top',
         'right'
       );
-    }
   });
 }
 

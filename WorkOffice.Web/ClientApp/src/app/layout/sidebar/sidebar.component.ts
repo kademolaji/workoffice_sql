@@ -104,24 +104,21 @@ export class SidebarComponent implements OnInit, OnDestroy {
     activities: string[]
   ): RouteInfo[] {
     const result: RouteInfo[] = [];
-    let subsub: RouteInfo[] = [];
-    let sub: RouteInfo[] = [];
+    let subsubMenu: RouteInfo[] = [];
     data.forEach((route) => {
-      sub = [];
       if (route.submenu.length > 0) {
         route.submenu.forEach((subRoute) => {
-          subsub = [];
+          subsubMenu = [];
           if (subRoute.submenu.length > 0) {
             subRoute.submenu.forEach((subsubRoute) => {
               if(activities.includes(subsubRoute.activity)){
-                subsub.push(subsubRoute)
+                subsubMenu.push(subsubRoute)
               }
             });
-            subRoute.submenu = subsub;
+            subRoute.submenu = subsubMenu;
           }
         });
-        sub = route.submenu.filter((x) => activities.includes(x.activity));
-        route.submenu = sub;
+        route.submenu = route.submenu.filter((x) => activities.includes(x.activity));
       }
       if (activities.includes(route.activity)) {
         result.push(route);

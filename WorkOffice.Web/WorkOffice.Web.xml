@@ -1298,7 +1298,7 @@
              <response code="201">customIdentityFormatSetting Created Successfully</response>
              <response code="400">If an error occur or invalid request payload</response>
         </member>
-        <member name="M:WorkOffice.Web.Controllers.CustomIdentityFormatSettingController.GetList(System.Int32,System.Int32)">
+        <member name="M:WorkOffice.Web.Controllers.CustomIdentityFormatSettingController.GetList(WorkOffice.Contracts.ServicesContracts.SearchCall{WorkOffice.Contracts.ServicesContracts.SearchParameter})">
              <summary>
              Get list of customIdentityFormatSetting
              </summary>
@@ -1306,8 +1306,7 @@
              Sample request:
             
              </remarks>
-             <param name="pageNumber"></param>
-             <param name="pageSize"></param>
+             <param name="options"></param>
              <returns>List of customIdentityFormatSetting</returns>
              <response code="200">Returns list of customIdentityFormatSetting</response>
              <response code="404">If list of customIdentityFormatSetting is null</response> 
@@ -1339,6 +1338,20 @@
              <returns>Object of customIdentityFormatSetting</returns>
              <response code="200">Returns object of customIdentityFormatSetting</response>
              <response code="404">If object of customIdentityFormatSetting is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.CustomIdentityFormatSettingController.MultipleDelete(WorkOffice.Contracts.Models.MultipleDeleteModel)">
+             <summary>
+             Delete Multiple StructureDefinition
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="model"></param>
+             <returns>Object of StructureDefinition</returns>
+             <response code="200">Returns object of StructureDefinition</response>
+             <response code="404">If object of StructureDefinition is null</response> 
              <response code="400">If an error occur or invalid request payload</response> 
         </member>
         <member name="P:WorkOffice.Web.Utilities.JwtIssuerOptions.Issuer">
@@ -1495,7 +1508,7 @@
              <response code="201">Location Created Successfully</response>
              <response code="400">If an error occur or invalid request payload</response>
         </member>
-        <member name="M:H2RHRMS.Api.Controllers.LocationController.GetList(System.Int32,System.Int32)">
+        <member name="M:H2RHRMS.Api.Controllers.LocationController.GetList(WorkOffice.Contracts.ServicesContracts.SearchCall{WorkOffice.Contracts.ServicesContracts.SearchParameter})">
              <summary>
              Get list of Location
              </summary>
@@ -1503,8 +1516,7 @@
              Sample request:
             
              </remarks>
-             <param name="pageNumber"></param>
-             <param name="pageSize"></param>
+             <param name="options"></param>
              <returns>List of Location</returns>
              <response code="200">Returns list of Location</response>
              <response code="404">If list of Location is null</response> 

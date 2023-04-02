@@ -16,6 +16,6 @@ namespace WorkOffice.Common
         Activity = 8,
         AppType = 9,
         Consultant = 10,
-        Hospital = 10,
+        Hospital = 11,
     }
 }

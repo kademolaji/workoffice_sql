@@ -179,7 +179,7 @@ export const ROUTES: RouteInfo[] = [
     path: '',
     title: 'Setup',
     iconType: 'material-icons-two-tone',
-    icon: 'supervised_user_circle',
+    icon: 'settings',
     class: 'menu-toggle',
     groupTitle: false,
     badge: '',

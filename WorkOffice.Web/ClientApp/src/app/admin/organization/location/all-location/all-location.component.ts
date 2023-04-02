@@ -1,13 +1,14 @@
 import { Direction } from '@angular/cdk/bidi';
-import { SelectionModel, DataSource } from '@angular/cdk/collections';
+import { SelectionModel } from '@angular/cdk/collections';
 import { HttpClient } from '@angular/common/http';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSnackBar, MatSnackBarVerticalPosition, MatSnackBarHorizontalPosition } from '@angular/material/snack-bar';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, Sort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { fromEvent, BehaviorSubject, Observable, merge, map } from 'rxjs';
+import { SearchCall, SearchParameter } from 'src/app/core/utilities/api-response';
 import { UnsubscribeOnDestroyAdapter } from 'src/app/shared/UnsubscribeOnDestroyAdapter';
 import { LocationModel } from '../location.model';
 import { LocationService } from '../location.service';
@@ -32,241 +33,172 @@ displayedColumns = [
   'phone',
   'actions',
 ];
-exampleDatabase!: LocationService | null;
-dataSource!: ExampleDataSource;
 selection = new SelectionModel<LocationModel>(true, []);
-index!: number;
-id = 0;
-locations!: LocationModel | null;
-constructor(
-  public httpClient: HttpClient,
-  public dialog: MatDialog,
-  public locationService: LocationService,
-  private snackBar: MatSnackBar,
-  private router: Router,
-) {
-  super();
-}
-@ViewChild(MatPaginator, { static: true })
-paginator!: MatPaginator;
-@ViewChild(MatSort, { static: true })
-sort!: MatSort;
-@ViewChild('filter', { static: true })
-filter!: ElementRef;
-ngOnInit() {
-  this.loadData();
-}
-refresh() {
-  this.loadData();
-}
-addNew() {
-  this.router.navigate(['/admin/company/add-location']);
-}
+  ELEMENT_DATA: LocationService[] = [];
+  isLoading = false;
+  totalRows = 0;
+  pageSize = 10;
+  currentPage = 0;
+  pageSizeOptions: number[] = [5, 10, 25, 100];
+  dataSource: MatTableDataSource<LocationModel> = new MatTableDataSource();
+  searchQuery = '';
+  sortOrder = '';
+  sortField = '';
+  isTblLoading = false;
 
-
-
-editCall(row: { id: number }) {
-  this.id = row.id;
-
-}
-
-deleteItem(row: { id: number }) {
-  this.id = row.id;
-  let tempDirection: Direction;
-  if (localStorage.getItem('isRtl') === 'true') {
-    tempDirection = 'rtl';
-  } else {
-    tempDirection = 'ltr';
+  constructor(
+    public httpClient: HttpClient,
+    public dialog: MatDialog,
+    public locationService: LocationService,
+    private snackBar: MatSnackBar,
+    private router: Router
+  ) {
+    super();
   }
-  const dialogRef = this.dialog.open(DeleteLocationDialogComponent, {
-    data: row,
-    direction: tempDirection,
-  });
-  this.subs.sink = dialogRef.afterClosed().subscribe((result) => {
-    if (result === 1) {
-      const foundIndex = this.exampleDatabase?.dataChange.value.findIndex(
-        (x) => x.locationId === this.id
-      );
-      // for delete we use splice in order to remove single object from DataService
-      if (foundIndex !== undefined) {
-        if (this.exampleDatabase) {
-          this.exampleDatabase.dataChange.value.splice(foundIndex, 1);
-        }
-        this.refreshTable();
-        this.showNotification(
-          'snackbar-danger',
-          'Delete Record Successfully...!!!',
-          'bottom',
-          'center'
-        );
-      }
-    }
-  });
-}
-private refreshTable() {
-  this.paginator._changePageSize(this.paginator.pageSize);
-}
-/** Whether the number of selected elements matches the total number of rows. */
-isAllSelected() {
-  const numSelected = this.selection.selected.length;
-  const numRows = this.dataSource?.renderedData.length;
-  return numSelected === numRows;
-}
+  @ViewChild(MatPaginator, { static: true })
+  paginator!: MatPaginator;
+  @ViewChild(MatSort, { static: true })
+  sort!: MatSort;
 
-/** Selects all rows if they are not all selected; otherwise clear selection. */
-masterToggle() {
-  this.isAllSelected()
-    ? this.selection.clear()
-    : this.dataSource?.renderedData.forEach((row) =>
-        this.selection.select(row)
-      );
-}
-removeSelectedRows() {
-  const totalSelect = this.selection.selected.length;
-  this.selection.selected.forEach((item) => {
-    const index = this.dataSource?.renderedData.findIndex((d) => d === item);
-    // console.log(this.dataSource.renderedData.findIndex((d) => d === item));
-    if (index !== undefined) {
-      if (this.exampleDatabase) {
-        this.exampleDatabase.dataChange.value.splice(index, 1);
-      }
-      this.refreshTable();
-      this.selection = new SelectionModel<LocationModel>(true, []);
-    }
-  });
-  this.showNotification(
-    'snackbar-danger',
-    totalSelect + ' Record Delete Successfully...!!!',
-    'bottom',
-    'center'
-  );
-}
-public loadData() {
-  this.exampleDatabase = new LocationService(this.httpClient);
-  this.dataSource = new ExampleDataSource(
-    this.exampleDatabase,
-    this.paginator,
-    this.sort
-  );
-  this.subs.sink = fromEvent(this.filter.nativeElement, 'keyup').subscribe(
-    () => {
-      if (!this.dataSource) {
-        return;
-      }
-      this.dataSource.filter = this.filter.nativeElement.value;
-    }
-  );
-}
-showNotification(
-  colorName: string,
-  text: string,
-  placementFrom: MatSnackBarVerticalPosition,
-  placementAlign: MatSnackBarHorizontalPosition
-) {
-  this.snackBar.open(text, '', {
-    duration: 2000,
-    verticalPosition: placementFrom,
-    horizontalPosition: placementAlign,
-    panelClass: colorName,
-  });
-}
-}
-export class ExampleDataSource extends DataSource<LocationModel> {
-filterChange = new BehaviorSubject('');
-get filter(): string {
-  return this.filterChange.value;
-}
-set filter(filter: string) {
-  this.filterChange.next(filter);
-}
-filteredData: LocationModel[] = [];
-renderedData: LocationModel[] = [];
-constructor(
-  public exampleDatabase: LocationService,
-  public paginator: MatPaginator,
-  public _sort: MatSort
-) {
-  super();
-  // Reset to the first page when the user changes the filter.
-  this.filterChange.subscribe(() => (this.paginator.pageIndex = 0));
-}
-/** Connect function called by the table to retrieve one stream containing the data to render. */
-connect(): Observable<LocationModel[]> {
-  // Listen for any changes in the base data, sorting, filtering, or pagination
-  const displayDataChanges = [
-    this.exampleDatabase.dataChange,
-    this._sort.sortChange,
-    this.filterChange,
-    this.paginator.page,
-  ];
-
-  this.exampleDatabase.getAllLocation(1, 10);
-  return merge(...displayDataChanges).pipe(
-    map(() => {
-      // Filter data
-      this.filteredData = this.exampleDatabase.data
-        .slice()
-        .filter((locations: LocationModel) => {
-          const searchStr = (
-            locations.name +
-            locations.country +
-            locations.state
-          ).toLowerCase();
-          return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
-        });
-      // Sort filtered data
-      const sortedData = this.sortData(this.filteredData.slice());
-      // Grab the page's slice of the filtered sorted data.
-      const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
-      this.renderedData = sortedData.splice(
-        startIndex,
-        this.paginator.pageSize
-      );
-      return this.renderedData;
-    })
-  );
-}
-// eslint-disable-next-line @typescript-eslint/no-empty-function
-disconnect() {}
-/** Returns a sorted copy of the database data. */
-sortData(data: LocationModel[]): LocationModel[] {
-  if (!this._sort.active || this._sort.direction === '') {
-    return data;
+  ngOnInit() {
+    this.loadData(this.searchQuery, this.sortField, this.sortOrder);
   }
-  return data.sort((a, b) => {
-    let propertyA: number | string = '';
-    let propertyB: number | string = '';
-    switch (this._sort.active) {
-      case 'locationId':
-        [propertyA, propertyB] = [a.locationId, b.locationId];
-        break;
-      case 'name':
-        [propertyA, propertyB] = [a.name, b.name];
-        break;
-      case 'country':
-        [propertyA, propertyB] = [a.country, b.country];
-        break;
-      case 'state':
-        [propertyA, propertyB] = [a.state, b.state];
-        break;
-      case 'city':
-        [propertyA, propertyB] = [a.city, b.city];
-        break;
-      case 'address':
-        [propertyA, propertyB] = [a.address, b.address];
-        break;
-        case 'zipCode':
-          [propertyA, propertyB] = [a.zipCode, b.zipCode];
-          break;
-        case 'phone':
-          [propertyA, propertyB] = [a.phone, b.phone];
-          break;
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.searchQuery = filterValue.trim();
+    this.loadData(this.searchQuery, this.sortField, this.sortOrder);
+  }
+
+  sortData(sort: Sort) {
+    this.sortField = sort.active;
+    this.sortOrder = sort.direction;
+    this.loadData(this.searchQuery, this.sortField, this.sortOrder);
+  }
+
+  pageChanged(event: PageEvent) {
+    this.pageSize = event.pageSize;
+    this.currentPage = event.pageIndex;
+    this.loadData(this.searchQuery, this.sortField, this.sortOrder);
+  }
+
+  refresh() {
+    this.searchQuery = '';
+    this.sortOrder = '';
+    this.sortField = '';
+    this.loadData(this.searchQuery, this.sortField, this.sortOrder);
+  }
+
+  addNew() {
+    this.router.navigate(['admin', 'company', 'add-location']);
+  }
+
+  editCall(row: { locationId: number }) {
+    this.router.navigate([
+      'admin',
+      'company',
+      'edit-location',
+      row.locationId,
+    ]);
+  }
+
+  deleteItem(row: LocationModel) {
+    let tempDirection: Direction;
+    if (localStorage.getItem('isRtl') === 'true') {
+      tempDirection = 'rtl';
+    } else {
+      tempDirection = 'ltr';
     }
-    const valueA = isNaN(+propertyA) ? propertyA : +propertyA;
-    const valueB = isNaN(+propertyB) ? propertyB : +propertyB;
-    return (
-      (valueA < valueB ? -1 : 1) * (this._sort.direction === 'asc' ? 1 : -1)
+    const dialogRef = this.dialog.open(
+      DeleteLocationDialogComponent,
+      {
+        data: row,
+        direction: tempDirection,
+      }
     );
-  });
-}
+    this.subs.sink = dialogRef.afterClosed().subscribe((result) => {
+        this.refresh();
+        this.showNotification(
+          'snackbar-success',
+          'Delete Record Successfully...!!!',
+          'top',
+          'right'
+        );
+    });
+  }
+
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource?.data.length;
+    return numSelected === numRows;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected()
+      ? this.selection.clear()
+      : this.dataSource?.data.forEach((row) => this.selection.select(row));
+  }
+  removeSelectedRows() {
+    const totalSelect = this.selection.selected.length;
+    const targetIds = this.selection.selected.map(
+      (data) => data.locationId
+    );
+    this.subs.sink = this.locationService
+      .deleteMultipleLocation(targetIds)
+      .subscribe({
+        next: (res) => {
+          if (res.status) {
+            this.refresh();
+            this.selection = new SelectionModel<LocationModel>(
+              true,
+              []
+            );
+            this.showNotification(
+              'snackbar-success',
+              totalSelect + ' Record Delete Successfully...!!!',
+              'top',
+              'right'
+            );
+          }
+        },
+        error: (error) => {
+          this.showNotification('snackbar-danger', error, 'top', 'right');
+        },
+      });
+  }
+  public loadData(searchQuery: string, sortField: string, sortOrder: string) {
+    this.isTblLoading = true;
+    const options: SearchCall<SearchParameter> = {
+      from: this.currentPage,
+      pageSize: this.pageSize,
+      sortField,
+      sortOrder,
+      parameter: {
+        searchQuery,
+      },
+    };
+    this.locationService
+      .getAllLocation(options)
+      .subscribe((res) => {
+        this.isTblLoading = false;
+        this.dataSource.data = res.result;
+        this.totalRows = res.totalCount;
+      });
+  }
+
+  showNotification(
+    colorName: string,
+    text: string,
+    placementFrom: MatSnackBarVerticalPosition,
+    placementAlign: MatSnackBarHorizontalPosition
+  ) {
+    this.snackBar.open(text, '', {
+      duration: 2000,
+      verticalPosition: placementFrom,
+      horizontalPosition: placementAlign,
+      panelClass: colorName,
+    });
+  }
 }

@@ -157,26 +157,49 @@ namespace WorkOffice.Services
             }
         }
 
-        public async Task<ApiResponse<GetResponse<List<CustomIdentityFormatSettingModel>>>> GetList(int pageNumber = 1, int pageSize = 10)
+        public async Task<ApiResponse<SearchReply<CustomIdentityFormatSettingModel>>> GetList(SearchCall<SearchParameter> options, long clientId)
         {
+            int count = 0;
+            int pageNumber = options.From > 0 ? options.From : 0;
+            int pageSize = options.PageSize > 0 ? options.PageSize : 10;
+            string sortOrder = string.IsNullOrEmpty(options.SortOrder) ? "asc" : options.SortOrder;
+            string sortField = string.IsNullOrEmpty(options.SortField) ? "prefix" : options.SortField;
+
             try
             {
-                var apiResponse = new ApiResponse<GetResponse<List<CustomIdentityFormatSettingModel>>>();
+                var apiResponse = new ApiResponse<SearchReply<CustomIdentityFormatSettingModel>>();
 
-                IQueryable<CustomIdentityFormatSetting> query = context.CustomIdentityFormatSettings;
-                int offset = (pageNumber - 1) * pageSize;
-                var items = await query.Skip(offset).Take(pageSize).ToListAsync();
-                if (items.Count <= 0)
+                IQueryable<CustomIdentityFormatSetting> query = context.CustomIdentityFormatSettings.Where(x => x.ClientId == clientId);
+                int offset = (pageNumber) * pageSize;
+
+                if (!string.IsNullOrEmpty(options.Parameter.SearchQuery))
                 {
-                    return new ApiResponse<GetResponse<List<CustomIdentityFormatSettingModel>>>() { StatusCode = System.Net.HttpStatusCode.NotFound, ResponseType = new GetResponse<List<CustomIdentityFormatSettingModel>>() { Status = false, Message = "No record found" }, IsSuccess = false };
+                    query = query.Where(x => x.Suffix.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())
+                    || x.Prefix.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower()));
                 }
-
-
-                var response = new GetResponse<List<CustomIdentityFormatSettingModel>>()
+                switch (sortField)
                 {
-                    Status = true,
-                    Entity = items.Select(x => x.ToModel<CustomIdentityFormatSettingModel>()).ToList(),
-                    Message = ""
+                    case "prefix":
+                        query = sortOrder == "asc" ? query.OrderBy(s => s.Prefix) : query.OrderByDescending(s => s.Prefix);
+                        break;
+                    case "suffix":
+                        query = sortOrder == "asc" ? query.OrderBy(s => s.Suffix) : query.OrderByDescending(s => s.Suffix);
+                        break;
+                    case "company":
+                        query = sortOrder == "asc" ? query.OrderBy(s => s.Company) : query.OrderByDescending(s => s.Company);
+                        break;
+                    default:
+                        query = query.OrderBy(s => s.Suffix);
+                        break;
+                }
+                count = query.Count();
+                var items = await query.Skip(offset).Take(pageSize).ToListAsync();
+
+
+                var response = new SearchReply<CustomIdentityFormatSettingModel>()
+                {
+                    TotalCount = count,
+                    Result = items.Select(x => x.ToModel<CustomIdentityFormatSettingModel>()).ToList(),
                 };
 
                 apiResponse.StatusCode = System.Net.HttpStatusCode.OK;
@@ -187,7 +210,7 @@ namespace WorkOffice.Services
             }
             catch (Exception ex)
             {
-                return new ApiResponse<GetResponse<List<CustomIdentityFormatSettingModel>>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new GetResponse<List<CustomIdentityFormatSettingModel>>() { Status = false, Message = $"Error encountered {ex.Message}" }, IsSuccess = false };
+                return new ApiResponse<SearchReply<CustomIdentityFormatSettingModel>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new SearchReply<CustomIdentityFormatSettingModel>() { TotalCount = 0, }, IsSuccess = false };
             }
         }
 
@@ -260,6 +283,47 @@ namespace WorkOffice.Services
 
                 var details = $"Deleted CustomIdentityFormatSettings ";
                 await auditTrail.SaveAuditTrail(details, "CustomIdentityFormatSettings", "Delete");
+
+                return apiResponse;
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<DeleteReply>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new DeleteReply() { Status = false, Message = $"Error encountered {ex.Message}" }, IsSuccess = false };
+            }
+        }
+
+        public async Task<ApiResponse<DeleteReply>> MultipleDelete(MultipleDeleteModel model)
+        {
+            try
+            {
+                if (model.targetIds.Count <= 0)
+                {
+                    return new ApiResponse<DeleteReply>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new DeleteReply { Status = false, Message = "StructureDefinitionId is required." }, IsSuccess = false };
+                }
+
+                var apiResponse = new ApiResponse<DeleteReply>();
+
+                foreach (var item in model.targetIds)
+                {
+                    var data = await context.CustomIdentityFormatSettings.FindAsync(item);
+                    if (data != null)
+                    {
+                        data.IsDeleted = true;
+                    }
+                };
+
+                var response = new DeleteReply()
+                {
+                    Status = await context.SaveChangesAsync() > 0,
+                    Message = "Records Deleted Successfully"
+                };
+
+                apiResponse.StatusCode = System.Net.HttpStatusCode.OK;
+                apiResponse.IsSuccess = true;
+                apiResponse.ResponseType = response;
+
+                var details = $"Deleted Multiple Custom Identity Format Settings: with Ids {model.targetIds.ToArray()} ";
+                await auditTrail.SaveAuditTrail(details, "Custom Identity Format Settings", "Delete");
 
                 return apiResponse;
             }

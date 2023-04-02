@@ -165,26 +165,62 @@ namespace WorkOffice.Services
             }
         }
 
-        public async Task<ApiResponse<GetResponse<List<LocationModel>>>> GetList(int pageNumber = 1, int pageSize = 10)
+        public async Task<ApiResponse<SearchReply<LocationModel>>> GetList(SearchCall<SearchParameter> options, long clientId)
         {
+            int count = 0;
+            int pageNumber = options.From > 0 ? options.From : 0;
+            int pageSize = options.PageSize > 0 ? options.PageSize : 10;
+            string sortOrder = string.IsNullOrEmpty(options.SortOrder) ? "asc" : options.SortOrder;
+            string sortField = string.IsNullOrEmpty(options.SortField) ? "name" : options.SortField;
+
             try
             {
-                var apiResponse = new ApiResponse<GetResponse<List<LocationModel>>>();
+                var apiResponse = new ApiResponse<SearchReply<LocationModel>>();
 
-                IQueryable<Location> query = context.Locations;
-                int offset = (pageNumber - 1) * pageSize;
-                var items = await query.Skip(offset).Take(pageSize).ToListAsync();
-                if (items.Count <= 0)
+                IQueryable<Location> query = context.Locations.Where(x => x.ClientId == clientId);
+                int offset = (pageNumber) * pageSize;
+
+                if (!string.IsNullOrEmpty(options.Parameter.SearchQuery))
                 {
-                    return new ApiResponse<GetResponse<List<LocationModel>>>() { StatusCode = System.Net.HttpStatusCode.NotFound, ResponseType = new GetResponse<List<LocationModel>>() { Status = false, Message = "No record found" }, IsSuccess = false };
+                    query = query.Where(x => x.Name.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())
+                    || x.Country.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower()));
                 }
-
-
-                var response = new GetResponse<List<LocationModel>>()
+           
+                switch (sortField)
                 {
-                    Status = true,
-                    Entity = items.Select(x => x.ToModel<LocationModel>()).ToList(),
-                    Message = ""
+                    case "name":
+                        query = sortOrder == "asc" ? query.OrderBy(s => s.Name) : query.OrderByDescending(s => s.Name);
+                        break;
+                    case "country":
+                        query = sortOrder == "asc" ? query.OrderBy(s => s.Country) : query.OrderByDescending(s => s.Country);
+                        break;
+                    case "state":
+                        query = sortOrder == "asc" ? query.OrderBy(s => s.State) : query.OrderByDescending(s => s.State);
+                        break;
+                    case "city":
+                        query = sortOrder == "asc" ? query.OrderBy(s => s.City) : query.OrderByDescending(s => s.City);
+                        break;
+                    case "address":
+                        query = sortOrder == "asc" ? query.OrderBy(s => s.Address) : query.OrderByDescending(s => s.Address);
+                        break;
+                    case "zipCode":
+                        query = sortOrder == "asc" ? query.OrderBy(s => s.ZipCode) : query.OrderByDescending(s => s.ZipCode);
+                        break;
+                    case "phone":
+                        query = sortOrder == "asc" ? query.OrderBy(s => s.Phone) : query.OrderByDescending(s => s.Phone);
+                        break;
+                    default:
+                        query = query.OrderBy(s => s.Name);
+                        break;
+                }
+                count = query.Count();
+                var items = await query.Skip(offset).Take(pageSize).ToListAsync();
+
+
+                var response = new SearchReply<LocationModel>()
+                {
+                    TotalCount = count,
+                    Result = items.Select(x => x.ToModel<LocationModel>()).ToList(),
                 };
 
                 apiResponse.StatusCode = System.Net.HttpStatusCode.OK;
@@ -195,7 +231,7 @@ namespace WorkOffice.Services
             }
             catch (Exception ex)
             {
-                return new ApiResponse<GetResponse<List<LocationModel>>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new GetResponse<List<LocationModel>>() { Status = false, Message = $"Error encountered {ex.Message}" }, IsSuccess = false };
+                return new ApiResponse<SearchReply<LocationModel>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new SearchReply<LocationModel>() { TotalCount = 0, }, IsSuccess = false };
             }
         }
 

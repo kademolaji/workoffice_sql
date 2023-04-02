@@ -38,6 +38,8 @@ import { AllCustomIdentitySettingsComponent } from './custom-identity-format/all
 import { AddCustomIdentitySettingsComponent } from './custom-identity-format/add-custom-identity-settings/add-custom-identity-settings.component';
 import { DeleteCustomIdentitySettingsDialogComponent } from './custom-identity-format/all-custom-identity-settings/dialog/delete/delete.component';
 import { CustomIdentityFormatService } from './custom-identity-format/custom-identity-format.service';
+import { GeneralInformationService } from './general-information/general-information.service';
+import { DeleteGeneralInformationDialogComponent } from './general-information/all-general-information/dialog/delete/delete.component';
 
 @NgModule({
   declarations: [AddLocationComponent,
@@ -55,6 +57,7 @@ import { CustomIdentityFormatService } from './custom-identity-format/custom-ide
 
     AllGeneralInformationComponent,
     AddGeneralInformationComponent,
+    DeleteGeneralInformationDialogComponent,
 
     AllCustomIdentitySettingsComponent,
     AddCustomIdentitySettingsComponent,
@@ -86,6 +89,6 @@ import { CustomIdentityFormatService } from './custom-identity-format/custom-ide
     ComponentsModule,
     SharedModule,
   ],
-  providers: [LocationService, StructureDefinitionService, CompanyStructureService, CustomIdentityFormatService ],
+  providers: [LocationService, StructureDefinitionService, CompanyStructureService, CustomIdentityFormatService, GeneralInformationService ],
 })
 export class OrganizationModule { }
