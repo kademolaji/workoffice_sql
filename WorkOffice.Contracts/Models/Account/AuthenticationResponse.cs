@@ -15,6 +15,7 @@ namespace WorkOffice.Contracts.Models
         public string ProfilePicture { get; set; }
         public string Token { get; set; }
         public string UserRole { get; set; }
+        public string[] UserActivities { get; set; }
         public bool IsVerified { get; set; }
 
         [JsonIgnore] // refresh token is returned in http only cookie

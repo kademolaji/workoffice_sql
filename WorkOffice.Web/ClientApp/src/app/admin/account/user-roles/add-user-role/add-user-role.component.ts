@@ -33,16 +33,6 @@ export class AddUserRoleComponent
   isAddMode = true;
   id = 0;
 
-  displayedColumns: string[] = [
-    'select',
-    'userActivityParentName',
-    'userActivityName',
-    // 'canAdd',
-    // 'canEdit',
-    // 'canView',
-    // 'canDelete',
-    // 'canApprove',
-  ];
  activitiesList: UserRoleActivitiesModel[] = [];
   isTblLoading = false;
 
@@ -63,17 +53,6 @@ export class AddUserRoleComponent
     this.isAddMode = !this.id;
     this.isTblLoading = true;
     const userRoleId = this.id ? this.id : 0;
-    this.subs.sink = this.userRoleService
-      .getUserRoleAndActivities(userRoleId)
-      .subscribe({
-        next: (res) => {
-          if (res.status) {
-            this.activitiesList = res.entity;
-            this.isTblLoading = false;
-          }
-        },
-      });
-
     if (!this.isAddMode) {
       this.subs.sink = this.userRoleService
         .getUserRoleById(userRoleId)
@@ -83,9 +62,21 @@ export class AddUserRoleComponent
               this.userRoleForm.setValue({
                 userRoleDefinition: res.entity.userRoleDefinition,
               });
+              this.activitiesList = res.entity.activities;
             }
           },
         });
+    }else {
+      this.subs.sink = this.userRoleService
+      .getUserRoleAndActivities(userRoleId)
+      .subscribe({
+        next: (res) => {
+          if (res.status) {
+            this.activitiesList = res.entity;
+            this.isTblLoading = false;
+          }
+        },
+      });
     }
   }
   cancelForm() {
@@ -95,8 +86,14 @@ export class AddUserRoleComponent
   onSubmit() {
     this.submitted = true;
     this.loading = true;
+    const selectedAct = this.activitiesList.filter(x=>x.isSelected);
     // stop here if form is invalid
-    if (this.userRoleForm.invalid) {
+    console.log("this.userRoleForm.invalid", this.userRoleForm.invalid)
+    console.log(" selectedAct.length",  selectedAct)
+
+    if (this.userRoleForm.invalid || selectedAct.length <= 0) {
+      this.submitted = false;
+      this.loading = false;
       this.showNotification(
         'snackbar-danger',
         'Add new user role failed...!!!',
@@ -107,8 +104,8 @@ export class AddUserRoleComponent
     } else {
       const userRole: UserRoleAndActivityModel = {
         userRoleAndActivityId: this.id ? this.id : 0,
-        userRoleDefinition: this.userRoleForm.value.definition,
-        activities: [],
+        userRoleDefinition: this.userRoleForm.value.userRoleDefinition,
+        activities: this.activitiesList,
       };
       this.subs.sink = this.userRoleService.addUserRole(userRole).subscribe({
         next: (res) => {
@@ -153,8 +150,8 @@ export class AddUserRoleComponent
     });
   }
 
-  checkUncheckAll(evt: Event) {
-    this.activitiesList.forEach((c) => c.isSelected = (evt.target as HTMLInputElement).checked)
+  checkUncheckAll() {
+    this.activitiesList.forEach((c) => c.isSelected = !c.isSelected)
   }
 
 

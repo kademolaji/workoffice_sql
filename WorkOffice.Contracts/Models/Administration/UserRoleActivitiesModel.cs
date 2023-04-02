@@ -18,5 +18,6 @@ namespace WorkOffice.Contracts.Models
         public bool CanView { get; set; }
         public bool CanDelete { get; set; }
         public bool CanApprove { get; set; }
+        public bool IsSelected { get; set; }
     }
 }

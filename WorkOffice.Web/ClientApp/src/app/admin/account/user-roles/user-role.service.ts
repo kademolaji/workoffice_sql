@@ -36,7 +36,7 @@ export class UserRoleService extends UnsubscribeOnDestroyAdapter {
 
   getUserRoleById(id: number) {
     return this.httpClient.get<GetResponse<UserRoleAndActivityModel>>(
-      `api/Administration/Get?structureDefinitionId=${id}`
+      `api/Administration/GetUserRoleDefinition?userRoleId=${id}`
     );
   }
 

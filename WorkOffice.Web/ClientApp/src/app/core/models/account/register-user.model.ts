@@ -1,4 +1,3 @@
-import { Role } from "../role";
 
 export interface RegisterUser {
   firstName: string;
@@ -7,6 +6,6 @@ export interface RegisterUser {
   confirmPassword: string;
   email: string;
   country: string;
-  userRole: Role;
+  userRoleId: number;
   acceptTerms: boolean;
 }

@@ -28,4 +28,10 @@ export class GeneralSettingsService {
     );
   }
 
+  getUserRoleList() {
+    return this.httpClient.get<GetResponse<GeneralSettingsModel[]>>(
+      `api/settings/GetUserRoleList`
+    );
+  }
+
 }

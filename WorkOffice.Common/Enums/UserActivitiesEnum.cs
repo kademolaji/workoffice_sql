@@ -13,5 +13,9 @@ namespace WorkOffice.Common
         Company_Structures = 5,
         General_Information = 6,
         Custom_Identity_Settings = 7,
+        Activity = 8,
+        AppType = 9,
+        Consultant = 10,
+        Hospital = 10,
     }
 }

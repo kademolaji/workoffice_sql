@@ -20,6 +20,10 @@ export class DeleteUserRoleDialogComponent {
     this.dialogRef.close();
   }
   confirmDelete(): void {
-    this.userRoleService.deleteUserRole(this.data.userRoleAndActivityId).subscribe();
+    this.userRoleService.deleteUserRole(this.data.userRoleAndActivityId).subscribe((data)=>{
+      if(data.status){
+        this.dialogRef.close();
+      }
+    });
   }
 }

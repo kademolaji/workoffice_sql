@@ -24,5 +24,6 @@ namespace WorkOffice.Contracts.ServicesContracts
         Task<ApiResponse<CreateResponse>> DisableEnableUser(long userId, long loggedInUserId);
         Task<ApiResponse<GetResponse<AuthenticationResponse>>> GetUserAccountById(long userId);
         Task UpdateLastActive(long userId);
+        List<string> GetUserActivitiesByUser(long userAccountId);
     }
 }

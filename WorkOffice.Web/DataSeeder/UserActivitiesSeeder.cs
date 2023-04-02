@@ -26,7 +26,12 @@ namespace WorkOffice.Web.DataSeeder
             AddNewData(new UserActivity { UserActivityId = (long)UserActivitiesEnum.Structure_Definition, UserActivityName = Enum.GetName(typeof(UserActivitiesEnum), UserActivitiesEnum.Structure_Definition).Replace("_", " "), UserActivityParentId = (long)UserActivityParentEnum.Organization, ClientId = 1 });
             AddNewData(new UserActivity { UserActivityId = (long)UserActivitiesEnum.Custom_Identity_Settings, UserActivityName = Enum.GetName(typeof(UserActivitiesEnum), UserActivitiesEnum.Custom_Identity_Settings).Replace("_", " "), UserActivityParentId = (long)UserActivityParentEnum.Organization, ClientId = 1 });
             AddNewData(new UserActivity { UserActivityId = (long)UserActivitiesEnum.General_Information, UserActivityName = Enum.GetName(typeof(UserActivitiesEnum), UserActivitiesEnum.General_Information).Replace("_", " "), UserActivityParentId = (long)UserActivityParentEnum.Organization, ClientId = 1 });
-
+            
+            AddNewData(new UserActivity { UserActivityId = (long)UserActivitiesEnum.Activity, UserActivityName = Enum.GetName(typeof(UserActivitiesEnum), UserActivitiesEnum.Activity).Replace("_", " "), UserActivityParentId = (long)UserActivityParentEnum.Setup, ClientId = 1 });
+            AddNewData(new UserActivity { UserActivityId = (long)UserActivitiesEnum.AppType, UserActivityName = Enum.GetName(typeof(UserActivitiesEnum), UserActivitiesEnum.AppType).Replace("_", " "), UserActivityParentId = (long)UserActivityParentEnum.Setup, ClientId = 1 });
+            AddNewData(new UserActivity { UserActivityId = (long)UserActivitiesEnum.Consultant, UserActivityName = Enum.GetName(typeof(UserActivitiesEnum), UserActivitiesEnum.Consultant).Replace("_", " "), UserActivityParentId = (long)UserActivityParentEnum.Setup, ClientId = 1 });
+            AddNewData(new UserActivity { UserActivityId = (long)UserActivitiesEnum.Hospital, UserActivityName = Enum.GetName(typeof(UserActivitiesEnum), UserActivitiesEnum.Hospital).Replace("_", " "), UserActivityParentId = (long)UserActivityParentEnum.Setup, ClientId = 1 });
+         
             _context.SaveChanges();
         }
 

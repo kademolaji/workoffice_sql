@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WorkOffice.Common;
 using WorkOffice.Common.Enums;
-using WorkOffice.Common.Settings;
 using WorkOffice.Contracts.Models;
 using WorkOffice.Contracts.ServicesContracts;
 using WorkOffice.Web.Filters;
@@ -25,13 +25,11 @@ namespace H2RHRMS.Api.Controllers
         private readonly IStructureDefinitionService service;
         private readonly IUserAuthorizationService authorized;
         private readonly IHttpAccessorService httpAccessorService;
-        private UserActivitiesList userActivitiesList;
         public StructureDefinitionController(IStructureDefinitionService _service, IUserAuthorizationService _userAuthorization, IHttpAccessorService _httpAccessorService)
         {
             service = _service;
             authorized = _userAuthorization;
             httpAccessorService = _httpAccessorService;
-            userActivitiesList = new UserActivitiesList();
         }
         //  POST /api/StructureDefinition/Create
         /// <summary>
@@ -61,21 +59,21 @@ namespace H2RHRMS.Api.Controllers
             {
                 model.ClientId = httpAccessorService.GetCurrentClientId();
                 var userId = httpAccessorService.GetCurrentUserId();
-                //if (authorized.CanPerformActionOnResource(userId, userActivitiesList.CreateStructureDefinition, model.ClientId, UserActions.Add))
-                //{
+                if (authorized.CanPerformActionOnResource(userId, (long)UserActivitiesEnum.Structure_Definition, model.ClientId, UserActions.Add))
+                {
                     var apiResponse = await service.Create(model);
                     if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
                     {
                         return BadRequest(apiResponse.ResponseType);
                     }
                     return Ok(apiResponse.ResponseType);
-                //}
+                }
 
-                //else
-                //{
-                //    return BadRequest(
-                //       new { Status = false, Message = $"You do not have enough right to add structure definition" });
-                //}
+                else
+                {
+                    return BadRequest(
+                       new { Status = false, Message = $"You do not have enough right to add structure definition" });
+                }
             }
             catch (Exception ex)
             {
@@ -189,7 +187,7 @@ namespace H2RHRMS.Api.Controllers
             {
                 var clientId = httpAccessorService.GetCurrentClientId();
                 var userId = httpAccessorService.GetCurrentUserId();
-                if (authorized.CanPerformActionOnResource(userId, userActivitiesList.ViewStructureDefinition, clientId, UserActions.View))
+                if (authorized.CanPerformActionOnResource(userId, (long)UserActivitiesEnum.Structure_Definition, clientId, UserActions.View))
                 {
                     var apiResponse = await service.Export(clientId);
                     if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
@@ -240,7 +238,7 @@ namespace H2RHRMS.Api.Controllers
             {
                 var clientId = httpAccessorService.GetCurrentClientId();
                 var userId = httpAccessorService.GetCurrentUserId();
-                if (authorized.CanPerformActionOnResource(userId, userActivitiesList.CreateStructureDefinition, clientId, UserActions.Add))
+                if (authorized.CanPerformActionOnResource(userId, (long)UserActivitiesEnum.Structure_Definition, clientId, UserActions.Add))
                 {
                     var apiResponse = new ApiResponse<CreateResponse>();
 
@@ -308,8 +306,8 @@ namespace H2RHRMS.Api.Controllers
             {
                 var clientId = httpAccessorService.GetCurrentClientId();
                 var userId = httpAccessorService.GetCurrentUserId();
-                //if (authorized.CanPerformActionOnResource(userId, userActivitiesList.DeleteStructureDefinition, clientId, UserActions.Delete))
-                //{
+                if (authorized.CanPerformActionOnResource(userId, (long)UserActivitiesEnum.Structure_Definition, clientId, UserActions.Delete))
+                {
                     var apiResponse = await service.Delete(structureDefinitionId);
                     if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
                     {
@@ -322,13 +320,13 @@ namespace H2RHRMS.Api.Controllers
                     }
 
                     return Ok(apiResponse.ResponseType);
-                //}
+                }
 
-                //else
-                //{
-                //    return BadRequest(
-                //       new { Status = false, Message = $"You do not have enough right to delete structure definition" });
-                //}
+                else
+                {
+                    return BadRequest(
+                       new { Status = false, Message = $"You do not have enough right to delete structure definition" });
+                }
             }
             catch (Exception ex)
             {
@@ -359,8 +357,8 @@ namespace H2RHRMS.Api.Controllers
             {
                 var clientId = httpAccessorService.GetCurrentClientId();
                 var userId = httpAccessorService.GetCurrentUserId();
-                //if (authorized.CanPerformActionOnResource(userId, userActivitiesList.DeleteStructureDefinition, clientId, UserActions.Delete))
-                //{
+                if (authorized.CanPerformActionOnResource(userId, (long)UserActivitiesEnum.Structure_Definition, clientId, UserActions.Delete))
+                {
                     var apiResponse = await service.MultipleDelete(model);
                     if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
                     {
@@ -373,12 +371,12 @@ namespace H2RHRMS.Api.Controllers
                     }
 
                     return Ok(apiResponse.ResponseType);
-                //}
-                //else
-                //{
-                //    return BadRequest(
-                //       new { Status = false, Message = $"You do not have enough right to delete structure definition" });
-                //}
+                }
+                else
+                {
+                    return BadRequest(
+                       new { Status = false, Message = $"You do not have enough right to delete structure definition" });
+                }
             }
             catch (Exception ex)
             {

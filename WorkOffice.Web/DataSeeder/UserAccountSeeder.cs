@@ -27,7 +27,7 @@ namespace WorkOffice.Web.DataSeeder
                 LastName = "Admin",
                 Email = "workoffice@qa.team",
                 Country = "Nigeria",
-                RoleId = 1,
+                //RoleId = 1,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
                 LockoutEnabled = true,

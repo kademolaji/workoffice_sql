@@ -8,11 +8,10 @@ import { MatSnackBar, MatSnackBarVerticalPosition, MatSnackBarHorizontalPosition
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { DeleteStructureDefinitionDialogComponent } from 'src/app/admin/organization/structure-definition/all-structure-definition/dialog/delete/delete.component';
-import { StructureDefinitionModel } from 'src/app/admin/organization/structure-definition/structure-definition.model';
 import { UnsubscribeOnDestroyAdapter } from 'src/app/shared/UnsubscribeOnDestroyAdapter';
 import { UserRoleActivitiesModel, UserRoleAndActivityModel } from '../user-role.model';
 import { UserRoleService } from '../user-role.service';
+import { DeleteUserRoleDialogComponent } from './dialog/delete/delete.component';
 
 @Component({
   selector: 'app-all-user-roles',
@@ -84,23 +83,23 @@ refresh() {
   this.searchQuery = '';
   this.sortOrder = '';
   this.sortField = '';
-  // this.loadData(this.searchQuery, this.sortField, this.sortOrder);
+  this.loadData();
 }
 
 addNew() {
   this.router.navigate(['admin', 'users', 'add-user-role']);
 }
 
-editCall(row: { structureDefinitionId: number }) {
+editCall(row: { userRoleAndActivityId: number }) {
   this.router.navigate([
     'admin',
     'users',
     'edit-user-role',
-    row.structureDefinitionId,
+    row.userRoleAndActivityId,
   ]);
 }
 
-deleteItem(row: StructureDefinitionModel) {
+deleteItem(row: UserRoleAndActivityModel) {
   let tempDirection: Direction;
   if (localStorage.getItem('isRtl') === 'true') {
     tempDirection = 'rtl';
@@ -108,14 +107,13 @@ deleteItem(row: StructureDefinitionModel) {
     tempDirection = 'ltr';
   }
   const dialogRef = this.dialog.open(
-    DeleteStructureDefinitionDialogComponent,
+    DeleteUserRoleDialogComponent,
     {
       data: row,
       direction: tempDirection,
     }
   );
   this.subs.sink = dialogRef.afterClosed().subscribe((result) => {
-    if (result === 1) {
       this.refresh();
       this.showNotification(
         'snackbar-success',
@@ -123,7 +121,6 @@ deleteItem(row: StructureDefinitionModel) {
         'top',
         'right'
       );
-    }
   });
 }
 
@@ -199,7 +196,7 @@ getParentActivities(activites: UserRoleActivitiesModel[]){
 }
 
 getActivities(activites: UserRoleActivitiesModel[]){
-  return activites.map(x=>x.userActivityName).join(" ,")
+  return activites.map(x=>x.userActivityName).join(", ")
 }
 
 }

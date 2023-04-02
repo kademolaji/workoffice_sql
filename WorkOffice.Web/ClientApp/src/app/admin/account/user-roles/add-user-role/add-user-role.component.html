@@ -56,19 +56,17 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div class="card">
                     <div class="header">
-                      <h2><strong>Select Activities</strong> </h2>
+                      <h2><strong>Select Activities</strong></h2>
                     </div>
                     <div class="body table-responsive">
                       <table class="table table-hover">
                         <thead>
                           <tr>
                             <th>
-                              <input
-                                type="checkbox"
-                                name="list_name"
-                                value="m1"
-                                (change)="checkUncheckAll($event)"
-                              />
+                              <mat-checkbox
+                                class="example-margin"
+                                (change)="checkUncheckAll()"
+                              ></mat-checkbox>
                             </th>
                             <th>Parent Activity</th>
                             <th>Activity</th>
@@ -82,51 +80,48 @@
                         <tbody>
                           <tr *ngFor="let item of activitiesList">
                             <th scope="row">
-                              <input
-                              type="checkbox"
-                              [checked]="item.isSelected"
-                              name="list_name"
-                              value="{{ item.isSelected }}"
-                            />
+                              <mat-checkbox
+                                class="example-margin"
+                                [(ngModel)]="item.isSelected"
+                                [ngModelOptions]="{ standalone: true }"
+                              ></mat-checkbox>
                             </th>
                             <td>{{ item.userActivityParentName }}</td>
                             <td>{{ item.userActivityName }}</td>
                             <td>
-                              <input
-                                type="checkbox"
-                                [checked]="item.canAdd"
-                                name="list_name"
-                                value="{{ item.canAdd }}"
-                              />
+                              <mat-checkbox
+                                class="example-margin"
+                                [(ngModel)]="item.canAdd"
+                                [ngModelOptions]="{ standalone: true }"
+                              ></mat-checkbox>
                             </td>
                             <td>
-                              <input
-                                type="checkbox"
-                                [checked]="item.canEdit"
-                                name="list_name"
-                                value="{{ item.canEdit }}"
-                              />
-                            </td><td>
-                              <input
-                                type="checkbox"
-                                [checked]="item.canView"
-                                name="list_name"
-                                value="{{ item.canView }}"
-                              />
-                            </td><td>
-                              <input
-                                type="checkbox"
-                                [checked]="item.canDelete"
-                                name="list_name"
-                                value="{{ item.canDelete }}"
-                              />
-                            </td><td>
-                              <input
-                                type="checkbox"
-                                [checked]="item.canApprove"
-                                name="list_name"
-                                value="{{ item.canApprove }}"
-                              />
+                              <mat-checkbox
+                                class="example-margin"
+                                [(ngModel)]="item.canEdit"
+                                [ngModelOptions]="{ standalone: true }"
+                              ></mat-checkbox>
+                            </td>
+                            <td>
+                              <mat-checkbox
+                                class="example-margin"
+                                [(ngModel)]="item.canView"
+                                [ngModelOptions]="{ standalone: true }"
+                              ></mat-checkbox>
+                            </td>
+                            <td>
+                              <mat-checkbox
+                                class="example-margin"
+                                [(ngModel)]="item.canDelete"
+                                [ngModelOptions]="{ standalone: true }"
+                              ></mat-checkbox>
+                            </td>
+                            <td>
+                              <mat-checkbox
+                                class="example-margin"
+                                [(ngModel)]="item.canApprove"
+                                [ngModelOptions]="{ standalone: true }"
+                              ></mat-checkbox>
                             </td>
                           </tr>
                         </tbody>

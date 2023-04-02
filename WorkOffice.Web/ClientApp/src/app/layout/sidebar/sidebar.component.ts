@@ -12,7 +12,6 @@ import {
 } from '@angular/core';
 import { ROUTES } from './sidebar-items';
 import { AuthService } from 'src/app/core/service/auth.service';
-import { Role } from 'src/app/core/models/role';
 import { RouteInfo } from './sidebar.metadata';
 @Component({
   selector: 'app-sidebar',
@@ -27,7 +26,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   listMaxWidth!: string;
   userFullName!: string;
   userImg!: string;
-  userType!: string;
+  currentUserRole!: string;
   headerHeight = 60;
   currentRoute!: string;
   routerObj;
@@ -73,33 +72,65 @@ export class SidebarComponent implements OnInit, OnDestroy {
   ngOnInit() {
     if (this.authService.currentUserValue) {
       const userRole = this.authService.currentUserValue.userRole;
+      const userActivities = this.authService.currentUserValue.userActivities;
       this.userFullName =
         this.authService.currentUserValue.firstName +
         ' ' +
         this.authService.currentUserValue.lastName;
-      this.userImg = this.authService.currentUserValue.profilePicture ? this.authService.currentUserValue.profilePicture : 'assets/images/user/admin.jpg';
+      this.userImg = this.authService.currentUserValue.profilePicture
+        ? this.authService.currentUserValue.profilePicture
+        : 'assets/images/user/admin.jpg';
 
-      this.sidebarItems = ROUTES.filter(
-        (x) => x.role.indexOf(userRole) !== -1 || x.role.indexOf('All') !== -1
+      // this.sidebarItems = ROUTES.filter(function(n) {
+      //   return userActivities.indexOf(n.activity) !== -1 || n.activity.indexOf("") !== -1;
+      // });
+
+      this.sidebarItems = this.filterMenuItemsByActivity(
+        ROUTES,
+        userActivities
       );
-      if (userRole === Role.Admin) {
-        this.userType = Role.Admin;
-      } else if (userRole === Role.Patient) {
-        this.userType = Role.Patient;
-      } else if (userRole === Role.Doctor) {
-        this.userType = Role.Doctor;
-      } else {
-        this.userType = Role.Admin;
-      }
+      this.currentUserRole = userRole;
     }
 
-    // this.sidebarItems = ROUTES.filter((sidebarItem) => sidebarItem);
     this.initLeftSidebar();
     this.bodyTag = this.document.body;
   }
   ngOnDestroy() {
     this.routerObj.unsubscribe();
   }
+
+  filterMenuItemsByActivity(
+    data: RouteInfo[],
+    activities: string[]
+  ): RouteInfo[] {
+    const result: RouteInfo[] = [];
+    let subsub: RouteInfo[] = [];
+    let sub: RouteInfo[] = [];
+    data.forEach((route) => {
+      sub = [];
+      if (route.submenu.length > 0) {
+        route.submenu.forEach((subRoute) => {
+          subsub = [];
+          if (subRoute.submenu.length > 0) {
+            subRoute.submenu.forEach((subsubRoute) => {
+              if(activities.includes(subsubRoute.activity)){
+                subsub.push(subsubRoute)
+              }
+            });
+            subRoute.submenu = subsub;
+          }
+        });
+        sub = route.submenu.filter((x) => activities.includes(x.activity));
+        route.submenu = sub;
+      }
+      if (activities.includes(route.activity)) {
+        result.push(route);
+      }
+    });
+    return result;
+  }
+
+
   initLeftSidebar() {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const _this = this;

@@ -1,4 +1,3 @@
-import { Role } from "../role";
 
 export interface UserAccount {
  userId: number;
@@ -9,7 +8,7 @@ export interface UserAccount {
  country: string;
  profilePicture: string;
  token: string;
- userRole: Role;
+ userRole: string;
  biography: string;
  fullName: string;
 }

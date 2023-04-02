@@ -72,6 +72,19 @@
              <response code="404">If list of UserRole And Activities is null</response> 
              <response code="400">If an error occur or invalid request payload</response> 
         </member>
+        <member name="M:WorkOffice.Web.Controllers.AdministrationController.GetUserRoleDefinition(System.Int64)">
+             <summary>
+             Get list of UserRoleAndActivities
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <returns>List of UserRole And Activities</returns>
+             <response code="200">Returns list of UserRole And Activities</response>
+             <response code="404">If list of UserRole And Activities is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
         <member name="M:WorkOffice.Web.Controllers.AdministrationController.GetActivitiesByRoleId(System.Int64)">
              <summary>
              Get list of Activities By RoleId

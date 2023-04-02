@@ -1,4 +1,3 @@
-import { Role } from './role';
 
 export class User {
   userId!: string;
@@ -7,7 +6,8 @@ export class User {
   email!: string;
   profilePicture!: string;
   token!: string;
-  userRole!: Role;
+  userRole!: string;
   isVerified!: boolean;
-  fullName!: string
+  fullName!: string;
+  userActivities!: string[];
 }

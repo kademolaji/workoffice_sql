@@ -26,7 +26,6 @@ namespace WorkOffice.Domain.Entities
         public int AccessFailedCount { get; set; }
         public bool LockoutEnabled { get; set; }
         public DateTime CreationDate { get; set; }
-        public int RoleId { get; set; }
         public string ProfilePicture { get; set; }
         public string Country { get; set; }
         public string Biography { get; set; }

@@ -8,6 +8,6 @@ export interface RouteInfo {
   groupTitle: boolean;
   badge: string;
   badgeClass: string;
-  role: string[];
+  activity: string;
   submenu: RouteInfo[];
 }
