@@ -15,6 +15,6 @@ export interface GeneralInformationModel {
   note: string;
   zipcode: string;
   currency: string;
-  ismulticompany: string;
-  subsidiary_level: string;
+  ismulticompany: boolean;
+  subsidiary_level: number;
 }

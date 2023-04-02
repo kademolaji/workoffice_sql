@@ -19,7 +19,8 @@ import { DeleteLocationDialogComponent } from './dialog/delete/delete.component'
   templateUrl: './all-location.component.html',
   styleUrls: ['./all-location.component.css']
 })
-export class AllLocationComponent  extends UnsubscribeOnDestroyAdapter
+export class AllLocationComponent
+extends UnsubscribeOnDestroyAdapter
 implements OnInit
 {
 displayedColumns = [

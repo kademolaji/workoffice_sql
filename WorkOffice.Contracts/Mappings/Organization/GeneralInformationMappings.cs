@@ -13,7 +13,7 @@ namespace WorkOffice.Contracts.Mappings
             return new T
             {
                 GeneralInformationId = entity.GeneralInformationId,
-                Organisationname = entity.Organisationname,
+                OrganisationName = entity.Organisationname,
                 Taxid = entity.Taxid,
                 Regno = entity.Regno,
                 Phone = entity.Phone,
@@ -40,7 +40,7 @@ namespace WorkOffice.Contracts.Mappings
             return new T
             {
                 GeneralInformationId = entity.GeneralInformationId,
-                Organisationname = entity.Organisationname,
+                Organisationname = entity.OrganisationName,
                 Taxid = entity.Taxid,
                 Regno = entity.Regno,
                 Phone = entity.Phone,

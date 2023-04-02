@@ -34,4 +34,10 @@ export class GeneralSettingsService {
     );
   }
 
+  getCompanyList() {
+    return this.httpClient.get<GetResponse<GeneralSettingsModel[]>>(
+      `api/settings/GetCompanyList`
+    );
+  }
+
 }

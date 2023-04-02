@@ -31,6 +31,7 @@ export class AddGeneralInformationComponent
   isAddMode = true;
   id = 0;
   countryList: GeneralSettingsModel[] = [];
+  ismulticompany= false;
 
   constructor(
     private fb: UntypedFormBuilder,
@@ -49,13 +50,13 @@ export class AddGeneralInformationComponent
       regno: ['', [Validators.required]],
       phone:['', [Validators.required]],
       email:['', [Validators.required]],
-      fax: ['', [Validators.required]],
+      fax: [''],
       address1: ['', [Validators.required]],
-      address2: ['', [Validators.required]],
+      address2: [''],
       city: ['', [Validators.required]],
       state: ['', [Validators.required]],
       country: ['', [Validators.required]],
-      note: ['', [Validators.required]],
+      note: [''],
       zipcode: ['', [Validators.required]],
       currency: ['', [Validators.required]],
       ismulticompany:[false, [Validators.required]],
@@ -131,7 +132,7 @@ export class AddGeneralInformationComponent
         zipcode: this.generalInformationForm.value.zipcode,
         currency: this.generalInformationForm.value.currency,
         ismulticompany: this.generalInformationForm.value.ismulticompany,
-        subsidiary_level: this.generalInformationForm.value.subsidiary_level,
+        subsidiary_level: +this.generalInformationForm.value.subsidiary_level,
       };
       this.subs.sink = this.generalInformationService
         .addGeneralInformation(generalInformationModel)

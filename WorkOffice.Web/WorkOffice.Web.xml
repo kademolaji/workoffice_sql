@@ -1461,6 +1461,20 @@
              <response code="201">GeneralInformation Created Successfully</response>
              <response code="400">If an error occur or invalid request payload</response>
         </member>
+        <member name="M:H2RHRMS.Api.Controllers.GeneralInformationController.GetList(WorkOffice.Contracts.ServicesContracts.SearchCall{WorkOffice.Contracts.ServicesContracts.SearchParameter})">
+             <summary>
+             Get list of GeneralInformation
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="options"></param>
+             <returns>List of customIdentityFormatSetting</returns>
+             <response code="200">Returns list of GeneralInformation</response>
+             <response code="404">If list of GeneralInformation is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
         <member name="M:H2RHRMS.Api.Controllers.GeneralInformationController.Get(System.Int64)">
              <summary>
              Get object of GeneralInformation
@@ -1487,6 +1501,20 @@
              <returns>Object of GeneralInformation</returns>
              <response code="200">Returns object of GeneralInformation</response>
              <response code="404">If object of GeneralInformation is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:H2RHRMS.Api.Controllers.GeneralInformationController.MultipleDelete(WorkOffice.Contracts.Models.MultipleDeleteModel)">
+             <summary>
+             Delete Multiple StructureDefinition
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="model"></param>
+             <returns>Object of StructureDefinition</returns>
+             <response code="200">Returns object of StructureDefinition</response>
+             <response code="404">If object of StructureDefinition is null</response> 
              <response code="400">If an error occur or invalid request payload</response> 
         </member>
         <member name="M:H2RHRMS.Api.Controllers.LocationController.Create(WorkOffice.Contracts.Models.LocationModel)">

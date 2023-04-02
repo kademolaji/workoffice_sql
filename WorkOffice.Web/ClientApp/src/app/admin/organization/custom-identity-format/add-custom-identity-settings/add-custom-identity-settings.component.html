@@ -41,8 +41,8 @@
                   <mat-form-field class="example-full-width mb-3" appearance="outline">
                     <mat-label>Select Company</mat-label>
                     <mat-select formControlName="company" required>
-                      <mat-option  *ngFor="let country of companyList" [value]="country.label">
-                        {{country.label}}
+                      <mat-option  *ngFor="let company of companyList" [value]="company.label">
+                        {{company.label}}
                       </mat-option>
                     </mat-select>
                     <mat-error *ngIf="customIdentitySettingsForm.get('company')?.hasError('required')">

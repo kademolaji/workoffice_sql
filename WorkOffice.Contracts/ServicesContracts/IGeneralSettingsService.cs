@@ -12,6 +12,7 @@ namespace WorkOffice.Contracts.ServicesContracts
         Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetStructureDefinitionList(long clientId);
         Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetCompanyStructureList(long clientId);
         Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetUserRoleList(long clientId);
+        Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetCompanyList(long clientId);
 
     }
 }

@@ -57,6 +57,48 @@ namespace H2RHRMS.Api.Controllers
             }
         }
 
+        // GET api/GeneralInformation/GetList
+        /// <summary>
+        /// Get list of GeneralInformation
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        /// </remarks>
+        /// <param name="options"></param>
+        /// <returns>List of customIdentityFormatSetting</returns>
+        /// <response code="200">Returns list of GeneralInformation</response>
+        /// <response code="404">If list of GeneralInformation is null</response> 
+        /// <response code="400">If an error occur or invalid request payload</response> 
+        [HttpPost]
+        [Route("GetList")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetResponse<List<CustomIdentityFormatSettingModel>>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(GetResponse<ProducesResponseStub>))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(GetResponse<ProducesResponseStub>))]
+        public async Task<IActionResult> GetList(SearchCall<SearchParameter> options)
+        {
+            try
+            {
+                var clientId = httpAccessorService.GetCurrentClientId();
+                var apiResponse = await service.GetList(options, clientId);
+                if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    return BadRequest(apiResponse.ResponseType);
+                }
+
+                if (apiResponse.StatusCode == System.Net.HttpStatusCode.NotFound)
+                {
+                    return NotFound(apiResponse.ResponseType);
+                }
+
+                return Ok(apiResponse.ResponseType);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"{ex.Message}");
+            }
+        }
+
         // GET api/GeneralInformation/Get
         /// <summary>
         /// Get object of GeneralInformation
@@ -141,6 +183,47 @@ namespace H2RHRMS.Api.Controllers
             }
         }
 
-       
+        /// <summary>
+        /// Delete Multiple StructureDefinition
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        /// </remarks>
+        /// <param name="model"></param>
+        /// <returns>Object of StructureDefinition</returns>
+        /// <response code="200">Returns object of StructureDefinition</response>
+        /// <response code="404">If object of StructureDefinition is null</response> 
+        /// <response code="400">If an error occur or invalid request payload</response> 
+        [HttpPost]
+        [Route("MultipleDelete")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DeleteReply))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(DeleteReply))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(DeleteReply))]
+        public async Task<IActionResult> MultipleDelete(MultipleDeleteModel model)
+        {
+            try
+            {
+
+                var apiResponse = await service.MultipleDelete(model);
+                if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    return BadRequest(apiResponse.ResponseType);
+                }
+
+                if (apiResponse.StatusCode == System.Net.HttpStatusCode.NotFound)
+                {
+                    return NotFound(apiResponse.ResponseType);
+                }
+
+                return Ok(apiResponse.ResponseType);
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"{ex.Message}");
+            }
+        }
+
     }
 }

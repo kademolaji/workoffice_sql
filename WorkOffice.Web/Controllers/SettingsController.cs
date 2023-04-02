@@ -112,5 +112,28 @@ namespace WorkOffice.Web.Controllers
                 return BadRequest($"Server Error {ex.Message}");
             }
         }
+
+
+        [HttpGet]
+        [Route("GetCompanyList")]
+        [ProducesResponseType(201, Type = typeof(CreateResponse))]
+        [ProducesResponseType(400, Type = typeof(CreateResponse))]
+        public async Task<IActionResult> GetCompanyList()
+        {
+            try
+            {
+                var clientId = httpAccessorService.GetCurrentClientId();
+                var apiResponse = await service.GetCompanyList(clientId);
+                if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    return BadRequest(apiResponse.ResponseType);
+                }
+                return Ok(apiResponse.ResponseType);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Server Error {ex.Message}");
+            }
+        }
     }
 }

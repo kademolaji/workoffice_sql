@@ -45,7 +45,7 @@ export class GeneralInformationService extends UnsubscribeOnDestroyAdapter {
 
   deleteGeneralInformation(id: number) {
     return this.httpClient.delete<DeleteReply>(
-      `api/generalinformation/Delete?generalinformationId=${id}`
+      `api/generalinformation/Delete?generalInformationId=${id}`
     );
   }
 
