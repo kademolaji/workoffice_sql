@@ -119,7 +119,6 @@ deleteItem(row: CompanyStructureModel) {
     }
   );
   this.subs.sink = dialogRef.afterClosed().subscribe((result) => {
-    if (result === 1) {
       this.refresh();
       this.showNotification(
         'snackbar-success',
@@ -127,7 +126,6 @@ deleteItem(row: CompanyStructureModel) {
         'top',
         'right'
       );
-    }
   });
 }
 

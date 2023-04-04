@@ -1,13 +1,8 @@
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Component, Inject } from '@angular/core';
 import { LocationService } from '../../../location.service';
+import { LocationModel } from '../../../location.model';
 
-export interface DialogData {
-  id: number;
-  name: string;
-  designation: string;
-  mobile: string;
-}
 
 @Component({
   selector: 'app-delete',
@@ -17,13 +12,17 @@ export interface DialogData {
 export class DeleteLocationDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<DeleteLocationDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    @Inject(MAT_DIALOG_DATA) public data: LocationModel,
     public locationService: LocationService
   ) {}
   onNoClick(): void {
     this.dialogRef.close();
   }
   confirmDelete(): void {
-    this.locationService.deleteLocation(this.data.id);
+    this.locationService.deleteLocation(this.data.locationId).subscribe((data)=>{
+      if(data.status){
+        this.dialogRef.close();
+      }
+    });
   }
 }

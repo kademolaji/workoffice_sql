@@ -47,21 +47,12 @@
                   <mat-form-field class="example-full-width mb-3" appearance="outline">
                     <mat-label>Select Country</mat-label>
                     <mat-select formControlName="country" required>
-                      <mat-option [value]="'1'">
-                        Nigeria
-                      </mat-option>
-                      <mat-option [value]="'2'">
-                        Ghana
-                      </mat-option>
-                      <mat-option [value]="'3'">
-                        England
-                      </mat-option>
-                      <mat-option [value]="'4'">
-                        Uganda
+                      <mat-option  *ngFor="let country of countryList" [value]="country.label">
+                        {{country.label}}
                       </mat-option>
                     </mat-select>
                     <mat-error *ngIf="addUserForm.get('country')?.hasError('required')">
-                      Select country
+                      Country is required
                     </mat-error>
                   </mat-form-field>
                 </div>
@@ -93,18 +84,12 @@
                 <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
                   <mat-form-field class="example-full-width mb-3" appearance="outline">
                     <mat-label>Select Role</mat-label>
-                    <mat-select formControlName="userRole" required>
-                      <mat-option [value]="'Admin'">
-                        Admin
-                      </mat-option>
-                      <mat-option [value]="'Doctor'">
-                        Doctor
-                      </mat-option>
-                      <mat-option [value]="'Patient'">
-                        Patient
+                    <mat-select formControlName="userRoleId" required>
+                      <mat-option  *ngFor="let userRole of userRoleList" [value]="userRole.value">
+                        {{userRole.label}}
                       </mat-option>
                     </mat-select>
-                    <mat-error *ngIf="addUserForm.get('userRole')?.hasError('required')">
+                    <mat-error *ngIf="addUserForm.get('userRoleId')?.hasError('required')">
                       Select country
                     </mat-error>
                   </mat-form-field>

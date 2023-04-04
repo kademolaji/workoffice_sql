@@ -1,3 +1,127 @@
-<p>
-  add-location works!
-</p>
+<section class="content">
+  <div class="content-block">
+    <div class="block-header">
+      <!-- breadcrumb -->
+      <app-breadcrumb *ngIf="isAddMode" [title]="'Add Location'" [items]="['Location']" [active_item]="'Location'"></app-breadcrumb>
+      <app-breadcrumb *ngIf="!isAddMode" [title]="'Edit Location'" [items]="['Location']" [active_item]="'Edit Location'"></app-breadcrumb>
+
+    </div>
+    <div class="row clearfix">
+      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="card">
+          <div class="header">
+            <h2 *ngIf="isAddMode"><strong> Add New Location</strong></h2>
+            <h2 *ngIf="!isAddMode"><strong> Edit Location</strong></h2>
+          </div>
+          <div class="body">
+            <form class="m-4" [formGroup]="locationForm" (ngSubmit)="onSubmit()">
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Name</mat-label>
+                    <input matInput formControlName="name" required>
+                    <mat-error *ngIf="locationForm.get('name')?.hasError('required')">
+                      Name is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Select Country</mat-label>
+                    <mat-select formControlName="country" required>
+                      <mat-option  *ngFor="let country of countryList" [value]="country.label">
+                        {{country.label}}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="locationForm.get('country')?.hasError('required')">
+                      Country is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                  <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                    <mat-form-field class="example-full-width mb-3" appearance="outline">
+                      <mat-label>State</mat-label>
+                      <input matInput formControlName="state">
+                      <mat-error *ngIf="locationForm.get('state')?.hasError('required')">
+                        State is required
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>City</mat-label>
+                    <input matInput formControlName="city">
+                    <mat-error *ngIf="locationForm.get('city')?.hasError('required')">
+                      City is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Address</mat-label>
+                    <input matInput formControlName="address" required>
+                    <mat-error *ngIf="locationForm.get('address')?.hasError('required')">
+                     Address is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Zip Code</mat-label>
+                    <input matInput formControlName="zipCode" required>
+                    <mat-error *ngIf="locationForm.get('zipCode')?.hasError('required')">
+                      Zip Code is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Phone</mat-label>
+                    <input matInput formControlName="phone" required>
+                    <mat-error *ngIf="locationForm.get('phone')?.hasError('required')">
+                      Phone is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Fax</mat-label>
+                    <input matInput formControlName="fax">
+                    <mat-error *ngIf="locationForm.get('fax')?.hasError('required')">
+                      Fax is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Note</mat-label>
+                    <input matInput formControlName="note">
+                    <mat-error *ngIf="locationForm.get('note')?.hasError('required')">
+                      Note is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-3">
+                  <button class="btn-space" [class.auth-spinner]="loading" [disabled]="loading" [disabled]="!locationForm.valid " mat-raised-button
+                    color="primary">Submit</button>
+                  <button type="button" (click)="cancelForm()" mat-raised-button color="warn">Cancel</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

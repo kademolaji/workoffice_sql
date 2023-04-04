@@ -70,7 +70,7 @@ namespace WorkOffice.Web.Controllers
         /// <response code="400">If an error occur or invalid request payload</response> 
         [HttpGet]
         [Route("GetAllUserRoleDefinitions")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetResponse<List<UserRoleDefinitionModel>>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetResponse<List<UserRoleAndActivityModel>>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(GetResponse<ProducesResponseStub>))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(GetResponse<ProducesResponseStub>))]
         public async Task<IActionResult> GetAllUserRoleDefinitions()
@@ -151,7 +151,7 @@ namespace WorkOffice.Web.Controllers
         /// <response code="200">Returns object of DeleteMultipleUserRoleDefinition</response>
         /// <response code="404">If object of DeleteMultipleUserRoleDefinition is null</response> 
         /// <response code="400">If an error occur or invalid request payload</response> 
-        [HttpDelete]
+        [HttpPost]
         [Route("DeleteMultipleUserRoleDefinition")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DeleteReply))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(DeleteReply))]
@@ -253,6 +253,42 @@ namespace WorkOffice.Web.Controllers
                     return NotFound(apiResponse.ResponseType);
                 }
 
+                return Ok(apiResponse.ResponseType);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"{ex.Message}");
+            }
+        }
+
+        // GET api/Administration/GetUserRoleDefinition
+        /// <summary>
+        /// Get list of UserRoleAndActivities
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        /// </remarks>
+        /// <returns>List of UserRole And Activities</returns>
+        /// <response code="200">Returns list of UserRole And Activities</response>
+        /// <response code="404">If list of UserRole And Activities is null</response> 
+        /// <response code="400">If an error occur or invalid request payload</response> 
+        [HttpGet]
+        [Route("GetUserRoleDefinition")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetResponse<List<UserRoleActivitiesModel>>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(GetResponse<ProducesResponseStub>))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(GetResponse<ProducesResponseStub>))]
+        public async Task<IActionResult> GetUserRoleDefinition(long userRoleId)
+        {
+            try
+            {
+                var clientId = httpAccessorService.GetCurrentClientId();
+                var apiResponse = await service.GetUserRoleDefinition(userRoleId, clientId);
+                if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    return BadRequest(apiResponse.ResponseType);
+                }
+              
                 return Ok(apiResponse.ResponseType);
             }
             catch (Exception ex)

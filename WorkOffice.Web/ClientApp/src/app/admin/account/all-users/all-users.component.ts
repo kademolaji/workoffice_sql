@@ -17,7 +17,6 @@ import { UnsubscribeOnDestroyAdapter } from 'src/app/shared/UnsubscribeOnDestroy
 import { Direction } from '@angular/cdk/bidi';
 import { UsersService } from './users.service';
 import { SearchUserListOptions, UserListModel } from './users.model';
-import { Role } from 'src/app/core/models/role';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-all-users',
@@ -210,7 +209,7 @@ export class ExampleDataSource extends DataSource<UserListModel> {
       pageSize: 10,
       parameter: {
         searchQuery: '',
-        userRole: Role.Admin
+        userRole: ''
       }
     };
     this.exampleDatabase.getAllUsers(options);

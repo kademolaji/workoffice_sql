@@ -6,7 +6,6 @@ import {
   Validators,
 } from '@angular/forms';
 import { AuthService } from 'src/app/core/service/auth.service';
-import { Role } from 'src/app/core/models/role';
 import { UnsubscribeOnDestroyAdapter } from 'src/app/shared/UnsubscribeOnDestroyAdapter';
 @Component({
   selector: 'app-signin',
@@ -66,16 +65,7 @@ export class SigninComponent
           next: (res) => {
             if (res.status) {
               setTimeout(() => {
-                const role = this.authService.currentUserValue.userRole;
-                if (role === Role.All || role === Role.Admin) {
                   this.router.navigate(['/admin/dashboard/main']);
-                } else if (role === Role.Doctor) {
-                  this.router.navigate(['/doctor/dashboard']);
-                } else if (role === Role.Patient) {
-                  this.router.navigate(['/patient/dashboard']);
-                } else {
-                  this.router.navigate(['/account/login']);
-                }
                 this.loading = false;
               }, 1000);
             } else {

@@ -8,7 +8,7 @@ namespace WorkOffice.Contracts.Models
    public class GeneralInformationModel : BaseModel
     {
         public long GeneralInformationId { get; set; }
-        public string Organisationname { get; set; }
+        public string OrganisationName { get; set; }
         public string Taxid { get; set; }
         public string Regno { get; set; }
         public string Phone { get; set; }

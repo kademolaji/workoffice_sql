@@ -186,6 +186,56 @@ namespace WorkOffice.Services
                 bool result = false;
                 string refreshTokenData = null;
                 UserAccount entity = null;
+
+                List<UserAccess> userAccess = new List<UserAccess>();
+                List<UserAccountRole> userAccountRole = new List<UserAccountRole>();
+                List<UserAccountAdditionalActivity> userActivities = new List<UserAccountAdditionalActivity>();
+
+                if (model.AdditionalActivities.Any())
+                {
+                    foreach (var item in model.AdditionalActivities)
+                    {
+                        var userActivity = new UserAccountAdditionalActivity()
+                        {
+                            UserActivityId = item.UserActivityId,
+                            CanAdd = item.CanAdd,
+                            CanEdit = item.CanEdit,
+                            CanApprove = item.CanApprove,
+                            CanView = item.CanView,
+                            CanDelete = item.CanDelete,
+                            ClientId = model.ClientId
+                        };
+
+                        userActivities.Add(userActivity);
+                    }
+                }
+
+                if (model.UserAccessIds.Any())
+                {
+                    foreach (var item in model.UserAccessIds)
+                    {
+                        var access = new UserAccess()
+                        {
+                            CompanyStructureId = item,
+                            ClientId = model.ClientId
+                        };
+                        userAccess.Add(access);
+                    }
+                }
+                if (model.UserRoleIds.Any())
+                {
+                    foreach (var item in model.UserRoleIds)
+                    {
+                        var access = new UserAccountRole()
+                        {
+                            UserRoleDefinitionId = item,
+                            ClientId = model.ClientId
+                        };
+                        userAccountRole.Add(access);
+                    }
+                }
+
+
                 using (var trans = _context.Database.BeginTransaction())
                 {
                     try
@@ -198,14 +248,27 @@ namespace WorkOffice.Services
                             LastName = model.LastName,
                             Email = model.Email,
                             Country = model.Country,
-                            RoleId = (int)model.UserRole,
                             PasswordHash = passwordHash,
                             PasswordSalt = passwordSalt,
                             LockoutEnabled = true,
                             AccessFailedCount = 0,
                             VerificationToken = randomTokenString(),
                             AcceptTerms = model.AcceptTerms,
-                            Disabled = false
+                            Disabled = false,
+                            PhoneNumber = model.PhoneNumber,
+                            PhoneNumberConfirmed = true,
+                            TwoFactorEnabled = false,
+                            LockoutEnd = DateTime.Now.AddHours(48),
+                            IsFirstLoginAttempt = true,
+                            SecurityQuestion = model.SecurityQuestion,
+                            SecurityAnswer = model.SecurityAnswer,
+                            NextPasswordChangeDate = DateTime.Now.AddDays(30),
+                            ClientId = model.ClientId,
+                            CanChangePassword = true,
+                            Accesslevel = model.Accesslevel,
+                            UserAccess = userAccess,
+                            UserAccountRole = userAccountRole,
+                            UserAccountAdditionalActivity = userActivities,
                         };
                         _context.UserAccounts.Add(entity);
 
@@ -229,7 +292,7 @@ namespace WorkOffice.Services
                             catch (Exception)
                             {
                             }
-                            var details = $"Created new User: Name = {model.FirstName} {model.LastName}, Email = {model.Email}, Country = {model.Country}, Role = {model.UserRole}";
+                            var details = $"Created new User: Name = {model.FirstName} {model.LastName}, Email = {model.Email}, Country = {model.Country}, RoleId = {model.UserRoleId}";
                             await _auditTrail.SaveAuditTrail(details, "User", "Create");
                             trans.Commit();
                         }
@@ -374,7 +437,6 @@ namespace WorkOffice.Services
                             LastName = model.LastName,
                             Email = model.Email,
                             Country = model.Country,
-                            RoleId = (int)RolesEnum.Admin,
                             PasswordHash = passwordHash,
                             PasswordSalt = passwordSalt,
                             LockoutEnabled = true,
@@ -476,7 +538,7 @@ namespace WorkOffice.Services
                         result = await _context.SaveChangesAsync() > 0;
                         if (result)
                         {
-                            var details = $"Change Password: Name = {user.FirstName} {user.LastName}, Email = {user.Email}, Role = {user.RoleId}";
+                            var details = $"Change Password: Name = {user.FirstName} {user.LastName}, Email = {user.Email}";
                             await _auditTrail.SaveAuditTrail(details, "User", "Update");
                             trans.Commit();
                         }
@@ -537,7 +599,7 @@ namespace WorkOffice.Services
                             // Send Email
                             await sendVerificationSuccessfulEmail(user, origin);
 
-                            var details = $"Verified Account: Name = {user.FirstName} {user.LastName}, Email = {user.Email}, Role = {user.RoleId}";
+                            var details = $"Verified Account: Name = {user.FirstName} {user.LastName}, Email = {user.Email}";
                             await _auditTrail.SaveAuditTrail(details, "User", "Update");
                             trans.Commit();
                         }
@@ -597,7 +659,7 @@ namespace WorkOffice.Services
                         {
                             // send email
                             await SendPasswordResetEmail(user, origin);
-                            var details = $"Forget Password: Name = {user.FirstName} {user.LastName}, Email = {user.Email}, Role = {user.RoleId}";
+                            var details = $"Forget Password: Name = {user.FirstName} {user.LastName}, Email = {user.Email}";
                             await _auditTrail.SaveAuditTrail(details, "User", "Update");
                             trans.Commit();
                         }
@@ -663,7 +725,7 @@ namespace WorkOffice.Services
                         result = await _context.SaveChangesAsync() > 0;
                         if (result)
                         {
-                            var details = $"Reset Password: Name = {user.FirstName} {user.LastName}, Email = {user.Email}, Role = {user.RoleId}";
+                            var details = $"Reset Password: Name = {user.FirstName} {user.LastName}, Email = {user.Email}";
                             await _auditTrail.SaveAuditTrail(details, "User", "Update");
                             trans.Commit();
                         }
@@ -805,7 +867,6 @@ namespace WorkOffice.Services
                     ProfilePicture = u.ProfilePicture,
                     Country = u.Country,
                     Biography = u.Biography,
-                    Role = u.RoleId.ToString(),
                     Status = u.Disabled ? "Inactive" : "Active"
                 });
 
@@ -1004,6 +1065,33 @@ namespace WorkOffice.Services
             }
         }
 
+        public List<string> GetUserActivitiesByUser(long userAccountId)
+        {
+            List<string> activities = new List<string>();
+            List<string> parentActivities = new List<string>();
+            var user = _context.UserAccounts.Where(x => x.UserId == userAccountId).FirstOrDefault();
+
+            var additionalActivityIds = _context.UserAccountAdditionalActivities.Where(x => x.UserAccountId == user.UserId).Select(x => x.UserActivityId);
+
+            var userRoleActivityIds = (from a in _context.UserAccountRoles
+                                       join b in _context.UserRoleDefinitions on a.UserRoleDefinitionId equals b.UserRoleDefinitionId
+                                       join c in _context.UserRoleActivities on b.UserRoleDefinitionId equals c.UserRoleDefinitionId
+                                       where a.UserAccountId == user.UserId
+                                       select c.UserActivityId).ToList();
+            if (userRoleActivityIds.Any())
+            {
+                parentActivities = (from a in _context.UserActivityParents
+                                    join b in _context.UserActivities on a.UserActivityParentId equals b.UserActivityParentId
+                                    where userRoleActivityIds.Contains(b.UserActivityId)
+                                    select a.UserActivityParentName.ToLower()).ToList();
+            }
+
+            activities = _context.UserActivities.Where(x => additionalActivityIds.Contains(x.UserActivityId)
+               || userRoleActivityIds.Contains(x.UserActivityId)
+              ).Select(x => x.UserActivityName.ToLower()).ToList();
+            var list = activities.Concat(parentActivities);
+            return list.ToList();
+        }
 
         private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {

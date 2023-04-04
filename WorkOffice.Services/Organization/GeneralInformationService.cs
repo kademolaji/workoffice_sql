@@ -37,14 +37,14 @@ namespace WorkOffice.Services
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Request is not coming from a valid client" }, IsSuccess = false };
                 }
-                if (string.IsNullOrEmpty(model.Organisationname))
+                if (string.IsNullOrEmpty(model.OrganisationName))
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Name is required." }, IsSuccess = false };
                 }
-                var isExist = await context.GeneralInformations.AnyAsync(x => x.Organisationname == model.Organisationname);
+                var isExist = await context.GeneralInformations.AnyAsync(x => x.Organisationname == model.OrganisationName);
                 if (isExist)
                 {
-                    return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = $"{model.Organisationname} already exist." }, IsSuccess = false };
+                    return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = $"{model.OrganisationName} already exist." }, IsSuccess = false };
                 }
 
                 var apiResponse = new ApiResponse<CreateResponse>();
@@ -59,7 +59,7 @@ namespace WorkOffice.Services
                         result = await context.SaveChangesAsync() > 0;
                         if (result)
                         {
-                            var details = $"Created new General Information: Definition = {model.ClientId}, Description = {model.Organisationname}, Level = {model.State} ";
+                            var details = $"Created new General Information: Definition = {model.ClientId}, Description = {model.OrganisationName}, Level = {model.State} ";
                             await auditTrail.SaveAuditTrail(details, "General Information", "Create");
                             trans.Commit();
                         }
@@ -100,7 +100,7 @@ namespace WorkOffice.Services
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Request is not coming from a valid client" }, IsSuccess = false };
                 }
-                if (string.IsNullOrEmpty(model.Organisationname))
+                if (string.IsNullOrEmpty(model.OrganisationName))
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Definition is required." }, IsSuccess = false };
                 }
@@ -116,7 +116,7 @@ namespace WorkOffice.Services
                 {
                     try
                     {
-                        entity.Organisationname = model.Organisationname;
+                        entity.Organisationname = model.OrganisationName;
                         entity.Taxid = model.Taxid;
                         entity.Regno = model.Regno;
                         entity.Phone = model.Phone;
@@ -138,7 +138,7 @@ namespace WorkOffice.Services
                         result = await context.SaveChangesAsync() > 0;
                         if (result)
                         {
-                            var details = $"Updated GeneralInformation: Definition = {model.ClientId}, Description = {model.Organisationname}, Level = {model.Regno} ";
+                            var details = $"Updated GeneralInformation: Definition = {model.ClientId}, Description = {model.OrganisationName}, Level = {model.Regno} ";
                             await auditTrail.SaveAuditTrail(details, "GeneralInformation", "Update");
                             trans.Commit();
                         }
@@ -169,6 +169,64 @@ namespace WorkOffice.Services
                 return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = $"Error encountered {ex.Message}" }, IsSuccess = false };
             }
         }
+
+        public async Task<ApiResponse<SearchReply<GeneralInformationModel>>> GetList(SearchCall<SearchParameter> options, long clientId)
+        {
+            int count = 0;
+            int pageNumber = options.From > 0 ? options.From : 0;
+            int pageSize = options.PageSize > 0 ? options.PageSize : 10;
+            string sortOrder = string.IsNullOrEmpty(options.SortOrder) ? "asc" : options.SortOrder;
+            string sortField = string.IsNullOrEmpty(options.SortField) ? "organisationName" : options.SortField;
+
+            try
+            {
+                var apiResponse = new ApiResponse<SearchReply<GeneralInformationModel>>();
+
+                IQueryable<GeneralInformation> query = context.GeneralInformations.Where(x => x.ClientId == clientId);
+                int offset = (pageNumber) * pageSize;
+
+                if (!string.IsNullOrEmpty(options.Parameter.SearchQuery))
+                {
+                    query = query.Where(x => x.Organisationname.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())
+                    || x.Country.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower()));
+                }
+                switch (sortField)
+                {
+                    case "organisationName":
+                        query = sortOrder == "asc" ? query.OrderBy(s => s.Organisationname) : query.OrderByDescending(s => s.Organisationname);
+                        break;
+                    //case "suffix":
+                    //    query = sortOrder == "asc" ? query.OrderBy(s => s.Suffix) : query.OrderByDescending(s => s.Suffix);
+                    //    break;
+                    //case "company":
+                    //    query = sortOrder == "asc" ? query.OrderBy(s => s.Company) : query.OrderByDescending(s => s.Company);
+                    //    break;
+                    default:
+                        query = query.OrderBy(s => s.Organisationname);
+                        break;
+                }
+                count = query.Count();
+                var items = await query.Skip(offset).Take(pageSize).ToListAsync();
+
+
+                var response = new SearchReply<GeneralInformationModel>()
+                {
+                    TotalCount = count,
+                    Result = items.Select(x => x.ToModel<GeneralInformationModel>()).ToList(),
+                };
+
+                apiResponse.StatusCode = System.Net.HttpStatusCode.OK;
+                apiResponse.IsSuccess = true;
+                apiResponse.ResponseType = response;
+
+                return apiResponse;
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<SearchReply<GeneralInformationModel>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new SearchReply<GeneralInformationModel>() { TotalCount = 0, }, IsSuccess = false };
+            }
+        }
+
 
         public async Task<ApiResponse<GetResponse<GeneralInformationModel>>> Get(long generalInformationId, long clientId)
         {
@@ -218,7 +276,7 @@ namespace WorkOffice.Services
 
                 var apiResponse = new ApiResponse<DeleteReply>();
 
-                var result = await context.Locations.FindAsync(generalInformationId);
+                var result = await context.GeneralInformations.FindAsync(generalInformationId);
 
                 if (result == null)
                 {
@@ -237,8 +295,49 @@ namespace WorkOffice.Services
                 apiResponse.IsSuccess = true;
                 apiResponse.ResponseType = response;
 
-                var details = $"Deleted Location: Definition = {result.Name}, Description = {result.Address}, Level = {result.Country} ";
-                await auditTrail.SaveAuditTrail(details, "Location", "Delete");
+                var details = $"Deleted GeneralInformations: Definition = {result.Organisationname}, Description = {result.Address1}, Level = {result.Country} ";
+                await auditTrail.SaveAuditTrail(details, "General Information", "Delete");
+
+                return apiResponse;
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<DeleteReply>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new DeleteReply() { Status = false, Message = $"Error encountered {ex.Message}" }, IsSuccess = false };
+            }
+        }
+
+        public async Task<ApiResponse<DeleteReply>> MultipleDelete(MultipleDeleteModel model)
+        {
+            try
+            {
+                if (model.targetIds.Count <= 0)
+                {
+                    return new ApiResponse<DeleteReply>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new DeleteReply { Status = false, Message = "StructureDefinitionId is required." }, IsSuccess = false };
+                }
+
+                var apiResponse = new ApiResponse<DeleteReply>();
+
+                foreach (var item in model.targetIds)
+                {
+                    var data = await context.GeneralInformations.FindAsync(item);
+                    if (data != null)
+                    {
+                        data.IsDeleted = true;
+                    }
+                };
+
+                var response = new DeleteReply()
+                {
+                    Status = await context.SaveChangesAsync() > 0,
+                    Message = "Records Deleted Successfully"
+                };
+
+                apiResponse.StatusCode = System.Net.HttpStatusCode.OK;
+                apiResponse.IsSuccess = true;
+                apiResponse.ResponseType = response;
+
+                var details = $"Deleted Multiple General Information: with Ids {model.targetIds.ToArray()} ";
+                await auditTrail.SaveAuditTrail(details, "General Information", "Delete");
 
                 return apiResponse;
             }

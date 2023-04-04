@@ -233,8 +233,8 @@ namespace WorkOffice.Domain.Migrations
                     b.Property<long>("ClientId")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("Company")
-                        .HasColumnType("integer");
+                    b.Property<string>("Company")
+                        .HasColumnType("text");
 
                     b.Property<DateTimeOffset>("CreatedOn")
                         .HasColumnType("timestamp with time zone");
@@ -245,11 +245,11 @@ namespace WorkOffice.Domain.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("Prefix")
-                        .HasColumnType("integer");
+                    b.Property<string>("Prefix")
+                        .HasColumnType("text");
 
-                    b.Property<int>("Suffix")
-                        .HasColumnType("integer");
+                    b.Property<string>("Suffix")
+                        .HasColumnType("text");
 
                     b.HasKey("CustomIdentityFormatSettingId");
 

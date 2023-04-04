@@ -11,7 +11,9 @@ namespace WorkOffice.Contracts.ServicesContracts
     {
         Task<ApiResponse<CreateResponse>> Create(GeneralInformationModel model);
         Task<ApiResponse<CreateResponse>> Update(GeneralInformationModel model);
+        Task<ApiResponse<SearchReply<GeneralInformationModel>>> GetList(SearchCall<SearchParameter> options, long clientId);
         Task<ApiResponse<GetResponse<GeneralInformationModel>>> Get(long generalInformationId, long clientId);
         Task<ApiResponse<DeleteReply>> Delete(long generalInformationId);
+        Task<ApiResponse<DeleteReply>> MultipleDelete(MultipleDeleteModel model);
     }
 }

@@ -9,7 +9,7 @@ export const ROUTES: RouteInfo[] = [
     groupTitle: true,
     badge: '',
     badgeClass: '',
-    role: ['All'],
+    activity: "",
     submenu: [],
   },
 
@@ -23,7 +23,7 @@ export const ROUTES: RouteInfo[] = [
     groupTitle: false,
     badge: '',
     badgeClass: '',
-    role: ['Admin'],
+    activity: "",
     submenu: [
       {
         path: '/admin/dashboard/main',
@@ -34,7 +34,7 @@ export const ROUTES: RouteInfo[] = [
         groupTitle: false,
         badge: '',
         badgeClass: '',
-        role: [''],
+        activity: "",
         submenu: [],
       },
       {
@@ -46,39 +46,12 @@ export const ROUTES: RouteInfo[] = [
         groupTitle: false,
         badge: '',
         badgeClass: '',
-        role: [''],
+        activity: "",
         submenu: [],
       },
     ],
   },
 
-  // Doctor Modules
-  {
-    path: '/doctor/dashboard',
-    title: 'MENUITEMS.DASHBOARD.LIST.DOCTOR-DASHBOARD',
-    iconType: 'material-icons-two-tone',
-    icon: 'space_dashboard',
-    class: '',
-    groupTitle: false,
-    badge: '',
-    badgeClass: '',
-    role: ['Doctor'],
-    submenu: [],
-  },
-
-  // Patient Modules
-  {
-    path: '/patient/dashboard',
-    title: 'MENUITEMS.DASHBOARD.LIST.PATIENT-DASHBOARD',
-    iconType: 'material-icons-two-tone',
-    icon: 'space_dashboard',
-    class: '',
-    groupTitle: false,
-    badge: '',
-    badgeClass: '',
-    role: ['Patient'],
-    submenu: [],
-  },
   // Common Modules
 
   {
@@ -90,10 +63,10 @@ export const ROUTES: RouteInfo[] = [
     groupTitle: false,
     badge: '',
     badgeClass: '',
-    role: ['Admin'],
+    activity: "account",
     submenu: [
       {
-        path: '/admin/users/all-users',
+        path: '',
         title: 'User Account',
         iconType: '',
         icon: '',
@@ -101,7 +74,7 @@ export const ROUTES: RouteInfo[] = [
         groupTitle: false,
         badge: '',
         badgeClass: '',
-        role: [''],
+        activity: "user accounts",
         submenu: [ {
           path: '/admin/users/all-users',
           title: 'All Users',
@@ -111,11 +84,11 @@ export const ROUTES: RouteInfo[] = [
           groupTitle: false,
           badge: '',
           badgeClass: '',
-          role: [''],
+          activity: "user accounts",
           submenu: [],
         },
         {
-          path: '/admin/users/all-user-role',
+          path: '/admin/users/all-user-roles',
           title: 'User Role',
           iconType: '',
           icon: '',
@@ -123,12 +96,12 @@ export const ROUTES: RouteInfo[] = [
           groupTitle: false,
           badge: '',
           badgeClass: '',
-          role: [''],
+          activity: "user roles",
           submenu: [],
         },],
       },
       {
-        path: '/admin/company/all-location',
+        path: '',
         title: 'Company',
         iconType: '',
         icon: '',
@@ -136,7 +109,7 @@ export const ROUTES: RouteInfo[] = [
         groupTitle: false,
         badge: '',
         badgeClass: '',
-        role: ['Admin'],
+        activity: "organization",
         submenu: [
           {
             path: '/admin/company/all-general-information',
@@ -147,7 +120,7 @@ export const ROUTES: RouteInfo[] = [
             groupTitle: false,
             badge: '',
             badgeClass: '',
-            role: [''],
+            activity: "general information",
             submenu: [],
           },
           {
@@ -159,7 +132,7 @@ export const ROUTES: RouteInfo[] = [
             groupTitle: false,
             badge: '',
             badgeClass: '',
-            role: [''],
+            activity: "custom identity settings",
             submenu: [],
           },
           {
@@ -171,7 +144,7 @@ export const ROUTES: RouteInfo[] = [
             groupTitle: false,
             badge: '',
             badgeClass: '',
-            role: [''],
+            activity: "locations",
             submenu: [],
           },
           {
@@ -183,7 +156,7 @@ export const ROUTES: RouteInfo[] = [
             groupTitle: false,
             badge: '',
             badgeClass: '',
-            role: [''],
+            activity: "structure definition",
             submenu: [],
           },
           {
@@ -195,7 +168,7 @@ export const ROUTES: RouteInfo[] = [
             groupTitle: false,
             badge: '',
             badgeClass: '',
-            role: [''],
+            activity: "company structures",
             submenu: [],
           }
         ],
@@ -206,12 +179,12 @@ export const ROUTES: RouteInfo[] = [
     path: '',
     title: 'Setup',
     iconType: 'material-icons-two-tone',
-    icon: 'supervised_user_circle',
+    icon: 'settings',
     class: 'menu-toggle',
     groupTitle: false,
     badge: '',
     badgeClass: '',
-    role: ['Admin'],
+    activity: "setup",
     submenu: [
       {
         path: '/setup/nhsactivity/all-nhsactivity',
@@ -222,7 +195,7 @@ export const ROUTES: RouteInfo[] = [
         groupTitle: false,
         badge: '',
         badgeClass: '',
-        role: [''],
+        activity: "activity",
         submenu: [],
       },
       {
@@ -234,7 +207,7 @@ export const ROUTES: RouteInfo[] = [
         groupTitle: false,
         badge: '',
         badgeClass: '',
-        role: ['Admin'],
+        activity: "apptype",
         submenu: [],
       },
       {
@@ -246,7 +219,7 @@ export const ROUTES: RouteInfo[] = [
             groupTitle: false,
             badge: '',
             badgeClass: '',
-            role: [''],
+            activity: "consultant",
             submenu: [],
       },
       {
@@ -258,7 +231,7 @@ export const ROUTES: RouteInfo[] = [
             groupTitle: false,
             badge: '',
             badgeClass: '',
-            role: [''],
+            activity: "hospital",
             submenu: [],
       }
       ,
@@ -332,91 +305,4 @@ export const ROUTES: RouteInfo[] = [
       }
         ],
   },
-  // {
-  //   path: '',
-  //   title: 'Multi level Menu',
-  //   iconType: 'material-icons-two-tone',
-  //   icon: 'slideshow',
-  //   class: 'menu-toggle',
-  //   groupTitle: false,
-  //   badge: '',
-  //   badgeClass: '',
-  //   role: ['Admin'],
-  //   submenu: [
-  //     {
-  //       path: '/multilevel/first1',
-  //       title: 'First',
-  //       iconType: '',
-  //       icon: '',
-  //       class: 'ml-menu',
-  //       groupTitle: false,
-  //       badge: '',
-  //       badgeClass: '',
-  //       role: [''],
-  //       submenu: [],
-  //     },
-  //     {
-  //       path: '/',
-  //       title: 'Second',
-  //       iconType: '',
-  //       icon: '',
-  //       class: 'ml-sub-menu',
-  //       groupTitle: false,
-  //       badge: '',
-  //       badgeClass: '',
-  //       role: [''],
-  //       submenu: [
-  //         {
-  //           path: '/multilevel/secondlevel/second1',
-  //           title: 'Second 1',
-  //           iconType: '',
-  //           icon: '',
-  //           class: 'ml-menu2',
-  //           groupTitle: false,
-  //           badge: '',
-  //           badgeClass: '',
-  //           role: [''],
-  //           submenu: [],
-  //         },
-  //         {
-  //           path: '/',
-  //           title: 'Second 2',
-  //           iconType: '',
-  //           icon: '',
-  //           class: 'ml-sub-menu2',
-  //           groupTitle: false,
-  //           badge: '',
-  //           badgeClass: '',
-  //           role: [''],
-  //           submenu: [
-  //             {
-  //               path: '/multilevel/thirdlevel/third1',
-  //               title: 'third 1',
-  //               iconType: '',
-  //               icon: '',
-  //               class: 'ml-menu3',
-  //               groupTitle: false,
-  //               badge: '',
-  //               badgeClass: '',
-  //               role: [''],
-  //               submenu: [],
-  //             },
-  //           ],
-  //         },
-  //       ],
-  //     },
-  //     {
-  //       path: '/multilevel/first3',
-  //       title: 'Third',
-  //       iconType: '',
-  //       icon: '',
-  //       class: 'ml-menu',
-  //       groupTitle: false,
-  //       badge: '',
-  //       badgeClass: '',
-  //       role: [''],
-  //       submenu: [],
-  //     },
-  //   ],
-  // },
 ];

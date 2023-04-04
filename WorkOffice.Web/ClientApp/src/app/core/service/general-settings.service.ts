@@ -28,4 +28,16 @@ export class GeneralSettingsService {
     );
   }
 
+  getUserRoleList() {
+    return this.httpClient.get<GetResponse<GeneralSettingsModel[]>>(
+      `api/settings/GetUserRoleList`
+    );
+  }
+
+  getCompanyList() {
+    return this.httpClient.get<GetResponse<GeneralSettingsModel[]>>(
+      `api/settings/GetCompanyList`
+    );
+  }
+
 }

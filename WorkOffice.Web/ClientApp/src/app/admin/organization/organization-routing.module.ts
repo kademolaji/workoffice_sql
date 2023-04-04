@@ -23,7 +23,7 @@ const routes: Routes = [
   },
   {
     path: "edit-general-information/:id",
-    component: AddLocationComponent,
+    component: AddGeneralInformationComponent,
   },
   {
     path: "all-custom-identity-settings",

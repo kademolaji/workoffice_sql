@@ -52,7 +52,9 @@ namespace WorkOffice.Web.Controllers
                 {
                     setTokenCookie(apiResponse.ResponseType.Entity.RefreshToken);
                     var token = _jwtTokenGenerator.CreateToken(apiResponse.ResponseType.Entity);
+                    var userActivities = _userAccountService.GetUserActivitiesByUser(apiResponse.ResponseType.Entity.UserId);
                     apiResponse.ResponseType.Entity.Token = token;
+                    apiResponse.ResponseType.Entity.UserActivities = userActivities.ToArray();
                 }
                 if (apiResponse.StatusCode == System.Net.HttpStatusCode.OK)
                 {

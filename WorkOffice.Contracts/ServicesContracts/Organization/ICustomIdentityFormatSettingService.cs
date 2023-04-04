@@ -11,8 +11,9 @@ namespace WorkOffice.Contracts.ServicesContracts
     {
         Task<ApiResponse<CreateResponse>> Create(CustomIdentityFormatSettingModel model);
         Task<ApiResponse<CreateResponse>> Update(CustomIdentityFormatSettingModel model);
-        Task<ApiResponse<GetResponse<List<CustomIdentityFormatSettingModel>>>> GetList(int pageNumber = 1, int pageSize = 10);
+        Task<ApiResponse<SearchReply<CustomIdentityFormatSettingModel>>> GetList(SearchCall<SearchParameter> options, long clientId);
         Task<ApiResponse<GetResponse<CustomIdentityFormatSettingModel>>> Get(long employeeIdFormatId);
         Task<ApiResponse<DeleteReply>> Delete(long employeeIdFormatId);
+        Task<ApiResponse<DeleteReply>> MultipleDelete(MultipleDeleteModel model);
     }
 }

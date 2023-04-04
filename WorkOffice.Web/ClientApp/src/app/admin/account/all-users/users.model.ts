@@ -1,4 +1,3 @@
-import { Role } from 'src/app/core/models/role';
 
 export interface AddEditUserModel {
   firstName: string;
@@ -7,7 +6,7 @@ export interface AddEditUserModel {
   confirmPassword: string;
   email: string;
   country: string;
-  userRole: Role;
+  userRoleId: number;
   acceptTerms: boolean;
 }
 
@@ -31,5 +30,5 @@ export interface SearchUserListOptions {
 
 export interface SearchUserList {
   searchQuery: string;
-  userRole: Role;
+  userRole: string;
 }

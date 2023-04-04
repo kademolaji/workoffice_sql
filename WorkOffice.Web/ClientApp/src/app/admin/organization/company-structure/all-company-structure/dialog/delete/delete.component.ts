@@ -19,6 +19,10 @@ export class DeleteCompanyStructureDialogComponent {
     this.dialogRef.close();
   }
   confirmDelete(): void {
-    this.structureDefinitionService.deleteCompanyStructure(this.data.companyStructureId).subscribe();
+    this.structureDefinitionService.deleteCompanyStructure(this.data.companyStructureId).subscribe((data)=>{
+      if(data.status){
+        this.dialogRef.close();
+      }
+    });
   }
 }

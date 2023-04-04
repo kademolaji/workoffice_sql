@@ -29,7 +29,7 @@ namespace WorkOffice.Services
             try
             {
 
-                if (model.ClientId > 0)
+                if (model.ClientId <= 0)
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Request is not coming from a valid client" }, IsSuccess = false };
                 }
@@ -42,19 +42,23 @@ namespace WorkOffice.Services
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = $"{model.UserRoleDefinition} already exist." }, IsSuccess = false };
                 }
-
+                var slectedUserActivities = model.activities.Where(x => x.IsSelected).ToList();
+                if (slectedUserActivities.Count <= 0)
+                {
+                    return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = $"Please select user activities for this role." }, IsSuccess = false };
+                }
                 var apiResponse = new ApiResponse<CreateResponse>();
                 bool result = false;
-                UserRoleDefinition definition = null;
+                UserRoleDefinition definition;
                 using (var trans = context.Database.BeginTransaction())
                 {
                     try
                     {
                         List<UserRoleActivity> activities = new List<UserRoleActivity>();
 
-                        if (model.activities.Count > 0)
+                        if (slectedUserActivities.Count > 0)
                         {
-                            foreach (var item in model.activities)
+                            foreach (var item in slectedUserActivities)
                             {
                                 var newActivity = new UserRoleActivity()
                                 {
@@ -101,7 +105,7 @@ namespace WorkOffice.Services
                         if (result)
                         {
                             var details = $"Created new UserRoleDefinition: UserRoleDefinition = {model.UserRoleDefinition} ";
-                           await auditTrail.SaveAuditTrail(details, "UserRoleDefinition", "Create");
+                            await auditTrail.SaveAuditTrail(details, "UserRoleDefinition", "Create");
                             trans.Commit();
                         }
                     }
@@ -132,37 +136,53 @@ namespace WorkOffice.Services
             }
         }
 
-        public async Task<ApiResponse<GetResponse<List<UserRoleDefinitionModel>>>> GetAllUserRoleDefinitions(long clientId)
+        public async Task<ApiResponse<GetResponse<List<UserRoleAndActivityModel>>>> GetAllUserRoleDefinitions(long clientId)
         {
             try
             {
-                var apiResponse = new ApiResponse<GetResponse<List<UserRoleDefinitionModel>>>();
+                var apiResponse = new ApiResponse<GetResponse<List<UserRoleAndActivityModel>>>();
 
-                var roles = await (from a in context.UserRoleDefinitions
-                                       //join b in context.UserAccountRoles on a.Id equals b.UserRoleDefinitionId
-                                       //into grp
-                                       //from b in grp.DefaultIfEmpty()
-                                   where a.IsDeleted == false && a.ClientId == clientId
-                                   orderby a.RoleName
-                                   select new UserRoleDefinitionModel
-                                   {
-                                       UserRoleDefinitionId = a.UserRoleDefinitionId,
-                                       RoleName = a.RoleName,
-                                       //    UserCount = grp.Count()
-                                   }).ToListAsync();
+                var userRoleAndActivities = await (from a in context.UserRoleDefinitions
+                                                   where a.IsDeleted == false && a.ClientId == clientId
+                                                   orderby a.RoleName
+                                                   select new UserRoleAndActivityModel
+                                                   {
+                                                       UserRoleAndActivityId = a.UserRoleDefinitionId,
+                                                       UserRoleDefinition = a.RoleName,
+                                                   }).ToListAsync();
 
-
-
-                if (roles.Count <= 0)
+                if (userRoleAndActivities.Count > 0)
                 {
-                    return new ApiResponse<GetResponse<List<UserRoleDefinitionModel>>>() { StatusCode = System.Net.HttpStatusCode.NotFound, ResponseType = new GetResponse<List<UserRoleDefinitionModel>>() { Status = false, Message = "No record found" }, IsSuccess = false };
+                    foreach (var item in userRoleAndActivities)
+                    {
+                        var activities = await (from a in context.UserRoleDefinitions
+                                                join b in context.UserRoleActivities on a.UserRoleDefinitionId equals b.UserRoleDefinitionId
+                                                join q in context.UserActivities on b.UserActivityId equals q.UserActivityId
+                                                where b.UserRoleDefinitionId == item.UserRoleAndActivityId && b.ClientId == clientId
+                                                orderby q.UserActivityParent.UserActivityParentName
+                                                select new UserRoleActivitiesModel
+                                                {
+                                                    UserRoleDefinitionId = a.UserRoleDefinitionId,
+                                                    UserRoleDefinition = a.RoleName,
+                                                    UserActivityParentId = q.UserActivityParentId,
+                                                    UserActivityParentName = q.UserActivityParent.UserActivityParentName,
+                                                    UserActivityId = q.UserActivityId,
+                                                    UserActivityName = q.UserActivityName,
+                                                    CanAdd = (bool)b.CanAdd,
+                                                    CanApprove = (bool)b.CanApprove,
+                                                    CanDelete = (bool)b.CanDelete,
+                                                    CanEdit = (bool)b.CanEdit,
+                                                    CanView = (bool)b.CanView,
+                                                    IsSelected = q.UserActivityId == b.UserActivityId
+                                                }).ToListAsync();
+                        item.activities = activities;
+                    }
                 }
 
-
-                var response = new GetResponse<List<UserRoleDefinitionModel>>()
+                var response = new GetResponse<List<UserRoleAndActivityModel>>()
                 {
                     Status = true,
-                    Entity = roles.GroupBy(x => x.UserRoleDefinitionId).Select(k => k.FirstOrDefault()).ToList(),
+                    Entity = userRoleAndActivities,
                     Message = ""
                 };
 
@@ -174,7 +194,101 @@ namespace WorkOffice.Services
             }
             catch (Exception ex)
             {
-                return new ApiResponse<GetResponse<List<UserRoleDefinitionModel>>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new GetResponse<List<UserRoleDefinitionModel>>() { Status = false, Message = $"Error encountered {ex.Message}" }, IsSuccess = false };
+                return new ApiResponse<GetResponse<List<UserRoleAndActivityModel>>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new GetResponse<List<UserRoleAndActivityModel>>() { Status = false, Message = $"Error encountered {ex.Message}" }, IsSuccess = false };
+            }
+        }
+
+        public async Task<ApiResponse<GetResponse<UserRoleAndActivityModel>>> GetUserRoleDefinition(long userRoleId, long clientId)
+        {
+            try
+            {
+                var apiResponse = new ApiResponse<GetResponse<UserRoleAndActivityModel>>();
+
+                var userRoleAndActivities = await (from a in context.UserRoleDefinitions
+                                                   where a.UserRoleDefinitionId == userRoleId && a.IsDeleted == false && a.ClientId == clientId
+                                                   orderby a.RoleName
+                                                   select new UserRoleAndActivityModel
+                                                   {
+                                                       UserRoleAndActivityId = a.UserRoleDefinitionId,
+                                                       UserRoleDefinition = a.RoleName,
+                                                   }).FirstOrDefaultAsync();
+
+                if (userRoleAndActivities != null && userRoleAndActivities.UserRoleAndActivityId > 0)
+                {
+                    var allUserRoleActivities = await (from p in context.UserActivityParents
+                                      join q in context.UserActivities on p.UserActivityParentId equals q.UserActivityParentId
+                                      orderby p.UserActivityParentName
+                                      where p.ClientId == clientId
+                                      select new UserRoleActivitiesModel
+                                      {
+                                          UserRoleActivitiesId = 0,
+                                          UserRoleDefinitionId = 0,
+                                          UserRoleDefinition = "",
+                                          UserActivityParentId = p.UserActivityParentId,
+                                          UserActivityParentName = p.UserActivityParentName,
+                                          UserActivityId = q.UserActivityId,
+                                          UserActivityName = q.UserActivityName,
+                                          CanAdd = false,
+                                          CanApprove = false,
+                                          CanDelete = false,
+                                          CanEdit = false,
+                                          CanView = false,
+                                          IsSelected = false
+                                      }).ToListAsync();
+
+
+                    var selectedUserRoleActivities = await (from a in context.UserRoleDefinitions
+                                   join b in context.UserRoleActivities on a.UserRoleDefinitionId equals b.UserRoleDefinitionId
+                                   join q in context.UserActivities on b.UserActivityId equals q.UserActivityId
+                                   where b.UserRoleDefinitionId == userRoleAndActivities.UserRoleAndActivityId && b.ClientId == clientId
+                                   orderby q.UserActivityParent.UserActivityParentName
+                                   select new UserRoleActivitiesModel
+                                   {
+                                       UserRoleActivitiesId = b.UserRoleActivityId,
+                                       UserRoleDefinitionId = a.UserRoleDefinitionId,
+                                       UserRoleDefinition = a.RoleName,
+                                       UserActivityParentId = q.UserActivityParentId,
+                                       UserActivityParentName = q.UserActivityParent.UserActivityParentName,
+                                       UserActivityId = q.UserActivityId,
+                                       UserActivityName = q.UserActivityName,
+                                       CanAdd = (bool)b.CanAdd,
+                                       CanApprove = (bool)b.CanApprove,
+                                       CanDelete = (bool)b.CanDelete,
+                                       CanEdit = (bool)b.CanEdit,
+                                       CanView = (bool)b.CanView,
+                                       IsSelected = q.UserActivityId == b.UserActivityId
+                                   }).ToListAsync();
+
+                    if (selectedUserRoleActivities.Any())
+                    {
+                        var data2Ids = selectedUserRoleActivities.Select(a => a.UserActivityId).ToList();
+
+                        var result = selectedUserRoleActivities.Concat(allUserRoleActivities.Where(x => !data2Ids.Contains(x.UserActivityId)));
+
+                        userRoleAndActivities.activities = result.ToList();
+                    }
+                    else
+                    {
+                        userRoleAndActivities.activities = allUserRoleActivities;
+                    }
+                }
+
+                var response = new GetResponse<UserRoleAndActivityModel>()
+                {
+                    Status = true,
+                    Entity = userRoleAndActivities,
+                    Message = ""
+                };
+
+                apiResponse.StatusCode = System.Net.HttpStatusCode.OK;
+                apiResponse.IsSuccess = true;
+                apiResponse.ResponseType = response;
+
+                return apiResponse;
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<GetResponse<UserRoleAndActivityModel>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new GetResponse<UserRoleAndActivityModel>() { Status = false, Message = $"Error encountered {ex.Message}" }, IsSuccess = false };
             }
         }
 
@@ -259,7 +373,7 @@ namespace WorkOffice.Services
                 apiResponse.ResponseType = response;
 
                 var details = $"Deleted Multiple UserRoleDefinition: with Ids {model.targetIds.ToArray()} ";
-               await  auditTrail.SaveAuditTrail(details, "UserRoleDefinition", "Delete");
+                await auditTrail.SaveAuditTrail(details, "UserRoleDefinition", "Delete");
 
                 return apiResponse;
             }
@@ -340,13 +454,15 @@ namespace WorkOffice.Services
             {
                 var apiResponse = new ApiResponse<GetResponse<List<UserRoleActivitiesModel>>>();
                 List<UserRoleActivitiesModel> activitiesModels = new List<UserRoleActivitiesModel>();
+                List<UserRoleActivitiesModel> data2 = new List<UserRoleActivitiesModel>();
                 var data = await (from p in context.UserActivityParents
                                   join q in context.UserActivities on p.UserActivityParentId equals q.UserActivityParentId
                                   orderby p.UserActivityParentName
                                   where p.ClientId == clientId
                                   select new UserRoleActivitiesModel
                                   {
-                                      UserRoleDefinitionId = 1,
+                                      UserRoleActivitiesId = 0,
+                                      UserRoleDefinitionId = 0,
                                       UserRoleDefinition = "",
                                       UserActivityParentId = p.UserActivityParentId,
                                       UserActivityParentName = p.UserActivityParentName,
@@ -356,48 +472,48 @@ namespace WorkOffice.Services
                                       CanApprove = false,
                                       CanDelete = false,
                                       CanEdit = false,
-                                      CanView = false
+                                      CanView = false,
+                                      IsSelected = false
                                   }).ToListAsync();
 
                 if (userRoleId > 0)
                 {
-                    var data2 = await (from a in context.UserRoleDefinitions
-                                       join b in context.UserRoleActivities on a.UserRoleDefinitionId equals b.UserRoleDefinitionId
-                                       join q in context.UserActivities on b.UserActivityId equals q.UserActivityId
-                                       where b.UserRoleDefinitionId == userRoleId && b.ClientId == clientId
-                                       orderby q.UserActivityParent.UserActivityParentName
-                                       select new UserRoleActivitiesModel
-                                       {
-                                           UserRoleDefinitionId = a.UserRoleDefinitionId,
-                                           UserRoleDefinition = a.RoleName,
-                                           UserActivityParentId = q.UserActivityParentId,
-                                           UserActivityParentName = q.UserActivityParent.UserActivityParentName,
-                                           UserActivityId = q.UserActivityId,
-                                           UserActivityName = q.UserActivityName,
-                                           CanAdd = (bool)b.CanAdd,
-                                           CanApprove = (bool)b.CanApprove,
-                                           CanDelete = (bool)b.CanDelete,
-                                           CanEdit = (bool)b.CanEdit,
-                                           CanView = (bool)b.CanView
-                                       }).ToListAsync();
-                    if (data2.Any())
-                    {
-                        var data2Ids = data2.Select(a => a.UserActivityId).ToList();
+                    data2 = await (from a in context.UserRoleDefinitions
+                                   join b in context.UserRoleActivities on a.UserRoleDefinitionId equals b.UserRoleDefinitionId
+                                   join q in context.UserActivities on b.UserActivityId equals q.UserActivityId
+                                   where b.UserRoleDefinitionId == userRoleId && b.ClientId == clientId
+                                   orderby q.UserActivityParent.UserActivityParentName
+                                   select new UserRoleActivitiesModel
+                                   {
+                                       UserRoleActivitiesId = b.UserRoleActivityId,
+                                       UserRoleDefinitionId = a.UserRoleDefinitionId,
+                                       UserRoleDefinition = a.RoleName,
+                                       UserActivityParentId = q.UserActivityParentId,
+                                       UserActivityParentName = q.UserActivityParent.UserActivityParentName,
+                                       UserActivityId = q.UserActivityId,
+                                       UserActivityName = q.UserActivityName,
+                                       CanAdd = (bool)b.CanAdd,
+                                       CanApprove = (bool)b.CanApprove,
+                                       CanDelete = (bool)b.CanDelete,
+                                       CanEdit = (bool)b.CanEdit,
+                                       CanView = (bool)b.CanView,
+                                       IsSelected = q.UserActivityId == b.UserActivityId
+                                   }).ToListAsync();
 
-                        var result = data2.Concat(data.Where(x => !data2Ids.Contains(x.UserActivityId)));
-
-                        activitiesModels = result.OrderByDescending(x => x.UserRoleDefinitionId).ToList();
-                    }
-                    else
-                    {
-                        activitiesModels = data;
-                    }
 
                 }
 
-                if (activitiesModels.Count <= 0)
+                if (data2.Any())
                 {
-                    return new ApiResponse<GetResponse<List<UserRoleActivitiesModel>>>() { StatusCode = System.Net.HttpStatusCode.NotFound, ResponseType = new GetResponse<List<UserRoleActivitiesModel>>() { Status = false, Message = "No record found" }, IsSuccess = false };
+                    var data2Ids = data2.Select(a => a.UserActivityId).ToList();
+
+                    var result = data2.Concat(data.Where(x => !data2Ids.Contains(x.UserActivityId)));
+
+                    activitiesModels = result.ToList();
+                }
+                else
+                {
+                    activitiesModels = data;
                 }
 
 

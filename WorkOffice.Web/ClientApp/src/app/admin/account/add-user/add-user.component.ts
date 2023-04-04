@@ -10,6 +10,8 @@ import {
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { GeneralSettingsModel } from 'src/app/core/models/general-settings.model';
+import { GeneralSettingsService } from 'src/app/core/service/general-settings.service';
 import { MustMatch } from 'src/app/core/utilities/must-match.validator';
 import { UnsubscribeOnDestroyAdapter } from 'src/app/shared/UnsubscribeOnDestroyAdapter';
 import { AddEditUserModel } from '../all-users/users.model';
@@ -28,15 +30,30 @@ export class AddUserComponent
   agree3 = false;
   submitted = false;
   loading = false;
+  countryList: GeneralSettingsModel[] = [];
+  userRoleList: GeneralSettingsModel[] = [];
+
   constructor(
     private fb: UntypedFormBuilder,
     private router: Router,
     private usersService: UsersService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private generalSettingsService: GeneralSettingsService
   ) {
     super();
   }
   ngOnInit() {
+
+    this.subs.sink = this.generalSettingsService
+    .getCountryList()
+    .subscribe((response) => {
+      this.countryList = response.entity;
+    });
+    this.subs.sink = this.generalSettingsService
+    .getUserRoleList()
+    .subscribe((response) => {
+      this.countryList = response.entity;
+    });
     this.addUserForm = this.fb.group(
       {
         firstName: ['', [Validators.required, Validators.pattern('[a-zA-Z]+')]],
@@ -48,7 +65,7 @@ export class AddUserComponent
           [Validators.required, Validators.email, Validators.minLength(5)],
         ],
         country: ['', [Validators.required]],
-        userRole: [''],
+        userRoleId: ['', [Validators.required]],
       },
       {
         validator: MustMatch('password', 'confirmPassword'),
@@ -81,7 +98,7 @@ export class AddUserComponent
         confirmPassword: this.addUserForm.value.confirmPassword,
         email: this.addUserForm.value.email,
         country: this.addUserForm.value.country,
-        userRole: this.addUserForm.value.userRole,
+        userRoleId: this.addUserForm.value.userRoleId,
         acceptTerms: true,
       };
       this.subs.sink = this.usersService.addUser(user).subscribe({

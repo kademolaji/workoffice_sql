@@ -85,7 +85,7 @@ export class AddStructureDefinitionComponent
       return;
     } else {
       const structureDefinition: StructureDefinitionModel = {
-        structureDefinitionId: this.id,
+        structureDefinitionId: this.id ? this.id : 0,
         definition: this.structureDefinitionForm.value.definition,
         description: this.structureDefinitionForm.value.description,
         level: this.structureDefinitionForm.value.level,

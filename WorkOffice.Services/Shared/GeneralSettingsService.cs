@@ -117,5 +117,73 @@ namespace WorkOffice.Services
                 return new ApiResponse<GetResponse<List<GeneralSettingsModel>>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new GetResponse<List<GeneralSettingsModel>>() { Status = false, Message = $"Error encountered {ex.Message}" }, IsSuccess = false };
             }
         }
+
+        public async Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetUserRoleList(long clientId)
+        {
+            try
+            {
+
+                var apiResponse = new ApiResponse<GetResponse<List<GeneralSettingsModel>>>();
+
+                var result = await (from a in context.UserRoleDefinitions
+                                    where a.ClientId == clientId && a.IsDeleted == false
+                                    select new GeneralSettingsModel
+                                    {
+                                        Label = a.RoleName,
+                                        Value = a.UserRoleDefinitionId.ToString()
+                                    }).ToListAsync();
+
+                var response = new GetResponse<List<GeneralSettingsModel>>()
+                {
+                    Status = true,
+                    Entity = result,
+                    Message = ""
+                };
+
+                apiResponse.StatusCode = System.Net.HttpStatusCode.OK;
+                apiResponse.IsSuccess = true;
+                apiResponse.ResponseType = response;
+
+                return apiResponse;
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<GetResponse<List<GeneralSettingsModel>>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new GetResponse<List<GeneralSettingsModel>>() { Status = false, Message = $"Error encountered {ex.Message}" }, IsSuccess = false };
+            }
+        }
+
+        public async Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetCompanyList(long clientId)
+        {
+            try
+            {
+
+                var apiResponse = new ApiResponse<GetResponse<List<GeneralSettingsModel>>>();
+
+                var result = await (from a in context.GeneralInformations
+                                    where a.ClientId == clientId && a.IsDeleted == false
+                                    select new GeneralSettingsModel
+                                    {
+                                        Label = a.Organisationname,
+                                        Value = a.GeneralInformationId.ToString()
+                                    }).ToListAsync();
+
+                var response = new GetResponse<List<GeneralSettingsModel>>()
+                {
+                    Status = true,
+                    Entity = result,
+                    Message = ""
+                };
+
+                apiResponse.StatusCode = System.Net.HttpStatusCode.OK;
+                apiResponse.IsSuccess = true;
+                apiResponse.ResponseType = response;
+
+                return apiResponse;
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<GetResponse<List<GeneralSettingsModel>>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new GetResponse<List<GeneralSettingsModel>>() { Status = false, Message = $"Error encountered {ex.Message}" }, IsSuccess = false };
+            }
+        }
     }
 }

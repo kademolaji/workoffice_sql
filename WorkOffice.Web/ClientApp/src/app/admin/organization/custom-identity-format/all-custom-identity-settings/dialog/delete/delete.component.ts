@@ -20,6 +20,10 @@ export class DeleteCustomIdentitySettingsDialogComponent {
     this.dialogRef.close();
   }
   confirmDelete(): void {
-    this.customIdentityFormatService.deleteCustomIdentityFormat(this.data.customIdentityFormatSettingId).subscribe();
+    this.customIdentityFormatService.deleteCustomIdentityFormat(this.data.customIdentityFormatSettingId).subscribe((data)=>{
+      if(data.status){
+        this.dialogRef.close();
+      }
+    });
   }
 }

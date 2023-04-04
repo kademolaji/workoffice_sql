@@ -1,0 +1,162 @@
+<section class="content">
+  <div class="content-block">
+    <div class="block-header">
+      <!-- breadcrumb -->
+      <app-breadcrumb
+        *ngIf="isAddMode"
+        [title]="'Add User Role'"
+        [items]="['User Role']"
+        [active_item]="'User Role'"
+      ></app-breadcrumb>
+      <app-breadcrumb
+        *ngIf="!isAddMode"
+        [title]="'Edit User Role'"
+        [items]="['User Role']"
+        [active_item]="'Edit User Role'"
+      ></app-breadcrumb>
+    </div>
+    <div class="row clearfix">
+      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="card">
+          <div class="header">
+            <h2 *ngIf="isAddMode"><strong> Add New User Role</strong></h2>
+            <h2 *ngIf="!isAddMode"><strong> Edit User Role</strong></h2>
+          </div>
+          <div class="body">
+            <form
+              class="m-4"
+              [formGroup]="userRoleForm"
+              (ngSubmit)="onSubmit()"
+            >
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field
+                    class="example-full-width mb-3"
+                    appearance="outline"
+                  >
+                    <mat-label>User Role </mat-label>
+                    <input
+                      matInput
+                      formControlName="userRoleDefinition"
+                      required
+                    />
+                    <mat-error
+                      *ngIf="
+                        userRoleForm
+                          .get('userRoleDefinition')
+                          ?.hasError('required')
+                      "
+                    >
+                      User role is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <div class="card">
+                    <div class="header">
+                      <h2><strong>Select Activities</strong></h2>
+                    </div>
+                    <div class="body table-responsive">
+                      <table class="table table-hover">
+                        <thead>
+                          <tr>
+                            <th>
+                              <mat-checkbox
+                                class="example-margin"
+                                (change)="checkUncheckAll()"
+                              ></mat-checkbox>
+                            </th>
+                            <th>Parent Activity</th>
+                            <th>Activity</th>
+                            <th>Can Add</th>
+                            <th>Can Edit</th>
+                            <th>Can View</th>
+                            <th>Can Delete</th>
+                            <th>Can Approve</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let item of activitiesList">
+                            <th scope="row">
+                              <mat-checkbox
+                                class="example-margin"
+                                [(ngModel)]="item.isSelected"
+                                [ngModelOptions]="{ standalone: true }"
+                              ></mat-checkbox>
+                            </th>
+                            <td>{{ item.userActivityParentName }}</td>
+                            <td>{{ item.userActivityName }}</td>
+                            <td>
+                              <mat-checkbox
+                                class="example-margin"
+                                [(ngModel)]="item.canAdd"
+                                [ngModelOptions]="{ standalone: true }"
+                              ></mat-checkbox>
+                            </td>
+                            <td>
+                              <mat-checkbox
+                                class="example-margin"
+                                [(ngModel)]="item.canEdit"
+                                [ngModelOptions]="{ standalone: true }"
+                              ></mat-checkbox>
+                            </td>
+                            <td>
+                              <mat-checkbox
+                                class="example-margin"
+                                [(ngModel)]="item.canView"
+                                [ngModelOptions]="{ standalone: true }"
+                              ></mat-checkbox>
+                            </td>
+                            <td>
+                              <mat-checkbox
+                                class="example-margin"
+                                [(ngModel)]="item.canDelete"
+                                [ngModelOptions]="{ standalone: true }"
+                              ></mat-checkbox>
+                            </td>
+                            <td>
+                              <mat-checkbox
+                                class="example-margin"
+                                [(ngModel)]="item.canApprove"
+                                [ngModelOptions]="{ standalone: true }"
+                              ></mat-checkbox>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-3">
+                  <button
+                    class="btn-space"
+                    [class.auth-spinner]="loading"
+                    [disabled]="loading"
+                    [disabled]="!userRoleForm.valid"
+                    mat-raised-button
+                    color="primary"
+                  >
+                    Submit
+                  </button>
+                  <button
+                    type="button"
+                    (click)="cancelForm()"
+                    mat-raised-button
+                    color="warn"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -9,7 +9,8 @@ namespace WorkOffice.Contracts.ServicesContracts
     public interface IAdministrationService
     {
         Task<ApiResponse<CreateResponse>> AddUpdateUserRoleAndActivity(UserRoleAndActivityModel model);
-        Task<ApiResponse<GetResponse<List<UserRoleDefinitionModel>>>> GetAllUserRoleDefinitions(long clientId);
+        Task<ApiResponse<GetResponse<List<UserRoleAndActivityModel>>>> GetAllUserRoleDefinitions(long clientId);
+        Task<ApiResponse<GetResponse<UserRoleAndActivityModel>>> GetUserRoleDefinition(long userRoleId, long clientId);
         Task<ApiResponse<DeleteReply>> DeleteUserRoleDefinition(long userRoleDefinitionId);
         Task<ApiResponse<DeleteReply>> DeleteMultipleUserRoleDefinition(MultipleDeleteModel model);
 

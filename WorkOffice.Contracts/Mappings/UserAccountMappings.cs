@@ -20,7 +20,7 @@ namespace WorkOffice.Contracts.Mappings
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Email = user.Email,
-                UserRole = Enum.GetName(typeof(RolesEnum), (RolesEnum)user.RoleId),
+                //UserRole = Enum.GetName(typeof(RolesEnum), (RolesEnum)user.RoleId),
                 ProfilePicture = user.ProfilePicture,
                 IsVerified = user.IsVerified
             };
