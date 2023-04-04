@@ -244,7 +244,7 @@ export const ROUTES: RouteInfo[] = [
             groupTitle: false,
             badge: '',
             badgeClass: '',
-            role: [''],
+            activity: "pathway status",
             submenu: [],
       }
 
@@ -258,7 +258,7 @@ export const ROUTES: RouteInfo[] = [
             groupTitle: false,
             badge: '',
             badgeClass: '',
-            role: [''],
+            activity: "rtt",
             submenu: [],
       }
 
@@ -272,7 +272,7 @@ export const ROUTES: RouteInfo[] = [
             groupTitle: false,
             badge: '',
             badgeClass: '',
-            role: [''],
+            activity: "specialty",
             submenu: [],
       }
 
@@ -286,7 +286,7 @@ export const ROUTES: RouteInfo[] = [
             groupTitle: false,
             badge: '',
             badgeClass: '',
-            role: [''],
+            activity: "waiting type",
             submenu: [],
       }
 
@@ -300,7 +300,7 @@ export const ROUTES: RouteInfo[] = [
             groupTitle: false,
             badge: '',
             badgeClass: '',
-            role: [''],
+            activity: "ward",
             submenu: [],
       }
         ],
