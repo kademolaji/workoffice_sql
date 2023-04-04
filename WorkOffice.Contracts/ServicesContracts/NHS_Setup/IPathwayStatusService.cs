@@ -11,7 +11,8 @@ namespace WorkOffice.Contracts.ServicesContracts
     {
         Task<ApiResponse<CreateResponse>> CreatePathwayStatus(PathwayStatusViewModels model);
         Task<ApiResponse<CreateResponse>> UpdatePathwayStatus(PathwayStatusViewModels model);
-        Task<ApiResponse<GetResponse<List<PathwayStatusViewModels>>>> GetList(int pageNumber = 1, int pageSize = 10);
+        //Task<ApiResponse<GetResponse<List<PathwayStatusViewModels>>>> GetList(int pageNumber = 1, int pageSize = 10);
+        Task<ApiResponse<SearchReply<PathwayStatusViewModels>>> GetList(SearchCall<SearchParameter> options);
         Task<ApiResponse<GetResponse<PathwayStatusViewModels>>> Get(long pathwayStatusId);
         Task<ApiResponse<DeleteReply>> Delete(long pathwayStatusId);
         Task<ApiResponse<DeleteReply>> MultipleDelete(MultipleDeleteModel model);

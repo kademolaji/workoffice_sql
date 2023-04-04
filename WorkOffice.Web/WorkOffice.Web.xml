@@ -123,7 +123,7 @@
              <response code="201">Activity Created Successfully</response>
              <response code="400">If an error occur or invalid request payload</response>
         </member>
-        <member name="M:WorkOffice.Web.Controllers.ActivityController.GetList(System.Int32,System.Int32)">
+        <member name="M:WorkOffice.Web.Controllers.ActivityController.GetList(WorkOffice.Contracts.ServicesContracts.SearchCall{WorkOffice.Contracts.ServicesContracts.SearchParameter})">
              <summary>
              Get list of Activity
              </summary>
@@ -365,7 +365,7 @@
              <response code="201">Consultant Created Successfully</response>
              <response code="400">If an error occur or invalid request payload</response>
         </member>
-        <member name="M:WorkOffice.Web.Controllers.ConsultantController.GetList(System.Int32,System.Int32)">
+        <member name="M:WorkOffice.Web.Controllers.ConsultantController.GetList(WorkOffice.Contracts.ServicesContracts.SearchCall{WorkOffice.Contracts.ServicesContracts.SearchParameter})">
              <summary>
              Get list of Consultant
              </summary>
@@ -486,7 +486,7 @@
              <response code="201">Hospital Created Successfully</response>
              <response code="400">If an error occur or invalid request payload</response>
         </member>
-        <member name="M:WorkOffice.Web.Controllers.HospitalController.GetList(System.Int32,System.Int32)">
+        <member name="M:WorkOffice.Web.Controllers.HospitalController.GetList(WorkOffice.Contracts.ServicesContracts.SearchCall{WorkOffice.Contracts.ServicesContracts.SearchParameter})">
              <summary>
              Get list of Hospital
              </summary>
@@ -607,7 +607,7 @@
              <response code="201">PathwayStatus Created Successfully</response>
              <response code="400">If an error occur or invalid request payload</response>
         </member>
-        <member name="M:WorkOffice.Web.Controllers.PathwayStatusController.GetList(System.Int32,System.Int32)">
+        <member name="M:WorkOffice.Web.Controllers.PathwayStatusController.GetList(WorkOffice.Contracts.ServicesContracts.SearchCall{WorkOffice.Contracts.ServicesContracts.SearchParameter})">
              <summary>
              Get list of PathwayStatus
              </summary>
@@ -728,7 +728,7 @@
              <response code="201">RTT Created Successfully</response>
              <response code="400">If an error occur or invalid request payload</response>
         </member>
-        <member name="M:WorkOffice.Web.Controllers.RTTController.GetList(System.Int32,System.Int32)">
+        <member name="M:WorkOffice.Web.Controllers.RTTController.GetList(WorkOffice.Contracts.ServicesContracts.SearchCall{WorkOffice.Contracts.ServicesContracts.SearchParameter})">
              <summary>
              Get list of RTT
              </summary>
@@ -849,7 +849,7 @@
              <response code="201">Specialty Created Successfully</response>
              <response code="400">If an error occur or invalid request payload</response>
         </member>
-        <member name="M:WorkOffice.Web.Controllers.SpecialtyController.GetList(System.Int32,System.Int32)">
+        <member name="M:WorkOffice.Web.Controllers.SpecialtyController.GetList(WorkOffice.Contracts.ServicesContracts.SearchCall{WorkOffice.Contracts.ServicesContracts.SearchParameter})">
              <summary>
              Get list of Specialty
              </summary>
@@ -970,7 +970,7 @@
              <response code="201">WaitingType Created Successfully</response>
              <response code="400">If an error occur or invalid request payload</response>
         </member>
-        <member name="M:WorkOffice.Web.Controllers.WaitingTypeController.GetList(System.Int32,System.Int32)">
+        <member name="M:WorkOffice.Web.Controllers.WaitingTypeController.GetList(WorkOffice.Contracts.ServicesContracts.SearchCall{WorkOffice.Contracts.ServicesContracts.SearchParameter})">
              <summary>
              Get list of WaitingType
              </summary>
@@ -1091,7 +1091,7 @@
              <response code="201">Ward Created Successfully</response>
              <response code="400">If an error occur or invalid request payload</response>
         </member>
-        <member name="M:WorkOffice.Web.Controllers.WardController.GetList(System.Int32,System.Int32)">
+        <member name="M:WorkOffice.Web.Controllers.WardController.GetList(WorkOffice.Contracts.ServicesContracts.SearchCall{WorkOffice.Contracts.ServicesContracts.SearchParameter})">
              <summary>
              Get list of Ward
              </summary>

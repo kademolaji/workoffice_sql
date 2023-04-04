@@ -157,27 +157,47 @@ namespace WorkOffice.Services
                 return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = $"Error encountered {ex.Message}" }, IsSuccess = false };
             }
         }
-
-        public async Task<ApiResponse<GetResponse<List<PathwayStatusViewModels>>>> GetList(int pageNumber = 1, int pageSize = 10)
+        public async Task<ApiResponse<SearchReply<PathwayStatusViewModels>>> GetList(SearchCall<SearchParameter> options)
         {
+            int count = 0;
+            int pageNumber = options.From > 0 ? options.From : 0;
+            int pageSize = options.PageSize > 0 ? options.PageSize : 10;
+            string sortOrder = string.IsNullOrEmpty(options.SortOrder) ? "asc" : options.SortOrder;
+            string sortField = string.IsNullOrEmpty(options.SortField) ? "code" : options.SortField;
+
             try
             {
-                var apiResponse = new ApiResponse<GetResponse<List<PathwayStatusViewModels>>>();
+                var apiResponse = new ApiResponse<SearchReply<PathwayStatusViewModels>>();
+
 
                 IQueryable<PathwayStatus> query = context.PathwayStatuses;
-                int offset = (pageNumber - 1) * pageSize;
-                var items = await query.Skip(offset).Take(pageSize).ToListAsync();
-                if (items.Count <= 0)
+                int offset = (pageNumber) * pageSize;
+
+                if (!string.IsNullOrEmpty(options.Parameter.SearchQuery))
                 {
-                    return new ApiResponse<GetResponse<List<PathwayStatusViewModels>>>() { StatusCode = System.Net.HttpStatusCode.NotFound, ResponseType = new GetResponse<List<PathwayStatusViewModels>>() { Status = false, Message = "No record found" }, IsSuccess = false };
+                    query = query.Where(x => x.Code.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())
+                    || x.Name.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower()));
                 }
-
-
-                var response = new GetResponse<List<PathwayStatusViewModels>>()
+                switch (sortField)
                 {
-                    Status = true,
-                    Entity = items.Select(x => x.ToModel<PathwayStatusViewModels>()).ToList(),
-                    Message = ""
+                    case "code":
+                        query = sortOrder == "asc" ? query.OrderBy(s => s.Code) : query.OrderByDescending(s => s.Code);
+                        break;
+                    case "name":
+                        query = sortOrder == "asc" ? query.OrderBy(s => s.Name) : query.OrderByDescending(s => s.Name);
+                        break;
+                    default:
+                        query = query.OrderBy(s => s.Code);
+                        break;
+                }
+                count = query.Count();
+                var items = await query.Skip(offset).Take(pageSize).ToListAsync();
+
+
+                var response = new SearchReply<PathwayStatusViewModels>()
+                {
+                    TotalCount = count,
+                    Result = items.Select(x => x.ToModel<PathwayStatusViewModels>()).ToList(),
                 };
 
                 apiResponse.StatusCode = System.Net.HttpStatusCode.OK;
@@ -188,9 +208,43 @@ namespace WorkOffice.Services
             }
             catch (Exception ex)
             {
-                return new ApiResponse<GetResponse<List<PathwayStatusViewModels>>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new GetResponse<List<PathwayStatusViewModels>>() { Status = false, Message = $"Error encountered {ex.Message}" }, IsSuccess = false };
+                return new ApiResponse<SearchReply<PathwayStatusViewModels>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new SearchReply<PathwayStatusViewModels>() { TotalCount = count }, IsSuccess = false };
             }
         }
+
+        //public async Task<ApiResponse<GetResponse<List<PathwayStatusViewModels>>>> GetList(int pageNumber = 1, int pageSize = 10)
+        //{
+        //    try
+        //    {
+        //        var apiResponse = new ApiResponse<GetResponse<List<PathwayStatusViewModels>>>();
+
+        //        IQueryable<PathwayStatus> query = context.PathwayStatuses;
+        //        int offset = (pageNumber - 1) * pageSize;
+        //        var items = await query.Skip(offset).Take(pageSize).ToListAsync();
+        //        if (items.Count <= 0)
+        //        {
+        //            return new ApiResponse<GetResponse<List<PathwayStatusViewModels>>>() { StatusCode = System.Net.HttpStatusCode.NotFound, ResponseType = new GetResponse<List<PathwayStatusViewModels>>() { Status = false, Message = "No record found" }, IsSuccess = false };
+        //        }
+
+
+        //        var response = new GetResponse<List<PathwayStatusViewModels>>()
+        //        {
+        //            Status = true,
+        //            Entity = items.Select(x => x.ToModel<PathwayStatusViewModels>()).ToList(),
+        //            Message = ""
+        //        };
+
+        //        apiResponse.StatusCode = System.Net.HttpStatusCode.OK;
+        //        apiResponse.IsSuccess = true;
+        //        apiResponse.ResponseType = response;
+
+        //        return apiResponse;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return new ApiResponse<GetResponse<List<PathwayStatusViewModels>>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new GetResponse<List<PathwayStatusViewModels>>() { Status = false, Message = $"Error encountered {ex.Message}" }, IsSuccess = false };
+        //    }
+        //}
 
         public async Task<ApiResponse<GetResponse<PathwayStatusViewModels>>> Get(long pathwayStatusId)
         {

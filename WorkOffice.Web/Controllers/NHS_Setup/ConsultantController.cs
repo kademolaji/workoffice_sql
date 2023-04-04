@@ -117,16 +117,18 @@ namespace WorkOffice.Web.Controllers
         /// <response code="200">Returns list of Consultant</response>
         /// <response code="404">If list of Consultant is null</response> 
         /// <response code="400">If an error occur or invalid request payload</response> 
-        [HttpGet]
+        [HttpPost]
         [Route("GetList")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetResponse<List<ConsultantViewModels>>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(GetResponse<ProducesResponseStub>))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(GetResponse<ProducesResponseStub>))]
-        public async Task<IActionResult> GetList(int pageNumber = 1, int pageSize = 10)
+
+        public async Task<IActionResult> GetList(SearchCall<SearchParameter> options)
         {
             try
             {
-                var apiResponse = await service.GetList(pageNumber, pageSize);
+                var clientId = httpAccessorService.GetCurrentClientId();
+                var apiResponse = await service.GetList(options);
                 if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
                 {
                     return BadRequest(apiResponse.ResponseType);
@@ -144,6 +146,28 @@ namespace WorkOffice.Web.Controllers
                 return BadRequest($"{ex.Message}");
             }
         }
+        //public async Task<IActionResult> GetList(int pageNumber = 1, int pageSize = 10)
+        //{
+        //    try
+        //    {
+        //        var apiResponse = await service.GetList(pageNumber, pageSize);
+        //        if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
+        //        {
+        //            return BadRequest(apiResponse.ResponseType);
+        //        }
+
+        //        if (apiResponse.StatusCode == System.Net.HttpStatusCode.NotFound)
+        //        {
+        //            return NotFound(apiResponse.ResponseType);
+        //        }
+
+        //        return Ok(apiResponse.ResponseType);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest($"{ex.Message}");
+        //    }
+        //}
 
         // GET api/Consultant/Get
         /// <summary>

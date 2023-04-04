@@ -158,26 +158,47 @@ namespace WorkOffice.Services
             }
         }
 
-        public async Task<ApiResponse<GetResponse<List<WaitingTypeViewModels>>>> GetList(int pageNumber = 1, int pageSize = 10)
+        public async Task<ApiResponse<SearchReply<WaitingTypeViewModels>>> GetList(SearchCall<SearchParameter> options)
         {
+            int count = 0;
+            int pageNumber = options.From > 0 ? options.From : 0;
+            int pageSize = options.PageSize > 0 ? options.PageSize : 10;
+            string sortOrder = string.IsNullOrEmpty(options.SortOrder) ? "asc" : options.SortOrder;
+            string sortField = string.IsNullOrEmpty(options.SortField) ? "code" : options.SortField;
+
             try
             {
-                var apiResponse = new ApiResponse<GetResponse<List<WaitingTypeViewModels>>>();
+                var apiResponse = new ApiResponse<SearchReply<WaitingTypeViewModels>>();
+
 
                 IQueryable<WaitingType> query = context.WaitingTypes;
-                int offset = (pageNumber - 1) * pageSize;
-                var items = await query.Skip(offset).Take(pageSize).ToListAsync();
-                if (items.Count <= 0)
+                int offset = (pageNumber) * pageSize;
+
+                if (!string.IsNullOrEmpty(options.Parameter.SearchQuery))
                 {
-                    return new ApiResponse<GetResponse<List<WaitingTypeViewModels>>>() { StatusCode = System.Net.HttpStatusCode.NotFound, ResponseType = new GetResponse<List<WaitingTypeViewModels>>() { Status = false, Message = "No record found" }, IsSuccess = false };
+                    query = query.Where(x => x.Code.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())
+                    || x.Name.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower()));
                 }
-
-
-                var response = new GetResponse<List<WaitingTypeViewModels>>()
+                switch (sortField)
                 {
-                    Status = true,
-                    Entity = items.Select(x => x.ToModel<WaitingTypeViewModels>()).ToList(),
-                    Message = ""
+                    case "code":
+                        query = sortOrder == "asc" ? query.OrderBy(s => s.Code) : query.OrderByDescending(s => s.Code);
+                        break;
+                    case "name":
+                        query = sortOrder == "asc" ? query.OrderBy(s => s.Name) : query.OrderByDescending(s => s.Name);
+                        break;
+                    default:
+                        query = query.OrderBy(s => s.Code);
+                        break;
+                }
+                count = query.Count();
+                var items = await query.Skip(offset).Take(pageSize).ToListAsync();
+
+
+                var response = new SearchReply<WaitingTypeViewModels>()
+                {
+                    TotalCount = count,
+                    Result = items.Select(x => x.ToModel<WaitingTypeViewModels>()).ToList(),
                 };
 
                 apiResponse.StatusCode = System.Net.HttpStatusCode.OK;
@@ -188,9 +209,43 @@ namespace WorkOffice.Services
             }
             catch (Exception ex)
             {
-                return new ApiResponse<GetResponse<List<WaitingTypeViewModels>>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new GetResponse<List<WaitingTypeViewModels>>() { Status = false, Message = $"Error encountered {ex.Message}" }, IsSuccess = false };
+                return new ApiResponse<SearchReply<WaitingTypeViewModels>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new SearchReply<WaitingTypeViewModels>() { TotalCount = count }, IsSuccess = false };
             }
         }
+
+        //public async Task<ApiResponse<GetResponse<List<WaitingTypeViewModels>>>> GetList(int pageNumber = 1, int pageSize = 10)
+        //{
+        //    try
+        //    {
+        //        var apiResponse = new ApiResponse<GetResponse<List<WaitingTypeViewModels>>>();
+
+        //        IQueryable<WaitingType> query = context.WaitingTypes;
+        //        int offset = (pageNumber - 1) * pageSize;
+        //        var items = await query.Skip(offset).Take(pageSize).ToListAsync();
+        //        if (items.Count <= 0)
+        //        {
+        //            return new ApiResponse<GetResponse<List<WaitingTypeViewModels>>>() { StatusCode = System.Net.HttpStatusCode.NotFound, ResponseType = new GetResponse<List<WaitingTypeViewModels>>() { Status = false, Message = "No record found" }, IsSuccess = false };
+        //        }
+
+
+        //        var response = new GetResponse<List<WaitingTypeViewModels>>()
+        //        {
+        //            Status = true,
+        //            Entity = items.Select(x => x.ToModel<WaitingTypeViewModels>()).ToList(),
+        //            Message = ""
+        //        };
+
+        //        apiResponse.StatusCode = System.Net.HttpStatusCode.OK;
+        //        apiResponse.IsSuccess = true;
+        //        apiResponse.ResponseType = response;
+
+        //        return apiResponse;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return new ApiResponse<GetResponse<List<WaitingTypeViewModels>>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new GetResponse<List<WaitingTypeViewModels>>() { Status = false, Message = $"Error encountered {ex.Message}" }, IsSuccess = false };
+        //    }
+        //}
 
         public async Task<ApiResponse<GetResponse<WaitingTypeViewModels>>> Get(long waitingTypeId)
         {

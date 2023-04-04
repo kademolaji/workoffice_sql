@@ -11,50 +11,50 @@ import {
 } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UnsubscribeOnDestroyAdapter } from 'src/app/shared/UnsubscribeOnDestroyAdapter';
-import { AppTypeModel } from './apptype.model';
-// import { AppTypeModel } from '../apptype.model';
-import { AppTypeService } from './apptype.service';
+import { WardModel } from '../ward.model';
+// import { WardModel } from '../ward.model';
+import { WardService } from '../ward.service';
 
 @Component({
-  selector: 'app-add-apptype',
-  templateUrl: './add-apptype.component.html',
-  styleUrls: ['./add-apptype.component.css'],
+  selector: 'app-add-ward',
+  templateUrl: './add-ward.component.html',
+  styleUrls: ['./add-ward.component.css'],
 })
-export class AddAppTypeComponent
+export class AddWardComponent
   extends UnsubscribeOnDestroyAdapter
   implements OnInit
 {
-  appTypeForm!: UntypedFormGroup;
+  wardForm!: UntypedFormGroup;
   hide3 = true;
   agree3 = false;
   submitted = false;
   loading = false;
   isAddMode = true;
-  id = '';
+  id = 0;
 
   constructor(
     private fb: UntypedFormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private AppTypeService: AppTypeService,
+    private WardService: WardService,
     private snackBar: MatSnackBar
   ) {
     super();
   }
   ngOnInit() {
-    this.appTypeForm = this.fb.group({
+    this.wardForm = this.fb.group({
       code: ['', [Validators.required]],
       name: ['', [Validators.required]],
     });
     this.id = this.route.snapshot.params['id'];
     this.isAddMode = !this.id;
     if(!this.isAddMode){
-      this.subs.sink = this.AppTypeService
-      .getAppTypeById(this.id)
+      this.subs.sink = this.WardService
+      .getWardById(this.id)
       .subscribe({
         next: (res) => {
           if (res.status) {
-            this.appTypeForm.setValue({
+            this.wardForm.setValue({
               code: res.entity.code,
               name: res.entity.name,
             });
@@ -67,30 +67,30 @@ export class AddAppTypeComponent
 
   }
   cancelForm() {
-    this.router.navigate(['/setup/apptype/all-apptype']);
+    this.router.navigate(['/setup/ward/all-ward']);
   }
 
   onSubmit() {
     this.submitted = true;
     this.loading = true;
     // stop here if form is invalid
-    if (this.appTypeForm.invalid) {
+    if (this.wardForm.invalid) {
       this.showNotification(
         'snackbar-danger',
-        'Add new App Type failed...!!!',
+        'Add new Ward failed...!!!',
         'top',
         'right'
       );
       return;
     } else {
-      const AppType: AppTypeModel = {
-        AppTypeId: this.id,
-        code: this.appTypeForm.value.code,
-        name: this.appTypeForm.value.name,
+      const ward: WardModel = {
+        wardId: this.id,
+        code: this.wardForm.value.code,
+        name: this.wardForm.value.name,
 
       };
-      this.subs.sink = this.AppTypeService
-        .addAppType(AppType)
+      this.subs.sink = this.WardService
+        .addWard(ward)
         .subscribe({
           next: (res) => {
             if (res.status) {
@@ -101,7 +101,7 @@ export class AddAppTypeComponent
                 'top',
                 'right'
               );
-              this.router.navigate(['/setup/apptype/all-apptype']);
+              this.router.navigate(['/setup/ward/all-ward']);
             } else {
               this.showNotification(
                 'snackbar-danger',

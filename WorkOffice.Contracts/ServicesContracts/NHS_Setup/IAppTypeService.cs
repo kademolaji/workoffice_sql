@@ -12,6 +12,7 @@ namespace WorkOffice.Contracts.ServicesContracts
         Task<ApiResponse<CreateResponse>> CreateAppType(AppTypeViewModels model);
         Task<ApiResponse<CreateResponse>> UpdateAppType(AppTypeViewModels model);
         //Task<ApiResponse<GetResponse<List<AppTypeViewModels>>>> GetList(int pageNumber = 1, int pageSize = 10);
+        //Task<ApiResponse<SearchReply<AppTypeViewModels>>> GetList(SearchCall<SearchParameter> options);
         Task<ApiResponse<SearchReply<AppTypeViewModels>>> GetList(SearchCall<SearchParameter> options);
         Task<ApiResponse<GetResponse<AppTypeViewModels>>> Get(long appTypeId);
         Task<ApiResponse<DeleteReply>> Delete(long appTypeId);

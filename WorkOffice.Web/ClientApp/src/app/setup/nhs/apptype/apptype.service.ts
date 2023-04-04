@@ -36,9 +36,9 @@ export class AppTypeService extends UnsubscribeOnDestroyAdapter {
       );
   }
 
-  getAppTypeById(id: string) {
+  getAppTypeById(id: number) {
     return this.httpClient.get<GetResponse<AppTypeModel>>(
-      `api/AppType/Get?AppTypeId=${id}`
+      `api/AppType/Get?appTypeId=${id}`
     );
   }
 
@@ -52,12 +52,12 @@ export class AppTypeService extends UnsubscribeOnDestroyAdapter {
   updateAppType(data: AppTypeModel): void {
     this.dialogData = data;
   }
-  deleteAppType(id: string) {
+  deleteAppType(id: number) {
     return this.httpClient.delete<DeleteReply>(
-      `api/AppType/Delete?AppTypeId=${id}`
+      `api/AppType/Delete?appTypeId=${id}`
     );
   }
-  deleteMultipleAppType(targetIds: string[]) {
+  deleteMultipleAppType(targetIds: number[]) {
     return this.httpClient.post<DeleteReply>(
       `api/AppType/MultipleDelete`, {targetIds: targetIds}
     );

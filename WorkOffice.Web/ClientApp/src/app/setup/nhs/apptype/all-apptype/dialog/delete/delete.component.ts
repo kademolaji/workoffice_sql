@@ -22,6 +22,6 @@ export class DeleteAppTypeDialogComponent {
     this.dialogRef.close();
   }
   confirmDelete(): void {
-    this.AppTypeService.deleteAppType(this.data.AppTypeId).subscribe();
+    this.AppTypeService.deleteAppType(this.data.appTypeId).subscribe();
   }
 }

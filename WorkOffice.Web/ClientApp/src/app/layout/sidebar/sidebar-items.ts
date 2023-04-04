@@ -214,7 +214,7 @@ export const ROUTES: RouteInfo[] = [
     role: ['Admin'],
     submenu: [
       {
-        path: '/admin/activity/all-activity',
+        path: '/setup/nhsactivity/all-nhsactivity',
         title: 'Activity',
         iconType: '',
         icon: '',
@@ -227,7 +227,7 @@ export const ROUTES: RouteInfo[] = [
       },
       {
         path: '/setup/apptype/all-apptype',
-        title: 'AppType',
+        title: 'Appointment Type',
         iconType: '',
         icon: '',
         class: 'ml-menu2',
@@ -238,7 +238,7 @@ export const ROUTES: RouteInfo[] = [
         submenu: [],
       },
       {
-            path: '/admin/consultant/all-consultant',
+            path: '/setup/consultant/all-consultant',
             title: 'Consultant',
             iconType: '',
             icon: '',
@@ -250,8 +250,77 @@ export const ROUTES: RouteInfo[] = [
             submenu: [],
       },
       {
-            path: '/admin/hospital/all-hospital',
+            path: '/setup/hospital/all-hospital',
             title: 'Hospital',
+            iconType: '',
+            icon: '',
+            class: 'ml-menu2',
+            groupTitle: false,
+            badge: '',
+            badgeClass: '',
+            role: [''],
+            submenu: [],
+      }
+      ,
+      {
+            path: '/setup/pathwaystatus/all-pathwaystatus',
+            title: 'Pathway Status',
+            iconType: '',
+            icon: '',
+            class: 'ml-menu2',
+            groupTitle: false,
+            badge: '',
+            badgeClass: '',
+            role: [''],
+            submenu: [],
+      }
+
+      ,
+      {
+            path: '/setup/rtt/all-rtt',
+            title: 'RTT',
+            iconType: '',
+            icon: '',
+            class: 'ml-menu2',
+            groupTitle: false,
+            badge: '',
+            badgeClass: '',
+            role: [''],
+            submenu: [],
+      }
+
+      ,
+      {
+            path: '/setup/specialty/all-specialty',
+            title: 'Specialty',
+            iconType: '',
+            icon: '',
+            class: 'ml-menu2',
+            groupTitle: false,
+            badge: '',
+            badgeClass: '',
+            role: [''],
+            submenu: [],
+      }
+
+      ,
+      {
+            path: '/setup/waitingtype/all-waitingtype',
+            title: 'Waiting Type',
+            iconType: '',
+            icon: '',
+            class: 'ml-menu2',
+            groupTitle: false,
+            badge: '',
+            badgeClass: '',
+            role: [''],
+            submenu: [],
+      }
+
+      ,
+      {
+            path: '/setup/ward/all-ward',
+            title: 'Ward',
             iconType: '',
             icon: '',
             class: 'ml-menu2',
