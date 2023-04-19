@@ -1,6 +1,6 @@
 
 export interface AppTypeModel {
-  AppTypeId: string;
+  appTypeId: number;
   code: string;
   name: string;
 }

@@ -16,6 +16,7 @@ namespace WorkOffice.Contracts.Mappings
                 Level = entity.Level,
                 ClientId = entity.ClientId
             };
+
         }
 
         public static T ToModel<T>(this StructureDefinitionModel entity) where T : StructureDefinition, new()

@@ -97,12 +97,12 @@ export class AllAppTypeComponent
     this.router.navigate(['setup', 'apptype', 'add-apptype']);
   }
 
-  editCall(row: { AppTypeId: string }) {
+  editCall(row: { appTypeId: number }) {
     this.router.navigate([
       'setup',
       'apptype',
       'edit-apptype',
-      row.AppTypeId,
+      row.appTypeId,
     ]);
   }
 
@@ -149,7 +149,7 @@ export class AllAppTypeComponent
   removeSelectedRows() {
     const totalSelect = this.selection.selected.length;
     const targetIds = this.selection.selected.map(
-      (data) => data.AppTypeId
+      (data) => data.appTypeId
     );
     this.subs.sink = this.AppTypeService
       .deleteMultipleAppType(targetIds)

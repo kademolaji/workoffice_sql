@@ -11,7 +11,8 @@ namespace WorkOffice.Contracts.ServicesContracts
     {
         Task<ApiResponse<CreateResponse>> CreateRTT(RTTViewModels model);
         Task<ApiResponse<CreateResponse>> UpdateRTT(RTTViewModels model);
-        Task<ApiResponse<GetResponse<List<RTTViewModels>>>> GetList(int pageNumber = 1, int pageSize = 10);
+        //Task<ApiResponse<GetResponse<List<RTTViewModels>>>> GetList(int pageNumber = 1, int pageSize = 10);
+        Task<ApiResponse<SearchReply<RTTViewModels>>> GetList(SearchCall<SearchParameter> options);
         Task<ApiResponse<GetResponse<RTTViewModels>>> Get(long rttId);
         Task<ApiResponse<DeleteReply>> Delete(long rttId);
         Task<ApiResponse<DeleteReply>> MultipleDelete(MultipleDeleteModel model);

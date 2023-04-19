@@ -24,7 +24,7 @@ namespace WorkOffice.Contracts.Mappings
         {
             return new T
             {
-                AppTypeId = entity.AppTypeId,
+                //AppTypeId = entity.AppTypeId,
                 Code = entity.Code,
                 Name = entity.Name,
  

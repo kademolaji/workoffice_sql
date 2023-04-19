@@ -11,7 +11,8 @@ namespace WorkOffice.Contracts.ServicesContracts
     {
         Task<ApiResponse<CreateResponse>> CreateSpecialty(SpecialtyViewModels model);
         Task<ApiResponse<CreateResponse>> UpdateSpecialty(SpecialtyViewModels model);
-        Task<ApiResponse<GetResponse<List<SpecialtyViewModels>>>> GetList(int pageNumber = 1, int pageSize = 10);
+        //Task<ApiResponse<GetResponse<List<SpecialtyViewModels>>>> GetList(int pageNumber = 1, int pageSize = 10);
+        Task<ApiResponse<SearchReply<SpecialtyViewModels>>> GetList(SearchCall<SearchParameter> options);
         Task<ApiResponse<GetResponse<SpecialtyViewModels>>> Get(long specialtyId);
         Task<ApiResponse<DeleteReply>> Delete(long specialtyId);
         Task<ApiResponse<DeleteReply>> MultipleDelete(MultipleDeleteModel model);

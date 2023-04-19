@@ -30,6 +30,12 @@ namespace WorkOffice.Services
         {
             try
             {
+
+                if (model.AppTypeId > 0)
+                {
+                    return await UpdateAppType(model);
+                }
+
                 if (string.IsNullOrEmpty(model.Code))
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse { Status = false, Message = "AppType Code is required." }, IsSuccess = false };
@@ -77,6 +83,7 @@ namespace WorkOffice.Services
                     Status = true,
                     Message = "AppType created successfully"
                 };
+
 
                 apiResponse.StatusCode = System.Net.HttpStatusCode.OK;
                 apiResponse.IsSuccess = true;
