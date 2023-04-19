@@ -47,6 +47,7 @@ namespace WorkOffice.Domain.Helpers
         public DbSet<Specialty> Specialties { get; set; }
         public DbSet<WaitingType> WaitingTypes { get; set; }
         public DbSet<Ward> Wards { get; set; }
+        public DbSet<Department> Departments { get; set; }
 
         //NHS
         public DbSet<NHS_Appointment> NHS_Appointments { get; set; }

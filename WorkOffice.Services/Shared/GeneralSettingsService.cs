@@ -185,5 +185,370 @@ namespace WorkOffice.Services
                 return new ApiResponse<GetResponse<List<GeneralSettingsModel>>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new GetResponse<List<GeneralSettingsModel>>() { Status = false, Message = $"Error encountered {ex.Message}" }, IsSuccess = false };
             }
         }
+
+  
+
+public async Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetNHSActivity()
+        {
+            try
+            {
+
+                var apiResponse = new ApiResponse<GetResponse<List<GeneralSettingsModel>>>();
+
+                var result = await (from a in context.NHSActivities
+                                    where a.IsDeleted == false
+                                    select new GeneralSettingsModel
+                                    {
+                                        Label = a.Name,
+                                        Value = a.NHSActivityId.ToString()
+                                    }).ToListAsync();
+
+                var response = new GetResponse<List<GeneralSettingsModel>>()
+                {
+                    Status = true,
+                    Entity = result,
+                    Message = ""
+                };
+
+                apiResponse.StatusCode = System.Net.HttpStatusCode.OK;
+                apiResponse.IsSuccess = true;
+                apiResponse.ResponseType = response;
+
+                return apiResponse;
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<GetResponse<List<GeneralSettingsModel>>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new GetResponse<List<GeneralSettingsModel>>() { Status = false, Message = $"Error encountered {ex.Message}" }, IsSuccess = false };
+            }
+        }
+        public async Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetAppType()
+        {
+            try
+            {
+
+                var apiResponse = new ApiResponse<GetResponse<List<GeneralSettingsModel>>>();
+
+                var result = await (from a in context.AppTypes
+                                    where a.IsDeleted == false
+                                    select new GeneralSettingsModel
+                                    {
+                                        Label = a.Name,
+                                        Value = a.AppTypeId.ToString()
+                                    }).ToListAsync();
+
+                var response = new GetResponse<List<GeneralSettingsModel>>()
+                {
+                    Status = true,
+                    Entity = result,
+                    Message = ""
+                };
+
+                apiResponse.StatusCode = System.Net.HttpStatusCode.OK;
+                apiResponse.IsSuccess = true;
+                apiResponse.ResponseType = response;
+
+                return apiResponse;
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<GetResponse<List<GeneralSettingsModel>>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new GetResponse<List<GeneralSettingsModel>>() { Status = false, Message = $"Error encountered {ex.Message}" }, IsSuccess = false };
+            }
+        }
+        public async Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetConsultant()
+        {
+            try
+            {
+
+                var apiResponse = new ApiResponse<GetResponse<List<GeneralSettingsModel>>>();
+
+                var result = await (from a in context.Consultants
+                                    where a.IsDeleted == false
+                                    select new GeneralSettingsModel
+                                    {
+                                        Label = a.Name,
+                                        Value = a.ConsultantId.ToString()
+                                    }).ToListAsync();
+
+                var response = new GetResponse<List<GeneralSettingsModel>>()
+                {
+                    Status = true,
+                    Entity = result,
+                    Message = ""
+                };
+
+                apiResponse.StatusCode = System.Net.HttpStatusCode.OK;
+                apiResponse.IsSuccess = true;
+                apiResponse.ResponseType = response;
+
+                return apiResponse;
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<GetResponse<List<GeneralSettingsModel>>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new GetResponse<List<GeneralSettingsModel>>() { Status = false, Message = $"Error encountered {ex.Message}" }, IsSuccess = false };
+            }
+        }
+        public async Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetHospital()
+        {
+            try
+            {
+
+                var apiResponse = new ApiResponse<GetResponse<List<GeneralSettingsModel>>>();
+
+                var result = await (from a in context.Hospitals
+                                    where a.IsDeleted == false
+                                    select new GeneralSettingsModel
+                                    {
+                                        Label = a.Name,
+                                        Value = a.HospitalId.ToString()
+                                    }).ToListAsync();
+
+                var response = new GetResponse<List<GeneralSettingsModel>>()
+                {
+                    Status = true,
+                    Entity = result,
+                    Message = ""
+                };
+
+                apiResponse.StatusCode = System.Net.HttpStatusCode.OK;
+                apiResponse.IsSuccess = true;
+                apiResponse.ResponseType = response;
+
+                return apiResponse;
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<GetResponse<List<GeneralSettingsModel>>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new GetResponse<List<GeneralSettingsModel>>() { Status = false, Message = $"Error encountered {ex.Message}" }, IsSuccess = false };
+            }
+        }
+        public async Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetPathwayStatus()
+        {
+            try
+            {
+
+                var apiResponse = new ApiResponse<GetResponse<List<GeneralSettingsModel>>>();
+
+                var result = await (from a in context.PathwayStatuses
+                                    where a.IsDeleted == false
+                                    select new GeneralSettingsModel
+                                    {
+                                        Label = a.Name,
+                                        Value = a.PathwayStatusId.ToString()
+                                    }).ToListAsync();
+
+                var response = new GetResponse<List<GeneralSettingsModel>>()
+                {
+                    Status = true,
+                    Entity = result,
+                    Message = ""
+                };
+
+                apiResponse.StatusCode = System.Net.HttpStatusCode.OK;
+                apiResponse.IsSuccess = true;
+                apiResponse.ResponseType = response;
+
+                return apiResponse;
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<GetResponse<List<GeneralSettingsModel>>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new GetResponse<List<GeneralSettingsModel>>() { Status = false, Message = $"Error encountered {ex.Message}" }, IsSuccess = false };
+            }
+        }
+        public async Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetRTT()
+        {
+            try
+            {
+
+                var apiResponse = new ApiResponse<GetResponse<List<GeneralSettingsModel>>>();
+
+                var result = await (from a in context.RTTs
+                                    where a.IsDeleted == false
+                                    select new GeneralSettingsModel
+                                    {
+                                        Label = a.Name,
+                                        Value = a.RTTId.ToString()
+                                    }).ToListAsync();
+
+                var response = new GetResponse<List<GeneralSettingsModel>>()
+                {
+                    Status = true,
+                    Entity = result,
+                    Message = ""
+                };
+
+                apiResponse.StatusCode = System.Net.HttpStatusCode.OK;
+                apiResponse.IsSuccess = true;
+                apiResponse.ResponseType = response;
+
+                return apiResponse;
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<GetResponse<List<GeneralSettingsModel>>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new GetResponse<List<GeneralSettingsModel>>() { Status = false, Message = $"Error encountered {ex.Message}" }, IsSuccess = false };
+            }
+        }
+        public async Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetSpecialty()
+        {
+            try
+            {
+
+                var apiResponse = new ApiResponse<GetResponse<List<GeneralSettingsModel>>>();
+
+                var result = await (from a in context.Specialties
+                                    where a.IsDeleted == false
+                                    select new GeneralSettingsModel
+                                    {
+                                        Label = a.Name,
+                                        Value = a.SpecialtyId.ToString()
+                                    }).ToListAsync();
+
+                var response = new GetResponse<List<GeneralSettingsModel>>()
+                {
+                    Status = true,
+                    Entity = result,
+                    Message = ""
+                };
+
+                apiResponse.StatusCode = System.Net.HttpStatusCode.OK;
+                apiResponse.IsSuccess = true;
+                apiResponse.ResponseType = response;
+
+                return apiResponse;
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<GetResponse<List<GeneralSettingsModel>>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new GetResponse<List<GeneralSettingsModel>>() { Status = false, Message = $"Error encountered {ex.Message}" }, IsSuccess = false };
+            }
+        }
+        public async Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetWaitingType()
+        {
+            try
+            {
+
+                var apiResponse = new ApiResponse<GetResponse<List<GeneralSettingsModel>>>();
+
+                var result = await (from a in context.WaitingTypes
+                                    where a.IsDeleted == false
+                                    select new GeneralSettingsModel
+                                    {
+                                        Label = a.Name,
+                                        Value = a.WaitingTypeId.ToString()
+                                    }).ToListAsync();
+
+                var response = new GetResponse<List<GeneralSettingsModel>>()
+                {
+                    Status = true,
+                    Entity = result,
+                    Message = ""
+                };
+
+                apiResponse.StatusCode = System.Net.HttpStatusCode.OK;
+                apiResponse.IsSuccess = true;
+                apiResponse.ResponseType = response;
+
+                return apiResponse;
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<GetResponse<List<GeneralSettingsModel>>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new GetResponse<List<GeneralSettingsModel>>() { Status = false, Message = $"Error encountered {ex.Message}" }, IsSuccess = false };
+            }
+        }
+        public async Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetWard()
+        {
+            try
+            {
+
+                var apiResponse = new ApiResponse<GetResponse<List<GeneralSettingsModel>>>();
+
+                var result = await (from a in context.Wards
+                                    where a.IsDeleted == false
+                                    select new GeneralSettingsModel
+                                    {
+                                        Label = a.Name,
+                                        Value = a.WardId.ToString()
+                                    }).ToListAsync();
+
+                var response = new GetResponse<List<GeneralSettingsModel>>()
+                {
+                    Status = true,
+                    Entity = result,
+                    Message = ""
+                };
+
+                apiResponse.StatusCode = System.Net.HttpStatusCode.OK;
+                apiResponse.IsSuccess = true;
+                apiResponse.ResponseType = response;
+
+                return apiResponse;
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<GetResponse<List<GeneralSettingsModel>>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new GetResponse<List<GeneralSettingsModel>>() { Status = false, Message = $"Error encountered {ex.Message}" }, IsSuccess = false };
+            }
+        }
+        public async Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetPatientList()
+        {
+            try
+            {
+
+                var apiResponse = new ApiResponse<GetResponse<List<GeneralSettingsModel>>>();
+
+                var result = await (from a in context.NHS_Patients
+                                    select new GeneralSettingsModel
+                                    {
+                                        Label = a.DistrictNumber,
+                                        Value = a.PatientId.ToString()
+                                    }).ToListAsync();
+
+                var response = new GetResponse<List<GeneralSettingsModel>>()
+                {
+                    Status = true,
+                    Entity = result,
+                    Message = ""
+                };
+
+                apiResponse.StatusCode = System.Net.HttpStatusCode.OK;
+                apiResponse.IsSuccess = true;
+                apiResponse.ResponseType = response;
+
+                return apiResponse;
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<GetResponse<List<GeneralSettingsModel>>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new GetResponse<List<GeneralSettingsModel>>() { Status = false, Message = $"Error encountered {ex.Message}" }, IsSuccess = false };
+            }
+        }
+        public async Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetDepartmentList()
+        {
+            try
+            {
+
+                var apiResponse = new ApiResponse<GetResponse<List<GeneralSettingsModel>>>();
+
+                var result = await (from a in context.Departments
+                                    select new GeneralSettingsModel
+                                    {
+                                        Label = a.Name,
+                                        Value = a.DepartmentId.ToString()
+                                    }).ToListAsync();
+
+                var response = new GetResponse<List<GeneralSettingsModel>>()
+                {
+                    Status = true,
+                    Entity = result,
+                    Message = ""
+                };
+
+                apiResponse.StatusCode = System.Net.HttpStatusCode.OK;
+                apiResponse.IsSuccess = true;
+                apiResponse.ResponseType = response;
+
+                return apiResponse;
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<GetResponse<List<GeneralSettingsModel>>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new GetResponse<List<GeneralSettingsModel>>() { Status = false, Message = $"Error encountered {ex.Message}" }, IsSuccess = false };
+            }
+        }
+     
     }
 }

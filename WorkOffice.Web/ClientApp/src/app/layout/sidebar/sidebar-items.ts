@@ -224,7 +224,7 @@ export const ROUTES: RouteInfo[] = [
         activity: 'view appointment',
         submenu: [
           {
-            path: '/nhs/all-patient',
+            path: '/nhs/all-appointment/PartialBooked',
             title: 'Partial Booked',
             iconType: '',
             icon: '',
@@ -236,7 +236,7 @@ export const ROUTES: RouteInfo[] = [
             submenu: [],
           },
           {
-            path: '/nhs/all-patient',
+            path: '/nhs/all-appointment/BookedAppointment',
             title: 'View Booked Appointment',
             iconType: '',
             icon: '',
@@ -248,7 +248,7 @@ export const ROUTES: RouteInfo[] = [
             submenu: [],
           },
           {
-            path: '/nhs/all-cancelled-appointment',
+            path: '/nhs/all-appointment/CancelledAppointment',
             title: 'Cancelled Appointment',
             iconType: '',
             icon: '',

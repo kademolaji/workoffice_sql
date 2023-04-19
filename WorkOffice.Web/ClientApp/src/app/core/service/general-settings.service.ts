@@ -39,5 +39,59 @@ export class GeneralSettingsService {
       `api/settings/GetCompanyList`
     );
   }
-
+  getNHSActivity() {
+    return this.httpClient.get<GetResponse<GeneralSettingsModel[]>>(
+      `api/settings/GetNHSActivity`
+    );
+  }
+  getAppType() {
+    return this.httpClient.get<GetResponse<GeneralSettingsModel[]>>(
+      `api/settings/GetAppType`
+    );
+  }
+  getConsultant() {
+    return this.httpClient.get<GetResponse<GeneralSettingsModel[]>>(
+      `api/settings/GetConsultant`
+    );
+  }
+  getHospital() {
+    return this.httpClient.get<GetResponse<GeneralSettingsModel[]>>(
+      `api/settings/GetHospital`
+    );
+  }
+  getPathwayStatus() {
+    return this.httpClient.get<GetResponse<GeneralSettingsModel[]>>(
+      `api/settings/GetPathwayStatus`
+    );
+  }
+  getRTT() {
+    return this.httpClient.get<GetResponse<GeneralSettingsModel[]>>(
+      `api/settings/GetRTT`
+    );
+  }
+  getSpecialty() {
+    return this.httpClient.get<GetResponse<GeneralSettingsModel[]>>(
+      `api/settings/GetSpecialty`
+    );
+  }
+  getWaitingType() {
+    return this.httpClient.get<GetResponse<GeneralSettingsModel[]>>(
+      `api/settings/GetWaitingType`
+    );
+  }
+  getWard() {
+    return this.httpClient.get<GetResponse<GeneralSettingsModel[]>>(
+      `api/settings/GetWard`
+    );
+  }
+  getPatientList() {
+    return this.httpClient.get<GetResponse<GeneralSettingsModel[]>>(
+      `api/settings/GetPatientList`
+    );
+  }
+  getDepartmentList() {
+    return this.httpClient.get<GetResponse<GeneralSettingsModel[]>>(
+      `api/settings/GetDepartmentList`
+    );
+  }
 }

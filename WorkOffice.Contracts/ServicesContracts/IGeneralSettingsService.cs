@@ -13,6 +13,17 @@ namespace WorkOffice.Contracts.ServicesContracts
         Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetCompanyStructureList(long clientId);
         Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetUserRoleList(long clientId);
         Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetCompanyList(long clientId);
+        Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetNHSActivity();
+        Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetAppType();
+        Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetConsultant();
+        Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetHospital();
+        Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetPathwayStatus();
+        Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetRTT();
+        Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetSpecialty();
+        Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetWaitingType();
+        Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetWard();
+        Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetPatientList();
+        Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetDepartmentList();
 
     }
 }

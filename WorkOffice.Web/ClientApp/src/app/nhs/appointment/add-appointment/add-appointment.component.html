@@ -19,7 +19,11 @@
                 <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
                   <mat-form-field class="example-full-width mb-3" appearance="outline">
                     <mat-label>Patient District Number</mat-label>
-                    <input matInput formControlName="patientId" required>
+                    <mat-select formControlName="patientId" required>
+                      <mat-option  *ngFor="let patient of patientList" [value]="patient.value">
+                        {{patient.label}}
+                      </mat-option>
+                    </mat-select>
                     <mat-error *ngIf="appointmentForm.get('patientId')?.hasError('required')">
                       Patient District Number is required
                     </mat-error>
@@ -27,8 +31,12 @@
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
                   <mat-form-field class="example-full-width mb-3" appearance="outline">
-                    <mat-label>Pathway</mat-label>
-                    <input matInput formControlName="wardId">
+                    <mat-label>Ward</mat-label>
+                    <mat-select formControlName="wardId" required>
+                      <mat-option  *ngFor="let ward of wardList" [value]="ward.value">
+                        {{ward.label}}
+                      </mat-option>
+                    </mat-select>
                     <mat-error *ngIf="appointmentForm.get('wardId')?.hasError('required')">
                       Pathway is required
                     </mat-error>
@@ -39,7 +47,11 @@
                 <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
                   <mat-form-field class="example-full-width mb-3" appearance="outline">
                     <mat-label>Status</mat-label>
-                    <input matInput formControlName="statusId" required>
+                    <mat-select formControlName="statusId" required>
+                      <mat-option  *ngFor="let pathwayStatus of pathwayStatusList" [value]="pathwayStatus.value">
+                        {{pathwayStatus.label}}
+                      </mat-option>
+                    </mat-select>
                     <mat-error *ngIf="appointmentForm.get('statusId')?.hasError('required')">
                       Status is required
                     </mat-error>
@@ -48,7 +60,11 @@
                 <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
                   <mat-form-field class="example-full-width mb-3" appearance="outline">
                     <mat-label>Speciality</mat-label>
-                    <input matInput formControlName="specialityId">
+                    <mat-select formControlName="specialityId" required>
+                      <mat-option  *ngFor="let speciality of specialityList" [value]="speciality.value">
+                        {{speciality.label}}
+                      </mat-option>
+                    </mat-select>
                     <mat-error *ngIf="appointmentForm.get('specialityId')?.hasError('required')">
                       Speciality is required
                     </mat-error>
@@ -92,7 +108,11 @@
                 <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
                   <mat-form-field class="example-full-width mb-3" appearance="outline">
                     <mat-label>Hospital</mat-label>
-                    <input matInput formControlName="hospitalId">
+                    <mat-select formControlName="hospitalId" required>
+                      <mat-option  *ngFor="let hospital of hospitalList" [value]="hospital.value">
+                        {{hospital.label}}
+                      </mat-option>
+                    </mat-select>
                     <mat-error *ngIf="appointmentForm.get('hospitalId')?.hasError('required')">
                       Hospital is required
                     </mat-error>
@@ -103,7 +123,11 @@
                 <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
                   <mat-form-field class="example-full-width mb-3" appearance="outline">
                     <mat-label>Department</mat-label>
-                    <input matInput formControlName="departmentId" required>
+                    <mat-select formControlName="departmentId" required>
+                      <mat-option  *ngFor="let department of departmentList" [value]="department.value">
+                        {{department.label}}
+                      </mat-option>
+                    </mat-select>
                     <mat-error *ngIf="appointmentForm.get('departmentId')?.hasError('required')">
                       Department is required
                     </mat-error>
@@ -112,7 +136,11 @@
                 <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
                   <mat-form-field class="example-full-width mb-3" appearance="outline">
                     <mat-label>Consultant</mat-label>
-                    <input matInput formControlName="consultantId">
+                    <mat-select formControlName="consultantId" required>
+                      <mat-option  *ngFor="let consultant of consultantList" [value]="consultant.value">
+                        {{consultant.label}}
+                      </mat-option>
+                    </mat-select>
                     <mat-error *ngIf="appointmentForm.get('consultantId')?.hasError('required')">
                       Consultant is required
                     </mat-error>
@@ -123,7 +151,11 @@
                 <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
                   <mat-form-field class="example-full-width mb-3" appearance="outline">
                     <mat-label>Appointment Type</mat-label>
-                    <input matInput formControlName="appTypeId" required>
+                    <mat-select formControlName="appTypeId" required>
+                      <mat-option  *ngFor="let appType of appTypeList" [value]="appType.value">
+                        {{appType.label}}
+                      </mat-option>
+                    </mat-select>
                     <mat-error *ngIf="appointmentForm.get('appTypeId')?.hasError('required')">
                       Appointment Type is required
                     </mat-error>

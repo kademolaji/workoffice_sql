@@ -173,6 +173,67 @@
              <response code="404">If object of Appointments is null</response> 
              <response code="400">If an error occur or invalid request payload</response> 
         </member>
+        <member name="M:WorkOffice.Web.Controllers.NHS.PatientDocumentController.Create(WorkOffice.Web.Dtos.PatientDocumentDto)">
+             <summary>
+             Create PatientDocument
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 POST /api/PatientDocument/Create
+                 {
+                   "revenueId": 10,
+                   "customerId": 210
+                     }
+            
+             </remarks>
+             <param name="model"></param>
+             <returns>Created success message </returns>
+             <response code="201">PatientDocument Created Successfully</response>
+             <response code="400">If an error occur or invalid request payload</response>
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.NHS.PatientDocumentController.GetList(WorkOffice.Contracts.ServicesContracts.SearchCall{WorkOffice.Contracts.ServicesContracts.SearchParameter})">
+             <summary>
+             Get list of PatientDocument
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="options"></param>
+             <returns>List of PatientDocument</returns>
+             <response code="200">Returns list of PatientDocument</response>
+             <response code="404">If list of PatientDocument is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.NHS.PatientDocumentController.Delete(System.Int64)">
+             <summary>
+             Delete PatientDocument
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="patientId"></param>
+             <returns>Object of PatientDocument</returns>
+             <response code="200">Returns object of PatientDocument</response>
+             <response code="404">If object of PatientDocument is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.NHS.PatientDocumentController.MultipleDelete(WorkOffice.Contracts.Models.MultipleDeleteModel)">
+             <summary>
+             Delete Multiple PatientDocument
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="model"></param>
+             <returns>Object of PatientDocument</returns>
+             <response code="200">Returns object of PatientDocument</response>
+             <response code="404">If object of PatientDocument is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
         <member name="M:WorkOffice.Web.Controllers.PatientInformationController.Create(WorkOffice.Contracts.Models.PatientInformationModel)">
              <summary>
              Create PatientInformation

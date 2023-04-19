@@ -5,6 +5,8 @@ import { MatSnackBar, MatSnackBarVerticalPosition, MatSnackBarHorizontalPosition
 import { ActivatedRoute, Router } from '@angular/router';
 import { UnsubscribeOnDestroyAdapter } from 'src/app/shared/UnsubscribeOnDestroyAdapter';
 import { WaitinglistModel } from '../watinglist.model';
+import { GeneralSettingsModel } from 'src/app/core/models/general-settings.model';
+import { GeneralSettingsService } from 'src/app/core/service/general-settings.service';
 
 @Component({
   selector: 'app-add-waitinglist',
@@ -21,12 +23,17 @@ loading = false;
 isAddMode = true;
 id = 0;
 
+specialityList: GeneralSettingsModel[] = [];
+waitingListStatusList: GeneralSettingsModel[] = [];
+patientList: GeneralSettingsModel[] = [];
+
 constructor(
   private fb: UntypedFormBuilder,
   private route: ActivatedRoute,
   private router: Router,
   private waitinglistService: WaitinglistService,
-  private snackBar: MatSnackBar
+  private snackBar: MatSnackBar,
+  private generalSettingsService: GeneralSettingsService
 ) {
   super();
 }
@@ -34,12 +41,12 @@ ngOnInit() {
   this.waitinglistForm = this.fb.group({
     waitTypeId: ['', [Validators.required]],
     specialityId:   ['', [Validators.required]],
-    tCIDate :   ['', [Validators.required]],
+    tciDate :   ['', [Validators.required]],
     waitinglistDate :   ['', [Validators.required]],
     waitinglistTime:   ['', [Validators.required]],
     condition :   ['', [Validators.required]],
     waitinglistStatus:   ['', [Validators.required]],
-    pathwayUniqueNumber:   ['', [Validators.required]],
+    pathwayUniqueNumber:   [''],
     patientId:  ['', [Validators.required]],
 
   });
@@ -52,7 +59,7 @@ ngOnInit() {
           this.waitinglistForm.setValue({
             waitTypeId: res.entity.waitTypeId,
             specialityId:   res.entity.specialityId,
-            tCIDate :   res.entity.tCIDate,
+            tciDate :   res.entity.tciDate,
             waitinglistDate :   res.entity.waitinglistDate,
             waitinglistTime:   res.entity.waitinglistTime,
             condition :   res.entity.condition,
@@ -63,6 +70,22 @@ ngOnInit() {
       },
     });
   }
+
+  this.subs.sink = this.generalSettingsService
+  .getSpecialty()
+  .subscribe((response) => {
+    this.specialityList = response.entity;
+  });
+this.subs.sink = this.generalSettingsService
+  .getWaitingType()
+  .subscribe((response) => {
+    this.waitingListStatusList = response.entity;
+  });
+this.subs.sink = this.generalSettingsService
+  .getPatientList()
+  .subscribe((response) => {
+    this.patientList = response.entity;
+  });
 }
 cancelForm() {
   this.router.navigate(['/nhs/all-waitinglist']);
@@ -85,7 +108,7 @@ onSubmit() {
       waitinglistId : this.id ? +this.id : 0,
       waitTypeId: this.waitinglistForm.value.waitTypeId,
       specialityId :this.waitinglistForm.value.specialityId,
-      tCIDate : this.waitinglistForm.value.tCIDate,
+      tciDate : this.waitinglistForm.value.tciDate,
       waitinglistDate : this.waitinglistForm.value.waitinglistDate,
       waitinglistTime :this.waitinglistForm.value.waitinglistTime,
       patientId : this.waitinglistForm.value.patientId,

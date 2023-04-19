@@ -3,7 +3,7 @@ export interface WaitinglistModel {
   waitinglistId : number;
   waitTypeId: number;
   specialityId : number;
-  tCIDate : string;
+  tciDate : string;
   waitinglistDate : string;
   waitinglistTime : string;
   patientId : number;

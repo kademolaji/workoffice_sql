@@ -13,7 +13,7 @@ import { AddPathwayComponent } from "./pathway/add-pathway/add-pathway.component
 
 const routes: Routes = [
   {
-    path: "all-appointment",
+    path: "all-appointment/:status",
     component: AllAppointmentComponent,
   },
   {

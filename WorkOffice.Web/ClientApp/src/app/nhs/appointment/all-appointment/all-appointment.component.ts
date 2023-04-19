@@ -6,7 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { Direction } from '@angular/cdk/bidi';
@@ -45,13 +45,16 @@ searchQuery = '';
 sortOrder = '';
 sortField = '';
 isTblLoading = false;
+status = '';
 
 constructor(
   public httpClient: HttpClient,
   public dialog: MatDialog,
   public appointmentService: AppointmentService,
   private snackBar: MatSnackBar,
-  private router: Router
+  private router: Router,
+  private route: ActivatedRoute,
+
 ) {
   super();
 }
@@ -61,6 +64,7 @@ paginator!: MatPaginator;
 sort!: MatSort;
 
 ngOnInit() {
+  this.status = this.route.snapshot.params['status'];
   this.loadData(this.searchQuery, this.sortField, this.sortOrder);
 }
 

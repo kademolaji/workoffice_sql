@@ -13,6 +13,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UnsubscribeOnDestroyAdapter } from 'src/app/shared/UnsubscribeOnDestroyAdapter';
 import { AppointmentService } from '../appointment.service';
 import { CreateAppointmentModel } from '../appointment.model';
+import { GeneralSettingsService } from 'src/app/core/service/general-settings.service';
+import { GeneralSettingsModel } from 'src/app/core/models/general-settings.model';
 
 @Component({
   selector: 'app-add-appointment',
@@ -29,54 +31,110 @@ export class AddAppointmentComponent
   isAddMode = true;
   id = 0;
 
+  departmentList: GeneralSettingsModel[] = [];
+  consultantList: GeneralSettingsModel[] = [];
+  appTypeList: GeneralSettingsModel[] = [];
+  hospitalList: GeneralSettingsModel[] = [];
+  specialityList: GeneralSettingsModel[] = [];
+  pathwayStatusList: GeneralSettingsModel[] = [];
+  patientList: GeneralSettingsModel[] = [];
+  wardList: GeneralSettingsModel[] = [];
+
   constructor(
     private fb: UntypedFormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private appointmentService: AppointmentService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private generalSettingsService: GeneralSettingsService
   ) {
     super();
   }
   ngOnInit() {
     this.appointmentForm = this.fb.group({
-      appTypeId:   ['', [Validators.required]],
-      statusId :  ['', [Validators.required]],
-      specialityId :  ['', [Validators.required]],
-       bookDate :  ['', [Validators.required]],
-      appDate :   ['', [Validators.required]],
-      appTime :  ['', [Validators.required]],
-      consultantId :  ['', [Validators.required]],
-      hospitalId :  ['', [Validators.required]],
-      wardId :  ['', [Validators.required]],
-      departmentId :   ['', [Validators.required]],
-      patientId :  ['', [Validators.required]],
-      comments :  ['', [Validators.required]],
+      appTypeId: ['', [Validators.required]],
+      statusId: ['', [Validators.required]],
+      specialityId: ['', [Validators.required]],
+      bookDate: ['', [Validators.required]],
+      appDate: ['', [Validators.required]],
+      appTime: ['', [Validators.required]],
+      consultantId: ['', [Validators.required]],
+      hospitalId: ['', [Validators.required]],
+      wardId: ['', [Validators.required]],
+      departmentId: ['', [Validators.required]],
+      patientId: ['', [Validators.required]],
+      comments: ['', [Validators.required]],
     });
     this.id = +this.route.snapshot.params['id'];
     this.isAddMode = !this.id;
     if (!this.isAddMode) {
-      this.subs.sink = this.appointmentService.getAppointmentById(this.id).subscribe({
-        next: (res) => {
-          if (res.status) {
-            this.appointmentForm.setValue({
-              appTypeId:  res.entity.appTypeId,
-              statusId :  res.entity.statusId,
-              specialityId :  res.entity.specialityId,
-               bookDate :  res.entity.bookDate,
-              appDate :  res.entity.appDate,
-              appTime :  res.entity.appTime,
-              consultantId :  res.entity.consultantId,
-              hospitalId :  res.entity.hospitalId,
-              wardId :  res.entity.wardId,
-              departmentId :  res.entity.departmentId,
-              patientId :  res.entity.patientId,
-              comments :  res.entity.comments
-            });
-          }
-        },
-      });
+      this.subs.sink = this.appointmentService
+        .getAppointmentById(this.id)
+        .subscribe({
+          next: (res) => {
+            if (res.status) {
+              this.appointmentForm.setValue({
+                appTypeId: res.entity.appTypeId,
+                statusId: res.entity.statusId,
+                specialityId: res.entity.specialityId,
+                bookDate: res.entity.bookDate,
+                appDate: res.entity.appDate,
+                appTime: res.entity.appTime,
+                consultantId: res.entity.consultantId,
+                hospitalId: res.entity.hospitalId,
+                wardId: res.entity.wardId,
+                departmentId: res.entity.departmentId,
+                patientId: res.entity.patientId,
+                comments: res.entity.comments,
+              });
+            }
+          },
+        });
     }
+
+    this.subs.sink = this.generalSettingsService
+      .getSpecialty()
+      .subscribe((response) => {
+        this.specialityList = response.entity;
+      });
+    this.subs.sink = this.generalSettingsService
+      .getConsultant()
+      .subscribe((response) => {
+        this.consultantList = response.entity;
+      });
+    this.subs.sink = this.generalSettingsService
+      .getAppType()
+      .subscribe((response) => {
+        this.appTypeList = response.entity;
+      });
+
+    this.subs.sink = this.generalSettingsService
+      .getHospital()
+      .subscribe((response) => {
+        this.hospitalList = response.entity;
+      });
+
+    this.subs.sink = this.generalSettingsService
+      .getPatientList()
+      .subscribe((response) => {
+        this.patientList = response.entity;
+      });
+
+    this.subs.sink = this.generalSettingsService
+      .getPathwayStatus()
+      .subscribe((response) => {
+        this.pathwayStatusList = response.entity;
+      });
+    this.subs.sink = this.generalSettingsService
+      .getDepartmentList()
+      .subscribe((response) => {
+        this.departmentList = response.entity;
+      });
+    this.subs.sink = this.generalSettingsService
+      .getWard()
+      .subscribe((response) => {
+        this.wardList = response.entity;
+      });
   }
   cancelForm() {
     this.router.navigate(['/nhs/all-appointment']);
@@ -98,47 +156,49 @@ export class AddAppointmentComponent
       const patient: CreateAppointmentModel = {
         appointmentId: this.id ? +this.id : 0,
         appTypeId: this.appointmentForm.value.appTypeId,
-        statusId : this.appointmentForm.value.statusId,
-        specialityId : this.appointmentForm.value.specialityId,
-         bookDate : this.appointmentForm.value.bookDate,
-        appDate : this.appointmentForm.value.appDate,
-        appTime : this.appointmentForm.value.appTime,
-        consultantId : this.appointmentForm.value.consultantId,
-        hospitalId : this.appointmentForm.value.hospitalId,
-        wardId : this.appointmentForm.value.wardId,
-        departmentId : this.appointmentForm.value.departmentId,
-        patientId : this.appointmentForm.value.patientId,
-        patientValidationId : 0,
-        comments : this.appointmentForm.value.comments,
-        appointmentStatus : "",
-        cancellationReason: ""
+        statusId: this.appointmentForm.value.statusId,
+        specialityId: this.appointmentForm.value.specialityId,
+        bookDate: this.appointmentForm.value.bookDate,
+        appDate: this.appointmentForm.value.appDate,
+        appTime: this.appointmentForm.value.appTime,
+        consultantId: this.appointmentForm.value.consultantId,
+        hospitalId: this.appointmentForm.value.hospitalId,
+        wardId: this.appointmentForm.value.wardId,
+        departmentId: this.appointmentForm.value.departmentId,
+        patientId: this.appointmentForm.value.patientId,
+        patientValidationId: 0,
+        comments: this.appointmentForm.value.comments,
+        appointmentStatus: '',
+        cancellationReason: '',
       };
-      this.subs.sink = this.appointmentService.addAppointment(patient).subscribe({
-        next: (res) => {
-          if (res.status) {
+      this.subs.sink = this.appointmentService
+        .addAppointment(patient)
+        .subscribe({
+          next: (res) => {
+            if (res.status) {
+              this.loading = false;
+              this.showNotification(
+                'snackbar-success',
+                res.message,
+                'top',
+                'right'
+              );
+              this.router.navigate(['/nhs/all-appointment']);
+            } else {
+              this.showNotification(
+                'snackbar-danger',
+                res.message,
+                'top',
+                'right'
+              );
+            }
+          },
+          error: (error) => {
+            this.showNotification('snackbar-danger', error, 'top', 'right');
+            this.submitted = false;
             this.loading = false;
-            this.showNotification(
-              'snackbar-success',
-              res.message,
-              'top',
-              'right'
-            );
-            this.router.navigate(['/nhs/all-appointment']);
-          } else {
-            this.showNotification(
-              'snackbar-danger',
-              res.message,
-              'top',
-              'right'
-            );
-          }
-        },
-        error: (error) => {
-          this.showNotification('snackbar-danger', error, 'top', 'right');
-          this.submitted = false;
-          this.loading = false;
-        },
-      });
+          },
+        });
     }
   }
 

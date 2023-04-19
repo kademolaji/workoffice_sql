@@ -135,5 +135,226 @@ namespace WorkOffice.Web.Controllers
                 return BadRequest($"Server Error {ex.Message}");
             }
         }
+        [HttpGet]
+        [Route("GetAppType")]
+        [ProducesResponseType(201, Type = typeof(CreateResponse))]
+        [ProducesResponseType(400, Type = typeof(CreateResponse))]
+        public async Task<IActionResult> GetAppType()
+        {
+            try
+            {
+                var apiResponse = await service.GetAppType();
+                if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    return BadRequest(apiResponse.ResponseType);
+                }
+                return Ok(apiResponse.ResponseType);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Server Error {ex.Message}");
+            }
+        }
+        [HttpGet]
+        [Route("GetNHSActivity")]
+        [ProducesResponseType(201, Type = typeof(CreateResponse))]
+        [ProducesResponseType(400, Type = typeof(CreateResponse))]
+        public async Task<IActionResult> GetNHSActivity()
+        {
+            try
+            {
+                var apiResponse = await service.GetNHSActivity();
+                if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    return BadRequest(apiResponse.ResponseType);
+                }
+                return Ok(apiResponse.ResponseType);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Server Error {ex.Message}");
+            }
+        }
+        [HttpGet]
+        [Route("GetConsultant")]
+        [ProducesResponseType(201, Type = typeof(CreateResponse))]
+        [ProducesResponseType(400, Type = typeof(CreateResponse))]
+        public async Task<IActionResult> GetConsultant()
+        {
+            try
+            {
+                var apiResponse = await service.GetConsultant();
+                if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    return BadRequest(apiResponse.ResponseType);
+                }
+                return Ok(apiResponse.ResponseType);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Server Error {ex.Message}");
+            }
+        }
+        [HttpGet]
+        [Route("GetHospital")]
+        [ProducesResponseType(201, Type = typeof(CreateResponse))]
+        [ProducesResponseType(400, Type = typeof(CreateResponse))]
+        public async Task<IActionResult> GetHospital()
+        {
+            try
+            {
+                var apiResponse = await service.GetHospital();
+                if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    return BadRequest(apiResponse.ResponseType);
+                }
+                return Ok(apiResponse.ResponseType);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Server Error {ex.Message}");
+            }
+        }
+        [HttpGet]
+        [Route("GetWaitingType")]
+        [ProducesResponseType(201, Type = typeof(CreateResponse))]
+        [ProducesResponseType(400, Type = typeof(CreateResponse))]
+        public async Task<IActionResult> GetWaitingType()
+        {
+            try
+            {
+                var apiResponse = await service.GetWaitingType();
+                if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    return BadRequest(apiResponse.ResponseType);
+                }
+                return Ok(apiResponse.ResponseType);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Server Error {ex.Message}");
+            }
+        }
+        [HttpGet]
+        [Route("GetPathwayStatus")]
+        [ProducesResponseType(201, Type = typeof(CreateResponse))]
+        [ProducesResponseType(400, Type = typeof(CreateResponse))]
+        public async Task<IActionResult> GetPathwayStatus()
+        {
+            try
+            {
+                var apiResponse = await service.GetPathwayStatus();
+                if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    return BadRequest(apiResponse.ResponseType);
+                }
+                return Ok(apiResponse.ResponseType);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Server Error {ex.Message}");
+            }
+        }
+        [HttpGet]
+        [Route("GetRTT")]
+        [ProducesResponseType(201, Type = typeof(CreateResponse))]
+        [ProducesResponseType(400, Type = typeof(CreateResponse))]
+        public async Task<IActionResult> GetRTT()
+        {
+            try
+            {
+                var apiResponse = await service.GetRTT();
+                if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    return BadRequest(apiResponse.ResponseType);
+                }
+                return Ok(apiResponse.ResponseType);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Server Error {ex.Message}");
+            }
+        }
+        [HttpGet]
+        [Route("GetWard")]
+        [ProducesResponseType(201, Type = typeof(CreateResponse))]
+        [ProducesResponseType(400, Type = typeof(CreateResponse))]
+        public async Task<IActionResult> GetWard()
+        {
+            try
+            {
+                var apiResponse = await service.GetWard();
+                if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    return BadRequest(apiResponse.ResponseType);
+                }
+                return Ok(apiResponse.ResponseType);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Server Error {ex.Message}");
+            }
+        }
+        [HttpGet]
+        [Route("GetSpecialty")]
+        [ProducesResponseType(201, Type = typeof(CreateResponse))]
+        [ProducesResponseType(400, Type = typeof(CreateResponse))]
+        public async Task<IActionResult> GetSpecialty()
+        {
+            try
+            {
+                var clientId = httpAccessorService.GetCurrentClientId();
+                var apiResponse = await service.GetSpecialty();
+                if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    return BadRequest(apiResponse.ResponseType);
+                }
+                return Ok(apiResponse.ResponseType);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Server Error {ex.Message}");
+            }
+        }
+        [HttpGet]
+        [Route("GetPatientList")]
+        [ProducesResponseType(201, Type = typeof(CreateResponse))]
+        [ProducesResponseType(400, Type = typeof(CreateResponse))]
+        public async Task<IActionResult> GetPatientList()
+        {
+            try
+            {
+                var apiResponse = await service.GetPatientList();
+                if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    return BadRequest(apiResponse.ResponseType);
+                }
+                return Ok(apiResponse.ResponseType);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Server Error {ex.Message}");
+            }
+        }
+        [HttpGet]
+        [Route("GetDepartmentList")]
+        [ProducesResponseType(201, Type = typeof(CreateResponse))]
+        [ProducesResponseType(400, Type = typeof(CreateResponse))]
+        public async Task<IActionResult> GetDepartmentList()
+        {
+            try
+            {
+                var apiResponse = await service.GetDepartmentList();
+                if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    return BadRequest(apiResponse.ResponseType);
+                }
+                return Ok(apiResponse.ResponseType);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Server Error {ex.Message}");
+            }
+        }
     }
 }
