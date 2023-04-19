@@ -14,7 +14,7 @@ namespace WorkOffice.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-   // [Authorize]
+    [Authorize]
     public class WardController : ControllerBase
     {
         private readonly IWardService service;

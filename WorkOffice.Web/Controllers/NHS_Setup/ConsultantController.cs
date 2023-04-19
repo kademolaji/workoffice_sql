@@ -8,13 +8,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using WorkOffice.Contracts.Models;
 using WorkOffice.Contracts.ServicesContracts;
+using WorkOffice.Web.Filters;
 using WorkOffice.Web.Utilities;
 
 namespace WorkOffice.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-   // [Authorize]
+    [ServiceFilter(typeof(LogUserActivity))]
+    [Authorize]
     public class ConsultantController : ControllerBase
     {
         private readonly IConsultantService service;

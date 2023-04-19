@@ -32,6 +32,11 @@ import { WaitinglistService } from './waitinglist/waitinglist.service';
 import { DeleteAppointmentDialogComponent } from './appointment/all-appointment/dialog/delete/delete.component';
 import { DeletePatientDialogComponent } from './patient/all-patient/dialog/delete/delete.component';
 import { DeleteWaitinglistDialogComponent } from './waitinglist/all-waitinglist/dialog/delete/delete.component';
+import { ValidateNowComponent } from './Validate/validate-now/validate-now.component';
+import { AddPathwayComponent } from './pathway/add-pathway/add-pathway.component';
+import { MatStepperModule } from '@angular/material/stepper';
+import { AddPatientDocumentDialogComponent } from './patient/add-patient/dialog/add-patient-document/add-patient-document.component';
+import { DeletePatientDocumentDialogComponent } from './patient/add-patient/dialog/delete/delete.component';
 
 @NgModule({
   imports: [
@@ -57,6 +62,7 @@ import { DeleteWaitinglistDialogComponent } from './waitinglist/all-waitinglist/
     NHSRoutingModule,
     ComponentsModule,
     SharedModule,
+    MatStepperModule,
   ],
   declarations: [
     AllAppointmentComponent,
@@ -66,10 +72,15 @@ import { DeleteWaitinglistDialogComponent } from './waitinglist/all-waitinglist/
     AllPatientComponent,
     AddPatientComponent,
     DeletePatientDialogComponent,
+    AddPatientDocumentDialogComponent,
+    DeletePatientDocumentDialogComponent,
 
     AllWaitinglistComponent,
     AddWaitinglistComponent,
     DeleteWaitinglistDialogComponent,
+
+    AddPathwayComponent,
+    ValidateNowComponent,
   ],
   providers: [PatientService, AppointmentService, WaitinglistService],
 })

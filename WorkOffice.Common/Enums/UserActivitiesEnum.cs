@@ -27,5 +27,10 @@ namespace WorkOffice.Common
         View_Waitinglist = 19,
         Add_Pathway = 20,
         Validate_now = 21,
+        Pathway_Status = 22,
+        RTT = 23,
+        Specialty = 24,
+        Waiting_Type = 25,
+        Ward = 26,
     }
 }

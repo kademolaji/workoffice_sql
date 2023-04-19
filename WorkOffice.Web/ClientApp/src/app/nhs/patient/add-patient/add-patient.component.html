@@ -14,147 +14,280 @@
             <h2 *ngIf="!isAddMode"><strong> Edit Patient Information</strong></h2>
           </div>
           <div class="body">
-            <form class="m-4" [formGroup]="patientInformationForm" (ngSubmit)="onSubmit()">
-              <div class="row">
-                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
-                  <mat-form-field class="example-full-width mb-3" appearance="outline">
-                    <mat-label>First Name</mat-label>
-                    <input matInput formControlName="firstName" required>
-                    <mat-error *ngIf="patientInformationForm.get('firstName')?.hasError('required')">
-                      First Name is required
-                    </mat-error>
-                  </mat-form-field>
-                </div>
-                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
-                  <mat-form-field class="example-full-width mb-3" appearance="outline">
-                    <mat-label>District Number</mat-label>
-                    <input matInput formControlName="districtNumber">
-                    <mat-error *ngIf="patientInformationForm.get('districtNumber')?.hasError('required')">
-                      District Number is required
-                    </mat-error>
-                  </mat-form-field>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
-                  <mat-form-field class="example-full-width mb-3" appearance="outline">
-                    <mat-label>LastName</mat-label>
-                    <input matInput formControlName="lastName" required>
-                    <mat-error *ngIf="patientInformationForm.get('lastName')?.hasError('required')">
-                      Last Name is required
-                    </mat-error>
-                  </mat-form-field>
-                </div>
-                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
-                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+            <mat-horizontal-stepper [linear]="isLinear" #stepper>
+              <mat-step [stepControl]="patientInformationForm!">
+                <form class="m-4" [formGroup]="patientInformationForm" (ngSubmit)="onSubmit()">
+                  <ng-template matStepLabel>Patient Information</ng-template>
+                  <div class="row">
+                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                      <mat-form-field class="example-full-width mb-3" appearance="outline">
+                        <mat-label>First Name</mat-label>
+                        <input matInput formControlName="firstName" required>
+                        <mat-error *ngIf="patientInformationForm.get('firstName')?.hasError('required')">
+                          First Name is required
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                      <mat-form-field class="example-full-width mb-3" appearance="outline">
+                        <mat-label>District Number</mat-label>
+                        <input matInput formControlName="districtNumber">
+                        <mat-error *ngIf="patientInformationForm.get('districtNumber')?.hasError('required')">
+                          District Number is required
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                      <mat-form-field class="example-full-width mb-3" appearance="outline">
+                        <mat-label>LastName</mat-label>
+                        <input matInput formControlName="lastName" required>
+                        <mat-error *ngIf="patientInformationForm.get('lastName')?.hasError('required')">
+                          Last Name is required
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                      <mat-form-field class="example-full-width mb-3" appearance="outline">
 
-                    <mat-label>Date of Birth</mat-label>
-                    <input matInput [matDatepicker]="picker1" formControlName="dOB" required>
-                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                    <mat-datepicker #picker1></mat-datepicker>
-                    <mat-error *ngIf="patientInformationForm.get('dOB')?.hasError('required')">
-                      Please select Date of birth
-                    </mat-error>
+                        <mat-label>Date of Birth</mat-label>
+                        <input matInput [matDatepicker]="picker1" formControlName="dob" required>
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                        <mat-error *ngIf="patientInformationForm.get('dob')?.hasError('required')">
+                          Please select Date of birth
+                        </mat-error>
 
-                  </mat-form-field>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
-                  <mat-form-field class="example-full-width mb-3" appearance="outline">
-                    <mat-label>Middle Name</mat-label>
-                    <input matInput formControlName="middleName" required>
-                    <mat-error *ngIf="patientInformationForm.get('middleName')?.hasError('required')">
-                      Middle Name is required
-                    </mat-error>
-                  </mat-form-field>
-                </div>
-                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
-                  <mat-form-field class="example-full-width mb-3" appearance="outline">
-                    <mat-label>Age</mat-label>
-                    <input matInput formControlName="age">
-                    <mat-error *ngIf="patientInformationForm.get('age')?.hasError('required')">
-                      Age is required
-                    </mat-error>
-                  </mat-form-field>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                      <mat-form-field class="example-full-width mb-3" appearance="outline">
+                        <mat-label>Middle Name</mat-label>
+                        <input matInput formControlName="middleName" required>
+                        <mat-error *ngIf="patientInformationForm.get('middleName')?.hasError('required')">
+                          Middle Name is required
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                      <mat-form-field class="example-full-width mb-3" appearance="outline">
+                        <mat-label>Age</mat-label>
+                        <input matInput formControlName="age">
+                        <mat-error *ngIf="patientInformationForm.get('age')?.hasError('required')">
+                          Age is required
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
 
-                  <mat-form-field class="example-full-width mb-3" appearance="outline">
-                    <mat-label>Gender</mat-label>
-                    <mat-select formControlName="sex" required>
-                      <mat-option [value]="'male'">
-                        Male
-                      </mat-option>
-                      <mat-option [value]="'female'">
-                        Female
-                      </mat-option>
-                    </mat-select>
-                    <mat-error *ngIf="patientInformationForm.get('sex')?.hasError('required')">
-                      Gender is required
-                    </mat-error>
-                  </mat-form-field>
+                      <mat-form-field class="example-full-width mb-3" appearance="outline">
+                        <mat-label>Gender</mat-label>
+                        <mat-select formControlName="sex" required>
+                          <mat-option [value]="'male'">
+                            Male
+                          </mat-option>
+                          <mat-option [value]="'female'">
+                            Female
+                          </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="patientInformationForm.get('sex')?.hasError('required')">
+                          Gender is required
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                      <mat-form-field class="example-full-width mb-3" appearance="outline">
+                        <mat-label>NHS Number</mat-label>
+                        <input matInput formControlName="nhsNumber">
+                        <mat-error *ngIf="patientInformationForm.get('nhsNumber')?.hasError('required')">
+                          NHS Number is required
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                      <mat-form-field class="example-full-width mb-3" appearance="outline">
+                        <mat-label>Phone Number</mat-label>
+                        <input matInput formControlName="phoneNo" required>
+                        <mat-error *ngIf="patientInformationForm.get('phoneNo')?.hasError('required')">
+                          Phone Number is required
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                      <mat-form-field class="example-full-width mb-3" appearance="outline">
+                        <mat-label>Email</mat-label>
+                        <input matInput formControlName="email">
+                        <mat-error *ngIf="patientInformationForm.get('email')?.hasError('required')">
+                          Email is required
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                      <mat-form-field class="example-full-width mb-3" appearance="outline">
+                        <mat-label>Address</mat-label>
+                        <input matInput formControlName="address" required>
+                        <mat-error *ngIf="patientInformationForm.get('address')?.hasError('required')">
+                          Address is required
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                      <mat-form-field class="example-full-width mb-3" appearance="outline">
+                        <mat-label>Postal Code</mat-label>
+                        <input matInput formControlName="postalCode">
+                        <mat-error *ngIf="patientInformationForm.get('postalCode')?.hasError('required')">
+                          Postal Code is required
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-3">
+                      <button class="btn-space" [class.auth-spinner]="loading" [disabled]="loading" [disabled]="!patientInformationForm.valid " mat-raised-button
+                        color="primary">Submit</button>
+                      <button type="button" (click)="cancelForm()" mat-raised-button color="warn">Cancel</button>
+                    </div>
+                  </div>
+                   <!-- <div>
+                    <button mat-raised-button matStepperNext color="primary"
+                      [disabled]="!HFormGroup1!.valid">Next</button>
+                  </div> -->
+                </form>
+
+              </mat-step>
+              <mat-step >
+                  <ng-template matStepLabel>Patient Document</ng-template>
+                    <div class="responsive_table">
+                      <div class="materialTableHeader">
+                        <div class="row">
+                          <div class="col-8">
+                            <ul class="header-buttons-left ms-0">
+                              <li class="tbl-title">
+                                <h2>Patient Document</h2>
+                              </li>
+                              <li class="tbl-search-box">
+                                <label for="search-input"><i class="material-icons search-icon">search</i></label>
+                                <input placeholder="Search" type="text"  class="browser-default search-field"
+                                  aria-label="Search box"  (keyup)="applyFilter($event)"  #input>
+                              </li>
+                              <li class="tbl-header-btn">
+                                <div class="m-l-10" matTooltip="ADD">
+                                  <button mat-mini-fab color="primary" (click)="addNew()">
+                                    <mat-icon class="col-white">add</mat-icon>
+                                  </button>
+                                </div>
+                              </li>
+                              <li class="tbl-header-btn">
+                                <div class="m-l-10" matTooltip="REFRESH">
+                                  <button mat-mini-fab color="primary" (click)="refresh()">
+                                    <mat-icon class="col-white">refresh</mat-icon>
+                                  </button>
+                                </div>
+                              </li>
+                              <li class="tbl-header-btn">
+                                <div class="m-l-10" [hidden]=!selection.hasValue() matTooltip="DELETE">
+                                  <button mat-mini-fab color="warn" (click)="removeSelectedRows()">
+                                    <mat-icon class="col-white">delete
+                                    </mat-icon>
+                                  </button>
+                                </div>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                      <mat-table #table [dataSource]="dataSource" matSort class="mat-cell" (matSortChange)="sortData($event)">
+                        <!-- Checkbox Column -->
+                        <ng-container matColumnDef="select">
+                          <mat-header-cell *matHeaderCellDef [ngClass]="'tbl-col-width-per-6'">
+                            <mat-checkbox (change)="$event ? masterToggle() : null"
+                              [checked]="selection.hasValue() && isAllSelected()"
+                              [indeterminate]="selection.hasValue() && !isAllSelected()" [ngClass]="'tbl-checkbox'">
+                            </mat-checkbox>
+                          </mat-header-cell>
+                          <mat-cell *matCellDef="let row" [ngClass]="'tbl-col-width-per-6'">
+                            <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+                              [checked]="selection.isSelected(row)" [ngClass]="'tbl-checkbox'">
+                            </mat-checkbox>
+                          </mat-cell>
+                        </ng-container>
+                        <!-- ID Column -->
+
+                        <ng-container matColumnDef="patientDocumentId">
+                          <mat-header-cell *matHeaderCellDef mat-sort-header>PatientDocumentId</mat-header-cell>
+                          <mat-cell *matCellDef="let row">{{row.patientDocumentId}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="documentName">
+                          <mat-header-cell *matHeaderCellDef mat-sort-header>Document Name</mat-header-cell>
+                          <mat-cell *matCellDef="let row"> {{row.documentName}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="consultantName">
+                          <mat-header-cell *matHeaderCellDef mat-sort-header>Consultant Name</mat-header-cell>
+                          <mat-cell *matCellDef="let row"> {{row.consultantName}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="clinicDate">
+                          <mat-header-cell *matHeaderCellDef mat-sort-header>Clinic Date</mat-header-cell>
+                          <mat-cell *matCellDef="let row"> {{row.clinicDate}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="speciality">
+                          <mat-header-cell *matHeaderCellDef mat-sort-header>Speciality</mat-header-cell>
+                          <mat-cell *matCellDef="let row"> {{row.speciality}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="dateUploaded">
+                          <mat-header-cell *matHeaderCellDef mat-sort-header>Date Uploaded</mat-header-cell>
+                          <mat-cell *matCellDef="let row"> {{row.dateUploaded}}</mat-cell>
+                        </ng-container>
+                        <!-- actions -->
+                        <ng-container matColumnDef="actions">
+                          <mat-header-cell class="pr-0" *matHeaderCellDef>Actions</mat-header-cell>
+                          <mat-cell *matCellDef="let row; let i=index;" class="pr-0">
+                            <button mat-icon-button (click)="$event.stopPropagation()" (click)="editCall(row)"
+                              class="tbl-action-btn">
+                              <app-feather-icons [icon]="'edit'" [class]="'tbl-fav-edit'"></app-feather-icons>
+                            </button>
+                            <button mat-icon-button (click)="$event.stopPropagation()" (click)="deleteItem(row)"
+                              class="tbl-action-btn">
+                              <app-feather-icons [icon]="'trash-2'" [class]="'tbl-fav-delete'"></app-feather-icons>
+                            </button>
+                          </mat-cell>
+                        </ng-container>
+                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="editCall(row)"
+                          [style.cursor]="'pointer'" matRipple>
+                        </mat-row>
+                      </mat-table>
+                      <!-- Loading spinner -->
+                      <div *ngIf="isTblLoading" class="tbl-spinner">
+                        <mat-progress-spinner color="primary" [diameter]="40" mode="indeterminate">
+                        </mat-progress-spinner>
+                      </div>
+                      <div *ngIf="!isTblLoading" class="no-results"
+                        [style.display]="dataSource.data.length === 0 ? '' : 'none'">
+                        No results
+                      </div>
+                      <mat-paginator #paginator [length]="totalRows" [pageIndex]="currentPage" [pageSize]="pageSize"
+                      [pageSizeOptions]="pageSizeOptions" (page)="pageChanged($event)" aria-label="Select page">
+                    </mat-paginator>
+                    </div>
+              </mat-step>
+              <mat-step>
+                <ng-template matStepLabel>Done</ng-template>
+                <p>You are now done.</p>
+                <div>
+                  <button mat-raised-button matStepperPrevious color="warn" class="msr-2">Back</button>
+                  <button mat-raised-button color="primary" (click)="stepper.reset()">Reset</button>
                 </div>
-                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
-                  <mat-form-field class="example-full-width mb-3" appearance="outline">
-                    <mat-label>NHS Number</mat-label>
-                    <input matInput formControlName="nHSNumber">
-                    <mat-error *ngIf="patientInformationForm.get('nHSNumber')?.hasError('required')">
-                      NHS Number is required
-                    </mat-error>
-                  </mat-form-field>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
-                  <mat-form-field class="example-full-width mb-3" appearance="outline">
-                    <mat-label>Phone Number</mat-label>
-                    <input matInput formControlName="phoneNo" required>
-                    <mat-error *ngIf="patientInformationForm.get('phoneNo')?.hasError('required')">
-                      Phone Number is required
-                    </mat-error>
-                  </mat-form-field>
-                </div>
-                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
-                  <mat-form-field class="example-full-width mb-3" appearance="outline">
-                    <mat-label>Email</mat-label>
-                    <input matInput formControlName="email">
-                    <mat-error *ngIf="patientInformationForm.get('email')?.hasError('required')">
-                      Email is required
-                    </mat-error>
-                  </mat-form-field>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
-                  <mat-form-field class="example-full-width mb-3" appearance="outline">
-                    <mat-label>Address</mat-label>
-                    <input matInput formControlName="address" required>
-                    <mat-error *ngIf="patientInformationForm.get('address')?.hasError('required')">
-                      Address is required
-                    </mat-error>
-                  </mat-form-field>
-                </div>
-                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
-                  <mat-form-field class="example-full-width mb-3" appearance="outline">
-                    <mat-label>Postal Code</mat-label>
-                    <input matInput formControlName="postalCode">
-                    <mat-error *ngIf="patientInformationForm.get('postalCode')?.hasError('required')">
-                      Postal Code is required
-                    </mat-error>
-                  </mat-form-field>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-3">
-                  <button class="btn-space" [class.auth-spinner]="loading" [disabled]="loading" [disabled]="!patientInformationForm.valid " mat-raised-button
-                    color="primary">Submit</button>
-                  <button type="button" (click)="cancelForm()" mat-raised-button color="warn">Cancel</button>
-                </div>
-              </div>
-            </form>
+              </mat-step>
+            </mat-horizontal-stepper>
           </div>
         </div>
       </div>

@@ -5,14 +5,29 @@ export interface PatientModel {
   firstName: string;
   lastName: string;
   middleName: string;
-  dOB: string;
+  dob: string;
   age: number;
   address: string;
   phoneNo: string;
   email: string;
   sex: string;
   postalCode: string;
-  nHSNumber: string;
+  nhsNumber: string;
   active: boolean;
   fullName: string;
 }
+
+export interface PatientDocumentModel {
+  patientDocumentId: number;
+  pocumentTypeId: number;
+  patientId: number;
+  physicalLocation: string;
+  documentName: string;
+  documentExtension: string;
+  documentFile: string;
+  clinicDate:string;
+  specialityId: number;
+  consultantName: string;
+  dateUploaded: string;
+}
+

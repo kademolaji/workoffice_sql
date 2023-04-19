@@ -10,7 +10,7 @@ import {
   SearchParameter,
   SearchReply,
 } from 'src/app/core/utilities/api-response';
-import { PatientModel } from './patient.model';
+import { PatientDocumentModel, PatientModel } from './patient.model';
 @Injectable()
 export class PatientService extends UnsubscribeOnDestroyAdapter {
   isTblLoading = true;
@@ -61,4 +61,20 @@ export class PatientService extends UnsubscribeOnDestroyAdapter {
       `api/patientinformation/MultipleDelete`, {targetIds: targetIds}
     );
   }
+
+  getAllPatientDocument(option: SearchCall<SearchParameter>) {
+    return this.httpClient
+       .post<SearchReply<PatientDocumentModel[]>>(
+         `api/patientdocument/GetList`, option
+       );
+   }
+   deletePatientDocument(id: number) {
+    return this.httpClient.delete<DeleteReply>(
+      `api/patientdocument/Delete?patientDocumentId=${id}`
+    );
+  }
+    addPatientDocument(formData: FormData) {
+      return this.httpClient.post<CreateResponse>('/api/patientdocument/create', formData);
+    }
+
 }

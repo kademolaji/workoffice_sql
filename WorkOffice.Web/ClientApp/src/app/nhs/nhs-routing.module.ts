@@ -7,6 +7,8 @@ import { AddPatientComponent } from "./patient/add-patient/add-patient.component
 import { AllPatientComponent } from "./patient/all-patient/all-patient.component";
 import { AddWaitinglistComponent } from "./waitinglist/add-waitinglist/add-waitinglist.component";
 import { AllWaitinglistComponent } from "./waitinglist/all-waitinglist/all-waitinglist.component";
+import { ValidateNowComponent } from "./Validate/validate-now/validate-now.component";
+import { AddPathwayComponent } from "./pathway/add-pathway/add-pathway.component";
 
 
 const routes: Routes = [
@@ -45,6 +47,14 @@ const routes: Routes = [
   {
     path: "edit-waitinglist/:id",
     component: AddWaitinglistComponent,
+  },
+  {
+    path: "add-pathway",
+    component: AddPathwayComponent,
+  },
+  {
+    path: "validate-now",
+    component: ValidateNowComponent,
   },
 
   { path: "**", component: Page404Component },

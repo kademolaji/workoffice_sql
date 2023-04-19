@@ -16,7 +16,7 @@ namespace WorkOffice.Web.Controllers
     [Route("api/[controller]")]
     [ServiceFilter(typeof(LogUserActivity))]
     [ApiController]
-    // [Authorize]
+     [Authorize]
     public class AppTypeController : ControllerBase
     {
         private readonly IAppTypeService service;

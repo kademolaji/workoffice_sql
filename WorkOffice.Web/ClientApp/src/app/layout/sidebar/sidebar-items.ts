@@ -262,7 +262,7 @@ export const ROUTES: RouteInfo[] = [
         ],
       },
       {
-        path: '/admin/consultant/all-consultant',
+        path: '/nhs/add-waitinglist',
         title: 'Add Waiting List',
         iconType: '',
         icon: '',
@@ -274,7 +274,7 @@ export const ROUTES: RouteInfo[] = [
         submenu: [],
       },
       {
-        path: '/admin/consultant/all-consultant',
+        path: '/nhs/all-waitinglist',
         title: 'View Waiting List',
         iconType: '',
         icon: '',
@@ -286,7 +286,7 @@ export const ROUTES: RouteInfo[] = [
         submenu: [],
       },
       {
-        path: '/admin/consultant/all-consultant',
+        path: '/nhs/add-pathway',
         title: 'Add Pathway',
         iconType: '',
         icon: '',
@@ -298,7 +298,7 @@ export const ROUTES: RouteInfo[] = [
         submenu: [],
       },
       {
-        path: '/admin/consultant/all-consultant',
+        path: '/nhs/validate-now',
         title: 'Validate now',
         iconType: '',
         icon: '',
@@ -383,7 +383,6 @@ export const ROUTES: RouteInfo[] = [
             activity: "pathway status",
             submenu: [],
       }
-
       ,
       {
             path: '/setup/rtt/all-rtt',
@@ -397,7 +396,6 @@ export const ROUTES: RouteInfo[] = [
             activity: "rtt",
             submenu: [],
       }
-
       ,
       {
             path: '/setup/specialty/all-specialty',
@@ -411,7 +409,6 @@ export const ROUTES: RouteInfo[] = [
             activity: "specialty",
             submenu: [],
       }
-
       ,
       {
             path: '/setup/waitingtype/all-waitingtype',
@@ -425,7 +422,6 @@ export const ROUTES: RouteInfo[] = [
             activity: "waiting type",
             submenu: [],
       }
-
       ,
       {
             path: '/setup/ward/all-ward',

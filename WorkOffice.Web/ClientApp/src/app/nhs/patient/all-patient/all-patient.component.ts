@@ -94,11 +94,11 @@ addNew() {
   this.router.navigate(['nhs','add-patient']);
 }
 
-editCall(row: { PatientId: number }) {
+editCall(row: { patientId: number }) {
   this.router.navigate([
     'nhs',
     'edit-patient',
-    row.PatientId,
+    row.patientId,
   ]);
 }
 
