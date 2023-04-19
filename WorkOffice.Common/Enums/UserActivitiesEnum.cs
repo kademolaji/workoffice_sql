@@ -17,5 +17,15 @@ namespace WorkOffice.Common
         AppType = 9,
         Consultant = 10,
         Hospital = 11,
+        Patient_Information = 12,
+        Add_Appointment = 13,
+        Patient_Appointment = 14,
+        View_Booked_Appointment = 15,
+        Cancelled_Appointment = 16,
+        Patient_Document = 17,
+        Add_Waitinglist = 18,
+        View_Waitinglist = 19,
+        Add_Pathway = 20,
+        Validate_now = 21,
     }
 }

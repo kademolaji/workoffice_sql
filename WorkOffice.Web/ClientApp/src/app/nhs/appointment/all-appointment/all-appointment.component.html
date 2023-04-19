@@ -1,0 +1,131 @@
+<section class="content">
+  <div class="content-block">
+    <div class="block-header">
+      <!-- breadcrumb -->
+      <app-breadcrumb [title]="'All Appointment'" [items]="['Appointment']" [active_item]="'All Appointment'"></app-breadcrumb>
+    </div>
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+          <div class="body">
+            <div class="responsive_table">
+              <div class="materialTableHeader">
+                <div class="row">
+                  <div class="col-8">
+                    <ul class="header-buttons-left ms-0">
+                      <li class="tbl-title">
+                        <h2>Appointments</h2>
+                      </li>
+                      <li class="tbl-search-box">
+                        <label for="search-input"><i class="material-icons search-icon">search</i></label>
+                        <input placeholder="Search" type="text"  class="browser-default search-field"
+                          aria-label="Search box"  (keyup)="applyFilter($event)"  #input>
+                      </li>
+                      <li class="tbl-header-btn">
+                        <div class="m-l-10" matTooltip="ADD">
+                          <button mat-mini-fab color="primary" (click)="addNew()">
+                            <mat-icon class="col-white">add</mat-icon>
+                          </button>
+                        </div>
+                      </li>
+                      <li class="tbl-header-btn">
+                        <div class="m-l-10" matTooltip="REFRESH">
+                          <button mat-mini-fab color="primary" (click)="refresh()">
+                            <mat-icon class="col-white">refresh</mat-icon>
+                          </button>
+                        </div>
+                      </li>
+                      <li class="tbl-header-btn">
+                        <div class="m-l-10" [hidden]=!selection.hasValue() matTooltip="DELETE">
+                          <button mat-mini-fab color="warn" (click)="removeSelectedRows()">
+                            <mat-icon class="col-white">delete
+                            </mat-icon>
+                          </button>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <mat-table #table [dataSource]="dataSource" matSort class="mat-cell" (matSortChange)="sortData($event)">
+                <!-- Checkbox Column -->
+                <ng-container matColumnDef="select">
+                  <mat-header-cell *matHeaderCellDef [ngClass]="'tbl-col-width-per-6'">
+                    <mat-checkbox (change)="$event ? masterToggle() : null"
+                      [checked]="selection.hasValue() && isAllSelected()"
+                      [indeterminate]="selection.hasValue() && !isAllSelected()" [ngClass]="'tbl-checkbox'">
+                    </mat-checkbox>
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let row" [ngClass]="'tbl-col-width-per-6'">
+                    <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+                      [checked]="selection.isSelected(row)" [ngClass]="'tbl-checkbox'">
+                    </mat-checkbox>
+                  </mat-cell>
+                </ng-container>
+                <!-- ID Column -->
+                <ng-container matColumnDef="appointmentId">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>appointmentId</mat-header-cell>
+                  <mat-cell *matCellDef="let row">{{row.appointmentId}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="patientUniqueNumber">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>patientUniqueNumber</mat-header-cell>
+                  <mat-cell *matCellDef="let row"> {{row.patientUniqueNumber}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="pathwayUniqueNumber">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>pathwayUniqueNumber</mat-header-cell>
+                  <mat-cell *matCellDef="let row"> {{row.pathwayUniqueNumber}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="appointmentDate">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Appointment Date</mat-header-cell>
+                  <mat-cell *matCellDef="let row"> {{row.appDate}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="bookingDate">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Booking Date</mat-header-cell>
+                  <mat-cell *matCellDef="let row"> {{row.bookDate}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="speciality">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>speciality</mat-header-cell>
+                  <mat-cell *matCellDef="let row"> {{row.speciality}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="dob">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Date of Birth</mat-header-cell>
+                  <mat-cell *matCellDef="let row"> {{row.dOB}}</mat-cell>
+                </ng-container>
+                <!-- actions -->
+                <ng-container matColumnDef="actions">
+                  <mat-header-cell class="pr-0" *matHeaderCellDef>Actions</mat-header-cell>
+                  <mat-cell *matCellDef="let row; let i=index;" class="pr-0">
+                    <button mat-icon-button (click)="$event.stopPropagation()" (click)="deleteItem(row)"
+                    class="tbl-action-btn">
+                    <app-feather-icons [icon]="'trash-2'" [class]="'tbl-fav-delete'"></app-feather-icons>
+                  </button>
+                    <button mat-icon-button (click)="$event.stopPropagation()" (click)="editCall(row)"
+                      class="tbl-action-btn">
+                      <app-feather-icons [icon]="'cancel'" [class]="'tbl-fav-edit'"></app-feather-icons>
+                    </button>
+                  </mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="editCall(row)"
+                  [style.cursor]="'pointer'" matRipple>
+                </mat-row>
+              </mat-table>
+              <!-- Loading spinner -->
+              <div *ngIf="isTblLoading" class="tbl-spinner">
+                <mat-progress-spinner color="primary" [diameter]="40" mode="indeterminate">
+                </mat-progress-spinner>
+              </div>
+              <div *ngIf="!isTblLoading" class="no-results"
+                [style.display]="dataSource.data.length === 0 ? '' : 'none'">
+                No results
+              </div>
+              <mat-paginator #paginator [length]="totalRows" [pageIndex]="currentPage" [pageSize]="pageSize"
+              [pageSizeOptions]="pageSizeOptions" (page)="pageChanged($event)" aria-label="Select page">
+            </mat-paginator>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

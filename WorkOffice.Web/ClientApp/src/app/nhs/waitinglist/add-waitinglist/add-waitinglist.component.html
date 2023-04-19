@@ -1,0 +1,112 @@
+<section class="content">
+  <div class="content-block">
+    <div class="block-header">
+      <!-- breadcrumb -->
+      <app-breadcrumb *ngIf="isAddMode" [title]="'Add Waitinglist'" [items]="['Waitinglist']" [active_item]="'Waitinglist'"></app-breadcrumb>
+      <app-breadcrumb *ngIf="!isAddMode" [title]="'Edit Waitinglist'" [items]="['Waitinglist']" [active_item]="'Edit Waitinglist'"></app-breadcrumb>
+
+    </div>
+    <div class="row clearfix">
+      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="card">
+          <div class="header">
+            <h2 *ngIf="isAddMode"><strong> Add New Waitinglist</strong></h2>
+            <h2 *ngIf="!isAddMode"><strong> Edit Waitinglist</strong></h2>
+          </div>
+          <div class="body">
+            <form class="m-4" [formGroup]="waitinglistForm" (ngSubmit)="onSubmit()">
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Patient District Number</mat-label>
+                    <input matInput formControlName="patientId" required>
+                    <mat-error *ngIf="waitinglistForm.get('patientId')?.hasError('required')">
+                      Patient District Number is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Pathway Unique Number</mat-label>
+                    <input matInput formControlName="pathwayUniqueNumber">
+                    <mat-error *ngIf="waitinglistForm.get('pathwayUniqueNumber')?.hasError('required')">
+                      Pathway Unique Number is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>WaitinglistStatus</mat-label>
+                    <input matInput formControlName="waitinglistStatus" required>
+                    <mat-error *ngIf="waitinglistForm.get('waitinglistStatus')?.hasError('required')">
+                      Waitinglist Status is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Speciality</mat-label>
+                    <input matInput formControlName="specialityId">
+                    <mat-error *ngIf="waitinglistForm.get('specialityId')?.hasError('required')">
+                      Speciality is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Waitinglist Date</mat-label>
+                    <input matInput formControlName="waitinglistDate" required>
+                    <mat-error *ngIf="waitinglistForm.get('waitinglistDate')?.hasError('required')">
+                      Waitinglist Date is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label> TCI Date</mat-label>
+                    <input matInput formControlName="tCIDate">
+                    <mat-error *ngIf="waitinglistForm.get('tCIDate')?.hasError('required')">
+                      TCI Date is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Waitinglist Time</mat-label>
+                    <input matInput formControlName="waitinglistTime" required>
+                    <mat-error *ngIf="waitinglistForm.get('waitinglistTime')?.hasError('required')">
+                      Waitinglist Time is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Condition</mat-label>
+                    <input matInput formControlName="condition">
+                    <mat-error *ngIf="waitinglistForm.get('condition')?.hasError('required')">
+                      Condition is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-3">
+                  <button class="btn-space" [class.auth-spinner]="loading" [disabled]="loading" [disabled]="!waitinglistForm.valid " mat-raised-button
+                    color="primary">Submit</button>
+                  <button type="button" (click)="cancelForm()" mat-raised-button color="warn">Cancel</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

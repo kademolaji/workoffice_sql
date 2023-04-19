@@ -31,7 +31,19 @@ namespace WorkOffice.Web.DataSeeder
             AddNewData(new UserActivity { UserActivityId = (long)UserActivitiesEnum.AppType, UserActivityName = Enum.GetName(typeof(UserActivitiesEnum), UserActivitiesEnum.AppType).Replace("_", " "), UserActivityParentId = (long)UserActivityParentEnum.Setup, ClientId = 1 });
             AddNewData(new UserActivity { UserActivityId = (long)UserActivitiesEnum.Consultant, UserActivityName = Enum.GetName(typeof(UserActivitiesEnum), UserActivitiesEnum.Consultant).Replace("_", " "), UserActivityParentId = (long)UserActivityParentEnum.Setup, ClientId = 1 });
             AddNewData(new UserActivity { UserActivityId = (long)UserActivitiesEnum.Hospital, UserActivityName = Enum.GetName(typeof(UserActivitiesEnum), UserActivitiesEnum.Hospital).Replace("_", " "), UserActivityParentId = (long)UserActivityParentEnum.Setup, ClientId = 1 });
-         
+
+            AddNewData(new UserActivity { UserActivityId = (long)UserActivitiesEnum.Patient_Information, UserActivityName = Enum.GetName(typeof(UserActivitiesEnum), UserActivitiesEnum.Patient_Information).Replace("_", " "), UserActivityParentId = (long)UserActivityParentEnum.NHS, ClientId = 1 });
+            AddNewData(new UserActivity { UserActivityId = (long)UserActivitiesEnum.Add_Appointment, UserActivityName = Enum.GetName(typeof(UserActivitiesEnum), UserActivitiesEnum.Add_Appointment).Replace("_", " "), UserActivityParentId = (long)UserActivityParentEnum.NHS, ClientId = 1 });
+            AddNewData(new UserActivity { UserActivityId = (long)UserActivitiesEnum.Patient_Document, UserActivityName = Enum.GetName(typeof(UserActivitiesEnum), UserActivitiesEnum.Patient_Document).Replace("_", " "), UserActivityParentId = (long)UserActivityParentEnum.NHS, ClientId = 1 });
+            AddNewData(new UserActivity { UserActivityId = (long)UserActivitiesEnum.Add_Waitinglist, UserActivityName = Enum.GetName(typeof(UserActivitiesEnum), UserActivitiesEnum.Add_Waitinglist).Replace("_", " "), UserActivityParentId = (long)UserActivityParentEnum.NHS, ClientId = 1 });
+            AddNewData(new UserActivity { UserActivityId = (long)UserActivitiesEnum.View_Waitinglist, UserActivityName = Enum.GetName(typeof(UserActivitiesEnum), UserActivitiesEnum.View_Waitinglist).Replace("_", " "), UserActivityParentId = (long)UserActivityParentEnum.NHS, ClientId = 1 });
+            AddNewData(new UserActivity { UserActivityId = (long)UserActivitiesEnum.Add_Pathway, UserActivityName = Enum.GetName(typeof(UserActivitiesEnum), UserActivitiesEnum.Add_Pathway).Replace("_", " "), UserActivityParentId = (long)UserActivityParentEnum.NHS, ClientId = 1 });
+            AddNewData(new UserActivity { UserActivityId = (long)UserActivitiesEnum.Validate_now, UserActivityName = Enum.GetName(typeof(UserActivitiesEnum), UserActivitiesEnum.Validate_now).Replace("_", " "), UserActivityParentId = (long)UserActivityParentEnum.NHS, ClientId = 1 });
+
+            AddNewData(new UserActivity { UserActivityId = (long)UserActivitiesEnum.Patient_Appointment, UserActivityName = Enum.GetName(typeof(UserActivitiesEnum), UserActivitiesEnum.Patient_Appointment).Replace("_", " "), UserActivityParentId = (long)UserActivityParentEnum.View_Appointment, ClientId = 1 });
+            AddNewData(new UserActivity { UserActivityId = (long)UserActivitiesEnum.View_Booked_Appointment, UserActivityName = Enum.GetName(typeof(UserActivitiesEnum), UserActivitiesEnum.View_Booked_Appointment).Replace("_", " "), UserActivityParentId = (long)UserActivityParentEnum.View_Appointment, ClientId = 1 });
+            AddNewData(new UserActivity { UserActivityId = (long)UserActivitiesEnum.Cancelled_Appointment, UserActivityName = Enum.GetName(typeof(UserActivitiesEnum), UserActivitiesEnum.Cancelled_Appointment).Replace("_", " "), UserActivityParentId = (long)UserActivityParentEnum.View_Appointment, ClientId = 1 });
+
             _context.SaveChanges();
         }
 

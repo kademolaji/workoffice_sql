@@ -98,6 +98,231 @@
              <response code="404">If list of Activities By RoleId is null</response> 
              <response code="400">If an error occur or invalid request payload</response> 
         </member>
+        <member name="M:WorkOffice.Web.Controllers.AppointmentsController.Create(WorkOffice.Contracts.Models.CreateAppointmentModel)">
+             <summary>
+             Create Appointments
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 POST /api/Appointments/Create
+                 {
+                   "revenueId": 10,
+                   "customerId": 210
+                     }
+            
+             </remarks>
+             <param name="model"></param>
+             <returns>Created success message </returns>
+             <response code="201">Appointments Created Successfully</response>
+             <response code="400">If an error occur or invalid request payload</response>
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.AppointmentsController.GetList(WorkOffice.Contracts.ServicesContracts.SearchCall{WorkOffice.Contracts.ServicesContracts.SearchParameter})">
+             <summary>
+             Get list of Appointments
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="options"></param>
+             <returns>List of Appointments</returns>
+             <response code="200">Returns list of Appointments</response>
+             <response code="404">If list of Appointments is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.AppointmentsController.Get(System.Int64)">
+             <summary>
+             Get object of Appointments
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="patientId"></param>
+             <returns>Object of Appointments</returns>
+             <response code="200">Returns object of Appointments</response>
+             <response code="404">If object of Appointments is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.AppointmentsController.Delete(System.Int64)">
+             <summary>
+             Delete Appointments
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="patientId"></param>
+             <returns>Object of Appointments</returns>
+             <response code="200">Returns object of Appointments</response>
+             <response code="404">If object of Appointments is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.AppointmentsController.MultipleDelete(WorkOffice.Contracts.Models.MultipleDeleteModel)">
+             <summary>
+             Delete Multiple Appointments
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="model"></param>
+             <returns>Object of Appointments</returns>
+             <response code="200">Returns object of Appointments</response>
+             <response code="404">If object of Appointments is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.PatientInformationController.Create(WorkOffice.Contracts.Models.PatientInformationModel)">
+             <summary>
+             Create PatientInformation
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 POST /api/PatientInformation/Create
+                 {
+                   "revenueId": 10,
+                   "customerId": 210
+                     }
+            
+             </remarks>
+             <param name="model"></param>
+             <returns>Created success message </returns>
+             <response code="201">PatientInformation Created Successfully</response>
+             <response code="400">If an error occur or invalid request payload</response>
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.PatientInformationController.GetList(WorkOffice.Contracts.ServicesContracts.SearchCall{WorkOffice.Contracts.ServicesContracts.SearchParameter})">
+             <summary>
+             Get list of PatientInformation
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="options"></param>
+             <returns>List of PatientInformation</returns>
+             <response code="200">Returns list of PatientInformation</response>
+             <response code="404">If list of PatientInformation is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.PatientInformationController.Get(System.Int64)">
+             <summary>
+             Get object of PatientInformation
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="patientId"></param>
+             <returns>Object of PatientInformation</returns>
+             <response code="200">Returns object of PatientInformation</response>
+             <response code="404">If object of PatientInformation is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.PatientInformationController.Delete(System.Int64)">
+             <summary>
+             Delete PatientInformation
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="patientId"></param>
+             <returns>Object of PatientInformation</returns>
+             <response code="200">Returns object of PatientInformation</response>
+             <response code="404">If object of PatientInformation is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.PatientInformationController.MultipleDelete(WorkOffice.Contracts.Models.MultipleDeleteModel)">
+             <summary>
+             Delete Multiple PatientInformation
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="model"></param>
+             <returns>Object of PatientInformation</returns>
+             <response code="200">Returns object of PatientInformation</response>
+             <response code="404">If object of PatientInformation is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.WaitingListController.Create(WorkOffice.Contracts.Models.WaitingListModel)">
+             <summary>
+             Create WaitingList
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 POST /api/WaitingList/Create
+                 {
+                   "revenueId": 10,
+                   "customerId": 210
+                     }
+            
+             </remarks>
+             <param name="model"></param>
+             <returns>Created success message </returns>
+             <response code="201">WaitingList Created Successfully</response>
+             <response code="400">If an error occur or invalid request payload</response>
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.WaitingListController.GetList(WorkOffice.Contracts.ServicesContracts.SearchCall{WorkOffice.Contracts.ServicesContracts.SearchParameter})">
+             <summary>
+             Get list of WaitingList
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="options"></param>
+             <returns>List of WaitingList</returns>
+             <response code="200">Returns list of WaitingList</response>
+             <response code="404">If list of WaitingList is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.WaitingListController.Get(System.Int64)">
+             <summary>
+             Get object of WaitingList
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="waitinglistId"></param>
+             <returns>Object of WaitingList</returns>
+             <response code="200">Returns object of WaitingList</response>
+             <response code="404">If object of WaitingList is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.WaitingListController.Delete(System.Int64)">
+             <summary>
+             Delete WaitingList
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="waitinglistId"></param>
+             <returns>Object of WaitingList</returns>
+             <response code="200">Returns object of WaitingList</response>
+             <response code="404">If object of WaitingList is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.WaitingListController.MultipleDelete(WorkOffice.Contracts.Models.MultipleDeleteModel)">
+             <summary>
+             Delete Multiple WaitingList
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="model"></param>
+             <returns>Object of WaitingList</returns>
+             <response code="200">Returns object of WaitingList</response>
+             <response code="404">If object of WaitingList is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
         <member name="M:WorkOffice.Web.Controllers.ActivityController.CreateActivity(WorkOffice.Contracts.Models.NHSActivityViewModels)">
              <summary>
              Create Activity

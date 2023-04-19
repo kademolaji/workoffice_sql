@@ -48,8 +48,13 @@ namespace WorkOffice.Domain.Helpers
         public DbSet<WaitingType> WaitingTypes { get; set; }
         public DbSet<Ward> Wards { get; set; }
 
-
-
+        //NHS
+        public DbSet<NHS_Appointment> NHS_Appointments { get; set; }
+        public DbSet<NHS_Patient> NHS_Patients { get; set; }
+        public DbSet<NHS_Waitinglist> NHS_Waitinglists { get; set; }
+        public DbSet<NHS_Patientdocument> NHS_Patientdocuments { get; set; }
+        public DbSet<NHS_Patient_Validation> NHS_Patient_Validations { get; set; }
+        public DbSet<NHS_Patient_Validation_Detail> NHS_Patient_Validation_Details { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -87,6 +92,14 @@ namespace WorkOffice.Domain.Helpers
             modelBuilder.Entity<Specialty>().HasIndex(ur => new { ur.SpecialtyId });
             modelBuilder.Entity<WaitingType>().HasIndex(ur => new { ur.WaitingTypeId });
             modelBuilder.Entity<Ward>().HasIndex(ur => new { ur.WardId });
+
+            modelBuilder.Entity<NHS_Appointment>().HasIndex(ur => new { ur.AppointmentId });
+            modelBuilder.Entity<NHS_Patient>().HasIndex(ur => new { ur.PatientId });
+            modelBuilder.Entity<NHS_Waitinglist>().HasIndex(ur => new { ur.WaitinglistId });
+            modelBuilder.Entity<NHS_Patientdocument>().HasIndex(ur => new { ur.PatientDocumentId });
+            modelBuilder.Entity<NHS_Patient_Validation>().HasIndex(ur => new { ur.PatientValidationId });
+            modelBuilder.Entity<NHS_Patient_Validation_Detail>().HasIndex(ur => new { ur.PatientValidationDetailsId });
+
             modelBuilder.UseIdentityColumns();
 
             FilterQuery(modelBuilder);

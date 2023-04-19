@@ -8,6 +8,8 @@ namespace WorkOffice.Common
     {
         Account = 1,
         Organization = 2,
-        Setup = 3
+        Setup = 3, 
+        NHS = 4,
+        View_Appointment = 5
     }
 }

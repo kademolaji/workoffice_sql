@@ -9,4 +9,8 @@
     <ProjectReference Include="..\WorkOffice.Domain\WorkOffice.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Mappings\NHS\" />
+  </ItemGroup>
+
 </Project>

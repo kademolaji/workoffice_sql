@@ -52,7 +52,12 @@ namespace WorkOffice.Web
             services.AddScoped<IWaitingTypeService, WaitingTypeService>();
             services.AddScoped<IWardService, WardService>();
             services.AddScoped<IGeneralSettingsService, GeneralSettingsService>();
-            
+
+            services.AddScoped<IPatientInformationService, PatientInformationService>();
+            services.AddScoped<IPatientDocumentService, PatientDocumentService>();
+            services.AddScoped<IAppointmentsServices, AppointmentsServices>();
+            services.AddScoped<IWaitingListService, WaitingListService>();
+
             services.AddScoped<DataContext>();
 
             return services;

@@ -230,6 +230,9 @@ namespace WorkOffice.Domain.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+                    b.Property<string>("Activity")
+                        .HasColumnType("text");
+
                     b.Property<long>("ClientId")
                         .HasColumnType("bigint");
 
@@ -246,6 +249,9 @@ namespace WorkOffice.Domain.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<string>("Prefix")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Separator")
                         .HasColumnType("text");
 
                     b.Property<string>("Suffix")
@@ -441,6 +447,513 @@ namespace WorkOffice.Domain.Migrations
                     b.HasIndex("NHSActivityId");
 
                     b.ToTable("NHSActivities");
+                });
+
+            modelBuilder.Entity("WorkOffice.Domain.Entities.NHS_Appointment", b =>
+                {
+                    b.Property<int>("AppointmentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<bool?>("Active")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime>("AppDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("AppTime")
+                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<int>("AppTypeId")
+                        .HasColumnType("integer");
+
+                    b.Property<long?>("AppTypeId1")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("AppointmentStatus")
+                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<DateTime>("BookDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("CancellationReason")
+                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("Comments")
+                        .HasColumnType("text");
+
+                    b.Property<int?>("ConsultantId")
+                        .HasColumnType("integer");
+
+                    b.Property<long?>("ConsultantId1")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<DateTime?>("CreatedOn")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool?>("Deleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int?>("DepartmentId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("HospitalId")
+                        .HasColumnType("integer");
+
+                    b.Property<long?>("HospitalId1")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("NHS_PatientPatientId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("NHS_Patient_ValidationPatientValidationId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("PatientId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("SpecialityId")
+                        .HasColumnType("integer");
+
+                    b.Property<long?>("SpecialtyId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("StatusId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("WardId")
+                        .HasColumnType("integer");
+
+                    b.Property<long?>("WardId1")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("patientValidationId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("AppointmentId");
+
+                    b.HasIndex("AppTypeId1");
+
+                    b.HasIndex("AppointmentId");
+
+                    b.HasIndex("ConsultantId1");
+
+                    b.HasIndex("HospitalId1");
+
+                    b.HasIndex("NHS_PatientPatientId");
+
+                    b.HasIndex("NHS_Patient_ValidationPatientValidationId");
+
+                    b.HasIndex("SpecialtyId");
+
+                    b.HasIndex("WardId1");
+
+                    b.ToTable("NHS_Appointments");
+                });
+
+            modelBuilder.Entity("WorkOffice.Domain.Entities.NHS_Patient", b =>
+                {
+                    b.Property<int>("PatientId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<bool?>("Active")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Address")
+                        .HasColumnType("character varying(550)")
+                        .HasMaxLength(550);
+
+                    b.Property<int>("Age")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<DateTime?>("CreatedOn")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime>("DOB")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool?>("Deleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("DistrictNumber")
+                        .IsRequired()
+                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("Email")
+                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("character varying(150)")
+                        .HasMaxLength(150);
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("character varying(150)")
+                        .HasMaxLength(150);
+
+                    b.Property<string>("MiddleName")
+                        .HasColumnType("character varying(150)")
+                        .HasMaxLength(150);
+
+                    b.Property<string>("NHSNumber")
+                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("PhoneNo")
+                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("PostalCode")
+                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("Sex")
+                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("PatientId");
+
+                    b.HasIndex("PatientId");
+
+                    b.ToTable("NHS_Patients");
+                });
+
+            modelBuilder.Entity("WorkOffice.Domain.Entities.NHS_Patient_Validation", b =>
+                {
+                    b.Property<int>("PatientValidationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<bool?>("Active")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<DateTime?>("CreatedOn")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool?>("Deleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("DistrictNumber")
+                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("NHSNumber")
+                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("PathWayCondition")
+                        .HasColumnType("character varying(150)")
+                        .HasMaxLength(150);
+
+                    b.Property<DateTime?>("PathWayEndDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("PathWayNumber")
+                        .IsRequired()
+                        .HasColumnType("character varying(150)")
+                        .HasMaxLength(150);
+
+                    b.Property<DateTime>("PathWayStartDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("PathWayStatusId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("PathWayStatusIdCode")
+                        .HasColumnType("text");
+
+                    b.Property<long?>("PathwayStatusId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("RTTId")
+                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("RTTWait")
+                        .HasColumnType("character varying(550)")
+                        .HasMaxLength(550);
+
+                    b.Property<int>("SpecialityId")
+                        .HasColumnType("integer");
+
+                    b.Property<long?>("SpecialtyId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("PatientValidationId");
+
+                    b.HasIndex("PathwayStatusId");
+
+                    b.HasIndex("PatientValidationId");
+
+                    b.HasIndex("SpecialtyId");
+
+                    b.ToTable("NHS_Patient_Validations");
+                });
+
+            modelBuilder.Entity("WorkOffice.Domain.Entities.NHS_Patient_Validation_Detail", b =>
+                {
+                    b.Property<int>("PatientValidationDetailsId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<bool?>("Active")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Activity")
+                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<int?>("ConsultantId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<DateTime?>("CreatedOn")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool?>("Deleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("NHS_PatientPatientId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("NHS_Patient_ValidationPatientValidationId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("PathWayStatusId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("PatientId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PatientValidationId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("SpecialityId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("PatientValidationDetailsId");
+
+                    b.HasIndex("NHS_PatientPatientId");
+
+                    b.HasIndex("NHS_Patient_ValidationPatientValidationId");
+
+                    b.HasIndex("PatientValidationDetailsId");
+
+                    b.ToTable("NHS_Patient_Validation_Details");
+                });
+
+            modelBuilder.Entity("WorkOffice.Domain.Entities.NHS_Patientdocument", b =>
+                {
+                    b.Property<int>("PatientDocumentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<bool?>("Active")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("ClinicDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<DateTime?>("CreatedOn")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("DateUploaded")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool?>("Deleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("DocumentExtension")
+                        .IsRequired()
+                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<byte[]>("DocumentFile")
+                        .IsRequired()
+                        .HasColumnType("bytea");
+
+                    b.Property<string>("DocumentName")
+                        .IsRequired()
+                        .HasColumnType("character varying(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<int>("DocumentTypeId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PatientId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("PhysicalLocation")
+                        .HasColumnType("character varying(500)")
+                        .HasMaxLength(500);
+
+                    b.Property<int?>("SpecialityId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("PatientDocumentId");
+
+                    b.HasIndex("PatientDocumentId");
+
+                    b.ToTable("NHS_Patientdocuments");
+                });
+
+            modelBuilder.Entity("WorkOffice.Domain.Entities.NHS_Waitinglist", b =>
+                {
+                    b.Property<int>("WaitinglistId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<bool?>("Active")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Condition")
+                        .HasColumnType("text");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<DateTime?>("CreatedOn")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool?>("Deleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int?>("NHS_PatientPatientId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("NHS_Patient_ValidationPatientValidationId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("PatientId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SpecialityId")
+                        .HasColumnType("integer");
+
+                    b.Property<long?>("SpecialtyId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("TCIDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("WaitTypeId")
+                        .HasColumnType("integer");
+
+                    b.Property<long?>("WaitingTypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("WaitinglistDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("WaitinglistStatus")
+                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("WaitinglistTime")
+                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<int?>("patientValidationId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("WaitinglistId");
+
+                    b.HasIndex("NHS_PatientPatientId");
+
+                    b.HasIndex("NHS_Patient_ValidationPatientValidationId");
+
+                    b.HasIndex("SpecialtyId");
+
+                    b.HasIndex("WaitingTypeId");
+
+                    b.HasIndex("WaitinglistId");
+
+                    b.ToTable("NHS_Waitinglists");
                 });
 
             modelBuilder.Entity("WorkOffice.Domain.Entities.Notification", b =>
@@ -774,9 +1287,6 @@ namespace WorkOffice.Domain.Migrations
 
                     b.Property<DateTime?>("ResetTokenExpires")
                         .HasColumnType("timestamp without time zone");
-
-                    b.Property<int>("RoleId")
-                        .HasColumnType("integer");
 
                     b.Property<string>("SecurityAnswer")
                         .HasColumnType("character varying(256)")
@@ -1131,6 +1641,78 @@ namespace WorkOffice.Domain.Migrations
                     b.HasOne("WorkOffice.Domain.Entities.StructureDefinition", null)
                         .WithMany("CompanyStructure")
                         .HasForeignKey("StructureDefinitionId");
+                });
+
+            modelBuilder.Entity("WorkOffice.Domain.Entities.NHS_Appointment", b =>
+                {
+                    b.HasOne("WorkOffice.Domain.Entities.AppType", "AppType")
+                        .WithMany()
+                        .HasForeignKey("AppTypeId1");
+
+                    b.HasOne("WorkOffice.Domain.Entities.Consultant", "Consultant")
+                        .WithMany()
+                        .HasForeignKey("ConsultantId1");
+
+                    b.HasOne("WorkOffice.Domain.Entities.Hospital", "Hospital")
+                        .WithMany()
+                        .HasForeignKey("HospitalId1");
+
+                    b.HasOne("WorkOffice.Domain.Entities.NHS_Patient", "NHS_Patient")
+                        .WithMany("NHS_Appointment")
+                        .HasForeignKey("NHS_PatientPatientId");
+
+                    b.HasOne("WorkOffice.Domain.Entities.NHS_Patient_Validation", "NHS_Patient_Validation")
+                        .WithMany("NHS_Appointment")
+                        .HasForeignKey("NHS_Patient_ValidationPatientValidationId");
+
+                    b.HasOne("WorkOffice.Domain.Entities.Specialty", "Specialty")
+                        .WithMany()
+                        .HasForeignKey("SpecialtyId");
+
+                    b.HasOne("WorkOffice.Domain.Entities.Ward", "Ward")
+                        .WithMany()
+                        .HasForeignKey("WardId1");
+                });
+
+            modelBuilder.Entity("WorkOffice.Domain.Entities.NHS_Patient_Validation", b =>
+                {
+                    b.HasOne("WorkOffice.Domain.Entities.PathwayStatus", "PathwayStatus")
+                        .WithMany()
+                        .HasForeignKey("PathwayStatusId");
+
+                    b.HasOne("WorkOffice.Domain.Entities.Specialty", "Specialty")
+                        .WithMany()
+                        .HasForeignKey("SpecialtyId");
+                });
+
+            modelBuilder.Entity("WorkOffice.Domain.Entities.NHS_Patient_Validation_Detail", b =>
+                {
+                    b.HasOne("WorkOffice.Domain.Entities.NHS_Patient", "NHS_Patient")
+                        .WithMany("NHS_Patient_Validation_Detail")
+                        .HasForeignKey("NHS_PatientPatientId");
+
+                    b.HasOne("WorkOffice.Domain.Entities.NHS_Patient_Validation", "NHS_Patient_Validation")
+                        .WithMany("NHS_Patient_Validation_Detail")
+                        .HasForeignKey("NHS_Patient_ValidationPatientValidationId");
+                });
+
+            modelBuilder.Entity("WorkOffice.Domain.Entities.NHS_Waitinglist", b =>
+                {
+                    b.HasOne("WorkOffice.Domain.Entities.NHS_Patient", "NHS_Patient")
+                        .WithMany("NHS_Waitinglist")
+                        .HasForeignKey("NHS_PatientPatientId");
+
+                    b.HasOne("WorkOffice.Domain.Entities.NHS_Patient_Validation", "NHS_Patient_Validation")
+                        .WithMany("NHS_Waitinglist")
+                        .HasForeignKey("NHS_Patient_ValidationPatientValidationId");
+
+                    b.HasOne("WorkOffice.Domain.Entities.Specialty", "Specialty")
+                        .WithMany()
+                        .HasForeignKey("SpecialtyId");
+
+                    b.HasOne("WorkOffice.Domain.Entities.WaitingType", "WaitingType")
+                        .WithMany()
+                        .HasForeignKey("WaitingTypeId");
                 });
 
             modelBuilder.Entity("WorkOffice.Domain.Entities.State", b =>

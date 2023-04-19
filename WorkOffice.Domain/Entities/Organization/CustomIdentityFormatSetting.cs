@@ -15,5 +15,7 @@ namespace WorkOffice.Domain.Entities
         public string Suffix { get; set; }
         public int Digits { get; set; }
         public string Company { get; set; }
+        public string Separator { get; set; }
+        public string Activity { get; set; }
     }
 }
