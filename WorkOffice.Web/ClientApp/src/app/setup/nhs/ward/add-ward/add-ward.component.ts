@@ -46,7 +46,7 @@ export class AddWardComponent
       code: ['', [Validators.required]],
       name: ['', [Validators.required]],
     });
-    this.id = this.route.snapshot.params['id'];
+    this.id = +this.route.snapshot.params['id'];
     this.isAddMode = !this.id;
     if(!this.isAddMode){
       this.subs.sink = this.WardService
@@ -84,7 +84,7 @@ export class AddWardComponent
       return;
     } else {
       const ward: WardModel = {
-        wardId: this.id,
+        wardId: this.id ? + this.id : 0,
         code: this.wardForm.value.code,
         name: this.wardForm.value.name,
 

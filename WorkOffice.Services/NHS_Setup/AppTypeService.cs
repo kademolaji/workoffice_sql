@@ -130,6 +130,7 @@ namespace WorkOffice.Services
                     {
                         entity.Code = model.Code;
                         entity.Name = model.Name;
+                        entity.CreatedOn = DateTime.UtcNow;
 
                         result = await context.SaveChangesAsync() > 0;
                         if (result)

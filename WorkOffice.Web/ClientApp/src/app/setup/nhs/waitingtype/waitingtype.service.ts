@@ -32,34 +32,31 @@ export class WaitingTypeService extends UnsubscribeOnDestroyAdapter {
   getAllWaitingType(option: SearchCall<SearchParameter>) {
    return this.httpClient
       .post<SearchReply<WaitingTypeModel[]>>(
-        `api/WaitingType/GetList`, option
+        `api/waitingType/GetList`, option
       );
   }
 
   getWaitingTypeById(id: number) {
     return this.httpClient.get<GetResponse<WaitingTypeModel>>(
-      `api/WaitingType/Get?waitingTypeId=${id}`
+      `api/waitingType/Get?waitingTypeId=${id}`
     );
   }
 
   addWaitingType(data: WaitingTypeModel) {
     this.dialogData = data;
     return this.httpClient.post<CreateResponse>(
-      `api/WaitingType/Create`,
+      `api/waitingType/Create`,
       data
     );
   }
-  updateWaitingType(data: WaitingTypeModel): void {
-    this.dialogData = data;
-  }
   deleteWaitingType(id: number) {
     return this.httpClient.delete<DeleteReply>(
-      `api/WaitingType/Delete?waitingTypeId=${id}`
+      `api/waitingType/Delete?waitingTypeId=${id}`
     );
   }
   deleteMultipleWaitingType(targetIds: number[]) {
     return this.httpClient.post<DeleteReply>(
-      `api/WaitingType/MultipleDelete`, {targetIds: targetIds}
+      `api/waitingType/MultipleDelete`, {targetIds: targetIds}
     );
   }
 }

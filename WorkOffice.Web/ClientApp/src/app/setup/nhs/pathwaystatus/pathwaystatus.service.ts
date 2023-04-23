@@ -32,34 +32,32 @@ export class PathwayStatusService extends UnsubscribeOnDestroyAdapter {
   getAllPathwayStatus(option: SearchCall<SearchParameter>) {
    return this.httpClient
       .post<SearchReply<PathwayStatusModel[]>>(
-        `api/PathwayStatus/GetList`, option
+        `api/pathwayStatus/GetList`, option
       );
   }
 
   getPathwayStatusById(id: number) {
     return this.httpClient.get<GetResponse<PathwayStatusModel>>(
-      `api/PathwayStatus/Get?appTypeId=${id}`
+      `api/pathwayStatus/Get?appTypeId=${id}`
     );
   }
 
   addPathwayStatus(data: PathwayStatusModel) {
     this.dialogData = data;
     return this.httpClient.post<CreateResponse>(
-      `api/PathwayStatus/Create`,
+      `api/pathwayStatus/Create`,
       data
     );
   }
-  updatePathwayStatus(data: PathwayStatusModel): void {
-    this.dialogData = data;
-  }
+
   deletePathwayStatus(id: number) {
     return this.httpClient.delete<DeleteReply>(
-      `api/PathwayStatus/Delete?appTypeId=${id}`
+      `api/pathwayStatus/Delete?appTypeId=${id}`
     );
   }
   deleteMultiplePathwayStatus(targetIds: number[]) {
     return this.httpClient.post<DeleteReply>(
-      `api/PathwayStatus/MultipleDelete`, {targetIds: targetIds}
+      `api/pathwayStatus/MultipleDelete`, {targetIds: targetIds}
     );
   }
 }

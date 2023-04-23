@@ -32,34 +32,32 @@ export class NHSActivityService extends UnsubscribeOnDestroyAdapter {
   getAllNHSActivity(option: SearchCall<SearchParameter>) {
    return this.httpClient
       .post<SearchReply<NHSActivityModel[]>>(
-        `api/Activity/GetList`, option
+        `api/activity/GetList`, option
       );
   }
 
   getNHSActivityById(id: number) {
     return this.httpClient.get<GetResponse<NHSActivityModel>>(
-      `api/Activity/Get?appTypeId=${id}`
+      `api/activity/Get?nhsActivityId=${id}`
     );
   }
 
   addNHSActivity(data: NHSActivityModel) {
     this.dialogData = data;
     return this.httpClient.post<CreateResponse>(
-      `api/Activity/Create`,
+      `api/activity/Create`,
       data
     );
   }
-  updateNHSActivity(data: NHSActivityModel): void {
-    this.dialogData = data;
-  }
+
   deleteNHSActivity(id: number) {
     return this.httpClient.delete<DeleteReply>(
-      `api/Activity/Delete?appTypeId=${id}`
+      `api/activity/Delete?nhsActivityId=${id}`
     );
   }
   deleteMultipleNHSActivity(targetIds: number[]) {
     return this.httpClient.post<DeleteReply>(
-      `api/Activity/MultipleDelete`, {targetIds: targetIds}
+      `api/activity/MultipleDelete`, {targetIds: targetIds}
     );
   }
 }

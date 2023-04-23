@@ -29,6 +29,10 @@ namespace WorkOffice.Services
         {
             try
             {
+                if (model.WardId > 0)
+                {
+                    return await UpdateWard(model);
+                }
                 if (string.IsNullOrEmpty(model.Code))
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse { Status = false, Message = "Ward Code is required." }, IsSuccess = false };
@@ -122,6 +126,8 @@ namespace WorkOffice.Services
                     {
                         entity.Code = model.Code;
                         entity.Name = model.Name;
+                        entity.CreatedOn = DateTime.UtcNow;
+
 
                         result = await context.SaveChangesAsync() > 0;
                         if (result)
@@ -129,6 +135,7 @@ namespace WorkOffice.Services
                             var details = $"Updated Ward: Code = {model.Code}, Name = {model.Name} ";
                             await auditTrail.SaveAuditTrail(details, "App Type", "Update");
                             trans.Commit();
+
                         }
                     }
                     catch (Exception ex)
@@ -257,7 +264,16 @@ namespace WorkOffice.Services
 
                 var apiResponse = new ApiResponse<GetResponse<WardViewModels>>();
 
-                var result = await context.Wards.FindAsync(wardId);
+                var result = await (from wd in context.Wards
+                                    where wd.WardId == wardId
+                                    select new WardViewModels
+                                    {
+                                        WardId = wd.WardId,
+                                        Code = wd.Code,
+                                        Name = wd.Name,
+                                    }).FirstOrDefaultAsync();
+
+                //var result = await context.Wards.FindAsync(wardId);
 
                 if (result == null)
                 {
@@ -267,7 +283,7 @@ namespace WorkOffice.Services
                 var response = new GetResponse<WardViewModels>()
                 {
                     Status = true,
-                    Entity = result.ToModel<WardViewModels>(),
+                    Entity = result,
                     Message = ""
                 };
 

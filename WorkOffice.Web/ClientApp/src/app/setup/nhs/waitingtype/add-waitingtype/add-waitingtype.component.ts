@@ -46,7 +46,7 @@ export class AddWaitingTypeComponent
       code: ['', [Validators.required]],
       name: ['', [Validators.required]],
     });
-    this.id = this.route.snapshot.params['id'];
+    this.id = +this.route.snapshot.params['id'];
     this.isAddMode = !this.id;
     if(!this.isAddMode){
       this.subs.sink = this.WaitingTypeService
@@ -84,7 +84,8 @@ export class AddWaitingTypeComponent
       return;
     } else {
       const waitingType: WaitingTypeModel = {
-        waitingTypeId: this.id,
+        //waitingTypeId: this.id,
+        waitingTypeId: this.id ? + this.id : 0,
         code: this.waitingTypeForm.value.code,
         name: this.waitingTypeForm.value.name,
 

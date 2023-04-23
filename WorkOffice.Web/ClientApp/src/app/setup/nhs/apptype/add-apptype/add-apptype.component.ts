@@ -46,7 +46,7 @@ export class AddAppTypeComponent
       code: ['', [Validators.required]],
       name: ['', [Validators.required]],
     });
-    this.id = this.route.snapshot.params['id'];
+    this.id = +this.route.snapshot.params['id'];
     this.isAddMode = !this.id;
     if(!this.isAddMode){
       this.subs.sink = this.AppTypeService
@@ -84,7 +84,8 @@ export class AddAppTypeComponent
       return;
     } else {
       const appType: AppTypeModel = {
-        appTypeId: this.id,
+        // appTypeId: this.id,
+        appTypeId: this.id ? + this.id : 0,
         code: this.appTypeForm.value.code,
         name: this.appTypeForm.value.name,
 

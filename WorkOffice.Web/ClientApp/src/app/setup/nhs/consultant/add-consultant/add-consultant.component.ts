@@ -46,8 +46,9 @@ export class AddConsultantComponent
       code: ['', [Validators.required]],
       name: ['', [Validators.required]],
     });
-    this.id = this.route.snapshot.params['id'];
+    this.id = +this.route.snapshot.params['id'];
     this.isAddMode = !this.id;
+
     if(!this.isAddMode){
       this.subs.sink = this.ConsultantService
       .getConsultantById(this.id)
@@ -84,7 +85,8 @@ export class AddConsultantComponent
       return;
     } else {
       const consultant: ConsultantModel = {
-        consultantId: this.id,
+        //consultantId: this.id,
+        consultantId: this.id ? + this.id : 0,
         code: this.consultantForm.value.code,
         name: this.consultantForm.value.name,
 
