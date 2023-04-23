@@ -19,7 +19,7 @@ export interface PatientModel {
 
 export interface PatientDocumentModel {
   patientDocumentId: number;
-  pocumentTypeId: number;
+  documentTypeId: number;
   patientId: number;
   physicalLocation: string;
   documentName: string;

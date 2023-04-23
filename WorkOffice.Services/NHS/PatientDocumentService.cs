@@ -28,7 +28,7 @@ namespace WorkOffice.Services
             try
             {
 
-                if (model.PatientId > 0)
+                if (model.PatientDocumentId > 0)
                 {
                     return await Update(model);
                 }

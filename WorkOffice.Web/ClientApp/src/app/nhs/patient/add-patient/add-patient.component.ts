@@ -99,11 +99,13 @@ export class AddPatientComponent
     });
 
     this.patientDocumentForm = this.fb.group({});
-    this.loadData(this.searchQuery, this.sortField, this.sortOrder);
+
 
     this.id = +this.route.snapshot.params['id'];
     this.isAddMode = !this.id;
     if (!this.isAddMode) {
+      this.searchQuery =  this.id.toString();
+      this.loadData(this.searchQuery, this.sortField, this.sortOrder);
       this.subs.sink = this.patientService.getPatientById(this.id).subscribe({
         next: (res) => {
           if (res.status) {
@@ -164,6 +166,7 @@ export class AddPatientComponent
         next: (res) => {
           if (res.status) {
             this.loading = false;
+            this.id = +res.id;
             this.showNotification(
               'snackbar-success',
               res.message,
@@ -231,8 +234,8 @@ export class AddPatientComponent
   addNew() {
     const row: PatientDocumentModel = {
       patientDocumentId: 0,
-      pocumentTypeId: 0,
-      patientId: 0,
+      documentTypeId: 1,
+      patientId: +this.id,
       physicalLocation: "",
       documentName:  "",
       documentExtension:  "",

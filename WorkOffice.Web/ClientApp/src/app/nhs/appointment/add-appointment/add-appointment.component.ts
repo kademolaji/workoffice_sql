@@ -61,36 +61,10 @@ export class AddAppointmentComponent
       consultantId: ['', [Validators.required]],
       hospitalId: ['', [Validators.required]],
       wardId: ['', [Validators.required]],
-      departmentId: ['', [Validators.required]],
+      departmentId: [''],
       patientId: ['', [Validators.required]],
       comments: ['', [Validators.required]],
     });
-    this.id = +this.route.snapshot.params['id'];
-    this.isAddMode = !this.id;
-    if (!this.isAddMode) {
-      this.subs.sink = this.appointmentService
-        .getAppointmentById(this.id)
-        .subscribe({
-          next: (res) => {
-            if (res.status) {
-              this.appointmentForm.setValue({
-                appTypeId: res.entity.appTypeId,
-                statusId: res.entity.statusId,
-                specialityId: res.entity.specialityId,
-                bookDate: res.entity.bookDate,
-                appDate: res.entity.appDate,
-                appTime: res.entity.appTime,
-                consultantId: res.entity.consultantId,
-                hospitalId: res.entity.hospitalId,
-                wardId: res.entity.wardId,
-                departmentId: res.entity.departmentId,
-                patientId: res.entity.patientId,
-                comments: res.entity.comments,
-              });
-            }
-          },
-        });
-    }
 
     this.subs.sink = this.generalSettingsService
       .getSpecialty()
@@ -135,9 +109,36 @@ export class AddAppointmentComponent
       .subscribe((response) => {
         this.wardList = response.entity;
       });
+
+    this.id = +this.route.snapshot.params['id'];
+    this.isAddMode = !this.id;
+    if (!this.isAddMode) {
+      this.subs.sink = this.appointmentService
+        .getAppointmentById(this.id)
+        .subscribe({
+          next: (res) => {
+            if (res.status) {
+              this.appointmentForm.setValue({
+                appTypeId: res.entity.appTypeId,
+                statusId: res.entity.statusId,
+                specialityId: res.entity.specialityId,
+                bookDate: res.entity.bookDate,
+                appDate: res.entity.appDate,
+                appTime: res.entity.appTime,
+                consultantId: res.entity.consultantId,
+                hospitalId: res.entity.hospitalId,
+                wardId: res.entity.wardId,
+                departmentId: res.entity.departmentId,
+                patientId: res.entity.patientId,
+                comments: res.entity.comments,
+              });
+            }
+          },
+        });
+    }
   }
   cancelForm() {
-    this.router.navigate(['/nhs/all-appointment']);
+    this.router.navigate(['/nhs/all-appointment/PartialBooked']);
   }
 
   onSubmit() {
@@ -155,20 +156,20 @@ export class AddAppointmentComponent
     } else {
       const patient: CreateAppointmentModel = {
         appointmentId: this.id ? +this.id : 0,
-        appTypeId: this.appointmentForm.value.appTypeId,
-        statusId: this.appointmentForm.value.statusId,
-        specialityId: this.appointmentForm.value.specialityId,
+        appTypeId: +this.appointmentForm.value.appTypeId,
+        statusId: +this.appointmentForm.value.statusId,
+        specialityId: +this.appointmentForm.value.specialityId,
         bookDate: this.appointmentForm.value.bookDate,
         appDate: this.appointmentForm.value.appDate,
         appTime: this.appointmentForm.value.appTime,
-        consultantId: this.appointmentForm.value.consultantId,
-        hospitalId: this.appointmentForm.value.hospitalId,
-        wardId: this.appointmentForm.value.wardId,
-        departmentId: this.appointmentForm.value.departmentId,
-        patientId: this.appointmentForm.value.patientId,
+        consultantId: +this.appointmentForm.value.consultantId,
+        hospitalId: +this.appointmentForm.value.hospitalId,
+        wardId: +this.appointmentForm.value.wardId,
+        departmentId: +this.appointmentForm.value.departmentId,
+        patientId: +this.appointmentForm.value.patientId,
         patientValidationId: 0,
         comments: this.appointmentForm.value.comments,
-        appointmentStatus: '',
+        appointmentStatus: 'PartialBooked',
         cancellationReason: '',
       };
       this.subs.sink = this.appointmentService
@@ -183,7 +184,7 @@ export class AddAppointmentComponent
                 'top',
                 'right'
               );
-              this.router.navigate(['/nhs/all-appointment']);
+              this.router.navigate(['/nhs/all-appointment/PartialBooked']);
             } else {
               this.showNotification(
                 'snackbar-danger',

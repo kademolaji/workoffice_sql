@@ -45,7 +45,7 @@ searchQuery = '';
 sortOrder = '';
 sortField = '';
 isTblLoading = false;
-status = '';
+status = 'PartialBooked';
 
 constructor(
   public httpClient: HttpClient,
@@ -65,6 +65,7 @@ sort!: MatSort;
 
 ngOnInit() {
   this.status = this.route.snapshot.params['status'];
+  this.searchQuery =  this.status;
   this.loadData(this.searchQuery, this.sortField, this.sortOrder);
 }
 

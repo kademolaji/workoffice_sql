@@ -36,7 +36,7 @@ export interface AppointmentResponseModel {
   appointmentStatus : string;
   cancellationReason: string;
   speciality: string;
-  patientUniqueNumber: string;
+  patientNumber: string;
   pathwayUniqueNumber: string;
 }
 

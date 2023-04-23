@@ -139,7 +139,7 @@
              Sample request:
             
              </remarks>
-             <param name="patientId"></param>
+             <param name="appointmentId"></param>
              <returns>Object of Appointments</returns>
              <response code="200">Returns object of Appointments</response>
              <response code="404">If object of Appointments is null</response> 

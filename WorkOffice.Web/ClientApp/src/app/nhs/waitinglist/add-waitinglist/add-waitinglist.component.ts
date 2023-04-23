@@ -26,6 +26,7 @@ id = 0;
 specialityList: GeneralSettingsModel[] = [];
 waitingListStatusList: GeneralSettingsModel[] = [];
 patientList: GeneralSettingsModel[] = [];
+waitTypeList: GeneralSettingsModel[] = [];
 
 constructor(
   private fb: UntypedFormBuilder,
@@ -39,7 +40,7 @@ constructor(
 }
 ngOnInit() {
   this.waitinglistForm = this.fb.group({
-    waitTypeId: ['', [Validators.required]],
+    waitTypeId:  ['', [Validators.required]],
     specialityId:   ['', [Validators.required]],
     tciDate :   ['', [Validators.required]],
     waitinglistDate :   ['', [Validators.required]],
@@ -50,26 +51,6 @@ ngOnInit() {
     patientId:  ['', [Validators.required]],
 
   });
-  this.id = +this.route.snapshot.params['id'];
-  this.isAddMode = !this.id;
-  if (!this.isAddMode) {
-    this.subs.sink = this.waitinglistService.getWaitinglistById(this.id).subscribe({
-      next: (res) => {
-        if (res.status) {
-          this.waitinglistForm.setValue({
-            waitTypeId: res.entity.waitTypeId,
-            specialityId:   res.entity.specialityId,
-            tciDate :   res.entity.tciDate,
-            waitinglistDate :   res.entity.waitinglistDate,
-            waitinglistTime:   res.entity.waitinglistTime,
-            condition :   res.entity.condition,
-            waitinglistStatus:   res.entity.waitinglistStatus,
-            pathwayUniqueNumber:   res.entity.pathwayUniqueNumber,
-          });
-        }
-      },
-    });
-  }
 
   this.subs.sink = this.generalSettingsService
   .getSpecialty()
@@ -86,6 +67,34 @@ this.subs.sink = this.generalSettingsService
   .subscribe((response) => {
     this.patientList = response.entity;
   });
+this.subs.sink = this.generalSettingsService
+  .getWaitingType()
+  .subscribe((response) => {
+    this.waitTypeList = response.entity;
+  });
+
+  this.id = +this.route.snapshot.params['id'];
+  this.isAddMode = !this.id;
+  if (!this.isAddMode) {
+    this.subs.sink = this.waitinglistService.getWaitinglistById(this.id).subscribe({
+      next: (res) => {
+        if (res.status) {
+          this.waitinglistForm.setValue({
+            waitTypeId: res.entity.waitTypeId,
+            specialityId:   res.entity.specialityId,
+            tciDate :   res.entity.tciDate,
+            waitinglistDate :   res.entity.waitinglistDate,
+            waitinglistTime:   res.entity.waitinglistTime,
+            condition :   res.entity.condition,
+            waitinglistStatus:   res.entity.waitinglistStatus,
+            pathwayUniqueNumber:   res.entity.pathwayUniqueNumber,
+            patientId: res.entity.patientId,
+          });
+        }
+      },
+    });
+  }
+
 }
 cancelForm() {
   this.router.navigate(['/nhs/all-waitinglist']);
@@ -106,12 +115,12 @@ onSubmit() {
   } else {
     const watintlist: WaitinglistModel = {
       waitinglistId : this.id ? +this.id : 0,
-      waitTypeId: this.waitinglistForm.value.waitTypeId,
-      specialityId :this.waitinglistForm.value.specialityId,
+      waitTypeId: +this.waitinglistForm.value.waitTypeId,
+      specialityId : +this.waitinglistForm.value.specialityId,
       tciDate : this.waitinglistForm.value.tciDate,
       waitinglistDate : this.waitinglistForm.value.waitinglistDate,
       waitinglistTime :this.waitinglistForm.value.waitinglistTime,
-      patientId : this.waitinglistForm.value.patientId,
+      patientId : +this.waitinglistForm.value.patientId,
       patientValidationId:0,
       condition : this.waitinglistForm.value.condition,
       waitinglistStatus: this.waitinglistForm.value.waitinglistStatus,
