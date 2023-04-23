@@ -93,11 +93,11 @@ addNew() {
   this.router.navigate(['nhs', 'add-waitinglist']);
 }
 
-editCall(row: { WaitinglistId: number }) {
+editCall(row: { waitinglistId: number }) {
   this.router.navigate([
     'nhs',
     'edit-waitinglist',
-    row.WaitinglistId,
+    row.waitinglistId,
   ]);
 }
 

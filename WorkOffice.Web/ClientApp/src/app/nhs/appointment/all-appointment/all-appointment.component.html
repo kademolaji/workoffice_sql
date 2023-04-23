@@ -15,8 +15,8 @@
                     <ul class="header-buttons-left ms-0">
                       <li class="tbl-title">
                         <h2 *ngIf="status === 'PartialBooked'">Parital Booked Appointments</h2>
-                        <h2  *ngIf="status === 'BookedAppointment'">Booked Appointments</h2>
-                        <h2  *ngIf="status === 'CancelledAppointment'">Cancelled Appointments</h2>
+                        <h2  *ngIf="status === 'Booked'">Booked Appointments</h2>
+                        <h2  *ngIf="status === 'Cancelled'">Cancelled Appointments</h2>
                       </li>
                       <li class="tbl-search-box">
                         <label for="search-input"><i class="material-icons search-icon">search</i></label>
@@ -66,15 +66,15 @@
                 </ng-container>
                 <!-- ID Column -->
                 <ng-container matColumnDef="appointmentId">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header>appointmentId</mat-header-cell>
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>AppointmentId</mat-header-cell>
                   <mat-cell *matCellDef="let row">{{row.appointmentId}}</mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="patientUniqueNumber">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header>patientUniqueNumber</mat-header-cell>
-                  <mat-cell *matCellDef="let row"> {{row.patientUniqueNumber}}</mat-cell>
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Patient UniqueNumber</mat-header-cell>
+                  <mat-cell *matCellDef="let row"> {{row.patientNumber}}</mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="pathwayUniqueNumber">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header>pathwayUniqueNumber</mat-header-cell>
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Pathway UniqueNumber</mat-header-cell>
                   <mat-cell *matCellDef="let row"> {{row.pathwayUniqueNumber}}</mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="appointmentDate">

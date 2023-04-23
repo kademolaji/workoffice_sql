@@ -32,33 +32,33 @@ export class AppointmentService extends UnsubscribeOnDestroyAdapter {
   getAllAppointment(option: SearchCall<SearchParameter>) {
    return this.httpClient
       .post<SearchReply<AppointmentResponseModel[]>>(
-        `api/appointment/GetList`, option
+        `api/appointments/GetList`, option
       );
   }
 
   getAppointmentById(id: number) {
     return this.httpClient.get<GetResponse<AppointmentResponseModel>>(
-      `api/appointment/Get?appointmentId=${id}`
+      `api/appointments/Get?appointmentId=${id}`
     );
   }
 
   addAppointment(data: CreateAppointmentModel) {
     this.dialogData = data;
     return this.httpClient.post<CreateResponse>(
-      `api/appointment/Create`,
+      `api/appointments/Create`,
       data
     );
   }
 
   deleteAppointment(id: number) {
     return this.httpClient.delete<DeleteReply>(
-      `api/appointment/Delete?appointmentId=${id}`
+      `api/appointments/Delete?appointmentId=${id}`
     );
   }
 
   deleteMultipleAppointment(targetIds: number[]) {
     return this.httpClient.post<DeleteReply>(
-      `api/appointment/MultipleDelete`, {targetIds: targetIds}
+      `api/appointments/MultipleDelete`, {targetIds: targetIds}
     );
   }
 }

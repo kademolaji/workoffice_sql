@@ -119,30 +119,30 @@ public class AppointmentsController : ControllerBase
         }
     }
 
-    // GET api/Appointments/Get
-    /// <summary>
-    /// Get object of Appointments
-    /// </summary>
-    /// <remarks>
-    /// Sample request:
-    ///
-    /// </remarks>
-    /// <param name="patientId"></param>
-    /// <returns>Object of Appointments</returns>
-    /// <response code="200">Returns object of Appointments</response>
-    /// <response code="404">If object of Appointments is null</response> 
-    /// <response code="400">If an error occur or invalid request payload</response> 
-    [HttpGet]
+        // GET api/Appointments/Get
+        /// <summary>
+        /// Get object of Appointments
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        /// </remarks>
+        /// <param name="appointmentId"></param>
+        /// <returns>Object of Appointments</returns>
+        /// <response code="200">Returns object of Appointments</response>
+        /// <response code="404">If object of Appointments is null</response> 
+        /// <response code="400">If an error occur or invalid request payload</response> 
+        [HttpGet]
     [Route("Get")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetResponse<AppointmentResponseModel>))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(GetResponse<ProducesResponseStub>))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(GetResponse<ProducesResponseStub>))]
-    public async Task<IActionResult> Get(long patientId)
+    public async Task<IActionResult> Get(long appointmentId)
     {
         try
         {
             var clientId = httpAccessorService.GetCurrentClientId();
-            var apiResponse = await service.Get(patientId);
+            var apiResponse = await service.Get(appointmentId);
             if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
             {
                 return BadRequest(apiResponse.ResponseType);

@@ -55,10 +55,10 @@ namespace WorkOffice.Services
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Ward is required." }, IsSuccess = false };
                 }
-                if (model.DepartmentId <= 0)
-                {
-                    return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Department is required." }, IsSuccess = false };
-                }
+                //if (model.DepartmentId <= 0)
+                //{
+                //    return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Department is required." }, IsSuccess = false };
+                //}
 
 
 
@@ -157,10 +157,10 @@ namespace WorkOffice.Services
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Ward is required." }, IsSuccess = false };
                 }
-                if (model.DepartmentId <= 0)
-                {
-                    return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Department is required." }, IsSuccess = false };
-                }
+                //if (model.DepartmentId <= 0)
+                //{
+                //    return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Department is required." }, IsSuccess = false };
+                //}
 
 
                 var apiResponse = new ApiResponse<CreateResponse>();
@@ -232,7 +232,7 @@ namespace WorkOffice.Services
             int pageNumber = options.From > 0 ? options.From : 0;
             int pageSize = options.PageSize > 0 ? options.PageSize : 10;
             string sortOrder = string.IsNullOrEmpty(options.SortOrder) ? "asc" : options.SortOrder;
-            string sortField = string.IsNullOrEmpty(options.SortField) ? "firstName" : options.SortField;
+            string sortField = string.IsNullOrEmpty(options.SortField) ? "patientNumber" : options.SortField;
 
             try
             {
@@ -259,6 +259,7 @@ namespace WorkOffice.Services
                                                                   AppointmentStatus = app.AppointmentStatus,
                                                                   CancellationReason = app.CancellationReason,
                                                                   PatientNumber = pat.DistrictNumber,
+                                                                  Speciality = context.Specialties.FirstOrDefault(x=>x.SpecialtyId == app.SpecialityId).Name
                                                               }).AsQueryable();
 
                 int offset = (pageNumber) * pageSize;
@@ -266,7 +267,8 @@ namespace WorkOffice.Services
                 if (!string.IsNullOrEmpty(options.Parameter.SearchQuery))
                 {
                     query = query.Where(x => x.PatientNumber.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())
-                    || x.Speciality.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower()));
+                    || x.Speciality.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())
+                    || x.AppointmentStatus.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower()));
                 }
                 switch (sortField)
                 {
@@ -309,7 +311,7 @@ namespace WorkOffice.Services
             {
                 if (appointmentId <= 0)
                 {
-                    return new ApiResponse<GetResponse<AppointmentResponseModel>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new GetResponse<AppointmentResponseModel> { Status = false, Entity = null, Message = "StructureDefinitionId is required." }, IsSuccess = false };
+                    return new ApiResponse<GetResponse<AppointmentResponseModel>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new GetResponse<AppointmentResponseModel> { Status = false, Entity = null, Message = "Appointment Id is required." }, IsSuccess = false };
                 }
 
                 var apiResponse = new ApiResponse<GetResponse<AppointmentResponseModel>>();
