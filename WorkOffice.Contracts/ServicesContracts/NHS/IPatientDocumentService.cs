@@ -12,5 +12,6 @@ namespace WorkOffice.Contracts.ServicesContracts
         Task<ApiResponse<SearchReply<PatientDocumentModel>>> GetList(SearchCall<SearchParameter> options);
         Task<ApiResponse<DeleteReply>> Delete(long patientDocumentId);
         Task<ApiResponse<DeleteReply>> MultipleDelete(MultipleDeleteModel model);
+        Task<ApiResponse<GetResponse<PatientDocumentModel>>> Get(long patientDocumentId);
     }
 }

@@ -64,7 +64,7 @@ namespace WorkOffice.Web.Controllers.NHS
                 {
                     return Ok(new { Status = false, ProjectImage = "", Message = $"Please select image file" });
                 }
-                string[] permittedExtensions = { ".png", ".jpg", ".jpeg", ".svg", ".gif" };
+                string[] permittedExtensions = { ".png", ".jpg", ".jpeg", ".svg", ".gif", ".pdf", ".txt", ".doc", ".docx" };
                 string extension = Path.GetExtension(model.File.FileName);
                 if (string.IsNullOrEmpty(extension) || !permittedExtensions.Contains(extension))
                 {
@@ -87,7 +87,7 @@ namespace WorkOffice.Web.Controllers.NHS
                         PatientId = model.PatientId,
                         PhysicalLocation = model.PhysicalLocation,
                         DocumentName = model.DocumentName,
-                        DocumentExtension = extension,
+                        DocumentExtension = model.File.ContentType,
                         DocumentFile = bytes,
                         ClinicDate = model.ClinicDate,
                         DateUploaded = DateTime.UtcNow,
@@ -256,6 +256,19 @@ namespace WorkOffice.Web.Controllers.NHS
             {
                 return BadRequest($"{ex.Message}");
             }
+        }
+
+        [HttpGet]
+        [Route("Download")]
+        public async Task<FileStreamResult> DownloadPatientDocument(int patientDocumentId)
+        {
+            var myImage = await service.Get(patientDocumentId);
+            var stream = new MemoryStream(myImage.ResponseType.Entity.DocumentFile);
+
+            return new FileStreamResult(stream, myImage.ResponseType.Entity.DocumentExtension)
+            {
+                FileDownloadName = myImage.ResponseType.Entity.DocumentName
+            };
         }
     }
 }

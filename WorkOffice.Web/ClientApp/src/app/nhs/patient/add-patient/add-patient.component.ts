@@ -25,6 +25,8 @@ import {
 } from 'src/app/core/utilities/api-response';
 import { AddPatientDocumentDialogComponent } from './dialog/add-patient-document/add-patient-document.component';
 import { DeletePatientDocumentDialogComponent } from './dialog/delete/delete.component';
+import Swal from 'sweetalert2';
+import { HttpEventType, HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-add-patient',
@@ -266,27 +268,28 @@ export class AddPatientComponent
     });
   }
 
-  editCall(row: PatientDocumentModel) {
-    let tempDirection: Direction;
-    if (localStorage.getItem('isRtl') === 'true') {
-      tempDirection = 'rtl';
-    } else {
-      tempDirection = 'ltr';
-    }
-    const dialogRef = this.dialog.open(AddPatientDocumentDialogComponent, {
-      data: row,
-      direction: tempDirection,
-    });
-    this.subs.sink = dialogRef.afterClosed().subscribe((result) => {
-      this.refresh();
-      this.showNotification(
-        'snackbar-success',
-        'Delete Record Successfully...!!!',
-        'top',
-        'right'
-      );
-    });
+  viewDocument(row: PatientDocumentModel) {
+    this.subs.sink = this.patientService.downloadDocument(row.patientDocumentId).subscribe((event) => {
+      if (event.type === HttpEventType.UploadProgress)
+          console.log("event", event)
+  else if (event.type === HttpEventType.Response) {
+      this.downloadFile(event);
   }
+      });
+
+  }
+
+  private downloadFile = (data: HttpResponse<Blob>) => {
+    const downloadedFile = new Blob([data.body as BlobPart], { type: data.body?.type });
+    const a = document.createElement('a');
+    a.setAttribute('style', 'display:none;');
+    document.body.appendChild(a);
+    a.download = "";
+    a.href = URL.createObjectURL(downloadedFile);
+    a.target = '_blank';
+    a.click();
+    document.body.removeChild(a);
+}
 
   deleteItem(row: PatientDocumentModel) {
     let tempDirection: Direction;
@@ -363,4 +366,5 @@ export class AddPatientComponent
       this.totalRows = res.totalCount;
     });
   }
+
 }

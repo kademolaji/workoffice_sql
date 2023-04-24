@@ -181,6 +181,50 @@ namespace WorkOffice.Services
             }
         }
 
+        public async Task<ApiResponse<GetResponse<PatientDocumentModel>>> Get(long patientDocumentId)
+        {
+
+            try
+            {
+                var apiResponse = new ApiResponse<GetResponse<PatientDocumentModel>>();
+
+
+                var result = await (from doc in context.NHS_Patientdocuments
+                                    where doc.PatientDocumentId == patientDocumentId
+                                    select new PatientDocumentModel
+                                    {
+                                        PatientDocumentId = doc.PatientDocumentId,
+                                        DocumentTypeId = doc.DocumentTypeId,
+                                        PatientId = doc.PatientId,
+                                        PhysicalLocation = doc.PhysicalLocation,
+                                        DocumentName = doc.DocumentName,
+                                        DocumentExtension = doc.DocumentExtension,
+                                        DocumentFile = doc.DocumentFile,
+                                        ClinicDate = doc.ClinicDate,
+                                        DateUploaded = doc.DateUploaded,
+                                        SpecialityId = doc.SpecialityId,
+
+                                    }).FirstOrDefaultAsync();
+
+
+                var response = new GetResponse<PatientDocumentModel>()
+                {
+                    Status = true,
+                    Entity = result
+                };
+
+                apiResponse.StatusCode = System.Net.HttpStatusCode.OK;
+                apiResponse.IsSuccess = true;
+                apiResponse.ResponseType = response;
+
+                return apiResponse;
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<GetResponse<PatientDocumentModel>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new GetResponse<PatientDocumentModel>() { Status = false, Message = ex.Message }, IsSuccess = false };
+            }
+        }
+
         public async Task<ApiResponse<SearchReply<PatientDocumentModel>>> GetList(SearchCall<SearchParameter> options)
         {
             int count = 0;
@@ -208,13 +252,13 @@ namespace WorkOffice.Services
                                                               ClinicDate = doc.ClinicDate,
                                                               DateUploaded = doc.DateUploaded,
                                                               SpecialityId = doc.SpecialityId,
-                                                              Speciality = doc.SpecialityId != null ? context.Specialties.FirstOrDefault(x=>x.SpecialtyId == doc.SpecialityId).Name : "" ,
+                                                              Speciality = doc.SpecialityId != null ? context.Specialties.FirstOrDefault(x => x.SpecialtyId == doc.SpecialityId).Name : "",
                                                               ConsultantName = "",
 
                                                           }).AsQueryable();
                 int offset = (pageNumber) * pageSize;
 
-               
+
                 switch (sortField)
                 {
                     case "documentName":

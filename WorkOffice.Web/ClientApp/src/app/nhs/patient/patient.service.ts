@@ -76,5 +76,13 @@ export class PatientService extends UnsubscribeOnDestroyAdapter {
     addPatientDocument(formData: FormData) {
       return this.httpClient.post<CreateResponse>('/api/patientdocument/create', formData);
     }
-
+    downloadDocument(id: number) {
+      return this.httpClient.get(
+        `api/patientdocument/Download?patientDocumentId=${id}`
+        , {
+          reportProgress: true,
+          observe: 'events',
+          responseType: 'blob'
+        });
+    }
 }

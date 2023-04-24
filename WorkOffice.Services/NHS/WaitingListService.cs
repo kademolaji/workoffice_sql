@@ -222,7 +222,7 @@ namespace WorkOffice.Services
                         PatientId = model.PatientId,
                         Condition = model.Condition,
                         WaitinglistStatus = model.WaitinglistStatus,
-
+                        
                     }).ToList(),
                 };
 
