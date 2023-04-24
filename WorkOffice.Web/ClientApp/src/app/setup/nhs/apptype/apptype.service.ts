@@ -32,34 +32,32 @@ export class AppTypeService extends UnsubscribeOnDestroyAdapter {
   getAllAppType(option: SearchCall<SearchParameter>) {
    return this.httpClient
       .post<SearchReply<AppTypeModel[]>>(
-        `api/AppType/GetList`, option
+        `api/appType/GetList`, option
       );
   }
 
   getAppTypeById(id: number) {
     return this.httpClient.get<GetResponse<AppTypeModel>>(
-      `api/AppType/Get?appTypeId=${id}`
+      `api/appType/Get?appTypeId=${id}`
     );
   }
 
   addAppType(data: AppTypeModel) {
     this.dialogData = data;
     return this.httpClient.post<CreateResponse>(
-      `api/AppType/Create`,
+      `api/appType/Create`,
       data
     );
   }
-  updateAppType(data: AppTypeModel): void {
-    this.dialogData = data;
-  }
+
   deleteAppType(id: number) {
     return this.httpClient.delete<DeleteReply>(
-      `api/AppType/Delete?appTypeId=${id}`
+      `api/appType/Delete?appTypeId=${id}`
     );
   }
   deleteMultipleAppType(targetIds: number[]) {
     return this.httpClient.post<DeleteReply>(
-      `api/AppType/MultipleDelete`, {targetIds: targetIds}
+      `api/appType/MultipleDelete`, {targetIds: targetIds}
     );
   }
 }

@@ -29,6 +29,10 @@ namespace WorkOffice.Services
         {
             try
             {
+                if (model.ConsultantId > 0)
+                {
+                    return await UpdateConsultant(model);
+                }
                 if (string.IsNullOrEmpty(model.Code))
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse { Status = false, Message = "Consultant Code is required." }, IsSuccess = false };
@@ -122,7 +126,7 @@ namespace WorkOffice.Services
                     {
                         entity.Code = model.Code;
                         entity.Name = model.Name;
-
+                        entity.CreatedOn = DateTime.UtcNow;
                         result = await context.SaveChangesAsync() > 0;
                         if (result)
                         {
@@ -258,7 +262,15 @@ namespace WorkOffice.Services
 
                 var apiResponse = new ApiResponse<GetResponse<ConsultantViewModels>>();
 
-                var result = await context.Consultants.FindAsync(consultantId);
+                //var result = await context.Consultants.FindAsync(consultantId);
+                var result = await (from co in context.Consultants
+                                    where co.ConsultantId == consultantId
+                                    select new ConsultantViewModels
+                                    {
+                                        ConsultantId = co.ConsultantId,
+                                        Code = co.Code,
+                                        Name = co.Name,
+                                    }).FirstOrDefaultAsync();
 
                 if (result == null)
                 {
@@ -268,7 +280,8 @@ namespace WorkOffice.Services
                 var response = new GetResponse<ConsultantViewModels>()
                 {
                     Status = true,
-                    Entity = result.ToModel<ConsultantViewModels>(),
+                    //Entity = result.ToModel<ConsultantViewModels>(),
+                    Entity = result,
                     Message = ""
                 };
 

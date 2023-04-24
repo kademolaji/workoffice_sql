@@ -29,6 +29,11 @@ namespace WorkOffice.Services
         {
             try
             {
+
+                if (model.HospitalId > 0)
+                {
+                    return await UpdateHospital(model);
+                }
                 if (string.IsNullOrEmpty(model.Code))
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse { Status = false, Message = "Hospital Code is required." }, IsSuccess = false };
@@ -122,7 +127,7 @@ namespace WorkOffice.Services
                     {
                         entity.Code = model.Code;
                         entity.Name = model.Name;
-
+                        entity.CreatedOn = DateTime.UtcNow;
                         result = await context.SaveChangesAsync() > 0;
                         if (result)
                         {

@@ -32,34 +32,31 @@ export class HospitalService extends UnsubscribeOnDestroyAdapter {
   getAllHospital(option: SearchCall<SearchParameter>) {
    return this.httpClient
       .post<SearchReply<HospitalModel[]>>(
-        `api/Hospital/GetList`, option
+        `api/hospital/GetList`, option
       );
   }
 
   getHospitalById(id: number) {
     return this.httpClient.get<GetResponse<HospitalModel>>(
-      `api/Hospital/Get?hospitalId=${id}`
+      `api/hospital/Get?hospitalId=${id}`
     );
   }
 
   addHospital(data: HospitalModel) {
     this.dialogData = data;
     return this.httpClient.post<CreateResponse>(
-      `api/Hospital/Create`,
+      `api/hospital/Create`,
       data
     );
   }
-  updateHospital(data: HospitalModel): void {
-    this.dialogData = data;
-  }
   deleteHospital(id: number) {
     return this.httpClient.delete<DeleteReply>(
-      `api/Hospital/Delete?hospitalId=${id}`
+      `api/hospital/Delete?hospitalId=${id}`
     );
   }
   deleteMultipleHospital(targetIds: number[]) {
     return this.httpClient.post<DeleteReply>(
-      `api/Hospital/MultipleDelete`, {targetIds: targetIds}
+      `api/hospital/MultipleDelete`, {targetIds: targetIds}
     );
   }
 }

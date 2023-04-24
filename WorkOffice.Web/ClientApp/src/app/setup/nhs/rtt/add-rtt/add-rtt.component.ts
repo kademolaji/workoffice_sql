@@ -46,7 +46,7 @@ export class AddRTTComponent
       code: ['', [Validators.required]],
       name: ['', [Validators.required]],
     });
-    this.id = this.route.snapshot.params['id'];
+    this.id = +this.route.snapshot.params['id'];
     this.isAddMode = !this.id;
     if(!this.isAddMode){
       this.subs.sink = this.RTTService
@@ -84,7 +84,8 @@ export class AddRTTComponent
       return;
     } else {
       const rtt: RTTModel = {
-        rttId: this.id,
+        //rttId: this.id,
+        rttId: this.id ? + this.id : 0,
         code: this.rttForm.value.code,
         name: this.rttForm.value.name,
 

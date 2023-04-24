@@ -32,7 +32,7 @@ export class WaitinglistService extends UnsubscribeOnDestroyAdapter {
   getAllWaitinglist(option: SearchCall<SearchParameter>) {
    return this.httpClient
       .post<SearchReply<WaitinglistModel[]>>(
-        `api/waitinglist/GetList`, option
+        `api/waitingList/GetList`, option
       );
   }
 
@@ -52,13 +52,13 @@ export class WaitinglistService extends UnsubscribeOnDestroyAdapter {
 
   deleteWaitinglist(id: number) {
     return this.httpClient.delete<DeleteReply>(
-      `api/waitinglist/Delete?waitinglistId=${id}`
+      `api/waitingList/Delete?waitinglistId=${id}`
     );
   }
 
   deleteMultipleWaitinglist(targetIds: number[]) {
     return this.httpClient.post<DeleteReply>(
-      `api/waitinglist/MultipleDelete`, {targetIds: targetIds}
+      `api/waitingList/MultipleDelete`, {targetIds: targetIds}
     );
   }
 }

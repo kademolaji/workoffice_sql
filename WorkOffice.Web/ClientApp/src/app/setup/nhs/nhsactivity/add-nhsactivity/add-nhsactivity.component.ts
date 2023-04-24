@@ -45,7 +45,7 @@ export class AddNHSActivityComponent
       code: ['', [Validators.required]],
       name: ['', [Validators.required]],
     });
-    this.id = this.route.snapshot.params['id'];
+    this.id = +this.route.snapshot.params['id'];
     this.isAddMode = !this.id;
     if(!this.isAddMode){
       this.subs.sink = this.NHSActivityService
@@ -83,7 +83,8 @@ export class AddNHSActivityComponent
       return;
     } else {
       const nhsActivity: NHSActivityModel = {
-        nhsActivityId: this.id,
+        //nhsActivityId: this.id,
+        nhsActivityId: this.id ? + this.id : 0,
         code: this.nhsActivityForm.value.code,
         name: this.nhsActivityForm.value.name,
 

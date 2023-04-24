@@ -45,7 +45,7 @@ export class AddHospitalComponent
       code: ['', [Validators.required]],
       name: ['', [Validators.required]],
     });
-    this.id = this.route.snapshot.params['id'];
+    this.id = +this.route.snapshot.params['id'];
     this.isAddMode = !this.id;
     if(!this.isAddMode){
       this.subs.sink = this.HospitalService
@@ -83,7 +83,8 @@ export class AddHospitalComponent
       return;
     } else {
       const hospital: HospitalModel = {
-        hospitalId: this.id,
+        // hospitalId: this.id,
+        hospitalId: this.id ? + this.id : 0,
         code: this.hospitalForm.value.code,
         name: this.hospitalForm.value.name,
 

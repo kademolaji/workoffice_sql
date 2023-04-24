@@ -32,34 +32,31 @@ export class SpecialtyService extends UnsubscribeOnDestroyAdapter {
   getAllSpecialty(option: SearchCall<SearchParameter>) {
    return this.httpClient
       .post<SearchReply<SpecialtyModel[]>>(
-        `api/Specialty/GetList`, option
+        `api/specialty/GetList`, option
       );
   }
 
   getSpecialtyById(id: number) {
     return this.httpClient.get<GetResponse<SpecialtyModel>>(
-      `api/Specialty/Get?specialtyId=${id}`
+      `api/specialty/Get?specialtyId=${id}`
     );
   }
 
   addSpecialty(data: SpecialtyModel) {
     this.dialogData = data;
     return this.httpClient.post<CreateResponse>(
-      `api/Specialty/Create`,
+      `api/specialty/Create`,
       data
     );
   }
-  updateSpecialty(data: SpecialtyModel): void {
-    this.dialogData = data;
-  }
   deleteSpecialty(id: number) {
     return this.httpClient.delete<DeleteReply>(
-      `api/Specialty/Delete?specialtyId=${id}`
+      `api/specialty/Delete?specialtyId=${id}`
     );
   }
   deleteMultipleSpecialty(targetIds: number[]) {
     return this.httpClient.post<DeleteReply>(
-      `api/Specialty/MultipleDelete`, {targetIds: targetIds}
+      `api/specialty/MultipleDelete`, {targetIds: targetIds}
     );
   }
 }

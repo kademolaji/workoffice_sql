@@ -32,34 +32,32 @@ export class WardService extends UnsubscribeOnDestroyAdapter {
   getAllWard(option: SearchCall<SearchParameter>) {
    return this.httpClient
       .post<SearchReply<WardModel[]>>(
-        `api/Ward/GetList`, option
+        `api/ward/GetList`, option
       );
   }
 
   getWardById(id: number) {
     return this.httpClient.get<GetResponse<WardModel>>(
-      `api/Ward/Get?wardId=${id}`
+      `api/ward/Get?wardId=${id}`
     );
   }
 
   addWard(data: WardModel) {
     this.dialogData = data;
     return this.httpClient.post<CreateResponse>(
-      `api/Ward/Create`,
+      `api/ward/Create`,
       data
     );
   }
-  updateWard(data: WardModel): void {
-    this.dialogData = data;
-  }
+
   deleteWard(id: number) {
     return this.httpClient.delete<DeleteReply>(
-      `api/Ward/Delete?wardId=${id}`
+      `api/ward/Delete?wardId=${id}`
     );
   }
   deleteMultipleWard(targetIds: number[]) {
     return this.httpClient.post<DeleteReply>(
-      `api/Ward/MultipleDelete`, {targetIds: targetIds}
+      `api/ward/MultipleDelete`, {targetIds: targetIds}
     );
   }
 }

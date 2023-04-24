@@ -32,34 +32,32 @@ export class ConsultantService extends UnsubscribeOnDestroyAdapter {
   getAllConsultant(option: SearchCall<SearchParameter>) {
    return this.httpClient
       .post<SearchReply<ConsultantModel[]>>(
-        `api/Consultant/GetList`, option
+        `api/consultant/GetList`, option
       );
   }
 
   getConsultantById(id: number) {
     return this.httpClient.get<GetResponse<ConsultantModel>>(
-      `api/Consultant/Get?consultantId=${id}`
+      `api/consultant/Get?consultantId=${id}`
     );
   }
 
   addConsultant(data: ConsultantModel) {
     this.dialogData = data;
     return this.httpClient.post<CreateResponse>(
-      `api/Consultant/Create`,
+      `api/consultant/Create`,
       data
     );
   }
-  updateConsultant(data: ConsultantModel): void {
-    this.dialogData = data;
-  }
+
   deleteConsultant(id: number) {
     return this.httpClient.delete<DeleteReply>(
-      `api/Consultant/Delete?consultantId=${id}`
+      `api/consultant/Delete?consultantId=${id}`
     );
   }
   deleteMultipleConsultant(targetIds: number[]) {
     return this.httpClient.post<DeleteReply>(
-      `api/Consultant/MultipleDelete`, {targetIds: targetIds}
+      `api/consultant/MultipleDelete`, {targetIds: targetIds}
     );
   }
 }

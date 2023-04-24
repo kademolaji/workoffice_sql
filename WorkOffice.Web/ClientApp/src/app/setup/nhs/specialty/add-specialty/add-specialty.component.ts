@@ -46,7 +46,7 @@ export class AddSpecialtyComponent
       code: ['', [Validators.required]],
       name: ['', [Validators.required]],
     });
-    this.id = this.route.snapshot.params['id'];
+    this.id = +this.route.snapshot.params['id'];
     this.isAddMode = !this.id;
     if(!this.isAddMode){
       this.subs.sink = this.SpecialtyService
@@ -84,7 +84,8 @@ export class AddSpecialtyComponent
       return;
     } else {
       const specialty: SpecialtyModel = {
-        specialtyId: this.id,
+        //specialtyId: this.id,
+        specialtyId: this.id ? + this.id : 0,
         code: this.specialtyForm.value.code,
         name: this.specialtyForm.value.name,
 

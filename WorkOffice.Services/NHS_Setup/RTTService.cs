@@ -29,6 +29,10 @@ namespace WorkOffice.Services
         {
             try
             {
+                if (model.RTTId > 0)
+                {
+                    return await UpdateRTT(model);
+                }
                 if (string.IsNullOrEmpty(model.Code))
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse { Status = false, Message = "RTT Code is required." }, IsSuccess = false };
@@ -122,7 +126,7 @@ namespace WorkOffice.Services
                     {
                         entity.Code = model.Code;
                         entity.Name = model.Name;
-
+                        entity.CreatedOn = DateTime.UtcNow;
                         result = await context.SaveChangesAsync() > 0;
                         if (result)
                         {

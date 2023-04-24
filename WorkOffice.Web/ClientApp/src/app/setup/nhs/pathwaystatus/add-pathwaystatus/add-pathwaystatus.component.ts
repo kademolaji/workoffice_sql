@@ -46,7 +46,7 @@ export class AddPathwayStatusComponent
       code: ['', [Validators.required]],
       name: ['', [Validators.required]],
     });
-    this.id = this.route.snapshot.params['id'];
+    this.id = +this.route.snapshot.params['id'];
     this.isAddMode = !this.id;
     if(!this.isAddMode){
       this.subs.sink = this.PathwayStatusService
@@ -84,7 +84,8 @@ export class AddPathwayStatusComponent
       return;
     } else {
       const pathwayStatus: PathwayStatusModel = {
-        pathwayStatusId: this.id,
+        //pathwayStatusId: this.id,
+        pathwayStatusId: this.id ? + this.id : 0,
         code: this.pathwayStatusForm.value.code,
         name: this.pathwayStatusForm.value.name,
 

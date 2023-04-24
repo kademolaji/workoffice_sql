@@ -32,34 +32,32 @@ export class RTTService extends UnsubscribeOnDestroyAdapter {
   getAllRTT(option: SearchCall<SearchParameter>) {
    return this.httpClient
       .post<SearchReply<RTTModel[]>>(
-        `api/RTT/GetList`, option
+        `api/rtt/GetList`, option
       );
   }
 
   getRTTById(id: number) {
     return this.httpClient.get<GetResponse<RTTModel>>(
-      `api/RTT/Get?rttId=${id}`
+      `api/rtt/Get?rttId=${id}`
     );
   }
 
   addRTT(data: RTTModel) {
     this.dialogData = data;
     return this.httpClient.post<CreateResponse>(
-      `api/RTT/Create`,
+      `api/rtt/Create`,
       data
     );
   }
-  updateRTT(data: RTTModel): void {
-    this.dialogData = data;
-  }
+
   deleteRTT(id: number) {
     return this.httpClient.delete<DeleteReply>(
-      `api/RTT/Delete?rttId=${id}`
+      `api/rtt/Delete?rttId=${id}`
     );
   }
   deleteMultipleRTT(targetIds: number[]) {
     return this.httpClient.post<DeleteReply>(
-      `api/RTT/MultipleDelete`, {targetIds: targetIds}
+      `api/rtt/MultipleDelete`, {targetIds: targetIds}
     );
   }
 }
