@@ -32,5 +32,9 @@ namespace WorkOffice.Common
         Specialty = 24,
         Waiting_Type = 25,
         Ward = 26,
+        Diagnostic_Information=27,
+        Referral_Information = 28,
+        DiagnosticResult_Document = 29,
+
     }
 }

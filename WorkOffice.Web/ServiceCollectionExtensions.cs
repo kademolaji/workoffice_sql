@@ -57,6 +57,9 @@ namespace WorkOffice.Web
             services.AddScoped<IPatientDocumentService, PatientDocumentService>();
             services.AddScoped<IAppointmentsServices, AppointmentsServices>();
             services.AddScoped<IWaitingListService, WaitingListService>();
+            services.AddScoped<IDiagnosticService, DiagnosticService>();
+            services.AddScoped<IDiagnosticResultService, DiagnosticResultService>();
+            services.AddScoped<IReferralService, ReferralService>();
 
             services.AddScoped<DataContext>();
 
