@@ -258,10 +258,11 @@ export class AddPatientComponent
       direction: tempDirection,
     });
     this.subs.sink = dialogRef.afterClosed().subscribe((result) => {
+      console.log("result", result)
       this.refresh();
       this.showNotification(
         'snackbar-success',
-        'Delete Record Successfully...!!!',
+        'Record Uploaded Successfully...!!!',
         'top',
         'right'
       );
