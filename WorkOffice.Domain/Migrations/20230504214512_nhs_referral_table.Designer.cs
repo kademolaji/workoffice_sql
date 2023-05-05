@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using WorkOffice.Domain.Helpers;
@@ -9,9 +10,10 @@ using WorkOffice.Domain.Helpers;
 namespace WorkOffice.Domain.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230504214512_nhs_referral_table")]
+    partial class nhs_referral_table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -786,9 +788,6 @@ namespace WorkOffice.Domain.Migrations
                     b.Property<int?>("NHS_DiagnosticDiagnosticId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("NHS_Patient_ValidationPatientValidationId")
-                        .HasColumnType("integer");
-
                     b.Property<int?>("NHS_ReferralReferralId")
                         .HasColumnType("integer");
 
@@ -814,8 +813,6 @@ namespace WorkOffice.Domain.Migrations
                     b.HasKey("PatientId");
 
                     b.HasIndex("NHS_DiagnosticDiagnosticId");
-
-                    b.HasIndex("NHS_Patient_ValidationPatientValidationId");
 
                     b.HasIndex("NHS_ReferralReferralId");
 
@@ -876,21 +873,18 @@ namespace WorkOffice.Domain.Migrations
                     b.Property<long?>("PathwayStatusId")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("PatientId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("RTTId")
-                        .HasColumnType("integer")
+                    b.Property<string>("RTTId")
+                        .HasColumnType("character varying(50)")
                         .HasMaxLength(50);
 
                     b.Property<string>("RTTWait")
                         .HasColumnType("character varying(550)")
                         .HasMaxLength(550);
 
-                    b.Property<int>("SpecialtyId")
+                    b.Property<int>("SpecialityId")
                         .HasColumnType("integer");
 
-                    b.Property<long?>("SpecialtyId1")
+                    b.Property<long?>("SpecialtyId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("UpdatedBy")
@@ -906,7 +900,7 @@ namespace WorkOffice.Domain.Migrations
 
                     b.HasIndex("PatientValidationId");
 
-                    b.HasIndex("SpecialtyId1");
+                    b.HasIndex("SpecialtyId");
 
                     b.ToTable("NHS_Patient_Validations");
                 });
@@ -1937,10 +1931,6 @@ namespace WorkOffice.Domain.Migrations
                         .WithMany("NHS_Patient")
                         .HasForeignKey("NHS_DiagnosticDiagnosticId");
 
-                    b.HasOne("WorkOffice.Domain.Entities.NHS_Patient_Validation", null)
-                        .WithMany("NHS_Patient")
-                        .HasForeignKey("NHS_Patient_ValidationPatientValidationId");
-
                     b.HasOne("WorkOffice.Domain.Entities.NHS_Referral", null)
                         .WithMany("NHS_Patient")
                         .HasForeignKey("NHS_ReferralReferralId");
@@ -1954,7 +1944,7 @@ namespace WorkOffice.Domain.Migrations
 
                     b.HasOne("WorkOffice.Domain.Entities.Specialty", "Specialty")
                         .WithMany()
-                        .HasForeignKey("SpecialtyId1");
+                        .HasForeignKey("SpecialtyId");
                 });
 
             modelBuilder.Entity("WorkOffice.Domain.Entities.NHS_Patient_Validation_Detail", b =>

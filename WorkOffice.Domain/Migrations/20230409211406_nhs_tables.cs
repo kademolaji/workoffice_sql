@@ -28,14 +28,15 @@ namespace WorkOffice.Domain.Migrations
                 {
                     PatientValidationId = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    PatientId = table.Column<int>(nullable: false),
                     PathWayNumber = table.Column<string>(maxLength: 150, nullable: false),
                     PathWayCondition = table.Column<string>(maxLength: 150, nullable: true),
                     PathWayStatusId = table.Column<int>(nullable: true),
                     PathWayStatusIdCode = table.Column<string>(nullable: true),
                     PathWayStartDate = table.Column<DateTime>(nullable: false),
                     PathWayEndDate = table.Column<DateTime>(nullable: true),
-                    SpecialityId = table.Column<int>(nullable: false),
-                    RTTId = table.Column<string>(maxLength: 50, nullable: true),
+                    SpecialtyId = table.Column<int>(nullable: true),
+                    RTTId = table.Column<int>(maxLength: 50, nullable: true),
                     RTTWait = table.Column<string>(maxLength: 550, nullable: true),
                     DistrictNumber = table.Column<string>(maxLength: 50, nullable: true),
                     NHSNumber = table.Column<string>(maxLength: 50, nullable: true),
@@ -46,7 +47,7 @@ namespace WorkOffice.Domain.Migrations
                     UpdatedBy = table.Column<string>(maxLength: 50, nullable: true),
                     UpdatedOn = table.Column<DateTime>(nullable: true),
                     PathwayStatusId = table.Column<long>(nullable: true),
-                    SpecialtyId = table.Column<long>(nullable: true)
+                    //SpecialtyId = table.Column<long>(nullable: true)
                 },
                 constraints: table =>
                 {
