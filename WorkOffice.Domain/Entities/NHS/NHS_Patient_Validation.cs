@@ -12,10 +12,12 @@ namespace WorkOffice.Domain.Entities
             NHS_Appointment = new HashSet<NHS_Appointment>();
             NHS_Patient_Validation_Detail = new HashSet<NHS_Patient_Validation_Detail>();
             NHS_Waitinglist = new HashSet<NHS_Waitinglist>();
+            NHS_Patient = new HashSet<NHS_Patient>();
         }
 
         [Key]
         public int PatientValidationId { get; set; }
+        public int PatientId { get; set; }
 
         [Required]
         [StringLength(150)]
@@ -32,10 +34,10 @@ namespace WorkOffice.Domain.Entities
 
         public DateTime? PathWayEndDate { get; set; }
 
-        public int SpecialityId { get; set; }
+        public int SpecialtyId { get; set; }
 
         [StringLength(50)]
-        public string RTTId { get; set; }
+        public int RTTId { get; set; }
 
         [StringLength(550)]
         public string RTTWait { get; set; }
@@ -61,6 +63,8 @@ namespace WorkOffice.Domain.Entities
         public DateTime? UpdatedOn { get; set; }
 
         public virtual ICollection<NHS_Appointment> NHS_Appointment { get; set; }
+
+        public virtual ICollection<NHS_Patient> NHS_Patient { get; set; }
 
         public virtual PathwayStatus PathwayStatus { get; set; }
 

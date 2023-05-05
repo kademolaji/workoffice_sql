@@ -173,6 +173,142 @@
              <response code="404">If object of Appointments is null</response> 
              <response code="400">If an error occur or invalid request payload</response> 
         </member>
+        <member name="M:WorkOffice.Web.Controllers.DiagnosticController.Create(WorkOffice.Contracts.Models.DiagnosticModel)">
+             <summary>
+             Create Diagnostic
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 POST /api/Diagnostic/Create
+                 {
+                   "revenueId": 10,
+                   "customerId": 210
+                     }
+            
+             </remarks>
+             <param name="model"></param>
+             <returns>Created success message </returns>
+             <response code="201">Diagnostic Created Successfully</response>
+             <response code="400">If an error occur or invalid request payload</response>
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.DiagnosticController.GetList(WorkOffice.Contracts.ServicesContracts.SearchCall{WorkOffice.Contracts.ServicesContracts.SearchParameter})">
+             <summary>
+             Get list of Diagnostic
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="options"></param>
+             <returns>List of Diagnostic</returns>
+             <response code="200">Returns list of Diagnostic</response>
+             <response code="404">If list of Diagnostic is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.DiagnosticController.Get(System.Int64)">
+             <summary>
+             Get object of Diagnostic
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="DiagnosticId"></param>
+             <returns>Object of Diagnostic</returns>
+             <response code="200">Returns object of Diagnostic</response>
+             <response code="404">If object of Diagnostic is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.DiagnosticController.Delete(System.Int64)">
+             <summary>
+             Delete Diagnostic
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="DiagnosticId"></param>
+             <returns>Object of Diagnostic</returns>
+             <response code="200">Returns object of Diagnostic</response>
+             <response code="404">If object of Diagnostic is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.DiagnosticController.MultipleDelete(WorkOffice.Contracts.Models.MultipleDeleteModel)">
+             <summary>
+             Delete Multiple Diagnostic
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="model"></param>
+             <returns>Object of Diagnostic</returns>
+             <response code="200">Returns object of Diagnostic</response>
+             <response code="404">If object of Diagnostic is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.NHS.DiagnosticResultController.Create(WorkOffice.Web.Dtos.DiagnosticResultDto)">
+             <summary>
+             Create DiagnosticResult
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 POST /api/DiagnosticResult/Create
+                 {
+                   "revenueId": 10,
+                   "customerId": 210
+                     }
+            
+             </remarks>
+             <param name="model"></param>
+             <returns>Created success message </returns>
+             <response code="201">DiagnosticResult Created Successfully</response>
+             <response code="400">If an error occur or invalid request payload</response>
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.NHS.DiagnosticResultController.GetList(WorkOffice.Contracts.ServicesContracts.SearchCall{WorkOffice.Contracts.ServicesContracts.SearchParameter})">
+             <summary>
+             Get list of DiagnosticResult
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="options"></param>
+             <returns>List of DiagnosticResult</returns>
+             <response code="200">Returns list of DiagnosticResult</response>
+             <response code="404">If list of DiagnosticResult is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.NHS.DiagnosticResultController.Delete(System.Int64)">
+             <summary>
+             Delete DiagnosticResult
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="patientId"></param>
+             <returns>Object of DiagnosticResult</returns>
+             <response code="200">Returns object of DiagnosticResult</response>
+             <response code="404">If object of DiagnosticResult is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.NHS.DiagnosticResultController.MultipleDelete(WorkOffice.Contracts.Models.MultipleDeleteModel)">
+             <summary>
+             Delete Multiple DiagnosticResult
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="model"></param>
+             <returns>Object of DiagnosticResult</returns>
+             <response code="200">Returns object of DiagnosticResult</response>
+             <response code="404">If object of DiagnosticResult is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
         <member name="M:WorkOffice.Web.Controllers.NHS.PatientDocumentController.Create(WorkOffice.Web.Dtos.PatientDocumentDto)">
              <summary>
              Create PatientDocument
@@ -307,6 +443,81 @@
              <returns>Object of PatientInformation</returns>
              <response code="200">Returns object of PatientInformation</response>
              <response code="404">If object of PatientInformation is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.ReferralController.Create(WorkOffice.Web.Dtos.ReferralDto)">
+             <summary>
+             Create Referral
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 POST /api/Referral/Create
+                 {
+                   "revenueId": 10,
+                   "customerId": 210
+                     }
+            
+             </remarks>
+             <param name="model"></param>
+             <returns>Created success message </returns>
+             <response code="201">Referral Created Successfully</response>
+             <response code="400">If an error occur or invalid request payload</response>
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.ReferralController.GetList(WorkOffice.Contracts.ServicesContracts.SearchCall{WorkOffice.Contracts.ServicesContracts.SearchParameter})">
+             <summary>
+             Get list of Referral
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="options"></param>
+             <returns>List of Referral</returns>
+             <response code="200">Returns list of Referral</response>
+             <response code="404">If list of Referral is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.ReferralController.Get(System.Int64)">
+             <summary>
+             Get object of Referral
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="ReferralId"></param>
+             <returns>Object of Referral</returns>
+             <response code="200">Returns object of Referral</response>
+             <response code="404">If object of Referral is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.ReferralController.Delete(System.Int64)">
+             <summary>
+             Delete Referral
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="ReferralId"></param>
+             <returns>Object of Referral</returns>
+             <response code="200">Returns object of Referral</response>
+             <response code="404">If object of Referral is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.ReferralController.MultipleDelete(WorkOffice.Contracts.Models.MultipleDeleteModel)">
+             <summary>
+             Delete Multiple Referral
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="model"></param>
+             <returns>Object of Referral</returns>
+             <response code="200">Returns object of Referral</response>
+             <response code="404">If object of Referral is null</response> 
              <response code="400">If an error occur or invalid request payload</response> 
         </member>
         <member name="M:WorkOffice.Web.Controllers.WaitingListController.Create(WorkOffice.Contracts.Models.WaitingListModel)">

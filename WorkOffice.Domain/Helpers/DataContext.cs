@@ -56,6 +56,9 @@ namespace WorkOffice.Domain.Helpers
         public DbSet<NHS_Patientdocument> NHS_Patientdocuments { get; set; }
         public DbSet<NHS_Patient_Validation> NHS_Patient_Validations { get; set; }
         public DbSet<NHS_Patient_Validation_Detail> NHS_Patient_Validation_Details { get; set; }
+        public DbSet<NHS_Diagnostic> NHS_Diagnostics { get; set; }
+        public DbSet<NHS_DiagnosticResult> NHS_DiagnosticResults { get; set; }
+        public DbSet<NHS_Referral> NHS_Referrals { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -100,6 +103,9 @@ namespace WorkOffice.Domain.Helpers
             modelBuilder.Entity<NHS_Patientdocument>().HasIndex(ur => new { ur.PatientDocumentId });
             modelBuilder.Entity<NHS_Patient_Validation>().HasIndex(ur => new { ur.PatientValidationId });
             modelBuilder.Entity<NHS_Patient_Validation_Detail>().HasIndex(ur => new { ur.PatientValidationDetailsId });
+            modelBuilder.Entity<NHS_Diagnostic>().HasIndex(ur => new { ur.DiagnosticId });
+            modelBuilder.Entity<NHS_DiagnosticResult>().HasIndex(ur => new { ur.DiagnosticResultId });
+            modelBuilder.Entity<NHS_Referral>().HasIndex(ur => new { ur.ReferralId });
 
             modelBuilder.UseIdentityColumns();
 
