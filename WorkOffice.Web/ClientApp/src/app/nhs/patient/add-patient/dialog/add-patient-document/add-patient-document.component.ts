@@ -71,7 +71,6 @@ export class AddPatientDocumentDialogComponent
       return;
     } else {
       const formData = new FormData();
-      console.log('this.patientDocumentForm', this.patientDocumentForm.value);
       formData.append('patientDocumentId', this.data.patientDocumentId.toString());
       formData.append('patientId',  this.data.patientId.toString());
       formData.append('documentTypeId', this.data.documentTypeId.toString());

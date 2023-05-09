@@ -83,9 +83,11 @@ namespace WorkOffice.Web.Controllers.NHS
                 {
                     var newModel = new DiagnosticResultModel
                     {
+                        DiagnosticResultId = model.DiagnosticResultId,
                         DiagnosticId = model.DiagnosticId,
                         PatientId = model.PatientId,
                         ConsultantName = model.ConsultantName,
+                        DocumentName = model.DocumentName,
                         DocumentExtension = model.File.ContentType,
                         DocumentFile = bytes,
                         TestResultDate = model.TestResultDate,

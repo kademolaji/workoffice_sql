@@ -173,34 +173,46 @@ namespace WorkOffice.Services
             int pageNumber = options.From > 0 ? options.From : 0;
             int pageSize = options.PageSize > 0 ? options.PageSize : 10;
             string sortOrder = string.IsNullOrEmpty(options.SortOrder) ? "asc" : options.SortOrder;
-            string sortField = string.IsNullOrEmpty(options.SortField) ? "consultant" : options.SortField;
+            string sortField = string.IsNullOrEmpty(options.SortField) ? "patientName" : options.SortField;
 
             try
             {
                 var apiResponse = new ApiResponse<SearchReply<ReferralModel>>();
 
 
-                IQueryable<NHS_Referral> query = context.NHS_Referrals;
+                IQueryable<ReferralModel> query = (from app in context.NHS_Referrals
+                                                     join pat in context.NHS_Patients on app.PatientId equals pat.PatientId
+                                                     select new ReferralModel
+                                                     {
+                                                         ReferralId = app.ReferralId,
+                                                         PatientId = app.PatientId,
+                                                         ConsultantId = app.ConsultantId,
+                                                         DocumentName = app.DocumentName,
+                                                         PatientName = pat.FirstName + " " + pat.LastName,
+                                                         SpecialtyId = app.SpecialtyId,
+                                                         ReferralDate = app.ReferralDate,
+                                                         ConsultantName = app.ConsultantName,
+                                                         Specialty = context.Specialties.FirstOrDefault(x => x.SpecialtyId == app.SpecialtyId).Name
+                                                     }).AsQueryable();
                 int offset = (pageNumber) * pageSize;
 
                 if (!string.IsNullOrEmpty(options.Parameter.SearchQuery))
                 {
-                    query = query.Where(x => x.ConsultantName.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower()));
-                    //|| x.LastName.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())
-                    //|| x.MiddleName.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())
-                    //|| x.Address.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())
-                    //|| x.DistrictNumber.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())
-                    //|| x.NHSNumber.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower()));
+                    query = query.Where(x => x.ConsultantName.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())
+                    || x.DocumentName.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())
+                    || x.PatientName.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())
+                    || x.Specialty.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())
+                 );
                 }
                 switch (sortField)
                 {
-                    case "firsName":
+                    case "patientName":
+                        query = sortOrder == "asc" ? query.OrderBy(s => s.PatientName) : query.OrderByDescending(s => s.PatientName);
+                        break;
+                    case "consultantName":
                         query = sortOrder == "asc" ? query.OrderBy(s => s.ConsultantName) : query.OrderByDescending(s => s.ConsultantName);
                         break;
-                    //case "email":
-                    //    query = sortOrder == "asc" ? query.OrderBy(s => s.Email) : query.OrderByDescending(s => s.Email);
-                    //    break;
-                  
+
                     default:
                         query = query.OrderBy(s => s.ConsultantName);
                         break;
@@ -212,16 +224,7 @@ namespace WorkOffice.Services
                 var response = new SearchReply<ReferralModel>()
                 {
                     TotalCount = count,
-                    Result = items.Select(x => new ReferralModel {
-                        ReferralId = x.ReferralId,
-                        PatientId = x.PatientId,
-                        SpecialtyId = x.SpecialtyId,
-                        ConsultantId = x.ConsultantId,
-                        ConsultantName = x.ConsultantName,
-                        DocumentExtension = x.DocumentExtension,
-                        DocumentFile = x.DocumentFile,
-                        //FullName = $"{x.FirstName} {x.MiddleName} {x.LastName}"
-                    }).ToList(),
+                    Result = items.ToList(),
                 };
 
                 apiResponse.StatusCode = System.Net.HttpStatusCode.OK;
@@ -266,7 +269,6 @@ namespace WorkOffice.Services
                         DocumentExtension = result.DocumentExtension,
                         DocumentFile = result.DocumentFile,
                         DocumentName = result.DocumentName,
-                        //FullName = $"{result.FirstName} {result.MiddleName} {result.LastName}"
                     },
                     Message = ""
                 };

@@ -1,0 +1,113 @@
+<section class="content">
+  <div class="content-block">
+    <div class="block-header">
+      <!-- breadcrumb -->
+      <app-breadcrumb *ngIf="isAddMode" [title]="'Add Company Structure Definition'" [items]="['Company Structure Definition']" [active_item]="'Company Structure Definition'"></app-breadcrumb>
+      <app-breadcrumb *ngIf="!isAddMode" [title]="'Edit Company Structure Definition'" [items]="['Company Structure Definition']" [active_item]="'Edit Company Structure Definition'"></app-breadcrumb>
+
+    </div>
+    <div class="row clearfix">
+      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="card">
+          <div class="header">
+            <h2 *ngIf="isAddMode"><strong> Add New Company Structure Definition</strong></h2>
+            <h2 *ngIf="!isAddMode"><strong> Edit Company Structure Definition</strong></h2>
+          </div>
+          <div class="body">
+            <form class="m-4" [formGroup]="referralForm" (ngSubmit)="onSubmit()">
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Patient District Number</mat-label>
+                    <mat-select formControlName="patientId" required>
+                      <mat-option  *ngFor="let patient of patientList" [value]="patient.value">
+                        {{patient.label}}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="referralForm.get('patientId')?.hasError('required')">
+                      Patient District Number is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Document Name</mat-label>
+                    <input matInput formControlName="documentName">
+                    <mat-error *ngIf="referralForm.get('documentName')?.hasError('required')">
+                      Document Name is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Consultant</mat-label>
+                    <mat-select formControlName="consultantId" required>
+                      <mat-option  *ngFor="let patient of consultantList" [value]="patient.value">
+                        {{patient.label}}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="referralForm.get('consultantId')?.hasError('required')">
+                      Consultant is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Speciality</mat-label>
+                    <mat-select formControlName="specialtyId" required>
+                      <mat-option  *ngFor="let patient of specialityList" [value]="patient.value">
+                        {{patient.label}}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="referralForm.get('specialtyId')?.hasError('required')">
+                      Speciality is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+
+                    <mat-label>Referral Date</mat-label>
+                    <input matInput [matDatepicker]="picker1" formControlName="referralDate" required>
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                    <mat-error *ngIf="referralForm.get('referralDate')?.hasError('required')">
+                      Please select Referral Date
+                    </mat-error>
+
+                  </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Referal Name</mat-label>
+                    <input matInput formControlName="consultantName">
+                    <mat-error *ngIf="referralForm.get('consultantName')?.hasError('required')">
+                      Referal Name is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-3">
+                  <label>Upload</label>
+                  <app-file-upload formControlName="uploadFile"></app-file-upload>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-3">
+                  <button class="btn-space" [class.auth-spinner]="loading" [disabled]="loading" [disabled]="!referralForm.valid " mat-raised-button
+                    color="primary">Submit</button>
+                  <button type="button" (click)="cancelForm()" mat-raised-button color="warn">Cancel</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

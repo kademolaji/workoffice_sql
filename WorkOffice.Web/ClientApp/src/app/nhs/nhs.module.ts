@@ -37,6 +37,15 @@ import { AddPathwayComponent } from './pathway/add-pathway/add-pathway.component
 import { MatStepperModule } from '@angular/material/stepper';
 import { AddPatientDocumentDialogComponent } from './patient/add-patient/dialog/add-patient-document/add-patient-document.component';
 import { DeletePatientDocumentDialogComponent } from './patient/add-patient/dialog/delete/delete.component';
+import { AddDiagnosticComponent } from './diagnostic/add-diagnostic/add-diagnostic.component';
+import { AddDiagnosticResultDialogComponent } from './diagnostic/add-diagnostic/dialog/add-diagnostic-result/add-diagnostic-result.component';
+import { DeleteDiagnosticResultDialogComponent } from './diagnostic/add-diagnostic/dialog/delete/delete.component';
+import { AllDiagnosticComponent } from './diagnostic/all-diagnostic/all-diagnostic.component';
+import { DeleteDiagnosticDialogComponent } from './diagnostic/all-diagnostic/dialog/delete/delete.component';
+import { DiagnosticService } from './diagnostic/diagnostic.service';
+import { AddRefferalComponent } from './refferal/add-refferal/add-refferal.component';
+import { DeleteReferralDialogComponent } from './refferal/all-refferal/dialog/delete/delete.component';
+import { AllRefferalComponent } from './refferal/all-refferal/all-refferal.component';
 
 @NgModule({
   imports: [
@@ -81,7 +90,17 @@ import { DeletePatientDocumentDialogComponent } from './patient/add-patient/dial
 
     AddPathwayComponent,
     ValidateNowComponent,
+
+    AllDiagnosticComponent,
+    DeleteDiagnosticDialogComponent,
+    AddDiagnosticComponent,
+    AddDiagnosticResultDialogComponent,
+    DeleteDiagnosticResultDialogComponent,
+
+    AddRefferalComponent,
+    AllRefferalComponent,
+    DeleteReferralDialogComponent
   ],
-  providers: [PatientService, AppointmentService, WaitinglistService],
+  providers: [PatientService, AppointmentService, WaitinglistService, DiagnosticService],
 })
 export class NhsModule {}

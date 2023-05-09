@@ -179,17 +179,32 @@ namespace WorkOffice.Services
                 var apiResponse = new ApiResponse<SearchReply<DiagnosticModel>>();
 
 
-                IQueryable<NHS_Diagnostic> query = context.NHS_Diagnostics;
+             //   IQueryable<NHS_Diagnostic> query = context.NHS_Diagnostics;
+
+                IQueryable<DiagnosticModel> query = (from app in context.NHS_Diagnostics
+                                                              join pat in context.NHS_Patients on app.PatientId equals pat.PatientId
+                                                              select new DiagnosticModel
+                                                              {
+                                                                  DiagnosticId = app.DiagnosticId,
+                                                                  PatientId = app.PatientId,
+                                                                  PatientName = pat.FirstName + " " + pat.LastName,
+                                                                  SpecialtyId = app.SpecialtyId,
+                                                                  Problem = app.Problem,
+                                                                  DTD = app.DTD,
+                                                                  ConsultantName = app.ConsultantName,
+                                                                  Status = app.Status,
+                                                                  Specialty = context.Specialties.FirstOrDefault(x => x.SpecialtyId == app.SpecialtyId).Name
+                                                              }).AsQueryable();
                 int offset = (pageNumber) * pageSize;
 
                 if (!string.IsNullOrEmpty(options.Parameter.SearchQuery))
                 {
                     query = query.Where(x => x.Problem.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())
                     || x.Status.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())
+                    || x.PatientName.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())
+                    || x.Specialty.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())
                     || x.ConsultantName.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower()));
-                    //|| x.Address.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())
-                    //|| x.DistrictNumber.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())
-                    //|| x.NHSNumber.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower()));
+                    
                 }
                 switch (sortField)
                 {
@@ -199,7 +214,12 @@ namespace WorkOffice.Services
                     case "consultantname":
                         query = sortOrder == "asc" ? query.OrderBy(s => s.ConsultantName) : query.OrderByDescending(s => s.ConsultantName);
                         break;
-                  
+                    case "patientName":
+                        query = sortOrder == "asc" ? query.OrderBy(s => s.PatientName) : query.OrderByDescending(s => s.PatientName);
+                        break;
+                    case "specialty":
+                        query = sortOrder == "asc" ? query.OrderBy(s => s.Specialty) : query.OrderByDescending(s => s.Specialty);
+                        break;
                     default:
                         query = query.OrderBy(s => s.Problem);
                         break;
@@ -211,16 +231,7 @@ namespace WorkOffice.Services
                 var response = new SearchReply<DiagnosticModel>()
                 {
                     TotalCount = count,
-                    Result = items.Select(x => new DiagnosticModel {
-                        DiagnosticId = x.DiagnosticId,
-                        PatientId = x.PatientId,
-                        SpecialtyId = x.SpecialtyId,
-                        Problem = x.Problem,
-                        DTD = x.DTD,
-                        ConsultantName = x.ConsultantName,
-                        Status = x.Status,
-
-                    }).ToList(),
+                    Result = items.ToList(),
                 };
 
                 apiResponse.StatusCode = System.Net.HttpStatusCode.OK;

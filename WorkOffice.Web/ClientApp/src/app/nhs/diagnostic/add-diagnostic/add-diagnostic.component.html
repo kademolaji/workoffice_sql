@@ -1,0 +1,248 @@
+<section class="content">
+  <div class="content-block">
+    <div class="block-header">
+      <!-- breadcrumb -->
+      <app-breadcrumb *ngIf="isAddMode" [title]="'Add Diagnostic'" [items]="['Diagnostic']" [active_item]="'Diagnostic'"></app-breadcrumb>
+      <app-breadcrumb *ngIf="!isAddMode" [title]="'Edit Diagnostic'" [items]="['Diagnostic']" [active_item]="'Edit Diagnostic'"></app-breadcrumb>
+
+    </div>
+    <div class="row clearfix">
+      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="card">
+          <div class="header">
+            <h2 *ngIf="isAddMode"><strong> Add New Diagnostic</strong></h2>
+            <h2 *ngIf="!isAddMode"><strong> Edit Diagnostic</strong></h2>
+          </div>
+          <div class="body">
+            <mat-horizontal-stepper [linear]="isLinear" #stepper>
+              <mat-step [stepControl]="diagnosticForm!">
+                <form class="m-4" [formGroup]="diagnosticForm" (ngSubmit)="onSubmit()">
+                  <ng-template matStepLabel>Diagnostic</ng-template>
+                  <div class="row">
+                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                      <mat-form-field class="example-full-width mb-3" appearance="outline">
+                        <mat-label>Patient District Number</mat-label>
+                        <mat-select formControlName="patientId" required>
+                          <mat-option  *ngFor="let patient of patientList" [value]="patient.value">
+                            {{patient.label}}
+                          </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="diagnosticForm.get('patientId')?.hasError('required')">
+                          Patient District Number is required
+                        </mat-error>
+                      </mat-form-field>
+
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                      <mat-form-field class="example-full-width mb-3" appearance="outline">
+                        <mat-label>Speciality</mat-label>
+                        <mat-select formControlName="specialtyId" required>
+                          <mat-option  *ngFor="let patient of specialityList" [value]="patient.value">
+                            {{patient.label}}
+                          </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="diagnosticForm.get('specialtyId')?.hasError('required')">
+                          Speciality is required
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                      <mat-form-field class="example-full-width mb-3" appearance="outline">
+                        <mat-label>Consultant</mat-label>
+                        <mat-select formControlName="consultantName" required>
+                          <mat-option  *ngFor="let patient of consultantList" [value]="patient.label">
+                            {{patient.label}}
+                          </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="diagnosticForm.get('consultantName')?.hasError('required')">
+                          Consultant is required
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                      <mat-form-field class="example-full-width mb-3" appearance="outline">
+
+                        <mat-label>DTD</mat-label>
+                        <input matInput [matDatepicker]="picker1" formControlName="dtd" required>
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                        <mat-error *ngIf="diagnosticForm.get('dtd')?.hasError('required')">
+                          Please select DTD
+                        </mat-error>
+
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+
+                      <mat-form-field class="example-full-width mb-3" appearance="outline">
+                        <mat-label>Status</mat-label>
+                        <mat-select formControlName="status" required>
+                          <mat-option [value]="'Pending'">
+                            Pending
+                          </mat-option>
+                          <mat-option [value]="'female'">
+                            Done
+                          </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="diagnosticForm.get('status')?.hasError('required')">
+                          Status is required
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                      <mat-form-field class="example-full-width mb-3" appearance="outline">
+                        <mat-label>Problem</mat-label>
+                        <input matInput formControlName="problem">
+                        <mat-error *ngIf="diagnosticForm.get('problem')?.hasError('required')">
+                          Problem is required
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-3">
+                      <button class="btn-space" [class.auth-spinner]="loading" [disabled]="loading" [disabled]="!diagnosticForm.valid " mat-raised-button
+                        color="primary">Submit</button>
+                      <button type="button" (click)="cancelForm()" mat-raised-button color="warn">Cancel</button>
+                    </div>
+                  </div>
+
+                </form>
+
+              </mat-step>
+              <mat-step  >
+                  <ng-template matStepLabel>Diagnostic Result</ng-template>
+                    <div class="responsive_table">
+                      <div class="materialTableHeader">
+                        <div class="row">
+                          <div class="col-8">
+                            <ul class="header-buttons-left ms-0">
+                              <li class="tbl-title">
+                                <h2>Diagnostic Result</h2>
+                              </li>
+                              <li class="tbl-search-box">
+                                <label for="search-input"><i class="material-icons search-icon">search</i></label>
+                                <input placeholder="Search" type="text"  class="browser-default search-field"
+                                  aria-label="Search box"  (keyup)="applyFilter($event)"  #input>
+                              </li>
+                              <li class="tbl-header-btn">
+                                <div class="m-l-10" matTooltip="ADD">
+                                  <button mat-mini-fab color="primary" (click)="addNew()">
+                                    <mat-icon class="col-white">add</mat-icon>
+                                  </button>
+                                </div>
+                              </li>
+                              <li class="tbl-header-btn">
+                                <div class="m-l-10" matTooltip="REFRESH">
+                                  <button mat-mini-fab color="primary" (click)="refresh()">
+                                    <mat-icon class="col-white">refresh</mat-icon>
+                                  </button>
+                                </div>
+                              </li>
+                              <li class="tbl-header-btn">
+                                <div class="m-l-10" [hidden]=!selection.hasValue() matTooltip="DELETE">
+                                  <button mat-mini-fab color="warn" (click)="removeSelectedRows()">
+                                    <mat-icon class="col-white">delete
+                                    </mat-icon>
+                                  </button>
+                                </div>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                      <mat-table #table [dataSource]="dataSource" matSort class="mat-cell" (matSortChange)="sortData($event)">
+                        <!-- Checkbox Column -->
+                        <ng-container matColumnDef="select">
+                          <mat-header-cell *matHeaderCellDef [ngClass]="'tbl-col-width-per-6'">
+                            <mat-checkbox (change)="$event ? masterToggle() : null"
+                              [checked]="selection.hasValue() && isAllSelected()"
+                              [indeterminate]="selection.hasValue() && !isAllSelected()" [ngClass]="'tbl-checkbox'">
+                            </mat-checkbox>
+                          </mat-header-cell>
+                          <mat-cell *matCellDef="let row" [ngClass]="'tbl-col-width-per-6'">
+                            <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+                              [checked]="selection.isSelected(row)" [ngClass]="'tbl-checkbox'">
+                            </mat-checkbox>
+                          </mat-cell>
+                        </ng-container>
+                        <!-- ID Column -->
+
+                        <ng-container matColumnDef="diagnosticResultId">
+                          <mat-header-cell *matHeaderCellDef mat-sort-header>PiagnosticResultId</mat-header-cell>
+                          <mat-cell *matCellDef="let row">{{row.diagnosticResultId}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="documentName">
+                          <mat-header-cell *matHeaderCellDef mat-sort-header>Document Name</mat-header-cell>
+                          <mat-cell *matCellDef="let row"> {{row.documentName}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="consultantName">
+                          <mat-header-cell *matHeaderCellDef mat-sort-header>Consultant Name</mat-header-cell>
+                          <mat-cell *matCellDef="let row"> {{row.consultantName}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="testResultDate">
+                          <mat-header-cell *matHeaderCellDef mat-sort-header>Test Result Date</mat-header-cell>
+                          <mat-cell *matCellDef="let row"> {{row.testResultDate}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="speciality">
+                          <mat-header-cell *matHeaderCellDef mat-sort-header>Speciality</mat-header-cell>
+                          <mat-cell *matCellDef="let row"> {{row.speciality}}</mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="dateUploaded">
+                          <mat-header-cell *matHeaderCellDef mat-sort-header>Date Uploaded</mat-header-cell>
+                          <mat-cell *matCellDef="let row"> {{row.dateUploaded}}</mat-cell>
+                        </ng-container>
+                        <!-- actions -->
+                        <ng-container matColumnDef="actions">
+                          <mat-header-cell class="pr-0" *matHeaderCellDef>Actions</mat-header-cell>
+                          <mat-cell *matCellDef="let row; let i=index;" class="pr-0">
+                            <button mat-icon-button (click)="$event.stopPropagation()" (click)="viewDocument(row)"
+                              class="tbl-action-btn">
+                              <app-feather-icons [icon]="'edit'" [class]="'tbl-fav-edit'"></app-feather-icons>
+                            </button>
+                            <button mat-icon-button (click)="$event.stopPropagation()" (click)="deleteItem(row)"
+                              class="tbl-action-btn">
+                              <app-feather-icons [icon]="'trash-2'" [class]="'tbl-fav-delete'"></app-feather-icons>
+                            </button>
+                          </mat-cell>
+                        </ng-container>
+                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="viewDocument(row)"
+                          [style.cursor]="'pointer'" matRipple>
+                        </mat-row>
+                      </mat-table>
+                      <!-- Loading spinner -->
+                      <div *ngIf="isTblLoading" class="tbl-spinner">
+                        <mat-progress-spinner color="primary" [diameter]="40" mode="indeterminate">
+                        </mat-progress-spinner>
+                      </div>
+                      <div *ngIf="!isTblLoading" class="no-results"
+                        [style.display]="dataSource.data.length === 0 ? '' : 'none'">
+                        No results
+                      </div>
+                      <mat-paginator #paginator [length]="totalRows" [pageIndex]="currentPage" [pageSize]="pageSize"
+                      [pageSizeOptions]="pageSizeOptions" (page)="pageChanged($event)" aria-label="Select page">
+                    </mat-paginator>
+                    </div>
+              </mat-step>
+              <mat-step>
+                <ng-template matStepLabel>Done</ng-template>
+                <p>You are now done.</p>
+                <div>
+                  <button mat-raised-button matStepperPrevious color="warn" class="msr-2">Back</button>
+                  <button mat-raised-button color="primary" (click)="stepper.reset()">Reset</button>
+                </div>
+              </mat-step>
+            </mat-horizontal-stepper>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

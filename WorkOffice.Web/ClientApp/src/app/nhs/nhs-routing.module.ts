@@ -9,6 +9,10 @@ import { AddWaitinglistComponent } from "./waitinglist/add-waitinglist/add-waiti
 import { AllWaitinglistComponent } from "./waitinglist/all-waitinglist/all-waitinglist.component";
 import { ValidateNowComponent } from "./Validate/validate-now/validate-now.component";
 import { AddPathwayComponent } from "./pathway/add-pathway/add-pathway.component";
+import { AddRefferalComponent } from "./refferal/add-refferal/add-refferal.component";
+import { AllRefferalComponent } from "./refferal/all-refferal/all-refferal.component";
+import { AllDiagnosticComponent } from "./diagnostic/all-diagnostic/all-diagnostic.component";
+import { AddDiagnosticComponent } from "./diagnostic/add-diagnostic/add-diagnostic.component";
 
 
 const routes: Routes = [
@@ -55,6 +59,32 @@ const routes: Routes = [
   {
     path: "validate-now",
     component: ValidateNowComponent,
+  },
+
+  {
+    path: "all-diagnostic",
+    component: AllDiagnosticComponent,
+  },
+  {
+    path: "add-diagnostic",
+    component: AddDiagnosticComponent,
+  },
+  {
+    path: "edit-diagnostic/:id",
+    component: AddDiagnosticComponent,
+  },
+
+  {
+    path: "all-referral",
+    component: AllRefferalComponent,
+  },
+  {
+    path: "add-referral",
+    component: AddRefferalComponent,
+  },
+  {
+    path: "edit-referral/:id",
+    component: AddRefferalComponent,
   },
 
   { path: "**", component: Page404Component },

@@ -1,0 +1,97 @@
+<div class="addContainer">
+  <div class="modalHeader">
+    <div class="editRowModal">
+      <div class="modalHeader clearfix">
+        <div class="modal-about">
+         Diagnostic Result Document
+        </div>
+      </div>
+    </div>
+    <button mat-icon-button (click)="dialogRef.close()" class="modal-close-button" aria-label="Close dialog">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <div mat-dialog-content>
+    <form class="register-form m-4" [formGroup]="diagnosticResultForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Document Name</mat-label>
+            <input matInput formControlName="documentName" required>
+            <mat-error *ngIf="diagnosticResultForm.get('documentName')?.hasError('required')">
+              Document Name is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Speciality</mat-label>
+            <mat-select formControlName="specialityId" required>
+              <mat-option  *ngFor="let speciality of specialityList" [value]="speciality.value">
+                {{speciality.label}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="diagnosticResultForm.get('specialityId')?.hasError('required')">
+              Speciality is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Consultant</mat-label>
+            <mat-select formControlName="consultantName" required>
+              <mat-option  *ngFor="let speciality of consultantList" [value]="speciality.label">
+                {{speciality.label}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="diagnosticResultForm.get('consultantName')?.hasError('required')">
+              Consultant is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Test Result Date</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="testResultDate">
+
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="diagnosticResultForm.get('testResultDate')?.hasError('required')">
+              Please select Test Result Date
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Problem</mat-label>
+            <input matInput formControlName="problem" required>
+            <mat-error *ngIf="diagnosticResultForm.get('problem')?.hasError('required')">
+              Problem is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-5">
+          <label>Upload</label>
+          <app-file-upload formControlName="uploadFile"></app-file-upload>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+          <div class="example-button-row">
+            <button class="btn-space" [class.auth-spinner]="loading" [disabled]="loading" [disabled]="!diagnosticResultForm.valid " mat-raised-button
+            color="primary">Submit</button>
+
+            <button mat-raised-button color="warn" (click)="onNoClick()" tabindex="-1">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

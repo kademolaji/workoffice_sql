@@ -18,7 +18,8 @@ namespace WorkOffice.Contracts.Models
         public byte[] DocumentFile { get; set; }
         public DateTime ReferralDate { get; set; }
         public bool? Active { get; set; }
-        public string FullName { get; set; }
+        public string PatientName { get; set; }
+        public string Specialty { get; set; }
         [JsonIgnore]
         public string CurrentUserName { get; set; }
 

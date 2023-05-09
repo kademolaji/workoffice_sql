@@ -239,7 +239,7 @@ namespace WorkOffice.Services
 
 
                 IQueryable<DiagnosticResultModel> query = (from doc in context.NHS_DiagnosticResults
-                                                          where doc.PatientId == int.Parse(options.Parameter.SearchQuery)
+                                                          where doc.DiagnosticId == int.Parse(options.Parameter.SearchQuery)
                                                           select new DiagnosticResultModel
                                                           {
                                                               DiagnosticResultId = doc.DiagnosticResultId,
