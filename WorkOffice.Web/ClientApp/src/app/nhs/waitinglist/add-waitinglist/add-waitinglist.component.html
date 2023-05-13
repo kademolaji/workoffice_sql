@@ -2,9 +2,18 @@
   <div class="content-block">
     <div class="block-header">
       <!-- breadcrumb -->
-      <app-breadcrumb *ngIf="isAddMode" [title]="'Add Waitinglist'" [items]="['Waitinglist']" [active_item]="'Waitinglist'"></app-breadcrumb>
-      <app-breadcrumb *ngIf="!isAddMode" [title]="'Edit Waitinglist'" [items]="['Waitinglist']" [active_item]="'Edit Waitinglist'"></app-breadcrumb>
-
+      <app-breadcrumb
+        *ngIf="isAddMode"
+        [title]="'Add Waitinglist'"
+        [items]="['Waitinglist']"
+        [active_item]="'Waitinglist'"
+      ></app-breadcrumb>
+      <app-breadcrumb
+        *ngIf="!isAddMode"
+        [title]="'Edit Waitinglist'"
+        [items]="['Waitinglist']"
+        [active_item]="'Edit Waitinglist'"
+      ></app-breadcrumb>
     </div>
     <div class="row clearfix">
       <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
@@ -14,26 +23,49 @@
             <h2 *ngIf="!isAddMode"><strong> Edit Waitinglist</strong></h2>
           </div>
           <div class="body">
-            <form class="m-4" [formGroup]="waitinglistForm" (ngSubmit)="onSubmit()">
+            <form
+              class="m-4"
+              [formGroup]="waitinglistForm"
+              (ngSubmit)="onSubmit()"
+            >
               <div class="row">
                 <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
-                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                  <mat-form-field
+                    class="example-full-width mb-3"
+                    appearance="outline"
+                  >
                     <mat-label>Patient District Number</mat-label>
                     <mat-select formControlName="patientId" required>
-                      <mat-option  *ngFor="let patient of patientList" [value]="patient.value">
-                        {{patient.label}}
+                      <mat-option
+                        *ngFor="let patient of patientList"
+                        [value]="patient.value"
+                      >
+                        {{ patient.label }}
                       </mat-option>
                     </mat-select>
-                    <mat-error *ngIf="waitinglistForm.get('patientId')?.hasError('required')">
+                    <mat-error
+                      *ngIf="
+                        waitinglistForm.get('patientId')?.hasError('required')
+                      "
+                    >
                       Patient District Number is required
                     </mat-error>
                   </mat-form-field>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
-                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                  <mat-form-field
+                    class="example-full-width mb-3"
+                    appearance="outline"
+                  >
                     <mat-label>Pathway Unique Number</mat-label>
-                    <input matInput formControlName="pathwayUniqueNumber">
-                    <mat-error *ngIf="waitinglistForm.get('pathwayUniqueNumber')?.hasError('required')">
+                    <input matInput formControlName="pathwayUniqueNumber" />
+                    <mat-error
+                      *ngIf="
+                        waitinglistForm
+                          .get('pathwayUniqueNumber')
+                          ?.hasError('required')
+                      "
+                    >
                       Pathway Unique Number is required
                     </mat-error>
                   </mat-form-field>
@@ -41,27 +73,49 @@
               </div>
               <div class="row">
                 <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
-                  <mat-form-field class="example-full-width mb-3" appearance="outline">
-                    <mat-label>WaitinglistStatus</mat-label>
+                  <mat-form-field
+                    class="example-full-width mb-3"
+                    appearance="outline"
+                  >
+                    <mat-label>Status</mat-label>
                     <mat-select formControlName="waitinglistStatus" required>
-                      <mat-option  *ngFor="let waitingList of waitingListStatusList" [value]="waitingList.value">
-                        {{waitingList.label}}
-                      </mat-option>
+                      <mat-option [value]="'Active'"> Active </mat-option>
+                      <mat-option [value]="'Planned'"> Planned </mat-option>
+                      <mat-option [value]="'Cancel'"> Cancel </mat-option>
+                      <mat-option [value]="'Remove'"> Remove </mat-option>
                     </mat-select>
-                    <mat-error *ngIf="waitinglistForm.get('waitinglistStatus')?.hasError('required')">
+                    <mat-error
+                      *ngIf="
+                        waitinglistForm
+                          .get('waitinglistStatus')
+                          ?.hasError('required')
+                      "
+                    >
                       Waitinglist Status is required
                     </mat-error>
                   </mat-form-field>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
-                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                  <mat-form-field
+                    class="example-full-width mb-3"
+                    appearance="outline"
+                  >
                     <mat-label>Speciality</mat-label>
                     <mat-select formControlName="specialityId" required>
-                      <mat-option  *ngFor="let speciality of specialityList" [value]="speciality.value">
-                        {{speciality.label}}
+                      <mat-option
+                        *ngFor="let speciality of specialityList"
+                        [value]="speciality.value"
+                      >
+                        {{ speciality.label }}
                       </mat-option>
                     </mat-select>
-                    <mat-error *ngIf="waitinglistForm.get('specialityId')?.hasError('required')">
+                    <mat-error
+                      *ngIf="
+                        waitinglistForm
+                          .get('specialityId')
+                          ?.hasError('required')
+                      "
+                    >
                       Speciality is required
                     </mat-error>
                   </mat-form-field>
@@ -69,23 +123,55 @@
               </div>
               <div class="row">
                 <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
-                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                  <mat-form-field
+                    class="example-full-width mb-3"
+                    appearance="outline"
+                  >
                     <mat-label>Waitinglist Date</mat-label>
-                    <input matInput [matDatepicker]="picker1" formControlName="waitinglistDate" required>
-                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <input
+                      matInput
+                      [matDatepicker]="picker1"
+                      formControlName="waitinglistDate"
+                      required
+                    />
+                    <mat-datepicker-toggle
+                      matSuffix
+                      [for]="picker1"
+                    ></mat-datepicker-toggle>
                     <mat-datepicker #picker1></mat-datepicker>
-                    <mat-error *ngIf="waitinglistForm.get('waitinglistDate')?.hasError('required')">
+                    <mat-error
+                      *ngIf="
+                        waitinglistForm
+                          .get('waitinglistDate')
+                          ?.hasError('required')
+                      "
+                    >
                       Waitinglist Date is required
                     </mat-error>
                   </mat-form-field>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
-                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                  <mat-form-field
+                    class="example-full-width mb-3"
+                    appearance="outline"
+                  >
                     <mat-label> TCI Date</mat-label>
-                    <input matInput [matDatepicker]="picker" formControlName="tciDate" required>
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <input
+                      matInput
+                      [matDatepicker]="picker"
+                      formControlName="tciDate"
+                      required
+                    />
+                    <mat-datepicker-toggle
+                      matSuffix
+                      [for]="picker"
+                    ></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
-                    <mat-error *ngIf="waitinglistForm.get('tciDate')?.hasError('required')">
+                    <mat-error
+                      *ngIf="
+                        waitinglistForm.get('tciDate')?.hasError('required')
+                      "
+                    >
                       TCI Date is required
                     </mat-error>
                   </mat-form-field>
@@ -93,23 +179,46 @@
               </div>
               <div class="row">
                 <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
-                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                  <mat-form-field
+                    class="example-full-width mb-3"
+                    appearance="outline"
+                  >
                     <mat-label>Waitinglist Time</mat-label>
-                    <input matInput formControlName="waitinglistTime" required>
-                    <mat-error *ngIf="waitinglistForm.get('waitinglistTime')?.hasError('required')">
+                    <input
+                      matInput
+                      formControlName="waitinglistTime"
+                      required
+                    />
+                    <mat-error
+                      *ngIf="
+                        waitinglistForm
+                          .get('waitinglistTime')
+                          ?.hasError('required')
+                      "
+                    >
                       Waitinglist Time is required
                     </mat-error>
                   </mat-form-field>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
-                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                  <mat-form-field
+                    class="example-full-width mb-3"
+                    appearance="outline"
+                  >
                     <mat-label>Wait Type</mat-label>
                     <mat-select formControlName="waitTypeId" required>
-                      <mat-option  *ngFor="let waitType of waitTypeList" [value]="waitType.value">
-                        {{waitType.label}}
+                      <mat-option
+                        *ngFor="let waitType of waitTypeList"
+                        [value]="waitType.value"
+                      >
+                        {{ waitType.label }}
                       </mat-option>
                     </mat-select>
-                    <mat-error *ngIf="waitinglistForm.get('waitTypeId')?.hasError('required')">
+                    <mat-error
+                      *ngIf="
+                        waitinglistForm.get('waitTypeId')?.hasError('required')
+                      "
+                    >
                       Wait Type is required
                     </mat-error>
                   </mat-form-field>
@@ -117,10 +226,17 @@
               </div>
               <div class="row">
                 <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
-                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                  <mat-form-field
+                    class="example-full-width mb-3"
+                    appearance="outline"
+                  >
                     <mat-label>Condition</mat-label>
                     <textarea matInput formControlName="condition"></textarea>
-                    <mat-error *ngIf="waitinglistForm.get('condition')?.hasError('required')">
+                    <mat-error
+                      *ngIf="
+                        waitinglistForm.get('condition')?.hasError('required')
+                      "
+                    >
                       Condition is required
                     </mat-error>
                   </mat-form-field>
@@ -128,9 +244,24 @@
               </div>
               <div class="row">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-3">
-                  <button class="btn-space" [class.auth-spinner]="loading" [disabled]="loading" [disabled]="!waitinglistForm.valid " mat-raised-button
-                    color="primary">Submit</button>
-                  <button type="button" (click)="cancelForm()" mat-raised-button color="warn">Cancel</button>
+                  <button
+                    class="btn-space"
+                    [class.auth-spinner]="loading"
+                    [disabled]="loading"
+                    [disabled]="!waitinglistForm.valid"
+                    mat-raised-button
+                    color="primary"
+                  >
+                    Submit
+                  </button>
+                  <button
+                    type="button"
+                    (click)="cancelForm()"
+                    mat-raised-button
+                    color="warn"
+                  >
+                    Cancel
+                  </button>
                 </div>
               </div>
             </form>

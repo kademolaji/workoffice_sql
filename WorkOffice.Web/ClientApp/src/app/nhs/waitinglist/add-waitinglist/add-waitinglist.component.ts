@@ -87,7 +87,7 @@ this.subs.sink = this.generalSettingsService
             waitinglistTime:   res.entity.waitinglistTime,
             condition :   res.entity.condition,
             waitinglistStatus:   res.entity.waitinglistStatus,
-            pathwayUniqueNumber:   res.entity.pathwayUniqueNumber,
+            pathwayUniqueNumber:   "",
             patientId: res.entity.patientId,
           });
         }
