@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {
+  FormControl,
   UntypedFormBuilder,
   UntypedFormGroup,
   Validators,
@@ -15,6 +16,7 @@ import { AppointmentService } from '../appointment.service';
 import { CreateAppointmentModel } from '../appointment.model';
 import { GeneralSettingsService } from 'src/app/core/service/general-settings.service';
 import { GeneralSettingsModel } from 'src/app/core/models/general-settings.model';
+import { catchError, debounceTime, distinctUntilChanged, filter, finalize, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-add-appointment',
@@ -37,8 +39,11 @@ export class AddAppointmentComponent
   hospitalList: GeneralSettingsModel[] = [];
   specialityList: GeneralSettingsModel[] = [];
   pathwayStatusList: GeneralSettingsModel[] = [];
-  patientList: GeneralSettingsModel[] = [];
   wardList: GeneralSettingsModel[] = [];
+
+  patientList: GeneralSettingsModel[] = [];
+  isLoading = false;
+  minLengthTerm = 3;
 
   constructor(
     private fb: UntypedFormBuilder,
@@ -88,11 +93,6 @@ export class AddAppointmentComponent
         this.hospitalList = response.entity;
       });
 
-    this.subs.sink = this.generalSettingsService
-      .getPatientList()
-      .subscribe((response) => {
-        this.patientList = response.entity;
-      });
 
     this.subs.sink = this.generalSettingsService
       .getPathwayStatus()
@@ -129,14 +129,46 @@ export class AddAppointmentComponent
                 hospitalId: res.entity.hospitalId,
                 wardId: res.entity.wardId,
                 departmentId: res.entity.departmentId,
-                patientId: res.entity.patientId,
+                patientId: { label: "N/A", value: res.entity.patientId},
                 comments: res.entity.comments,
               });
             }
           },
         });
     }
+    this.appointmentForm.get('patientId')?.valueChanges
+    .pipe(
+      filter(res => {
+        console.log("res", res)
+        return res !== null && res.length >= this.minLengthTerm
+      }),
+      distinctUntilChanged(),
+      debounceTime(1000),
+      tap(() => {
+        this.patientList = [];
+        this.isLoading = true;
+      }),
+      switchMap(value => this.generalSettingsService.getPatientList(value as string).pipe(catchError((err) => this.router.navigateByUrl('/')))
+        .pipe(
+          finalize(() => {
+            this.isLoading = false
+          }),
+        )
+      )
+    )
+    .subscribe((data: any) => {
+      if (data['entity'] == undefined) {
+        this.patientList = [];
+      } else {
+        this.patientList = data['entity'];
+      }
+    });
   }
+
+  displayWith(value: any) {
+    return value?.label;
+  }
+
   cancelForm() {
     this.router.navigate(['/nhs/all-appointment/PartialBooked']);
   }
@@ -166,12 +198,13 @@ export class AddAppointmentComponent
         hospitalId: +this.appointmentForm.value.hospitalId,
         wardId: +this.appointmentForm.value.wardId,
         departmentId: +this.appointmentForm.value.departmentId,
-        patientId: +this.appointmentForm.value.patientId,
+        patientId: this.appointmentForm.value.patientId.value,
         patientValidationId: 0,
         comments: this.appointmentForm.value.comments,
         appointmentStatus: 'PartialBooked',
         cancellationReason: '',
       };
+      console.log("patient", patient)
       this.subs.sink = this.appointmentService
         .addAppointment(patient)
         .subscribe({

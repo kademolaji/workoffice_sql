@@ -320,11 +320,11 @@ namespace WorkOffice.Web.Controllers
         [Route("GetPatientList")]
         [ProducesResponseType(201, Type = typeof(CreateResponse))]
         [ProducesResponseType(400, Type = typeof(CreateResponse))]
-        public async Task<IActionResult> GetPatientList()
-        {
+        public async Task<IActionResult> GetPatientList(string search)
+       {
             try
             {
-                var apiResponse = await service.GetPatientList();
+                var apiResponse = await service.GetPatientList(search);
                 if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
                 {
                     return BadRequest(apiResponse.ResponseType);

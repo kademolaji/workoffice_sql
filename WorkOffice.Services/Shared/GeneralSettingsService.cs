@@ -186,9 +186,9 @@ namespace WorkOffice.Services
             }
         }
 
-  
 
-public async Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetNHSActivity()
+
+        public async Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetNHSActivity()
         {
             try
             {
@@ -485,19 +485,37 @@ public async Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetNHSAc
                 return new ApiResponse<GetResponse<List<GeneralSettingsModel>>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new GetResponse<List<GeneralSettingsModel>>() { Status = false, Message = $"Error encountered {ex.Message}" }, IsSuccess = false };
             }
         }
-        public async Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetPatientList()
+        public async Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetPatientList(string search)
         {
             try
             {
 
                 var apiResponse = new ApiResponse<GetResponse<List<GeneralSettingsModel>>>();
-
-                var result = await (from a in context.NHS_Patients
+                List<GeneralSettingsModel> result = new List<GeneralSettingsModel>();
+                if (!string.IsNullOrEmpty(search))
+                {
+                    result = await (from a in context.NHS_Patients
+                                    where a.FirstName.Contains(search)
+                                    || a.LastName.Contains(search)
+                                     || a.MiddleName.Contains(search)
+                                      || a.DistrictNumber.Contains(search)
+                                        || a.PhoneNo.Contains(search)
                                     select new GeneralSettingsModel
                                     {
                                         Label = a.DistrictNumber,
                                         Value = a.PatientId
                                     }).ToListAsync();
+                }
+                else
+                {
+                    result = await (from a in context.NHS_Patients
+                                    select new GeneralSettingsModel
+                                    {
+                                        Label = a.DistrictNumber,
+                                        Value = a.PatientId
+                                    }).ToListAsync();
+                }
+
 
                 var response = new GetResponse<List<GeneralSettingsModel>>()
                 {
@@ -549,6 +567,6 @@ public async Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetNHSAc
                 return new ApiResponse<GetResponse<List<GeneralSettingsModel>>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new GetResponse<List<GeneralSettingsModel>>() { Status = false, Message = $"Error encountered {ex.Message}" }, IsSuccess = false };
             }
         }
-     
+
     }
 }

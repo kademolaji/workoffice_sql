@@ -22,7 +22,7 @@ namespace WorkOffice.Contracts.ServicesContracts
         Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetSpecialty();
         Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetWaitingType();
         Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetWard();
-        Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetPatientList();
+        Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetPatientList(string search);
         Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetDepartmentList();
 
     }

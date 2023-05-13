@@ -50,6 +50,7 @@ import { ReferralService } from './refferal/referral.service';
 import { DeletePathwayDialogComponent } from './pathway/all-pathway/dialog/delete/delete.component';
 import { AllPathwayComponent } from './pathway/all-pathway/all-pathway.component';
 import { PathwayService } from './pathway/pathway.service';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   imports: [
@@ -76,6 +77,7 @@ import { PathwayService } from './pathway/pathway.service';
     ComponentsModule,
     SharedModule,
     MatStepperModule,
+    MatAutocompleteModule,
   ],
   declarations: [
     AllAppointmentComponent,
