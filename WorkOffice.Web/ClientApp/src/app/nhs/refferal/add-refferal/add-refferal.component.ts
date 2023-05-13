@@ -108,9 +108,9 @@ export class AddRefferalComponent
     } else {
       const formData = new FormData();
 
-      formData.append('referralId', this.id ? this.id.toString() : '');
+      formData.append('referralId', this.id ? this.id.toString() : '0');
       formData.append('patientId', this.referralForm.value.patientId);
-      formData.append('specialityId', this.referralForm.value.specialityId);
+      formData.append('specialtyId', this.referralForm.value.specialtyId);
       formData.append('consultantId', this.referralForm.value.consultantId);
       formData.append('documentName', this.referralForm.value.documentName);
       formData.append('consultantName', this.referralForm.value.consultantName);

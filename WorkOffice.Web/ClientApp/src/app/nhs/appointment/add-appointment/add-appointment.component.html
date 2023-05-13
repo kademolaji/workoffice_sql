@@ -48,8 +48,17 @@
                   <mat-form-field class="example-full-width mb-3" appearance="outline">
                     <mat-label>Status</mat-label>
                     <mat-select formControlName="statusId" required>
-                      <mat-option  *ngFor="let pathwayStatus of pathwayStatusList" [value]="pathwayStatus.value">
-                        {{pathwayStatus.label}}
+                      <mat-option [value]="1">
+                        ATT
+                      </mat-option>
+                      <mat-option [value]="2">
+                        CNC P
+                      </mat-option>
+                      <mat-option [value]="3">
+                        CNC H
+                      </mat-option>
+                      <mat-option [value]="4">
+                        DNA
                       </mat-option>
                     </mat-select>
                     <mat-error *ngIf="appointmentForm.get('statusId')?.hasError('required')">
@@ -123,9 +132,12 @@
                 <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
                   <mat-form-field class="example-full-width mb-3" appearance="outline">
                     <mat-label>Department</mat-label>
-                    <mat-select formControlName="departmentId">
-                      <mat-option  *ngFor="let department of departmentList" [value]="department.value">
-                        {{department.label}}
+                    <mat-select formControlName="departmentId" required>
+                      <mat-option [value]="1">
+                        OUTPATIENT
+                      </mat-option>
+                      <mat-option [value]="2">
+                        INPATIENT
                       </mat-option>
                     </mat-select>
                     <mat-error *ngIf="appointmentForm.get('departmentId')?.hasError('required')">

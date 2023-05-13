@@ -39,7 +39,7 @@ export class AddPatientDocumentDialogComponent
   }
   ngOnInit() {
     this.patientDocumentForm = this.fb.group({
-      // documentTypeId: ['', [Validators.required]],
+       documentTypeId: ['', [Validators.required]],
       physicalLocation: ['', [Validators.required]],
       documentName: ['', [Validators.required]],
       clinicDate: ['', [Validators.required]],
@@ -48,7 +48,7 @@ export class AddPatientDocumentDialogComponent
     });
     if (this.data.patientDocumentId > 0) {
       this.patientDocumentForm.setValue({
-        // documentTypeId: this.data.documentTypeId,
+        documentTypeId: this.data.documentTypeId,
         physicalLocation: this.data.physicalLocation,
         documentName: this.data.documentName,
         clinicDate: this.data.clinicDate,
@@ -73,7 +73,7 @@ export class AddPatientDocumentDialogComponent
       const formData = new FormData();
       formData.append('patientDocumentId', this.data.patientDocumentId.toString());
       formData.append('patientId',  this.data.patientId.toString());
-      formData.append('documentTypeId', this.data.documentTypeId.toString());
+      formData.append('documentTypeId',  this.patientDocumentForm.value.documentTypeId);
       formData.append('physicalLocation', this.patientDocumentForm.value.physicalLocation);
       formData.append('documentName', this.patientDocumentForm.value.documentName);
       formData.append('clinicDate', new Date(this.patientDocumentForm.value.clinicDate).toISOString());

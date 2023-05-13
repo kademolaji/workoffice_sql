@@ -28,7 +28,7 @@ namespace WorkOffice.Services
                                     select new GeneralSettingsModel
                                     {
                                         Label = a.Name,
-                                        Value = a.CompanyStructureId.ToString()
+                                        Value = a.CompanyStructureId
                                     }).ToListAsync();
 
                 var response = new GetResponse<List<GeneralSettingsModel>>()
@@ -62,7 +62,7 @@ namespace WorkOffice.Services
                                     select new GeneralSettingsModel
                                     {
                                         Label = a.Name,
-                                        Value = a.CountryId.ToString()
+                                        Value = a.CountryId
                                     }).ToListAsync();
 
                 var response = new GetResponse<List<GeneralSettingsModel>>()
@@ -96,7 +96,7 @@ namespace WorkOffice.Services
                                     select new GeneralSettingsModel
                                     {
                                         Label = a.Definition,
-                                        Value = a.StructureDefinitionId.ToString()
+                                        Value = a.StructureDefinitionId
                                     }).ToListAsync();
 
                 var response = new GetResponse<List<GeneralSettingsModel>>()
@@ -130,7 +130,7 @@ namespace WorkOffice.Services
                                     select new GeneralSettingsModel
                                     {
                                         Label = a.RoleName,
-                                        Value = a.UserRoleDefinitionId.ToString()
+                                        Value = a.UserRoleDefinitionId
                                     }).ToListAsync();
 
                 var response = new GetResponse<List<GeneralSettingsModel>>()
@@ -164,7 +164,7 @@ namespace WorkOffice.Services
                                     select new GeneralSettingsModel
                                     {
                                         Label = a.Organisationname,
-                                        Value = a.GeneralInformationId.ToString()
+                                        Value = a.GeneralInformationId
                                     }).ToListAsync();
 
                 var response = new GetResponse<List<GeneralSettingsModel>>()
@@ -200,7 +200,7 @@ public async Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetNHSAc
                                     select new GeneralSettingsModel
                                     {
                                         Label = a.Name,
-                                        Value = a.NHSActivityId.ToString()
+                                        Value = a.NHSActivityId
                                     }).ToListAsync();
 
                 var response = new GetResponse<List<GeneralSettingsModel>>()
@@ -233,7 +233,7 @@ public async Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetNHSAc
                                     select new GeneralSettingsModel
                                     {
                                         Label = a.Name,
-                                        Value = a.AppTypeId.ToString()
+                                        Value = a.AppTypeId
                                     }).ToListAsync();
 
                 var response = new GetResponse<List<GeneralSettingsModel>>()
@@ -266,7 +266,7 @@ public async Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetNHSAc
                                     select new GeneralSettingsModel
                                     {
                                         Label = a.Name,
-                                        Value = a.ConsultantId.ToString()
+                                        Value = a.ConsultantId
                                     }).ToListAsync();
 
                 var response = new GetResponse<List<GeneralSettingsModel>>()
@@ -299,7 +299,7 @@ public async Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetNHSAc
                                     select new GeneralSettingsModel
                                     {
                                         Label = a.Name,
-                                        Value = a.HospitalId.ToString()
+                                        Value = a.HospitalId
                                     }).ToListAsync();
 
                 var response = new GetResponse<List<GeneralSettingsModel>>()
@@ -332,7 +332,7 @@ public async Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetNHSAc
                                     select new GeneralSettingsModel
                                     {
                                         Label = a.Name,
-                                        Value = a.PathwayStatusId.ToString()
+                                        Value = a.PathwayStatusId
                                     }).ToListAsync();
 
                 var response = new GetResponse<List<GeneralSettingsModel>>()
@@ -365,7 +365,7 @@ public async Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetNHSAc
                                     select new GeneralSettingsModel
                                     {
                                         Label = a.Name,
-                                        Value = a.RTTId.ToString()
+                                        Value = a.RTTId
                                     }).ToListAsync();
 
                 var response = new GetResponse<List<GeneralSettingsModel>>()
@@ -398,7 +398,7 @@ public async Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetNHSAc
                                     select new GeneralSettingsModel
                                     {
                                         Label = a.Name,
-                                        Value = a.SpecialtyId.ToString()
+                                        Value = a.SpecialtyId
                                     }).ToListAsync();
 
                 var response = new GetResponse<List<GeneralSettingsModel>>()
@@ -431,7 +431,7 @@ public async Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetNHSAc
                                     select new GeneralSettingsModel
                                     {
                                         Label = a.Name,
-                                        Value = a.WaitingTypeId.ToString()
+                                        Value = a.WaitingTypeId
                                     }).ToListAsync();
 
                 var response = new GetResponse<List<GeneralSettingsModel>>()
@@ -464,7 +464,7 @@ public async Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetNHSAc
                                     select new GeneralSettingsModel
                                     {
                                         Label = a.Name,
-                                        Value = a.WardId.ToString()
+                                        Value = a.WardId
                                     }).ToListAsync();
 
                 var response = new GetResponse<List<GeneralSettingsModel>>()
@@ -496,7 +496,7 @@ public async Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetNHSAc
                                     select new GeneralSettingsModel
                                     {
                                         Label = a.DistrictNumber,
-                                        Value = a.PatientId.ToString()
+                                        Value = a.PatientId
                                     }).ToListAsync();
 
                 var response = new GetResponse<List<GeneralSettingsModel>>()
@@ -528,7 +528,7 @@ public async Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetNHSAc
                                     select new GeneralSettingsModel
                                     {
                                         Label = a.Name,
-                                        Value = a.DepartmentId.ToString()
+                                        Value = a.DepartmentId
                                     }).ToListAsync();
 
                 var response = new GetResponse<List<GeneralSettingsModel>>()

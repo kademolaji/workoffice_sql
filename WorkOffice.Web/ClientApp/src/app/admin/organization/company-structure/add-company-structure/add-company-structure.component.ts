@@ -11,7 +11,6 @@ import {
 } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GeneralSettingsModel } from 'src/app/core/models/general-settings.model';
-import { GeneralSettingsService } from 'src/app/core/service/general-settings.service';
 import { UnsubscribeOnDestroyAdapter } from 'src/app/shared/UnsubscribeOnDestroyAdapter';
 import { AddCompanyStructureModel } from '../company-structure.model';
 import { CompanyStructureService } from '../company-structure.service';
@@ -41,12 +40,9 @@ export class AddCompanyStructureComponent
     private route: ActivatedRoute,
     private router: Router,
     private companyStructureService: CompanyStructureService,
-    private generalSettingsService: GeneralSettingsService,
     private snackBar: MatSnackBar
   ) {
     super();
-  }
-  ngOnInit() {
     this.companyStructureForm = this.fb.group({
       name: ['', [Validators.required]],
       structureTypeId: ['', [Validators.required]],
@@ -55,8 +51,17 @@ export class AddCompanyStructureComponent
       contactPhone: ['', [Validators.required]],
       contactEmail: ['', [Validators.required]],
       companyHead: ['', [Validators.required]],
-      parentID: ['']
+      parentID: [''],
     });
+  }
+  ngOnInit() {
+    this.route.data.subscribe((data) => {
+      this.countryList = data['countryList'].entity;
+      this.structureDefinitionList = data['structureDefinitionList'].entity;
+      this.companyStructureParentList = data['companyStructureParentList'].entity;
+    });
+
+
     this.id = +this.route.snapshot.params['id'];
     this.isAddMode = !this.id;
     if (!this.isAddMode) {
@@ -65,7 +70,8 @@ export class AddCompanyStructureComponent
         .subscribe({
           next: (res) => {
             if (res.status) {
-              this.companyStructureForm.setValue({
+              console.log("res.entity", res.entity)
+              this.companyStructureForm.patchValue({
                 name: res.entity.name,
                 structureTypeId: res.entity.structureTypeId,
                 country: res.entity.country,
@@ -79,22 +85,6 @@ export class AddCompanyStructureComponent
           },
         });
     }
-
-    this.subs.sink = this.generalSettingsService
-      .getCompanyStructureList()
-      .subscribe((response) => {
-        this.companyStructureParentList = response.entity;
-      });
-    this.subs.sink = this.generalSettingsService
-      .getStructureDefinitionList()
-      .subscribe((response) => {
-        this.structureDefinitionList = response.entity;
-      });
-    this.subs.sink = this.generalSettingsService
-      .getCountryList()
-      .subscribe((response) => {
-        this.countryList = response.entity;
-      });
   }
   cancelForm() {
     this.router.navigate(['/admin/company/all-company-structure']);

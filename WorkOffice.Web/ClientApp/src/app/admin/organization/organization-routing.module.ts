@@ -11,6 +11,9 @@ import { AllGeneralInformationComponent } from "./general-information/all-genera
 import { AddGeneralInformationComponent } from "./general-information/add-general-information/add-general-information.component";
 import { AddCustomIdentitySettingsComponent } from "./custom-identity-format/add-custom-identity-settings/add-custom-identity-settings.component";
 import { AllCustomIdentitySettingsComponent } from "./custom-identity-format/all-custom-identity-settings/all-custom-identity-settings.component";
+import { CountryResolver } from "src/app/core/resolvers/country-resolver.service";
+import { StructionDefinitionResolver } from "src/app/core/resolvers/structure-definition-resolver.service";
+import { CompanyStructureResolver } from "src/app/core/resolvers/company-structure-resolver.service";
 
 const routes: Routes = [
   {
@@ -68,10 +71,20 @@ const routes: Routes = [
   {
     path: "add-company-structure",
     component: AddCompanyStructureComponent,
+    resolve: {
+      countryList: CountryResolver,
+      structureDefinitionList: StructionDefinitionResolver,
+      companyStructureParentList: CompanyStructureResolver
+    }
   },
   {
     path: "edit-company-structure/:id",
     component: AddCompanyStructureComponent,
+    resolve: {
+      countryList: CountryResolver,
+      structureDefinitionList: StructionDefinitionResolver,
+      companyStructureParentList: CompanyStructureResolver
+    }
   },
   { path: "**", component: Page404Component },
 ];
