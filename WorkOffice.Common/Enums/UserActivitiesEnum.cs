@@ -35,6 +35,7 @@ namespace WorkOffice.Common
         Diagnostic_Information=27,
         Referral_Information = 28,
         DiagnosticResult_Document = 29,
+        Add_PatientValidation = 30,
 
     }
 }

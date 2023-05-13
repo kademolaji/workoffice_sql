@@ -46,6 +46,7 @@ export class ReferralService extends UnsubscribeOnDestroyAdapter {
     return this.httpClient.post<CreateResponse>('/api/referral/create', formData);
   }
 
+
   deleteReferral(id: number) {
     return this.httpClient.delete<DeleteReply>(
       `api/referral/Delete?referralId=${id}`

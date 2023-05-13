@@ -44,8 +44,8 @@ namespace WorkOffice.Domain.Entities
 
         public DateTime? UpdatedOn { get; set; }
 
-        public virtual NHS_Patient NHS_Patient { get; set; }
+        //public virtual NHS_Patient NHS_Patient { get; set; }
 
-        public virtual NHS_Patient_Validation NHS_Patient_Validation { get; set; }
+        //public virtual NHS_Patient_Validation NHS_Patient_Validation { get; set; }
     }
 }

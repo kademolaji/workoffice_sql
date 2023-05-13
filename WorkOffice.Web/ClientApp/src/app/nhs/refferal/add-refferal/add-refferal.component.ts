@@ -114,10 +114,7 @@ export class AddRefferalComponent
       formData.append('consultantId', this.referralForm.value.consultantId);
       formData.append('documentName', this.referralForm.value.documentName);
       formData.append('consultantName', this.referralForm.value.consultantName);
-      formData.append(
-        'referralDate',
-        new Date(this.referralForm.value.clinicDate).toISOString()
-      );
+      formData.append('referralDate', new Date(this.referralForm.value.referralDate).toISOString());
       formData.append('file', this.referralForm.value.uploadFile);
 
       this.subs.sink = this.referralService.addReferral(formData).subscribe({

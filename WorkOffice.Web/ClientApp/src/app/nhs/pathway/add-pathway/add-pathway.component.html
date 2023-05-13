@@ -1,3 +1,131 @@
-<p>
-  add-pathway works!
-</p>
+<section class="content">
+  <div class="content-block">
+    <div class="block-header">
+      <!-- breadcrumb -->
+      <app-breadcrumb *ngIf="isAddMode" [title]="'Add Pathway'" [items]="['Pathway']" [active_item]="'Pathway'"></app-breadcrumb>
+      <app-breadcrumb *ngIf="!isAddMode" [title]="'Edit Pathway'" [items]="['Pathway']" [active_item]="'Edit Pathway'"></app-breadcrumb>
+
+    </div>
+    <div class="row clearfix">
+      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="card">
+          <div class="header">
+            <h2 *ngIf="isAddMode"><strong> Add New Pathway</strong></h2>
+            <h2 *ngIf="!isAddMode"><strong> Edit Pathway</strong></h2>
+          </div>
+          <div class="body">
+            <form class="m-4" [formGroup]="pathwayForm" (ngSubmit)="onSubmit()">
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Patient District Number</mat-label>
+                    <mat-select formControlName="patientId" required>
+                      <mat-option  *ngFor="let patient of patientList" [value]="patient.value">
+                        {{patient.label}}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="pathwayForm.get('patientId')?.hasError('required')">
+                      Patient District Number is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>RTT</mat-label>
+                    <mat-select formControlName="rttId" required>
+                      <mat-option  *ngFor="let rtt of rttList" [value]="rtt.value">
+                        {{rtt.label}}
+                      </mat-option>
+                    </mat-select>
+                    <!-- <mat-error *ngIf="pathwayForm.get('rttId')?.hasError('required')">
+                     Pathway is required
+                    </mat-error>  -->
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Status</mat-label>
+                    <mat-select formControlName="pathWayStatusId" required>
+                      <mat-option  *ngFor="let pathwayStatus of pathwayStatusList" [value]="pathwayStatus.value">
+                        {{pathwayStatus.label}}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="pathwayForm.get('pathWayStatusId')?.hasError('required')">
+                      Status is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Speciality</mat-label>
+                    <mat-select formControlName="specialtyId" required>
+                      <mat-option  *ngFor="let specialty of specialityList" [value]="specialty.value">
+                        {{specialty.label}} 
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="pathwayForm.get('specialityName')?.hasError('required')">
+                      Speciality is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Pathway StartDate</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="pathWayStartDate" required>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error *ngIf="pathwayForm.get('pathWayStartDate')?.hasError('required')">
+                      Please select pathway start date
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Pathway EndDate</mat-label>
+                    <input matInput [matDatepicker]="picker1" formControlName="pathWayEndDate" required>
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                    <!-- <mat-error *ngIf="pathwayForm.get('pathWayEndDate')?.hasError('required')">
+                      Please select pathway end date
+                    </mat-error> -->
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>PathWay Number</mat-label>
+                    <input matInput formControlName="pathWayNumber" required>
+                    <!-- <mat-error *ngIf="pathwayForm.get('pathWayNumber')?.hasError('required')">
+                      PathWayNumber is required
+                    </mat-error> -->
+                  </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>PathWay Condition</mat-label>
+                    <input matInput formControlName="pathWayCondition" required>
+                    <!-- <mat-error *ngIf="pathwayForm.get('pathWayCondition')?.hasError('required')">
+                      PathWayCondition is required
+                    </mat-error> -->
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-3">
+                  <button class="btn-space" [class.auth-spinner]="loading" [disabled]="loading" [disabled]="!pathwayForm.valid " mat-raised-button
+                    color="primary">Submit</button>
+                  <button type="button" (click)="cancelForm()" mat-raised-button color="warn">Cancel</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

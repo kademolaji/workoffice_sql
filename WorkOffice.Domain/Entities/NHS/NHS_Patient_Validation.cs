@@ -7,13 +7,14 @@ namespace WorkOffice.Domain.Entities
 {
     public class NHS_Patient_Validation
     {
-        public NHS_Patient_Validation()
-        {
-            NHS_Appointment = new HashSet<NHS_Appointment>();
-            NHS_Patient_Validation_Detail = new HashSet<NHS_Patient_Validation_Detail>();
-            NHS_Waitinglist = new HashSet<NHS_Waitinglist>();
-            NHS_Patient = new HashSet<NHS_Patient>();
-        }
+        //public NHS_Patient_Validation()
+        //{
+        //    NHS_Appointment = new HashSet<NHS_Appointment>();
+        //    NHS_Patient_Validation_Detail = new HashSet<NHS_Patient_Validation_Detail>();
+        //    NHS_Waitinglist = new HashSet<NHS_Waitinglist>();
+        //    NHS_Patient = new HashSet<NHS_Patient>();
+        //    Specialty = new HashSet<Specialty>();
+        //}
 
         [Key]
         public int PatientValidationId { get; set; }
@@ -62,16 +63,16 @@ namespace WorkOffice.Domain.Entities
 
         public DateTime? UpdatedOn { get; set; }
 
-        public virtual ICollection<NHS_Appointment> NHS_Appointment { get; set; }
+        //public virtual ICollection<NHS_Appointment> NHS_Appointment { get; set; }
 
-        public virtual ICollection<NHS_Patient> NHS_Patient { get; set; }
+        //public virtual PathwayStatus PathwayStatus { get; set; }
 
-        public virtual PathwayStatus PathwayStatus { get; set; }
+        //public virtual ICollection<NHS_Patient_Validation_Detail> NHS_Patient_Validation_Detail { get; set; }
 
-        public virtual ICollection<NHS_Patient_Validation_Detail> NHS_Patient_Validation_Detail { get; set; }
+        //public virtual ICollection<NHS_Patient> NHS_Patient { get; set; }
 
-        public virtual Specialty Specialty { get; set; }
+        //public virtual ICollection<Specialty> Specialty { get; set; }
 
-        public virtual ICollection<NHS_Waitinglist> NHS_Waitinglist { get; set; }
+        //public virtual ICollection<NHS_Waitinglist> NHS_Waitinglist { get; set; }
     }
 }

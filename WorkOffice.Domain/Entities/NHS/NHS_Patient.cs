@@ -10,7 +10,6 @@ namespace WorkOffice.Domain.Entities
         public NHS_Patient()
         {
             NHS_Appointment = new HashSet<NHS_Appointment>();
-            NHS_Patient_Validation_Detail = new HashSet<NHS_Patient_Validation_Detail>();
             NHS_Waitinglist = new HashSet<NHS_Waitinglist>();
         }
         [Key]
@@ -68,9 +67,6 @@ namespace WorkOffice.Domain.Entities
         public DateTime? UpdatedOn { get; set; }
 
         public virtual ICollection<NHS_Appointment> NHS_Appointment { get; set; }
-
-        public virtual ICollection<NHS_Patient_Validation_Detail> NHS_Patient_Validation_Detail { get; set; }
-
         public virtual ICollection<NHS_Waitinglist> NHS_Waitinglist { get; set; }
     }
 }

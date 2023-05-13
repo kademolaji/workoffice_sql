@@ -445,6 +445,81 @@
              <response code="404">If object of PatientInformation is null</response> 
              <response code="400">If an error occur or invalid request payload</response> 
         </member>
+        <member name="M:WorkOffice.Web.Controllers.PatientValidationController.Create(WorkOffice.Contracts.Models.PatientValidationModel)">
+             <summary>
+             Create PatientValidation
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 POST /api/PatientValidation/Create
+                 {
+                   "revenueId": 10,
+                   "customerId": 210
+                     }
+            
+             </remarks>
+             <param name="model"></param>
+             <returns>Created success message </returns>
+             <response code="201">PatientValidation Created Successfully</response>
+             <response code="400">If an error occur or invalid request payload</response>
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.PatientValidationController.GetList(WorkOffice.Contracts.ServicesContracts.SearchCall{WorkOffice.Contracts.ServicesContracts.SearchParameter})">
+             <summary>
+             Get list of PatientValidation
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="options"></param>
+             <returns>List of PatientValidation</returns>
+             <response code="200">Returns list of PatientValidation</response>
+             <response code="404">If list of PatientValidation is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.PatientValidationController.Get(System.Int64)">
+             <summary>
+             Get object of PatientValidation
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="PatientValidationId"></param>
+             <returns>Object of PatientValidation</returns>
+             <response code="200">Returns object of PatientValidation</response>
+             <response code="404">If object of PatientValidation is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.PatientValidationController.Delete(System.Int64)">
+             <summary>
+             Delete PatientValidation
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="patientId"></param>
+             <returns>Object of PatientValidation</returns>
+             <response code="200">Returns object of PatientValidation</response>
+             <response code="404">If object of PatientValidation is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.PatientValidationController.MultipleDelete(WorkOffice.Contracts.Models.MultipleDeleteModel)">
+             <summary>
+             Delete Multiple PatientValidation
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="model"></param>
+             <returns>Object of PatientValidation</returns>
+             <response code="200">Returns object of PatientValidation</response>
+             <response code="404">If object of PatientValidation is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
         <member name="M:WorkOffice.Web.Controllers.ReferralController.Create(WorkOffice.Web.Dtos.ReferralDto)">
              <summary>
              Create Referral

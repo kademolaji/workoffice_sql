@@ -2,16 +2,16 @@
   <div class="content-block">
     <div class="block-header">
       <!-- breadcrumb -->
-      <app-breadcrumb *ngIf="isAddMode" [title]="'Add Company Structure Definition'" [items]="['Company Structure Definition']" [active_item]="'Company Structure Definition'"></app-breadcrumb>
-      <app-breadcrumb *ngIf="!isAddMode" [title]="'Edit Company Structure Definition'" [items]="['Company Structure Definition']" [active_item]="'Edit Company Structure Definition'"></app-breadcrumb>
+      <app-breadcrumb *ngIf="isAddMode" [title]="'Add Referral'" [items]="['Referral']" [active_item]="'Referral'"></app-breadcrumb>
+      <app-breadcrumb *ngIf="!isAddMode" [title]="'Edit Referral'" [items]="['Referral']" [active_item]="'Edit Referral'"></app-breadcrumb>
 
     </div>
     <div class="row clearfix">
       <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
         <div class="card">
           <div class="header">
-            <h2 *ngIf="isAddMode"><strong> Add New Company Structure Definition</strong></h2>
-            <h2 *ngIf="!isAddMode"><strong> Edit Company Structure Definition</strong></h2>
+            <h2 *ngIf="isAddMode"><strong> Add Referral</strong></h2>
+            <h2 *ngIf="!isAddMode"><strong> Edit Referral</strong></h2>
           </div>
           <div class="body">
             <form class="m-4" [formGroup]="referralForm" (ngSubmit)="onSubmit()">

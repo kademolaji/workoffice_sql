@@ -27,7 +27,7 @@ namespace WorkOffice.Services
             try
             {
 
-                if (model.PatientId > 0)
+                if (model.PatientValidationId > 0)
                 {
                     return await Update(model);
                 }
@@ -35,7 +35,7 @@ namespace WorkOffice.Services
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "PathWay Number is required." }, IsSuccess = false };
                 }
-
+                var patDetail = context.NHS_Patients.Where(a => a.PatientId == model.PatientId).FirstOrDefault();
                 var apiResponse = new ApiResponse<CreateResponse>();
                 bool result = false;
                 NHS_Patient_Validation entity = null;
@@ -45,7 +45,7 @@ namespace WorkOffice.Services
                     {
                         entity = new NHS_Patient_Validation
                         {
-                            DistrictNumber = model.DistrictNumber,
+                            DistrictNumber = patDetail.DistrictNumber,
                             PathWayCondition = model.PathWayCondition,
                             PathWayEndDate = model.PathWayEndDate,
                             PathWayNumber = model.PathWayNumber,
@@ -55,7 +55,7 @@ namespace WorkOffice.Services
                             RTTId = model.RTTId,
                             SpecialtyId = model.SpecialtyId,
                             RTTWait = model.RTTWait,
-                            NHSNumber = model.NHSNumber,
+                            NHSNumber = patDetail.NHSNumber,
                             Active = true,
                             Deleted = false,
                             CreatedBy = model.CurrentUserName,
@@ -122,7 +122,7 @@ namespace WorkOffice.Services
 
                 var apiResponse = new ApiResponse<CreateResponse>();
                 bool result = false;
-                var entity = await context.NHS_Patient_Validations.FindAsync(model.PatientId);
+                var entity = await context.NHS_Patient_Validations.FindAsync(model.PatientValidationId);
                 if (entity == null)
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Record does not exist." }, IsSuccess = false };
@@ -216,7 +216,8 @@ namespace WorkOffice.Services
                                                                   SpecialityCode = y.Code,
                                                                   SpecialityName = y.Name,
                                                                   NHSNumber = x.NHSNumber,
-                                                              }).AsQueryable();
+                                                                  PatientValidationId = x.PatientValidationId
+                                                            }).AsQueryable();
                 int offset = (pageNumber) * pageSize;
 
                 if (!string.IsNullOrEmpty(options.Parameter.SearchQuery))
@@ -277,7 +278,7 @@ namespace WorkOffice.Services
 
                 var result = await(from x in context.NHS_Patient_Validations
                                    join y in context.Specialties on x.SpecialtyId equals y.SpecialtyId
-                                   where x.PatientValidationId == PatientValidationId && x.Deleted == false
+                                   where x.PatientValidationId == PatientValidationId
                                    select new PatientValidationModel
                                                             {
                                                                 PatientId = x.PatientId,

@@ -13,6 +13,7 @@ import { AddRefferalComponent } from "./refferal/add-refferal/add-refferal.compo
 import { AllRefferalComponent } from "./refferal/all-refferal/all-refferal.component";
 import { AllDiagnosticComponent } from "./diagnostic/all-diagnostic/all-diagnostic.component";
 import { AddDiagnosticComponent } from "./diagnostic/add-diagnostic/add-diagnostic.component";
+import { AllPathwayComponent } from "./pathway/all-pathway/all-pathway.component";
 
 
 const routes: Routes = [
@@ -53,7 +54,15 @@ const routes: Routes = [
     component: AddWaitinglistComponent,
   },
   {
+    path: "all-pathway",
+    component: AllPathwayComponent,
+  },
+  {
     path: "add-pathway",
+    component: AddPathwayComponent,
+  },
+  {
+    path: "edit-pathway/:id",
     component: AddPathwayComponent,
   },
   {

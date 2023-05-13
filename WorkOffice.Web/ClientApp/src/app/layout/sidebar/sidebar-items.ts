@@ -286,7 +286,7 @@ export const ROUTES: RouteInfo[] = [
         submenu: [],
       },
       {
-        path: '/nhs/add-pathway',
+        path: '/nhs/all-pathway',
         title: 'Add Pathway',
         iconType: '',
         icon: '',

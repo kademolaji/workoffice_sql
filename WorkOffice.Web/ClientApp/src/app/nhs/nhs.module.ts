@@ -46,6 +46,10 @@ import { DiagnosticService } from './diagnostic/diagnostic.service';
 import { AddRefferalComponent } from './refferal/add-refferal/add-refferal.component';
 import { DeleteReferralDialogComponent } from './refferal/all-refferal/dialog/delete/delete.component';
 import { AllRefferalComponent } from './refferal/all-refferal/all-refferal.component';
+import { ReferralService } from './refferal/referral.service';
+import { DeletePathwayDialogComponent } from './pathway/all-pathway/dialog/delete/delete.component';
+import { AllPathwayComponent } from './pathway/all-pathway/all-pathway.component';
+import { PathwayService } from './pathway/pathway.service';
 
 @NgModule({
   imports: [
@@ -88,7 +92,9 @@ import { AllRefferalComponent } from './refferal/all-refferal/all-refferal.compo
     AddWaitinglistComponent,
     DeleteWaitinglistDialogComponent,
 
+    AllPathwayComponent,
     AddPathwayComponent,
+    DeletePathwayDialogComponent,
     ValidateNowComponent,
 
     AllDiagnosticComponent,
@@ -101,6 +107,6 @@ import { AllRefferalComponent } from './refferal/all-refferal/all-refferal.compo
     AllRefferalComponent,
     DeleteReferralDialogComponent
   ],
-  providers: [PatientService, AppointmentService, WaitinglistService, DiagnosticService],
+  providers: [PatientService, AppointmentService, WaitinglistService, DiagnosticService, ReferralService, PathwayService],
 })
 export class NhsModule {}

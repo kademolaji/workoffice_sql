@@ -53,7 +53,7 @@ namespace WorkOffice.Web.Controllers
         [Route("Create")]
         [ProducesResponseType(201, Type = typeof(CreateResponse))]
         [ProducesResponseType(400, Type = typeof(CreateResponse))]
-        public async Task<IActionResult> Create(ReferralDto model)
+        public async Task<IActionResult> Create([FromForm] ReferralDto model)
         {
             try
             {
