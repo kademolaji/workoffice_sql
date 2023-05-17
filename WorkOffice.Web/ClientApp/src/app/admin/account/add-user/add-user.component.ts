@@ -52,7 +52,7 @@ export class AddUserComponent
     this.subs.sink = this.generalSettingsService
     .getUserRoleList()
     .subscribe((response) => {
-      this.countryList = response.entity;
+      this.userRoleList = response.entity;
     });
     this.addUserForm = this.fb.group(
       {
@@ -66,6 +66,9 @@ export class AddUserComponent
         ],
         country: ['', [Validators.required]],
         userRoleId: ['', [Validators.required]],
+        phoneNumber: ['', [Validators.required]],
+        securityQuestion: ['', [Validators.required]],
+        securityAnswer: ['', [Validators.required]],
       },
       {
         validator: MustMatch('password', 'confirmPassword'),
@@ -91,6 +94,8 @@ export class AddUserComponent
       return;
     } else {
       console.log("form Value", this.addUserForm.value)
+const userRoles: number[] = [];
+userRoles.push(+this.addUserForm.value.userRoleId)
       const user: AddEditUserModel = {
         firstName: this.addUserForm.value.firstName,
         lastName: this.addUserForm.value.lastName,
@@ -98,8 +103,14 @@ export class AddUserComponent
         confirmPassword: this.addUserForm.value.confirmPassword,
         email: this.addUserForm.value.email,
         country: this.addUserForm.value.country,
-        userRoleId: this.addUserForm.value.userRoleId,
+        userRoleId: +this.addUserForm.value.userRoleId,
         acceptTerms: true,
+        phoneNumber: this.addUserForm.value.phoneNumber,
+        accesslevel: 1,
+        securityQuestion: this.addUserForm.value.securityQuestion,
+        securityAnswer: this.addUserForm.value.securityAnswer,
+        userAccessIds: [],
+        userRoleIds: userRoles
       };
       this.subs.sink = this.usersService.addUser(user).subscribe({
         next: (res) => {

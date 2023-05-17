@@ -46,29 +46,7 @@
                     </ul>
                   </div>
                   <div class="col-4">
-                    <!-- <ul class="tbl-export-btn">
-                      <li>
-                        <div class="export-button m-l-10" matTooltip="XLSX">
-                          <img src="assets/images/icons/xlsx.png" alt=""
-                            (click)="exporter.exportTable('xlsx', {fileName:'assets-list', sheet: 'sheet1'})" />
-                        </div>
-                      </li>
-                      <li>
-                        <div class="export-button m-l-10" matTooltip="CSV">
-                          <img src="assets/images/icons/csv.png" alt="" (click)="exporter.exportTable('csv')" />
-                        </div>
-                      </li>
-                      <li>
-                        <div class="export-button m-l-10" matTooltip="JSON">
-                          <img src="assets/images/icons/json.png" alt="" (click)="exporter.exportTable('json')" />
-                        </div>
-                      </li>
-                      <li>
-                        <div class="export-button m-l-10" matTooltip="TXT">
-                          <img src="assets/images/icons/txt.png" alt="" (click)="exporter.exportTable('txt')" />
-                        </div>
-                      </li>
-                    </ul> -->
+
                   </div>
                 </div>
               </div>
@@ -141,12 +119,12 @@
                 </mat-row>
               </mat-table>
               <!-- Loading spinner -->
-              <div *ngIf="exampleDatabase?.isTblLoading" class="tbl-spinner">
+              <div *ngIf="isTblLoading" class="tbl-spinner">
                 <mat-progress-spinner color="primary" [diameter]="40" mode="indeterminate">
                 </mat-progress-spinner>
               </div>
-              <div *ngIf="!exampleDatabase?.isTblLoading" class="no-results"
-                [style.display]="dataSource.renderedData.length === 0 ? '' : 'none'">
+              <div *ngIf="!isTblLoading" class="no-results"
+                [style.display]="dataSource.data.length === 0 ? '' : 'none'">
                 No results
               </div>
               <mat-paginator #paginator [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="10"

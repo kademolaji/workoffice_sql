@@ -1,3 +1,24 @@
-<p>
-  verify-email works!
-</p>
+
+<div class="auth-container">
+  <div class="row auth-main">
+    <div class="col-sm-6 px-0 d-none d-sm-block">
+      <div class="left-img" style="background-image: url(assets/images/pages/bg-04.png);">
+      </div>
+    </div>
+    <div class="col-sm-6 auth-form-section">
+      <div class="form-section">
+        <div class="auth-wrapper">
+          <div class="d-flex align-items-center justify-content-center">
+            <div class="text-center" *ngIf="emailStatus === EmailStatus.Verifying">
+                Verifying email...
+            </div>
+            <div class="text-center" *ngIf="emailStatus === EmailStatus.Failed">
+                Verification failed, you can also verify your account using the <a routerLink="/account/forget-password">forgot password</a> page.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

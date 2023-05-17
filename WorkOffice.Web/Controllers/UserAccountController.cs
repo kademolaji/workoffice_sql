@@ -84,6 +84,8 @@ namespace WorkOffice.Web.Controllers
         {
             try
             {
+                model.ClientId = _httpAccessorService.GetCurrentClientId();
+
                 var apiResponse = await _userAccountService.Register(model, model.Password, Request.Headers["origin"], ipAddress());
                 if (apiResponse.ResponseType.Entity != null)
                 {

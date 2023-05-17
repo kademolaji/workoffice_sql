@@ -28,7 +28,7 @@
                     <mat-label>Last name</mat-label>
                     <input matInput formControlName="lastName">
                     <mat-error *ngIf="addUserForm.get('lastName')?.hasError('required')">
-                      First name is required
+                      Last name is required
                     </mat-error>
                   </mat-form-field>
                 </div>
@@ -83,6 +83,15 @@
               <div class="row">
                 <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
                   <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Phone Number</mat-label>
+                    <input matInput formControlName="phoneNumber" required>
+                    <mat-error *ngIf="addUserForm.get('phoneNumber')?.hasError('required')">
+                      Phone Number is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
                     <mat-label>Select Role</mat-label>
                     <mat-select formControlName="userRoleId" required>
                       <mat-option  *ngFor="let userRole of userRoleList" [value]="userRole.value">
@@ -90,7 +99,27 @@
                       </mat-option>
                     </mat-select>
                     <mat-error *ngIf="addUserForm.get('userRoleId')?.hasError('required')">
-                      Select country
+                      Select User Role
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Security Question</mat-label>
+                    <input matInput formControlName="securityQuestion" required>
+                    <mat-error *ngIf="addUserForm.get('securityQuestion')?.hasError('required')">
+                      Security Question is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                    <mat-label>Security Answer</mat-label>
+                    <input matInput formControlName="securityAnswer">
+                    <mat-error *ngIf="addUserForm.get('securityAnswer')?.hasError('required')">
+                      Security Answer is required
                     </mat-error>
                   </mat-form-field>
                 </div>

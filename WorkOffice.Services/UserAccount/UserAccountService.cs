@@ -191,24 +191,24 @@ namespace WorkOffice.Services
                 List<UserAccountRole> userAccountRole = new List<UserAccountRole>();
                 List<UserAccountAdditionalActivity> userActivities = new List<UserAccountAdditionalActivity>();
 
-                if (model.AdditionalActivities.Any())
-                {
-                    foreach (var item in model.AdditionalActivities)
-                    {
-                        var userActivity = new UserAccountAdditionalActivity()
-                        {
-                            UserActivityId = item.UserActivityId,
-                            CanAdd = item.CanAdd,
-                            CanEdit = item.CanEdit,
-                            CanApprove = item.CanApprove,
-                            CanView = item.CanView,
-                            CanDelete = item.CanDelete,
-                            ClientId = model.ClientId
-                        };
+                //if (model.AdditionalActivities.Any())
+                //{
+                //    foreach (var item in model.AdditionalActivities)
+                //    {
+                //        var userActivity = new UserAccountAdditionalActivity()
+                //        {
+                //            UserActivityId = item.UserActivityId,
+                //            CanAdd = item.CanAdd,
+                //            CanEdit = item.CanEdit,
+                //            CanApprove = item.CanApprove,
+                //            CanView = item.CanView,
+                //            CanDelete = item.CanDelete,
+                //            ClientId = model.ClientId
+                //        };
 
-                        userActivities.Add(userActivity);
-                    }
-                }
+                //        userActivities.Add(userActivity);
+                //    }
+                //}
 
                 if (model.UserAccessIds.Any())
                 {
@@ -868,6 +868,7 @@ namespace WorkOffice.Services
                     Country = u.Country,
                     Biography = u.Biography,
                     Status = u.Disabled ? "Inactive" : "Active"
+
                 });
 
                 //if (!string.IsNullOrEmpty(options.Parameter.SearchQuery))
@@ -1160,7 +1161,7 @@ namespace WorkOffice.Services
                 {"verifyURL", verifyUrl},
             };
 
-            var mailTitle = $"WorkOffice Account Verification";
+            var mailTitle = $"Account Verification";
             List<SaveNotificationModel> saveNotifications = new List<SaveNotificationModel>();
             var notification = new SaveNotificationModel { SenderId = admin.UserId, ReceiverId = account.UserId, Title = mailTitle, Body = messageParams.ToString() };
             saveNotifications.Add(notification);
@@ -1200,7 +1201,7 @@ namespace WorkOffice.Services
             };
 
             List<SaveNotificationModel> saveNotifications = new List<SaveNotificationModel>();
-            var notification = new SaveNotificationModel { SenderId = admin.UserId, ReceiverId = account.UserId, Title = "Account Verified. Welcome to SkilledAlly", Body = messageParams.ToString() };
+            var notification = new SaveNotificationModel { SenderId = admin.UserId, ReceiverId = account.UserId, Title = "Account Verified. Welcome onboard", Body = messageParams.ToString() };
             saveNotifications.Add(notification);
             await _auditTrail.SaveNotification(saveNotifications);
 

@@ -1,4 +1,3 @@
-
 export interface AddEditUserModel {
   firstName: string;
   lastName: string;
@@ -8,6 +7,12 @@ export interface AddEditUserModel {
   country: string;
   userRoleId: number;
   acceptTerms: boolean;
+  phoneNumber: string;
+  accesslevel: number;
+  securityQuestion: string;
+  securityAnswer: string;
+  userAccessIds: number[];
+  userRoleIds: number[];
 }
 
 export interface UserListModel {
