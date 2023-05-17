@@ -511,7 +511,7 @@ namespace WorkOffice.Services
                     result = await (from a in context.NHS_Patients
                                     select new GeneralSettingsModel
                                     {
-                                        Label = a.DistrictNumber,
+                                        Label = a.DistrictNumber + " - " + a.FirstName + " " + a.MiddleName + " " + a.LastName,
                                         Value = a.PatientId
                                     }).ToListAsync();
                 }
