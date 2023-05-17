@@ -13,6 +13,7 @@ import { Direction } from '@angular/cdk/bidi';
 import { SearchCall, SearchParameter } from 'src/app/core/utilities/api-response';
 import { DeleteAppointmentDialogComponent } from './dialog/delete/delete.component';
 import { AppointmentResponseModel } from '../appointment.model';
+import { CancelAppointmentDialogComponent } from './dialog/cancel/cancel.component';
 
 @Component({
   selector: 'app-all-appointment',
@@ -125,6 +126,32 @@ deleteItem(row: AppointmentResponseModel) {
       this.showNotification(
         'snackbar-success',
         'Delete Record Successfully...!!!',
+        'top',
+        'right'
+      );
+  });
+}
+
+
+cancelItem(row: AppointmentResponseModel) {
+  let tempDirection: Direction;
+  if (localStorage.getItem('isRtl') === 'true') {
+    tempDirection = 'rtl';
+  } else {
+    tempDirection = 'ltr';
+  }
+  const dialogRef = this.dialog.open(
+    CancelAppointmentDialogComponent,
+    {
+      data: row,
+      direction: tempDirection,
+    }
+  );
+  this.subs.sink = dialogRef.afterClosed().subscribe((result) => {
+      this.refresh();
+      this.showNotification(
+        'snackbar-success',
+        'Cancel Record Successfully...!!!',
         'top',
         'right'
       );

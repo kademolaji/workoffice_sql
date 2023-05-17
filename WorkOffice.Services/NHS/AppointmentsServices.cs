@@ -305,7 +305,7 @@ namespace WorkOffice.Services
             }
         }
 
-        public async Task<ApiResponse<GetResponse<AppointmentResponseModel>>> Get(long appointmentId)
+        public async Task<ApiResponse<GetResponse<AppointmentResponseModel>>> Get(int appointmentId)
         {
             try
             {
@@ -363,7 +363,7 @@ namespace WorkOffice.Services
             }
         }
 
-        public async Task<ApiResponse<DeleteReply>> Delete(long appointmentId)
+        public async Task<ApiResponse<DeleteReply>> Delete(int appointmentId)
         {
             try
             {
@@ -405,6 +405,48 @@ namespace WorkOffice.Services
             }
         }
 
+
+        public async Task<ApiResponse<DeleteReply>> Cancel(int appointmentId)
+        {
+            try
+            {
+
+                if (appointmentId <= 0)
+                {
+                    return new ApiResponse<DeleteReply>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new DeleteReply { Status = false, Message = "PatientId is required." }, IsSuccess = false };
+                }
+
+                var apiResponse = new ApiResponse<DeleteReply>();
+
+                var result = context.NHS_Appointments.Find(appointmentId);
+
+                if (result == null)
+                {
+                    return new ApiResponse<DeleteReply>() { StatusCode = System.Net.HttpStatusCode.NotFound, ResponseType = new DeleteReply { Status = false, Message = "No record found" }, IsSuccess = false };
+                }
+                result.AppointmentStatus = "Cancelled";
+
+
+                var response = new DeleteReply()
+                {
+                    Status = await context.SaveChangesAsync() > 0,
+                    Message = "Record Cancelled Successfully"
+                };
+
+                apiResponse.StatusCode = System.Net.HttpStatusCode.OK;
+                apiResponse.IsSuccess = true;
+                apiResponse.ResponseType = response;
+
+                var details = $"Deleted Appointment: PatientId = {result.PatientId}, Comments = {result.Comments}, BookDate = {result.BookDate} ";
+                await auditTrail.SaveAuditTrail(details, "Appointment", "Cancel");
+
+                return apiResponse;
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<DeleteReply>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new DeleteReply() { Status = false, Message = $"Error encountered {ex.Message}" }, IsSuccess = false };
+            }
+        }
         public async Task<ApiResponse<DeleteReply>> MultipleDelete(MultipleDeleteModel model)
         {
             try

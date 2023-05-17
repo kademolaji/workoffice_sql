@@ -101,10 +101,13 @@
                     class="tbl-action-btn">
                     <app-feather-icons [icon]="'trash-2'" [class]="'tbl-fav-delete'"></app-feather-icons>
                   </button>
-                    <button mat-icon-button (click)="$event.stopPropagation()" (click)="editCall(row)"
+                    <!-- <button mat-icon-button (click)="$event.stopPropagation()" (click)="editCall(row)"
                       class="tbl-action-btn">
                       <app-feather-icons [icon]="'cancel'" [class]="'tbl-fav-edit'"></app-feather-icons>
-                    </button>
+                    </button> -->
+                    <button  class="btn-space" type="button" (click)="cancelItem(row)" mat-raised-button color="warn">
+                    Cancel
+                  </button>
                   </mat-cell>
                 </ng-container>
                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

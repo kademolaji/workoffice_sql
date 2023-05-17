@@ -56,6 +56,12 @@ export class AppointmentService extends UnsubscribeOnDestroyAdapter {
     );
   }
 
+  cancelAppointment(id: number) {
+    return this.httpClient.delete<DeleteReply>(
+      `api/appointments/Cancel?appointmentId=${id}`
+    );
+  }
+
   deleteMultipleAppointment(targetIds: number[]) {
     return this.httpClient.post<DeleteReply>(
       `api/appointments/MultipleDelete`, {targetIds: targetIds}

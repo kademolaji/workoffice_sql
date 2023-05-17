@@ -76,6 +76,7 @@ export class AddPathwayComponent
       .subscribe((response) => {
         this.patientList = response.entity;
       });
+      
 
     this.subs.sink = this.generalSettingsService
       .getPathwayStatus()

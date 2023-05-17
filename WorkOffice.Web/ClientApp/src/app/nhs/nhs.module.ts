@@ -51,6 +51,7 @@ import { DeletePathwayDialogComponent } from './pathway/all-pathway/dialog/delet
 import { AllPathwayComponent } from './pathway/all-pathway/all-pathway.component';
 import { PathwayService } from './pathway/pathway.service';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { CancelAppointmentDialogComponent } from './appointment/all-appointment/dialog/cancel/cancel.component';
 
 @NgModule({
   imports: [
@@ -83,6 +84,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     AllAppointmentComponent,
     AddAppointmentComponent,
     DeleteAppointmentDialogComponent,
+    CancelAppointmentDialogComponent,
 
     AllPatientComponent,
     AddPatientComponent,
