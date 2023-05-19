@@ -59,7 +59,22 @@ namespace WorkOffice.Services
                 //{
                 //    return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Department is required." }, IsSuccess = false };
                 //}
-
+               if(model.StatusId == 1)
+                {
+                    model.AppointmentStatus = "ATTEND";
+                }
+               else if (model.StatusId == 2)
+                {
+                    model.AppointmentStatus = "CANCELLED BY PATIENT";
+                }
+                else if (model.StatusId == 3)
+                {
+                    model.AppointmentStatus = "CANCELLED BY HOSPITAL";
+                }
+                else
+                {
+                    model.AppointmentStatus = "DO NOT ATTEND";
+                }
 
 
                 var apiResponse = new ApiResponse<CreateResponse>();
@@ -85,6 +100,7 @@ namespace WorkOffice.Services
                             Comments = model.Comments,
                             AppointmentStatus = model.AppointmentStatus,
                             CancellationReason = model.CancellationReason,
+                            PatientValidationId = model.PatientValidationId,
                             Active = true,
                             Deleted = false,
                             CreatedBy = model.CurrentUserName,
@@ -161,11 +177,29 @@ namespace WorkOffice.Services
                 //{
                 //    return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Department is required." }, IsSuccess = false };
                 //}
+                if (model.StatusId == 1)
+                {
+                    model.AppointmentStatus = "ATTEND";
+                }
+                else if (model.StatusId == 2)
+                {
+                    model.AppointmentStatus = "CANCELLED BY PATIENT";
+                }
+                else if (model.StatusId == 3)
+                {
+                    model.AppointmentStatus = "CANCELLED BY HOSPITAL";
+                }
+                else
+                {
+                    model.AppointmentStatus = "DO NOT ATTEND";
+                }
 
 
                 var apiResponse = new ApiResponse<CreateResponse>();
                 bool result = false;
                 var entity = await context.NHS_Appointments.FindAsync(model.AppointmentId);
+                //var entity = await context.NHS_Appointments.Where(x=> x.AppointmentId == model.AppointmentId);
+                //var entity = await context.NHS_Appointments.FirstOrDefaultAsync(x => x.AppointmentId == model.AppointmentId);
                 if (entity == null)
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Record does not exist." }, IsSuccess = false };
@@ -185,6 +219,7 @@ namespace WorkOffice.Services
                         entity.WardId = model.WardId;
                         entity.DepartmentId = model.DepartmentId;
                         entity.PatientId = model.PatientId;
+                        entity.PatientValidationId = model.PatientValidationId;
                         entity.Comments = model.Comments;
                         entity.AppointmentStatus = model.AppointmentStatus;
                         entity.CancellationReason = model.CancellationReason;
@@ -241,6 +276,8 @@ namespace WorkOffice.Services
 
                 IQueryable<AppointmentResponseModel> query = (from app in context.NHS_Appointments
                                                               join pat in context.NHS_Patients on app.PatientId equals pat.PatientId
+                                                              //where app.AppointmentStatus == "PartialBooked" && app.Deleted==false
+                                                              where app.Deleted == false
                                                               select new AppointmentResponseModel
                                                               {
                                                                   AppointmentId = app.AppointmentId,
@@ -255,21 +292,108 @@ namespace WorkOffice.Services
                                                                   WardId = app.WardId,
                                                                   DepartmentId = app.DepartmentId,
                                                                   PatientId = app.PatientId,
+                                                                  PatientValidationId = app.PatientValidationId,
                                                                   Comments = app.Comments,
                                                                   AppointmentStatus = app.AppointmentStatus,
                                                                   CancellationReason = app.CancellationReason,
                                                                   PatientNumber = pat.DistrictNumber,
-                                                                  Speciality = context.Specialties.FirstOrDefault(x=>x.SpecialtyId == app.SpecialityId).Name
+                                                                  PatientName = $"{pat.FirstName} {pat.MiddleName} {pat.LastName}",
+                                                                  Speciality = context.Specialties.FirstOrDefault(x => x.SpecialtyId == app.SpecialityId).Name,
+                                                                  PatientPathNumber = context.NHS_Patient_Validations.FirstOrDefault(x => x.PatientValidationId == app.PatientValidationId).PathWayNumber
                                                               }).AsQueryable();
 
                 int offset = (pageNumber) * pageSize;
 
-                if (!string.IsNullOrEmpty(options.Parameter.SearchQuery))
+                //if (!string.IsNullOrEmpty(options.Parameter.SearchQuery))
+                //{
+                //    query = query.Where(x => x.PatientNumber.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())
+                //    || x.Speciality.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())
+                //    || x.AppointmentStatus.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower()));
+                //}
+                switch (sortField)
                 {
-                    query = query.Where(x => x.PatientNumber.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())
-                    || x.Speciality.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())
-                    || x.AppointmentStatus.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower()));
+                    case "patientNumber":
+                        query = sortOrder == "asc" ? query.OrderBy(s => s.PatientNumber) : query.OrderByDescending(s => s.PatientNumber);
+                        break;
+                    case "speciality":
+                        query = sortOrder == "asc" ? query.OrderBy(s => s.Speciality) : query.OrderByDescending(s => s.Speciality);
+                        break;
+
+                    default:
+                        query = query.OrderBy(s => s.PatientNumber);
+                        break;
                 }
+                count = query.Count();
+                var items = await query.Skip(offset).Take(pageSize).ToListAsync();
+
+
+                var response = new SearchReply<AppointmentResponseModel>()
+                {
+                    TotalCount = count,
+                    Result = items.ToList(),
+                };
+
+                apiResponse.StatusCode = System.Net.HttpStatusCode.OK;
+                apiResponse.IsSuccess = true;
+                apiResponse.ResponseType = response;
+
+                return apiResponse;
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<SearchReply<AppointmentResponseModel>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new SearchReply<AppointmentResponseModel>() { TotalCount = count }, IsSuccess = false };
+            }
+        }
+
+        public async Task<ApiResponse<SearchReply<AppointmentResponseModel>>> GetCancelList(SearchCall<SearchParameter> options)
+        {
+            int count = 0;
+            int pageNumber = options.From > 0 ? options.From : 0;
+            int pageSize = options.PageSize > 0 ? options.PageSize : 10;
+            string sortOrder = string.IsNullOrEmpty(options.SortOrder) ? "asc" : options.SortOrder;
+            string sortField = string.IsNullOrEmpty(options.SortField) ? "patientNumber" : options.SortField;
+
+            try
+            {
+                var apiResponse = new ApiResponse<SearchReply<AppointmentResponseModel>>();
+
+
+                IQueryable<AppointmentResponseModel> query = (from app in context.NHS_Appointments
+                                                              join pat in context.NHS_Patients on app.PatientId equals pat.PatientId
+                                                              //where app.AppointmentStatus == "Cancelled" && app.Deleted == false
+                                                              where app.Deleted == false
+                                                              select new AppointmentResponseModel
+                                                              {
+                                                                  AppointmentId = app.AppointmentId,
+                                                                  AppTypeId = app.AppTypeId,
+                                                                  StatusId = app.StatusId,
+                                                                  SpecialityId = app.SpecialityId,
+                                                                  BookDate = app.BookDate,
+                                                                  AppDate = app.AppDate,
+                                                                  AppTime = app.AppTime,
+                                                                  ConsultantId = app.ConsultantId,
+                                                                  HospitalId = app.HospitalId,
+                                                                  WardId = app.WardId,
+                                                                  DepartmentId = app.DepartmentId,
+                                                                  PatientId = app.PatientId,
+                                                                  PatientValidationId = app.PatientValidationId,
+                                                                  Comments = app.Comments,
+                                                                  AppointmentStatus = app.AppointmentStatus,
+                                                                  CancellationReason = app.CancellationReason,
+                                                                  PatientName = pat.FirstName + " " + pat.MiddleName + " " + pat.LastName,
+                                                                  PatientNumber = pat.DistrictNumber,
+                                                                  Speciality = context.Specialties.FirstOrDefault(x => x.SpecialtyId == app.SpecialityId).Name,
+                                                                  PatientPathNumber = context.NHS_Patient_Validations.FirstOrDefault(x => x.PatientValidationId == app.PatientValidationId).PathWayNumber
+                                                              }).AsQueryable();
+
+                int offset = (pageNumber) * pageSize;
+
+                //if (!string.IsNullOrEmpty(options.Parameter.SearchQuery))
+                //{
+                //    query = query.Where(x => x.PatientNumber.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())
+                //    || x.Speciality.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())
+                //    || x.AppointmentStatus.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower()));
+                //}
                 switch (sortField)
                 {
                     case "patientNumber":
@@ -333,10 +457,14 @@ namespace WorkOffice.Services
                                         WardId = app.WardId,
                                         DepartmentId = app.DepartmentId,
                                         PatientId = app.PatientId,
+                                        PatientValidationId = app.PatientValidationId,
                                         Comments = app.Comments,
                                         AppointmentStatus = app.AppointmentStatus,
                                         CancellationReason = app.CancellationReason,
                                         PatientNumber = pat.DistrictNumber,
+                                        Speciality = context.Specialties.FirstOrDefault(x => x.SpecialtyId == app.SpecialityId).Name,
+                                        PatientName = pat.FirstName + " " + pat.MiddleName + " " + pat.LastName,
+                                        PatientPathNumber = context.NHS_Patient_Validations.FirstOrDefault(x => x.PatientValidationId == app.PatientValidationId).PathWayNumber
                                     }).FirstOrDefaultAsync();
 
                 if (result == null)

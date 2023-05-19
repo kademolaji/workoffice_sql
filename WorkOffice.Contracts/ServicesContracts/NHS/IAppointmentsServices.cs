@@ -10,6 +10,7 @@ namespace WorkOffice.Contracts.ServicesContracts
     {
         Task<ApiResponse<CreateResponse>> Create(CreateAppointmentModel model);
         Task<ApiResponse<SearchReply<AppointmentResponseModel>>> GetList(SearchCall<SearchParameter> options);
+        Task<ApiResponse<SearchReply<AppointmentResponseModel>>> GetCancelList(SearchCall<SearchParameter> options);
         Task<ApiResponse<GetResponse<AppointmentResponseModel>>> Get(int appointmentId);
         Task<ApiResponse<DeleteReply>> Delete(int appointmentId);
         Task<ApiResponse<DeleteReply>> Cancel(int appointmentId);

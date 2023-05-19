@@ -119,6 +119,34 @@ public class AppointmentsController : ControllerBase
         }
     }
 
+        [HttpPost]
+        [Route("GetCancelList")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetResponse<List<AppointmentResponseModel>>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(GetResponse<ProducesResponseStub>))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(GetResponse<ProducesResponseStub>))]
+        public async Task<IActionResult> GetCancelList(SearchCall<SearchParameter> options)
+        {
+            try
+            {
+                var apiResponse = await service.GetCancelList(options);
+                if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    return BadRequest(apiResponse.ResponseType);
+                }
+
+                if (apiResponse.StatusCode == System.Net.HttpStatusCode.NotFound)
+                {
+                    return NotFound(apiResponse.ResponseType);
+                }
+
+                return Ok(apiResponse.ResponseType);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"{ex.Message}");
+            }
+        }
+
         // GET api/Appointments/Get
         /// <summary>
         /// Get object of Appointments

@@ -65,17 +65,17 @@
                   </mat-cell>
                 </ng-container>
                 <!-- ID Column -->
-                <ng-container matColumnDef="appointmentId">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header>AppointmentId</mat-header-cell>
-                  <mat-cell *matCellDef="let row">{{row.appointmentId}}</mat-cell>
+                <ng-container matColumnDef="patientName">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Patient Name</mat-header-cell>
+                  <mat-cell *matCellDef="let row">{{row.patientName}}</mat-cell>
                 </ng-container>
-                <ng-container matColumnDef="patientUniqueNumber">
+                <ng-container matColumnDef="patientNumber">
                   <mat-header-cell *matHeaderCellDef mat-sort-header>Patient UniqueNumber</mat-header-cell>
                   <mat-cell *matCellDef="let row"> {{row.patientNumber}}</mat-cell>
                 </ng-container>
-                <ng-container matColumnDef="pathwayUniqueNumber">
+                <ng-container matColumnDef="patientPathNumber">
                   <mat-header-cell *matHeaderCellDef mat-sort-header>Pathway UniqueNumber</mat-header-cell>
-                  <mat-cell *matCellDef="let row"> {{row.pathwayUniqueNumber}}</mat-cell>
+                  <mat-cell *matCellDef="let row"> {{row.patientPathNumber}}</mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="appointmentDate">
                   <mat-header-cell *matHeaderCellDef mat-sort-header>Appointment Date</mat-header-cell>
@@ -86,12 +86,12 @@
                   <mat-cell *matCellDef="let row"> {{row.bookDate}}</mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="speciality">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header>speciality</mat-header-cell>
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Speciality</mat-header-cell>
                   <mat-cell *matCellDef="let row"> {{row.speciality}}</mat-cell>
                 </ng-container>
-                <ng-container matColumnDef="dob">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header>Date of Birth</mat-header-cell>
-                  <mat-cell *matCellDef="let row"> {{row.dOB}}</mat-cell>
+                <ng-container matColumnDef="appointmentStatus">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Appt Status</mat-header-cell>
+                  <mat-cell *matCellDef="let row"> {{row.appointmentStatus}}</mat-cell>
                 </ng-container>
                 <!-- actions -->
                 <ng-container matColumnDef="actions">

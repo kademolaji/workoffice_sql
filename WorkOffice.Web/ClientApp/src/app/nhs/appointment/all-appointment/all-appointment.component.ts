@@ -26,11 +26,13 @@ implements OnInit
 {
 displayedColumns: string[] = [
   'select',
-  'patientUniqueNumber',
-  'pathwayUniqueNumber',
+  'patientName',
+  'patientNumber',
+  'patientPathNumber',
   'appointmentDate',
   'bookingDate',
   'speciality',
+  'appointmentStatus',
   'actions',
 ];
 selection = new SelectionModel<AppointmentResponseModel>(true, []);
@@ -210,13 +212,25 @@ public loadData(searchQuery: string, sortField: string, sortOrder: string) {
       searchQuery,
     },
   };
-  this.appointmentService
+  // if(searchQuery == "CancelledAppointment") {
+  //   this.appointmentService
+  //   .getAllCancelAppointment(options)
+  //   .subscribe((res) => {
+  //     this.isTblLoading = false;
+  //     this.dataSource.data = res.result;
+  //     this.totalRows = res.totalCount;
+  //   });
+  // }
+  // else{
+    this.appointmentService
     .getAllAppointment(options)
     .subscribe((res) => {
       this.isTblLoading = false;
       this.dataSource.data = res.result;
       this.totalRows = res.totalCount;
     });
+  //}
+
 }
 
 showNotification(

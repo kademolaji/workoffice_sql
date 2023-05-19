@@ -29,11 +29,15 @@ namespace WorkOffice.Contracts.Models
 
         public int? DepartmentId { get; set; }
 
-        public int? PatientId { get; set; }
+        public int PatientId { get; set; }
+
+        public int? PatientValidationId { get; set; }
+
+        public string PatientPathNumber { get; set; }
 
         public string PatientNumber { get; set; }
 
-
+        public string PatientName { get; set; }
         public string Comments { get; set; }
 
         public string AppointmentStatus { get; set; }
