@@ -199,10 +199,14 @@ export class AddAppointmentComponent
         wardId: +this.appointmentForm.value.wardId,
         departmentId: +this.appointmentForm.value.departmentId,
         patientId: this.appointmentForm.value.patientId.value,
-        patientValidationId: 0,
+        patientValidationId: +this.appointmentForm.value.patientValidationId,
         comments: this.appointmentForm.value.comments,
-        appointmentStatus: 'PartialBooked',
+        appointmentStatus: '',
         cancellationReason: '',
+        speciality: '',
+        patientNumber:'',
+        patientName:'',
+        patientPathNumber: '',
       };
       console.log("patient", patient)
       this.subs.sink = this.appointmentService

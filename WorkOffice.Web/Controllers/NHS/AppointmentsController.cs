@@ -70,7 +70,7 @@ public class AppointmentsController : ControllerBase
             else
             {
                 return BadRequest(
-                   new { Status = false, Message = $"You do not have enough right to add structure definition" });
+                   new { Status = false, Message = $"You do not have enough right to add Appointment" });
             }
         }
         catch (Exception ex)
@@ -119,6 +119,34 @@ public class AppointmentsController : ControllerBase
         }
     }
 
+        [HttpPost]
+        [Route("GetCancelList")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetResponse<List<AppointmentResponseModel>>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(GetResponse<ProducesResponseStub>))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(GetResponse<ProducesResponseStub>))]
+        public async Task<IActionResult> GetCancelList(SearchCall<SearchParameter> options)
+        {
+            try
+            {
+                var apiResponse = await service.GetCancelList(options);
+                if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    return BadRequest(apiResponse.ResponseType);
+                }
+
+                if (apiResponse.StatusCode == System.Net.HttpStatusCode.NotFound)
+                {
+                    return NotFound(apiResponse.ResponseType);
+                }
+
+                return Ok(apiResponse.ResponseType);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"{ex.Message}");
+            }
+        }
+
         // GET api/Appointments/Get
         /// <summary>
         /// Get object of Appointments
@@ -137,7 +165,7 @@ public class AppointmentsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetResponse<AppointmentResponseModel>))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(GetResponse<ProducesResponseStub>))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(GetResponse<ProducesResponseStub>))]
-    public async Task<IActionResult> Get(long appointmentId)
+    public async Task<IActionResult> Get(int appointmentId)
     {
         try
         {
@@ -181,7 +209,7 @@ public class AppointmentsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DeleteReply))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(DeleteReply))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(DeleteReply))]
-    public async Task<IActionResult> Delete(long patientId)
+    public async Task<IActionResult> Delete(int appointmentId)
     {
         try
         {
@@ -189,7 +217,7 @@ public class AppointmentsController : ControllerBase
             var userId = httpAccessorService.GetCurrentUserId();
             if (authorized.CanPerformActionOnResource(userId, (long)UserActivitiesEnum.Add_Appointment, clientId, UserActions.Delete))
             {
-                var apiResponse = await service.Delete(patientId);
+                var apiResponse = await service.Delete(appointmentId);
                 if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
                 {
                     return BadRequest(apiResponse.ResponseType);
@@ -206,7 +234,7 @@ public class AppointmentsController : ControllerBase
             else
             {
                 return BadRequest(
-                   new { Status = false, Message = $"You do not have enough right to delete structure definition" });
+                   new { Status = false, Message = $"You do not have enough right to delete Appointment" });
             }
         }
         catch (Exception ex)
@@ -215,19 +243,58 @@ public class AppointmentsController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Delete Multiple Appointments
-    /// </summary>
-    /// <remarks>
-    /// Sample request:
-    ///
-    /// </remarks>
-    /// <param name="model"></param>
-    /// <returns>Object of Appointments</returns>
-    /// <response code="200">Returns object of Appointments</response>
-    /// <response code="404">If object of Appointments is null</response> 
-    /// <response code="400">If an error occur or invalid request payload</response> 
-    [HttpPost]
+        [HttpDelete]
+        [Route("Cancel")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DeleteReply))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(DeleteReply))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(DeleteReply))]
+        public async Task<IActionResult> Cancel(int appointmentId)
+        {
+            try
+            {
+                var clientId = httpAccessorService.GetCurrentClientId();
+                var userId = httpAccessorService.GetCurrentUserId();
+                if (authorized.CanPerformActionOnResource(userId, (long)UserActivitiesEnum.Add_Appointment, clientId, UserActions.Delete))
+                {
+                    var apiResponse = await service.Cancel(appointmentId);
+                    if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                    {
+                        return BadRequest(apiResponse.ResponseType);
+                    }
+
+                    if (apiResponse.StatusCode == System.Net.HttpStatusCode.NotFound)
+                    {
+                        return NotFound(apiResponse.ResponseType);
+                    }
+
+                    return Ok(apiResponse.ResponseType);
+                }
+
+                else
+                {
+                    return BadRequest(
+                       new { Status = false, Message = $"You do not have enough right to cancel Appointment" });
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"{ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Delete Multiple Appointments
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        /// </remarks>
+        /// <param name="model"></param>
+        /// <returns>Object of Appointments</returns>
+        /// <response code="200">Returns object of Appointments</response>
+        /// <response code="404">If object of Appointments is null</response> 
+        /// <response code="400">If an error occur or invalid request payload</response> 
+        [HttpPost]
     [Route("MultipleDelete")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DeleteReply))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(DeleteReply))]
@@ -256,7 +323,7 @@ public class AppointmentsController : ControllerBase
             else
             {
                 return BadRequest(
-                   new { Status = false, Message = $"You do not have enough right to delete structure definition" });
+                   new { Status = false, Message = $"You do not have enough right to delete Appointment" });
             }
         }
         catch (Exception ex)

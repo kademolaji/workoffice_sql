@@ -36,6 +36,14 @@ export class AppointmentService extends UnsubscribeOnDestroyAdapter {
       );
   }
 
+  getAllCancelAppointment(option: SearchCall<SearchParameter>) {
+    return this.httpClient
+       .post<SearchReply<AppointmentResponseModel[]>>(
+         `api/appointments/GetCancelList`, option
+       );
+   }
+ 
+
   getAppointmentById(id: number) {
     return this.httpClient.get<GetResponse<AppointmentResponseModel>>(
       `api/appointments/Get?appointmentId=${id}`
@@ -53,6 +61,12 @@ export class AppointmentService extends UnsubscribeOnDestroyAdapter {
   deleteAppointment(id: number) {
     return this.httpClient.delete<DeleteReply>(
       `api/appointments/Delete?appointmentId=${id}`
+    );
+  }
+
+  cancelAppointment(id: number) {
+    return this.httpClient.delete<DeleteReply>(
+      `api/appointments/Cancel?appointmentId=${id}`
     );
   }
 

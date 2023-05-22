@@ -31,9 +31,9 @@ namespace WorkOffice.Domain.Entities
 
         public int? DepartmentId { get; set; }
 
-        public int? PatientId { get; set; }
+        public int PatientId { get; set; }
 
-        public int? patientValidationId { get; set; }
+        public int? PatientValidationId { get; set; }
 
         public string Comments { get; set; }
 
@@ -57,18 +57,18 @@ namespace WorkOffice.Domain.Entities
 
         public DateTime? UpdatedOn { get; set; }
 
-        public virtual AppType AppType { get; set; }
+        //public virtual AppType AppType { get; set; }
 
-        public virtual Consultant Consultant { get; set; }
+        //public virtual Consultant Consultant { get; set; }
 
-        public virtual Hospital Hospital { get; set; }
+        //public virtual Hospital Hospital { get; set; }
 
         public virtual NHS_Patient NHS_Patient { get; set; }
 
-        public virtual NHS_Patient_Validation NHS_Patient_Validation { get; set; }
+        //public virtual NHS_Patient_Validation NHS_Patient_Validation { get; set; }
 
-        public virtual Specialty Specialty { get; set; }
+        //public virtual Specialty Specialty { get; set; }
 
-        public virtual Ward Ward { get; set; }
+        //public virtual Ward Ward { get; set; }
     }
 }

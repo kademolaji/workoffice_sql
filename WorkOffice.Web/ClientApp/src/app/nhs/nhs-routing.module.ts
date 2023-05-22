@@ -21,6 +21,11 @@ const routes: Routes = [
     path: "all-appointment/:status",
     component: AllAppointmentComponent,
   },
+
+  // {
+  //   path: "all-cancelappointment",
+  //   component: AllCancelAppointmentComponent,
+  // },
   {
     path: "add-appointment",
     component: AddAppointmentComponent,

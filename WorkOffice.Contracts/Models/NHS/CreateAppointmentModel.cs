@@ -28,9 +28,9 @@ namespace WorkOffice.Contracts.Models
 
         public int? DepartmentId { get; set; }
 
-        public int? PatientId { get; set; }
+        public int PatientId { get; set; }
 
-        public int? patientValidationId { get; set; }
+        public int? PatientValidationId { get; set; }
 
         public string Comments { get; set; }
 

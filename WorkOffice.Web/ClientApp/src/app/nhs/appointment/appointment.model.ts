@@ -4,26 +4,7 @@ export interface CreateAppointmentModel {
   appTypeId: number;
   statusId : number;
   specialityId : number;
-   bookDate : string;
-  appDate : string;
-  appTime : string;
-  consultantId : number;
-  hospitalId : number;
-  wardId : number;
-  departmentId : number;
-  patientId : number;
-  patientValidationId : number;
-  comments : string;
-  appointmentStatus : string;
-  cancellationReason: string;
-}
-
-export interface AppointmentResponseModel {
-  appointmentId: number;
-  appTypeId: number;
-  statusId : number;
-  specialityId : number;
-   bookDate : string;
+  bookDate : string;
   appDate : string;
   appTime : string;
   consultantId : number;
@@ -37,6 +18,30 @@ export interface AppointmentResponseModel {
   cancellationReason: string;
   speciality: string;
   patientNumber: string;
-  pathwayUniqueNumber: string;
+  patientName: string;
+  patientPathNumber: string;
+}
+
+export interface AppointmentResponseModel {
+  appointmentId: number;
+  appTypeId: number;
+  statusId : number;
+  specialityId : number;
+  bookDate : string;
+  appDate : string;
+  appTime : string;
+  consultantId : number;
+  hospitalId : number;
+  wardId : number;
+  departmentId : number;
+  patientId : number;
+  patientValidationId : number;
+  comments : string;
+  appointmentStatus : string;
+  cancellationReason: string;
+  speciality: string;
+  patientNumber: string;
+  patientName: string;
+  patientPathNumber: string;
 }
 
