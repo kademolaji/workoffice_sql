@@ -228,12 +228,12 @@
                           <mat-cell *matCellDef="let row"> {{row.documentName}}</mat-cell>
                         </ng-container>
                         <ng-container matColumnDef="consultantName">
-                          <mat-header-cell *matHeaderCellDef mat-sort-header>Consultant Name</mat-header-cell>
-                          <mat-cell *matCellDef="let row"> {{row.consultantName}}</mat-cell>
+                          <mat-header-cell *matHeaderCellDef mat-sort-header>Document Type</mat-header-cell>
+                          <mat-cell *matCellDef="let row"> {{getDocumentType(row.documentTypeId)}}</mat-cell>
                         </ng-container>
                         <ng-container matColumnDef="clinicDate">
                           <mat-header-cell *matHeaderCellDef mat-sort-header>Clinic Date</mat-header-cell>
-                          <mat-cell *matCellDef="let row"> {{row.clinicDate}}</mat-cell>
+                          <mat-cell *matCellDef="let row"> {{row.clinicDate  | date}}</mat-cell>
                         </ng-container>
                         <ng-container matColumnDef="speciality">
                           <mat-header-cell *matHeaderCellDef mat-sort-header>Speciality</mat-header-cell>
@@ -241,7 +241,7 @@
                         </ng-container>
                         <ng-container matColumnDef="dateUploaded">
                           <mat-header-cell *matHeaderCellDef mat-sort-header>Date Uploaded</mat-header-cell>
-                          <mat-cell *matCellDef="let row"> {{row.dateUploaded}}</mat-cell>
+                          <mat-cell *matCellDef="let row"> {{row.dateUploaded | date}}</mat-cell>
                         </ng-container>
                         <!-- actions -->
                         <ng-container matColumnDef="actions">

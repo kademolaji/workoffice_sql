@@ -42,7 +42,7 @@ export class AddPatientDocumentDialogComponent
        documentTypeId: ['', [Validators.required]],
       physicalLocation: ['', [Validators.required]],
       documentName: ['', [Validators.required]],
-      clinicDate: ['', [Validators.required]],
+      clinicDate: [new Date(), [Validators.required]],
       specialityId: ['', [Validators.required]],
       uploadFile: [''],
     });

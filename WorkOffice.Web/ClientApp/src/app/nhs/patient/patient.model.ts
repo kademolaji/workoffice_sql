@@ -5,7 +5,7 @@ export interface PatientModel {
   firstName: string;
   lastName: string;
   middleName: string;
-  dob: string;
+  dob: Date;
   age: number;
   address: string;
   phoneNo: string;
@@ -25,9 +25,9 @@ export interface PatientDocumentModel {
   documentName: string;
   documentExtension: string;
   documentFile: string;
-  clinicDate:string;
+  clinicDate:Date;
   specialityId: number;
   consultantName: string;
-  dateUploaded: string;
+  dateUploaded: Date;
 }
 

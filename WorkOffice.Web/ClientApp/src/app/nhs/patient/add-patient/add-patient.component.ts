@@ -102,11 +102,10 @@ export class AddPatientComponent
 
     this.patientDocumentForm = this.fb.group({});
 
-
     this.id = +this.route.snapshot.params['id'];
     this.isAddMode = !this.id;
     if (!this.isAddMode) {
-      this.searchQuery =  this.id.toString();
+      this.searchQuery = this.id.toString();
       this.loadData(this.searchQuery, this.sortField, this.sortOrder);
       this.subs.sink = this.patientService.getPatientById(this.id).subscribe({
         next: (res) => {
@@ -238,14 +237,14 @@ export class AddPatientComponent
       patientDocumentId: 0,
       documentTypeId: 1,
       patientId: +this.id,
-      physicalLocation: "",
-      documentName:  "",
-      documentExtension:  "",
-      documentFile:  "",
-      clinicDate:  "",
+      physicalLocation: '',
+      documentName: '',
+      documentExtension: '',
+      documentFile: '',
+      clinicDate: new Date(),
       specialityId: 0,
-      consultantName: "",
-      dateUploaded: ""
+      consultantName: '',
+      dateUploaded: new Date(),
     };
     let tempDirection: Direction;
     if (localStorage.getItem('isRtl') === 'true') {
@@ -258,7 +257,7 @@ export class AddPatientComponent
       direction: tempDirection,
     });
     this.subs.sink = dialogRef.afterClosed().subscribe((result) => {
-      console.log("result", result)
+      console.log('result', result);
       this.refresh();
       this.showNotification(
         'snackbar-success',
@@ -270,27 +269,30 @@ export class AddPatientComponent
   }
 
   viewDocument(row: PatientDocumentModel) {
-    this.subs.sink = this.patientService.downloadDocument(row.patientDocumentId).subscribe((event) => {
-      if (event.type === HttpEventType.UploadProgress)
-          console.log("event", event)
-  else if (event.type === HttpEventType.Response) {
-      this.downloadFile(event);
-  }
+    this.subs.sink = this.patientService
+      .downloadDocument(row.patientDocumentId)
+      .subscribe((event) => {
+        if (event.type === HttpEventType.UploadProgress)
+          console.log('event', event);
+        else if (event.type === HttpEventType.Response) {
+          this.downloadFile(event);
+        }
       });
-
   }
 
   private downloadFile = (data: HttpResponse<Blob>) => {
-    const downloadedFile = new Blob([data.body as BlobPart], { type: data.body?.type });
+    const downloadedFile = new Blob([data.body as BlobPart], {
+      type: data.body?.type,
+    });
     const a = document.createElement('a');
     a.setAttribute('style', 'display:none;');
     document.body.appendChild(a);
-    a.download = "";
+    a.download = '';
     a.href = URL.createObjectURL(downloadedFile);
     a.target = '_blank';
     a.click();
     document.body.removeChild(a);
-}
+  };
 
   deleteItem(row: PatientDocumentModel) {
     let tempDirection: Direction;
@@ -329,7 +331,9 @@ export class AddPatientComponent
   }
   removeSelectedRows() {
     const totalSelect = this.selection.selected.length;
-    const targetIds = this.selection.selected.map((data) => data.patientDocumentId);
+    const targetIds = this.selection.selected.map(
+      (data) => data.patientDocumentId
+    );
     this.subs.sink = this.patientService
       .deleteMultiplePatient(targetIds)
       .subscribe({
@@ -368,4 +372,28 @@ export class AddPatientComponent
     });
   }
 
+  getDocumentType(documentTypeId: number) {
+    switch (documentTypeId) {
+      case 1:
+        return 'CLINICAL LETTER';
+      case 2:
+        return 'DISCHARGE LETTER';
+      case 3:
+        return 'REFERRAL LETTER';
+      case 4:
+        return 'CLINICAL NOTE';
+      case 5:
+        return 'TEST RESULT';
+      case 6:
+        return 'GENERAL LETTER';
+      case 7:
+        return 'DIAGNOSTIC REQUEST FORM';
+      case 8:
+        return 'CONSENT LETTER';
+      case 9:
+        return 'DISCHARGED SUMMARY LETTER';
+      default:
+        return 'CLINICAL LETTER';
+    }
+  }
 }
