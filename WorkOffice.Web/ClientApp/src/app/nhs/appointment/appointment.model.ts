@@ -19,7 +19,7 @@ export interface CreateAppointmentModel {
   speciality: string;
   patientNumber: string;
   patientName: string;
-  patientPathNumber: string;
+  patientPathWayNumber: string;
 }
 
 export interface AppointmentResponseModel {
@@ -42,6 +42,6 @@ export interface AppointmentResponseModel {
   speciality: string;
   patientNumber: string;
   patientName: string;
-  patientPathNumber: string;
+  patientPathWayNumber: string;
 }
 

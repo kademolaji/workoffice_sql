@@ -39,6 +39,7 @@ export class AddAppointmentComponent
   hospitalList: GeneralSettingsModel[] = [];
   specialityList: GeneralSettingsModel[] = [];
   pathwayStatusList: GeneralSettingsModel[] = [];
+  patientPathWayList: GeneralSettingsModel[] = [];
   wardList: GeneralSettingsModel[] = [];
 
   patientList: GeneralSettingsModel[] = [];
@@ -68,6 +69,7 @@ export class AddAppointmentComponent
       wardId: ['', [Validators.required]],
       departmentId: [''],
       patientId: ['', [Validators.required]],
+      patientValidationId: ['',[Validators.required]],
       comments: ['', [Validators.required]],
     });
 
@@ -110,6 +112,12 @@ export class AddAppointmentComponent
         this.wardList = response.entity;
       });
 
+      this.subs.sink = this.generalSettingsService
+      .getPatientPathWayList()
+      .subscribe((response) => {
+        this.patientPathWayList = response.entity;
+      });
+
     this.id = +this.route.snapshot.params['id'];
     this.isAddMode = !this.id;
     if (!this.isAddMode) {
@@ -130,6 +138,7 @@ export class AddAppointmentComponent
                 wardId: res.entity.wardId,
                 departmentId: res.entity.departmentId,
                 patientId: { label: "N/A", value: res.entity.patientId},
+                patientValidationId: res.entity.patientValidationId,
                 comments: res.entity.comments,
               });
             }
@@ -155,19 +164,25 @@ export class AddAppointmentComponent
           }),
         )
       )
-    )
+    ) 
     .subscribe((data: any) => {
       if (data['entity'] == undefined) {
         this.patientList = [];
       } else {
         this.patientList = data['entity'];
       }
-    });
+    }
+    
+    );
   }
 
   displayWith(value: any) {
     return value?.label;
   }
+
+  
+
+  
 
   cancelForm() {
     this.router.navigate(['/nhs/all-appointment/PartialBooked']);
@@ -206,7 +221,7 @@ export class AddAppointmentComponent
         speciality: '',
         patientNumber:'',
         patientName:'',
-        patientPathNumber: '',
+        patientPathWayNumber: '',
       };
       console.log("patient", patient)
       this.subs.sink = this.appointmentService

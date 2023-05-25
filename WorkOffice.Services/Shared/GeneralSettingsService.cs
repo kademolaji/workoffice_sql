@@ -535,6 +535,60 @@ namespace WorkOffice.Services
                 return new ApiResponse<GetResponse<List<GeneralSettingsModel>>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new GetResponse<List<GeneralSettingsModel>>() { Status = false, Message = $"Error encountered {ex.Message}" }, IsSuccess = false };
             }
         }
+
+
+        public async Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetPatientPathWayList(string search)
+        {
+            try
+            {
+
+                var apiResponse = new ApiResponse<GetResponse<List<GeneralSettingsModel>>>();
+                List<GeneralSettingsModel> result = new List<GeneralSettingsModel>();
+                if (!string.IsNullOrEmpty(search))
+                {
+                    result = await (from a in context.NHS_Patient_Validations
+                                    join b in context.NHS_Patients on a.PatientId equals b.PatientId
+                                    where a.NHSNumber.Contains(search)
+                                    || a.PathWayNumber.Contains(search)
+                                    || b.LastName.Contains(search)
+                                    || b.MiddleName.Contains(search)
+                                    || b.FirstName.Contains(search)
+
+                                    select new GeneralSettingsModel
+                                    {
+                                        Label = a.PathWayNumber + " - " + b.FirstName + " " + b.MiddleName + " " + b.LastName,
+                                        Value = a.PatientValidationId
+                                    }).ToListAsync();
+                }
+                else
+                {
+                    result = await (from a in context.NHS_Patient_Validations
+                                    select new GeneralSettingsModel
+                                    {
+                                        Label = a.PathWayNumber,
+                                        Value = a.PatientValidationId
+                                    }).ToListAsync();
+                }
+
+
+                var response = new GetResponse<List<GeneralSettingsModel>>()
+                {
+                    Status = true,
+                    Entity = result,
+                    Message = ""
+                };
+
+                apiResponse.StatusCode = System.Net.HttpStatusCode.OK;
+                apiResponse.IsSuccess = true;
+                apiResponse.ResponseType = response;
+
+                return apiResponse;
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<GetResponse<List<GeneralSettingsModel>>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new GetResponse<List<GeneralSettingsModel>>() { Status = false, Message = $"Error encountered {ex.Message}" }, IsSuccess = false };
+            }
+        }
         public async Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetDepartmentList()
         {
             try

@@ -336,6 +336,30 @@ namespace WorkOffice.Web.Controllers
                 return BadRequest($"Server Error {ex.Message}");
             }
         }
+
+
+        [HttpGet]
+        [Route("GetPatientPathWayList")]
+        [ProducesResponseType(201, Type = typeof(CreateResponse))]
+        [ProducesResponseType(400, Type = typeof(CreateResponse))]
+        public async Task<IActionResult> GetPatientPathWayList(string search)
+        {
+            try
+            {
+                var apiResponse = await service.GetPatientList(search);
+                if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    return BadRequest(apiResponse.ResponseType);
+                }
+                return Ok(apiResponse.ResponseType);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Server Error {ex.Message}");
+            }
+        }
+
+
         [HttpGet]
         [Route("GetDepartmentList")]
         [ProducesResponseType(201, Type = typeof(CreateResponse))]

@@ -10,13 +10,8 @@ using WorkOffice.Domain.Helpers;
 namespace WorkOffice.Domain.Migrations
 {
     [DbContext(typeof(DataContext))]
-<<<<<<<< HEAD:WorkOffice.Domain/Migrations/20230525092558_initail.Designer.cs
-    [Migration("20230525092558_initail")]
-    partial class initail
-========
-    [Migration("20230525094140_Initial Migration")]
-    partial class InitialMigration
->>>>>>>> 9c7d5e8fdc9684e2c1c5f4731e4def8d4f7f4faa:WorkOffice.Domain/Migrations/20230525094140_Initial Migration.Designer.cs
+    [Migration("20230525101038_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -845,12 +840,6 @@ namespace WorkOffice.Domain.Migrations
                     b.Property<int>("PatientId")
                         .HasColumnType("integer");
 
-<<<<<<<< HEAD:WorkOffice.Domain/Migrations/20230525092558_initail.Designer.cs
-========
-                    b.Property<int>("PatientId")
-                        .HasColumnType("integer");
-
->>>>>>>> 9c7d5e8fdc9684e2c1c5f4731e4def8d4f7f4faa:WorkOffice.Domain/Migrations/20230525094140_Initial Migration.Designer.cs
                     b.Property<int>("RTTId")
                         .HasColumnType("integer")
                         .HasMaxLength(50);
@@ -1842,11 +1831,7 @@ namespace WorkOffice.Domain.Migrations
 
             modelBuilder.Entity("WorkOffice.Domain.Entities.NHS_Appointment", b =>
                 {
-<<<<<<<< HEAD:WorkOffice.Domain/Migrations/20230525092558_initail.Designer.cs
                     b.HasOne("WorkOffice.Domain.Entities.NHS_Patient", null)
-========
-                    b.HasOne("WorkOffice.Domain.Entities.NHS_Patient", "NHS_Patient")
->>>>>>>> 9c7d5e8fdc9684e2c1c5f4731e4def8d4f7f4faa:WorkOffice.Domain/Migrations/20230525094140_Initial Migration.Designer.cs
                         .WithMany("NHS_Appointment")
                         .HasForeignKey("NHS_PatientPatientId");
                 });
@@ -1867,21 +1852,6 @@ namespace WorkOffice.Domain.Migrations
                     b.HasOne("WorkOffice.Domain.Entities.NHS_Patient", null)
                         .WithMany("NHS_Waitinglist")
                         .HasForeignKey("NHS_PatientPatientId");
-<<<<<<<< HEAD:WorkOffice.Domain/Migrations/20230525092558_initail.Designer.cs
-========
-
-                    b.HasOne("WorkOffice.Domain.Entities.NHS_Patient_Validation", "NHS_Patient_Validation")
-                        .WithMany()
-                        .HasForeignKey("NHS_Patient_ValidationPatientValidationId");
-
-                    b.HasOne("WorkOffice.Domain.Entities.Specialty", "Specialty")
-                        .WithMany()
-                        .HasForeignKey("SpecialtyId");
-
-                    b.HasOne("WorkOffice.Domain.Entities.WaitingType", "WaitingType")
-                        .WithMany()
-                        .HasForeignKey("WaitingTypeId");
->>>>>>>> 9c7d5e8fdc9684e2c1c5f4731e4def8d4f7f4faa:WorkOffice.Domain/Migrations/20230525094140_Initial Migration.Designer.cs
                 });
 
             modelBuilder.Entity("WorkOffice.Domain.Entities.Specialty", b =>

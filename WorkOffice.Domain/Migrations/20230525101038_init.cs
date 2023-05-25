@@ -4,11 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace WorkOffice.Domain.Migrations
 {
-<<<<<<<< HEAD:WorkOffice.Domain/Migrations/20230525092558_initail.cs
-    public partial class initail : Migration
-========
-    public partial class InitialMigration : Migration
->>>>>>>> 9c7d5e8fdc9684e2c1c5f4731e4def8d4f7f4faa:WorkOffice.Domain/Migrations/20230525094140_Initial Migration.cs
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -241,11 +237,7 @@ namespace WorkOffice.Domain.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     PatientValidationId = table.Column<int>(nullable: false),
                     PathWayStatusId = table.Column<int>(nullable: true),
-<<<<<<<< HEAD:WorkOffice.Domain/Migrations/20230525092558_initail.cs
                     SpecialtyId = table.Column<int>(nullable: true),
-========
-                    SpecialityId = table.Column<int>(nullable: true),
->>>>>>>> 9c7d5e8fdc9684e2c1c5f4731e4def8d4f7f4faa:WorkOffice.Domain/Migrations/20230525094140_Initial Migration.cs
                     Date = table.Column<DateTime>(nullable: false),
                     ConsultantId = table.Column<int>(nullable: true),
                     EndDate = table.Column<DateTime>(nullable: true),
@@ -274,10 +266,6 @@ namespace WorkOffice.Domain.Migrations
                     PathWayNumber = table.Column<string>(maxLength: 150, nullable: false),
                     PathWayCondition = table.Column<string>(maxLength: 150, nullable: true),
                     PathWayStatusId = table.Column<int>(nullable: true),
-<<<<<<<< HEAD:WorkOffice.Domain/Migrations/20230525092558_initail.cs
-========
-                    PathWayStatusIdCode = table.Column<string>(nullable: true),
->>>>>>>> 9c7d5e8fdc9684e2c1c5f4731e4def8d4f7f4faa:WorkOffice.Domain/Migrations/20230525094140_Initial Migration.cs
                     PathWayStartDate = table.Column<DateTime>(nullable: false),
                     PathWayEndDate = table.Column<DateTime>(nullable: true),
                     SpecialtyId = table.Column<int>(nullable: false),
@@ -311,11 +299,7 @@ namespace WorkOffice.Domain.Migrations
                     DocumentFile = table.Column<byte[]>(nullable: false),
                     ClinicDate = table.Column<DateTime>(nullable: true),
                     DateUploaded = table.Column<DateTime>(nullable: true),
-<<<<<<<< HEAD:WorkOffice.Domain/Migrations/20230525092558_initail.cs
                     SpecialtyId = table.Column<int>(nullable: true),
-========
-                    SpecialityId = table.Column<int>(nullable: true),
->>>>>>>> 9c7d5e8fdc9684e2c1c5f4731e4def8d4f7f4faa:WorkOffice.Domain/Migrations/20230525094140_Initial Migration.cs
                     Active = table.Column<bool>(nullable: true),
                     Deleted = table.Column<bool>(nullable: true),
                     CreatedBy = table.Column<string>(maxLength: 50, nullable: true),
@@ -825,11 +809,7 @@ namespace WorkOffice.Domain.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     AppTypeId = table.Column<int>(nullable: false),
                     StatusId = table.Column<int>(nullable: true),
-<<<<<<<< HEAD:WorkOffice.Domain/Migrations/20230525092558_initail.cs
                     SpecialtyId = table.Column<int>(nullable: true),
-========
-                    SpecialityId = table.Column<int>(nullable: true),
->>>>>>>> 9c7d5e8fdc9684e2c1c5f4731e4def8d4f7f4faa:WorkOffice.Domain/Migrations/20230525094140_Initial Migration.cs
                     BookDate = table.Column<DateTime>(nullable: false),
                     AppDate = table.Column<DateTime>(nullable: false),
                     AppTime = table.Column<string>(maxLength: 50, nullable: true),
@@ -868,11 +848,7 @@ namespace WorkOffice.Domain.Migrations
                     WaitinglistId = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     WaitTypeId = table.Column<int>(nullable: false),
-<<<<<<<< HEAD:WorkOffice.Domain/Migrations/20230525092558_initail.cs
                     SpecialtyId = table.Column<int>(nullable: false),
-========
-                    SpecialityId = table.Column<int>(nullable: false),
->>>>>>>> 9c7d5e8fdc9684e2c1c5f4731e4def8d4f7f4faa:WorkOffice.Domain/Migrations/20230525094140_Initial Migration.cs
                     TCIDate = table.Column<DateTime>(nullable: true),
                     WaitinglistDate = table.Column<DateTime>(nullable: false),
                     WaitinglistTime = table.Column<string>(maxLength: 50, nullable: true),
@@ -886,14 +862,7 @@ namespace WorkOffice.Domain.Migrations
                     CreatedOn = table.Column<DateTime>(nullable: true),
                     UpdatedBy = table.Column<string>(maxLength: 50, nullable: true),
                     UpdatedOn = table.Column<DateTime>(nullable: true),
-<<<<<<<< HEAD:WorkOffice.Domain/Migrations/20230525092558_initail.cs
                     NHS_PatientPatientId = table.Column<int>(nullable: true)
-========
-                    NHS_PatientPatientId = table.Column<int>(nullable: true),
-                    NHS_Patient_ValidationPatientValidationId = table.Column<int>(nullable: true),
-                    SpecialtyId = table.Column<long>(nullable: true),
-                    WaitingTypeId = table.Column<long>(nullable: true)
->>>>>>>> 9c7d5e8fdc9684e2c1c5f4731e4def8d4f7f4faa:WorkOffice.Domain/Migrations/20230525094140_Initial Migration.cs
                 },
                 constraints: table =>
                 {
@@ -904,27 +873,6 @@ namespace WorkOffice.Domain.Migrations
                         principalTable: "NHS_Patients",
                         principalColumn: "PatientId",
                         onDelete: ReferentialAction.Restrict);
-<<<<<<<< HEAD:WorkOffice.Domain/Migrations/20230525092558_initail.cs
-========
-                    table.ForeignKey(
-                        name: "FK_NHS_Waitinglists_NHS_Patient_Validations_NHS_Patient_Valida~",
-                        column: x => x.NHS_Patient_ValidationPatientValidationId,
-                        principalTable: "NHS_Patient_Validations",
-                        principalColumn: "PatientValidationId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_NHS_Waitinglists_Specialties_SpecialtyId",
-                        column: x => x.SpecialtyId,
-                        principalTable: "Specialties",
-                        principalColumn: "SpecialtyId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_NHS_Waitinglists_WaitingTypes_WaitingTypeId",
-                        column: x => x.WaitingTypeId,
-                        principalTable: "WaitingTypes",
-                        principalColumn: "WaitingTypeId",
-                        onDelete: ReferentialAction.Restrict);
->>>>>>>> 9c7d5e8fdc9684e2c1c5f4731e4def8d4f7f4faa:WorkOffice.Domain/Migrations/20230525094140_Initial Migration.cs
                 });
 
             migrationBuilder.CreateTable(
@@ -1140,24 +1088,6 @@ namespace WorkOffice.Domain.Migrations
                 column: "NHS_PatientPatientId");
 
             migrationBuilder.CreateIndex(
-<<<<<<<< HEAD:WorkOffice.Domain/Migrations/20230525092558_initail.cs
-========
-                name: "IX_NHS_Waitinglists_NHS_Patient_ValidationPatientValidationId",
-                table: "NHS_Waitinglists",
-                column: "NHS_Patient_ValidationPatientValidationId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_NHS_Waitinglists_SpecialtyId",
-                table: "NHS_Waitinglists",
-                column: "SpecialtyId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_NHS_Waitinglists_WaitingTypeId",
-                table: "NHS_Waitinglists",
-                column: "WaitingTypeId");
-
-            migrationBuilder.CreateIndex(
->>>>>>>> 9c7d5e8fdc9684e2c1c5f4731e4def8d4f7f4faa:WorkOffice.Domain/Migrations/20230525094140_Initial Migration.cs
                 name: "IX_NHS_Waitinglists_WaitinglistId",
                 table: "NHS_Waitinglists",
                 column: "WaitinglistId");
@@ -1364,12 +1294,9 @@ namespace WorkOffice.Domain.Migrations
                 name: "NHS_Patient_Validation_Details");
 
             migrationBuilder.DropTable(
-<<<<<<<< HEAD:WorkOffice.Domain/Migrations/20230525092558_initail.cs
                 name: "NHS_Patient_Validations");
 
             migrationBuilder.DropTable(
-========
->>>>>>>> 9c7d5e8fdc9684e2c1c5f4731e4def8d4f7f4faa:WorkOffice.Domain/Migrations/20230525094140_Initial Migration.cs
                 name: "NHS_Patientdocuments");
 
             migrationBuilder.DropTable(
@@ -1391,6 +1318,9 @@ namespace WorkOffice.Domain.Migrations
                 name: "RTTs");
 
             migrationBuilder.DropTable(
+                name: "Specialties");
+
+            migrationBuilder.DropTable(
                 name: "States");
 
             migrationBuilder.DropTable(
@@ -1409,19 +1339,10 @@ namespace WorkOffice.Domain.Migrations
                 name: "UserRoleActivities");
 
             migrationBuilder.DropTable(
-                name: "Wards");
-
-            migrationBuilder.DropTable(
-                name: "NHS_Patients");
-
-            migrationBuilder.DropTable(
-                name: "NHS_Patient_Validations");
-
-            migrationBuilder.DropTable(
-                name: "Specialties");
-
-            migrationBuilder.DropTable(
                 name: "WaitingTypes");
+
+            migrationBuilder.DropTable(
+                name: "Wards");
 
             migrationBuilder.DropTable(
                 name: "NHS_Patients");

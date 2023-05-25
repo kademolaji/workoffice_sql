@@ -89,6 +89,12 @@ export class GeneralSettingsService {
       `api/settings/GetPatientList?search=${search}`
     );
   }
+
+  getPatientPathWayList(search?: string) {
+    return this.httpClient.get<GetResponse<GeneralSettingsModel[]>>(
+      `api/settings/GetPatientPathWayList?search=${search}`
+    );
+  }
   getDepartmentList() {
     return this.httpClient.get<GetResponse<GeneralSettingsModel[]>>(
       `api/settings/GetDepartmentList`
