@@ -22,7 +22,10 @@ namespace WorkOffice.Web
                 new UserActivityParentSeeder(context).SeedData();
                 new UserActivitiesSeeder(context).SeedData();
                 new CountrySeeder(context).SeedData();
+                new UserRoleDefinitionSeeder(context).SeedData();
                 new UserAccountSeeder(context).SeedData();
+                new UserRoleSeeder(context).SeedData();
+
             }
 
             return host;
