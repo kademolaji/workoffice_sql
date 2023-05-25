@@ -14,7 +14,7 @@ namespace WorkOffice.Domain.Entities
 
         public int? StatusId { get; set; }
 
-        public int? SpecialityId { get; set; }
+        public int? SpecialtyId { get; set; }
 
         public DateTime BookDate { get; set; }
 
@@ -63,7 +63,7 @@ namespace WorkOffice.Domain.Entities
 
         //public virtual Hospital Hospital { get; set; }
 
-        public virtual NHS_Patient NHS_Patient { get; set; }
+        //public virtual NHS_Patient NHS_Patient { get; set; }
 
         //public virtual NHS_Patient_Validation NHS_Patient_Validation { get; set; }
 

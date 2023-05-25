@@ -42,7 +42,7 @@ namespace WorkOffice.Domain.Helpers
         public DbSet<AppType> AppTypes { get; set; }
         public DbSet<Consultant> Consultants { get; set; }
         public DbSet<Hospital> Hospitals { get; set; }
-        public DbSet<PathwayStatus> PathwayStatuses { get; set; }
+        public DbSet<PathWayStatus> PathWayStatuses { get; set; }
         public DbSet<RTT> RTTs { get; set; }
         public DbSet<Specialty> Specialties { get; set; }
         public DbSet<WaitingType> WaitingTypes { get; set; }
@@ -91,7 +91,7 @@ namespace WorkOffice.Domain.Helpers
             modelBuilder.Entity<AppType>().HasIndex(ur => new { ur.AppTypeId });
             modelBuilder.Entity<Consultant>().HasIndex(ur => new { ur.ConsultantId });
             modelBuilder.Entity<Hospital>().HasIndex(ur => new { ur.HospitalId });
-            modelBuilder.Entity<PathwayStatus>().HasIndex(ur => new { ur.PathwayStatusId });
+            modelBuilder.Entity<PathWayStatus>().HasIndex(ur => new { ur.PathWayStatusId });
             modelBuilder.Entity<RTT>().HasIndex(ur => new { ur.RTTId });
             modelBuilder.Entity<Specialty>().HasIndex(ur => new { ur.SpecialtyId });
             modelBuilder.Entity<WaitingType>().HasIndex(ur => new { ur.WaitingTypeId });
@@ -137,7 +137,7 @@ namespace WorkOffice.Domain.Helpers
             builder.Entity<AppType>().HasQueryFilter(p => !p.IsDeleted);
             builder.Entity<Consultant>().HasQueryFilter(p => !p.IsDeleted);
             builder.Entity<Hospital>().HasQueryFilter(p => !p.IsDeleted);
-            builder.Entity<PathwayStatus>().HasQueryFilter(p => !p.IsDeleted);
+            builder.Entity<PathWayStatus>().HasQueryFilter(p => !p.IsDeleted);
             builder.Entity<RTT>().HasQueryFilter(p => !p.IsDeleted);
             builder.Entity<Specialty>().HasQueryFilter(p => !p.IsDeleted);
             builder.Entity<WaitingType>().HasQueryFilter(p => !p.IsDeleted);

@@ -7,11 +7,11 @@ using System.Text;
 
 namespace WorkOffice.Domain.Entities
 {
-    public class PathwayStatus : Entity
+    public class PathWayStatus : Entity
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
-        public long PathwayStatusId { get; set; }
+        public long PathWayStatusId { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
         public bool AllowClosed { get; set; }

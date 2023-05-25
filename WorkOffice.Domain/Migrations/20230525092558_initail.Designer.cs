@@ -10,8 +10,8 @@ using WorkOffice.Domain.Helpers;
 namespace WorkOffice.Domain.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230504214512_nhs_referral_table")]
-    partial class nhs_referral_table
+    [Migration("20230525092558_initail")]
+    partial class initail
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -503,9 +503,6 @@ namespace WorkOffice.Domain.Migrations
                     b.Property<int>("AppTypeId")
                         .HasColumnType("integer");
 
-                    b.Property<long?>("AppTypeId1")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("AppointmentStatus")
                         .HasColumnType("character varying(50)")
                         .HasMaxLength(50);
@@ -523,9 +520,6 @@ namespace WorkOffice.Domain.Migrations
                     b.Property<int?>("ConsultantId")
                         .HasColumnType("integer");
 
-                    b.Property<long?>("ConsultantId1")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("CreatedBy")
                         .HasColumnType("character varying(50)")
                         .HasMaxLength(50);
@@ -542,23 +536,17 @@ namespace WorkOffice.Domain.Migrations
                     b.Property<int?>("HospitalId")
                         .HasColumnType("integer");
 
-                    b.Property<long?>("HospitalId1")
-                        .HasColumnType("bigint");
-
                     b.Property<int?>("NHS_PatientPatientId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("NHS_Patient_ValidationPatientValidationId")
+                    b.Property<int>("PatientId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("PatientId")
+                    b.Property<int?>("PatientValidationId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("SpecialityId")
+                    b.Property<int?>("SpecialtyId")
                         .HasColumnType("integer");
-
-                    b.Property<long?>("SpecialtyId")
-                        .HasColumnType("bigint");
 
                     b.Property<int?>("StatusId")
                         .HasColumnType("integer");
@@ -573,29 +561,11 @@ namespace WorkOffice.Domain.Migrations
                     b.Property<int?>("WardId")
                         .HasColumnType("integer");
 
-                    b.Property<long?>("WardId1")
-                        .HasColumnType("bigint");
-
-                    b.Property<int?>("patientValidationId")
-                        .HasColumnType("integer");
-
                     b.HasKey("AppointmentId");
-
-                    b.HasIndex("AppTypeId1");
 
                     b.HasIndex("AppointmentId");
 
-                    b.HasIndex("ConsultantId1");
-
-                    b.HasIndex("HospitalId1");
-
                     b.HasIndex("NHS_PatientPatientId");
-
-                    b.HasIndex("NHS_Patient_ValidationPatientValidationId");
-
-                    b.HasIndex("SpecialtyId");
-
-                    b.HasIndex("WardId1");
 
                     b.ToTable("NHS_Appointments");
                 });
@@ -867,25 +837,19 @@ namespace WorkOffice.Domain.Migrations
                     b.Property<int?>("PathWayStatusId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("PathWayStatusIdCode")
-                        .HasColumnType("text");
+                    b.Property<int>("PatientId")
+                        .HasColumnType("integer");
 
-                    b.Property<long?>("PathwayStatusId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("RTTId")
-                        .HasColumnType("character varying(50)")
+                    b.Property<int>("RTTId")
+                        .HasColumnType("integer")
                         .HasMaxLength(50);
 
                     b.Property<string>("RTTWait")
                         .HasColumnType("character varying(550)")
                         .HasMaxLength(550);
 
-                    b.Property<int>("SpecialityId")
+                    b.Property<int>("SpecialtyId")
                         .HasColumnType("integer");
-
-                    b.Property<long?>("SpecialtyId")
-                        .HasColumnType("bigint");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("character varying(50)")
@@ -896,11 +860,7 @@ namespace WorkOffice.Domain.Migrations
 
                     b.HasKey("PatientValidationId");
 
-                    b.HasIndex("PathwayStatusId");
-
                     b.HasIndex("PatientValidationId");
-
-                    b.HasIndex("SpecialtyId");
 
                     b.ToTable("NHS_Patient_Validations");
                 });
@@ -938,12 +898,6 @@ namespace WorkOffice.Domain.Migrations
                     b.Property<DateTime?>("EndDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<int?>("NHS_PatientPatientId")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("NHS_Patient_ValidationPatientValidationId")
-                        .HasColumnType("integer");
-
                     b.Property<int?>("PathWayStatusId")
                         .HasColumnType("integer");
 
@@ -953,7 +907,7 @@ namespace WorkOffice.Domain.Migrations
                     b.Property<int>("PatientValidationId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("SpecialityId")
+                    b.Property<int?>("SpecialtyId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Type")
@@ -968,10 +922,6 @@ namespace WorkOffice.Domain.Migrations
                         .HasColumnType("timestamp without time zone");
 
                     b.HasKey("PatientValidationDetailsId");
-
-                    b.HasIndex("NHS_PatientPatientId");
-
-                    b.HasIndex("NHS_Patient_ValidationPatientValidationId");
 
                     b.HasIndex("PatientValidationDetailsId");
 
@@ -1028,7 +978,7 @@ namespace WorkOffice.Domain.Migrations
                         .HasColumnType("character varying(500)")
                         .HasMaxLength(500);
 
-                    b.Property<int?>("SpecialityId")
+                    b.Property<int?>("SpecialtyId")
                         .HasColumnType("integer");
 
                     b.Property<string>("UpdatedBy")
@@ -1133,17 +1083,11 @@ namespace WorkOffice.Domain.Migrations
                     b.Property<int?>("NHS_PatientPatientId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("NHS_Patient_ValidationPatientValidationId")
-                        .HasColumnType("integer");
-
                     b.Property<int?>("PatientId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("SpecialityId")
+                    b.Property<int>("SpecialtyId")
                         .HasColumnType("integer");
-
-                    b.Property<long?>("SpecialtyId")
-                        .HasColumnType("bigint");
 
                     b.Property<DateTime?>("TCIDate")
                         .HasColumnType("timestamp without time zone");
@@ -1157,9 +1101,6 @@ namespace WorkOffice.Domain.Migrations
 
                     b.Property<int>("WaitTypeId")
                         .HasColumnType("integer");
-
-                    b.Property<long?>("WaitingTypeId")
-                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("WaitinglistDate")
                         .HasColumnType("timestamp without time zone");
@@ -1178,12 +1119,6 @@ namespace WorkOffice.Domain.Migrations
                     b.HasKey("WaitinglistId");
 
                     b.HasIndex("NHS_PatientPatientId");
-
-                    b.HasIndex("NHS_Patient_ValidationPatientValidationId");
-
-                    b.HasIndex("SpecialtyId");
-
-                    b.HasIndex("WaitingTypeId");
 
                     b.HasIndex("WaitinglistId");
 
@@ -1228,9 +1163,9 @@ namespace WorkOffice.Domain.Migrations
                     b.ToTable("Notifications");
                 });
 
-            modelBuilder.Entity("WorkOffice.Domain.Entities.PathwayStatus", b =>
+            modelBuilder.Entity("WorkOffice.Domain.Entities.PathWayStatus", b =>
                 {
-                    b.Property<long>("PathwayStatusId")
+                    b.Property<long>("PathWayStatusId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
@@ -1253,11 +1188,11 @@ namespace WorkOffice.Domain.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
-                    b.HasKey("PathwayStatusId");
+                    b.HasKey("PathWayStatusId");
 
-                    b.HasIndex("PathwayStatusId");
+                    b.HasIndex("PathWayStatusId");
 
-                    b.ToTable("PathwayStatuses");
+                    b.ToTable("PathWayStatuses");
                 });
 
             modelBuilder.Entity("WorkOffice.Domain.Entities.RTT", b =>
@@ -1896,33 +1831,9 @@ namespace WorkOffice.Domain.Migrations
 
             modelBuilder.Entity("WorkOffice.Domain.Entities.NHS_Appointment", b =>
                 {
-                    b.HasOne("WorkOffice.Domain.Entities.AppType", "AppType")
-                        .WithMany()
-                        .HasForeignKey("AppTypeId1");
-
-                    b.HasOne("WorkOffice.Domain.Entities.Consultant", "Consultant")
-                        .WithMany()
-                        .HasForeignKey("ConsultantId1");
-
-                    b.HasOne("WorkOffice.Domain.Entities.Hospital", "Hospital")
-                        .WithMany()
-                        .HasForeignKey("HospitalId1");
-
-                    b.HasOne("WorkOffice.Domain.Entities.NHS_Patient", "NHS_Patient")
+                    b.HasOne("WorkOffice.Domain.Entities.NHS_Patient", null)
                         .WithMany("NHS_Appointment")
                         .HasForeignKey("NHS_PatientPatientId");
-
-                    b.HasOne("WorkOffice.Domain.Entities.NHS_Patient_Validation", "NHS_Patient_Validation")
-                        .WithMany("NHS_Appointment")
-                        .HasForeignKey("NHS_Patient_ValidationPatientValidationId");
-
-                    b.HasOne("WorkOffice.Domain.Entities.Specialty", "Specialty")
-                        .WithMany()
-                        .HasForeignKey("SpecialtyId");
-
-                    b.HasOne("WorkOffice.Domain.Entities.Ward", "Ward")
-                        .WithMany()
-                        .HasForeignKey("WardId1");
                 });
 
             modelBuilder.Entity("WorkOffice.Domain.Entities.NHS_Patient", b =>
@@ -1936,45 +1847,11 @@ namespace WorkOffice.Domain.Migrations
                         .HasForeignKey("NHS_ReferralReferralId");
                 });
 
-            modelBuilder.Entity("WorkOffice.Domain.Entities.NHS_Patient_Validation", b =>
-                {
-                    b.HasOne("WorkOffice.Domain.Entities.PathwayStatus", "PathwayStatus")
-                        .WithMany()
-                        .HasForeignKey("PathwayStatusId");
-
-                    b.HasOne("WorkOffice.Domain.Entities.Specialty", "Specialty")
-                        .WithMany()
-                        .HasForeignKey("SpecialtyId");
-                });
-
-            modelBuilder.Entity("WorkOffice.Domain.Entities.NHS_Patient_Validation_Detail", b =>
-                {
-                    b.HasOne("WorkOffice.Domain.Entities.NHS_Patient", "NHS_Patient")
-                        .WithMany("NHS_Patient_Validation_Detail")
-                        .HasForeignKey("NHS_PatientPatientId");
-
-                    b.HasOne("WorkOffice.Domain.Entities.NHS_Patient_Validation", "NHS_Patient_Validation")
-                        .WithMany("NHS_Patient_Validation_Detail")
-                        .HasForeignKey("NHS_Patient_ValidationPatientValidationId");
-                });
-
             modelBuilder.Entity("WorkOffice.Domain.Entities.NHS_Waitinglist", b =>
                 {
-                    b.HasOne("WorkOffice.Domain.Entities.NHS_Patient", "NHS_Patient")
+                    b.HasOne("WorkOffice.Domain.Entities.NHS_Patient", null)
                         .WithMany("NHS_Waitinglist")
                         .HasForeignKey("NHS_PatientPatientId");
-
-                    b.HasOne("WorkOffice.Domain.Entities.NHS_Patient_Validation", "NHS_Patient_Validation")
-                        .WithMany("NHS_Waitinglist")
-                        .HasForeignKey("NHS_Patient_ValidationPatientValidationId");
-
-                    b.HasOne("WorkOffice.Domain.Entities.Specialty", "Specialty")
-                        .WithMany()
-                        .HasForeignKey("SpecialtyId");
-
-                    b.HasOne("WorkOffice.Domain.Entities.WaitingType", "WaitingType")
-                        .WithMany()
-                        .HasForeignKey("WaitingTypeId");
                 });
 
             modelBuilder.Entity("WorkOffice.Domain.Entities.Specialty", b =>

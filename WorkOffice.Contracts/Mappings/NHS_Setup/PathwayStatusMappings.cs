@@ -9,22 +9,22 @@ namespace WorkOffice.Contracts.Mappings
     public static class PathwayStatusMappings
 
     {
-        public static T ToModel<T>(this PathwayStatus entity) where T : PathwayStatusViewModels, new()
+        public static T ToModel<T>(this PathWayStatus entity) where T : PathwayStatusViewModels, new()
         {
             return new T
             {
-                PathwayStatusId = entity.PathwayStatusId,
+                PathwayStatusId = entity.PathWayStatusId,
                 Code = entity.Code,
                 Name = entity.Name,
 
             };
         }
 
-        public static T ToModel<T>(this PathwayStatusViewModels entity) where T : PathwayStatus, new()
+        public static T ToModel<T>(this PathwayStatusViewModels entity) where T : PathWayStatus, new()
         {
             return new T
             {
-                PathwayStatusId = entity.PathwayStatusId,
+                PathWayStatusId = entity.PathwayStatusId,
                 Code = entity.Code,
                 Name = entity.Name,
  

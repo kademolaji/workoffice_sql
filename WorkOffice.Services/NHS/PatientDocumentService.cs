@@ -58,7 +58,7 @@ namespace WorkOffice.Services
                             DocumentFile = model.DocumentFile,
                             ClinicDate = model.ClinicDate,
                             DateUploaded = model.DateUploaded,
-                            SpecialityId = model.SpecialityId,
+                            SpecialtyId = model.SpecialityId,
                             Active = true,
                             Deleted = false,
                             CreatedBy = model.CurrentUserName,
@@ -142,7 +142,7 @@ namespace WorkOffice.Services
                         entity.DocumentFile = model.DocumentFile;
                         entity.ClinicDate = model.ClinicDate;
                         entity.DateUploaded = model.DateUploaded;
-                        entity.SpecialityId = model.SpecialityId;
+                        entity.SpecialtyId = model.SpecialityId;
                         entity.UpdatedBy = model.CurrentUserName;
                         entity.UpdatedOn = DateTime.UtcNow;
 
@@ -202,7 +202,7 @@ namespace WorkOffice.Services
                                         DocumentFile = doc.DocumentFile,
                                         ClinicDate = doc.ClinicDate,
                                         DateUploaded = doc.DateUploaded,
-                                        SpecialityId = doc.SpecialityId,
+                                        SpecialityId = doc.SpecialtyId,
 
                                     }).FirstOrDefaultAsync();
 
@@ -251,8 +251,8 @@ namespace WorkOffice.Services
                                                               DocumentFile = doc.DocumentFile,
                                                               ClinicDate = doc.ClinicDate,
                                                               DateUploaded = doc.DateUploaded,
-                                                              SpecialityId = doc.SpecialityId,
-                                                              Speciality = doc.SpecialityId != null ? context.Specialties.FirstOrDefault(x => x.SpecialtyId == doc.SpecialityId).Name : "",
+                                                              SpecialityId = doc.SpecialtyId,
+                                                              Speciality = doc.SpecialtyId != null ? context.Specialties.FirstOrDefault(x => x.SpecialtyId == doc.SpecialtyId).Name : "",
                                                               ConsultantName = "",
 
                                                           }).AsQueryable();

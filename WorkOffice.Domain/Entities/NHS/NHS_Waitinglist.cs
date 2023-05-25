@@ -12,7 +12,7 @@ namespace WorkOffice.Domain.Entities
 
         public int WaitTypeId { get; set; }
 
-        public int SpecialityId { get; set; }
+        public int SpecialtyId { get; set; }
 
         public DateTime? TCIDate { get; set; }
 
@@ -44,12 +44,12 @@ namespace WorkOffice.Domain.Entities
 
         public DateTime? UpdatedOn { get; set; }
 
-        public virtual NHS_Patient NHS_Patient { get; set; }
+        //public virtual NHS_Patient NHS_Patient { get; set; }
 
-        public virtual NHS_Patient_Validation NHS_Patient_Validation { get; set; }
+        //public virtual NHS_Patient_Validation NHS_Patient_Validation { get; set; }
 
-        public virtual Specialty Specialty { get; set; }
+        //public virtual Specialty Specialty { get; set; }
 
-        public virtual WaitingType WaitingType { get; set; }
+        //public virtual WaitingType WaitingType { get; set; }
     }
 }

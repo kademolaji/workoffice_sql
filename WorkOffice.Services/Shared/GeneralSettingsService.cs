@@ -327,12 +327,12 @@ namespace WorkOffice.Services
 
                 var apiResponse = new ApiResponse<GetResponse<List<GeneralSettingsModel>>>();
 
-                var result = await (from a in context.PathwayStatuses
+                var result = await (from a in context.PathWayStatuses
                                     where a.IsDeleted == false
                                     select new GeneralSettingsModel
                                     {
                                         Label = a.Name,
-                                        Value = a.PathwayStatusId
+                                        Value = a.PathWayStatusId
                                     }).ToListAsync();
 
                 var response = new GetResponse<List<GeneralSettingsModel>>()

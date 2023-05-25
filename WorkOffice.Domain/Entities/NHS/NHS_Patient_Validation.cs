@@ -29,8 +29,6 @@ namespace WorkOffice.Domain.Entities
 
         public int? PathWayStatusId { get; set; }
 
-        public string PathWayStatusIdCode { get; set; }
-
         public DateTime PathWayStartDate { get; set; }
 
         public DateTime? PathWayEndDate { get; set; }

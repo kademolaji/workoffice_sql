@@ -14,7 +14,7 @@ namespace WorkOffice.Domain.Entities
 
         public int? PathWayStatusId { get; set; }
 
-        public int? SpecialityId { get; set; }
+        public int? SpecialtyId { get; set; }
 
         public DateTime Date { get; set; }
 

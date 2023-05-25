@@ -51,7 +51,7 @@ namespace WorkOffice.Services
                         entity = new NHS_Waitinglist
                         {
                             WaitTypeId = model.WaitTypeId,
-                            SpecialityId = model.SpecialityId,
+                            SpecialtyId = model.SpecialityId,
                             TCIDate = model.TCIDate,
                             WaitinglistDate = model.WaitinglistDate,
                             WaitinglistTime = model.WaitinglistTime,
@@ -128,7 +128,7 @@ namespace WorkOffice.Services
                     try
                     {
                         entity.WaitTypeId = model.WaitTypeId;
-                        entity.SpecialityId = model.SpecialityId;
+                        entity.SpecialtyId = model.SpecialityId;
                         entity.TCIDate = model.TCIDate;
                         entity.WaitinglistDate = model.WaitinglistDate;
                         entity.WaitinglistTime = model.WaitinglistTime;
@@ -215,7 +215,7 @@ namespace WorkOffice.Services
                     {
                         WaitinglistId = model.WaitinglistId,
                         WaitTypeId = model.WaitTypeId,
-                        SpecialityId = model.SpecialityId,
+                        SpecialityId = model.SpecialtyId,
                         TCIDate = model.TCIDate,
                         WaitinglistDate = model.WaitinglistDate,
                         WaitinglistTime = model.WaitinglistTime,
@@ -263,7 +263,7 @@ namespace WorkOffice.Services
                     {
                         WaitinglistId = result.WaitinglistId,
                         WaitTypeId = result.WaitTypeId,
-                        SpecialityId = result.SpecialityId,
+                        SpecialityId = result.SpecialtyId,
                         TCIDate = result.TCIDate,
                         WaitinglistDate = result.WaitinglistDate,
                         WaitinglistTime = result.WaitinglistTime,

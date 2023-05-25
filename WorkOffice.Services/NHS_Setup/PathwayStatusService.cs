@@ -46,14 +46,14 @@ namespace WorkOffice.Services
 
                 var apiResponse = new ApiResponse<CreateResponse>();
                 bool result = false;
-                PathwayStatus entity = null;
+                PathWayStatus entity = null;
                 using (var trans = context.Database.BeginTransaction())
                 {
                     try
                     {
 
-                        entity = model.ToModel<PathwayStatus>();
-                        context.PathwayStatuses.Add(entity);
+                        entity = model.ToModel<PathWayStatus>();
+                        context.PathWayStatuses.Add(entity);
 
                         result = await context.SaveChangesAsync() > 0;
                         if (result)
@@ -61,8 +61,8 @@ namespace WorkOffice.Services
 
                             context.SaveChanges();
 
-                            var details = $"Created new PathwayStatus:Code = {model.Code}, Name = {model.Name}";
-                            await auditTrail.SaveAuditTrail(details, "PathwayStatus", "Create");
+                            var details = $"Created new PathWayStatus:Code = {model.Code}, Name = {model.Name}";
+                            await auditTrail.SaveAuditTrail(details, "PathWayStatus", "Create");
                             trans.Commit();
                         }
                     }
@@ -76,9 +76,9 @@ namespace WorkOffice.Services
 
                 var response = new CreateResponse()
                 {
-                    Id = entity.PathwayStatusId,
+                    Id = entity.PathWayStatusId,
                     Status = true,
-                    Message = "PathwayStatus created successfully"
+                    Message = "PathWayStatus created successfully"
                 };
 
                 apiResponse.StatusCode = System.Net.HttpStatusCode.OK;
@@ -115,7 +115,7 @@ namespace WorkOffice.Services
 
                 var apiResponse = new ApiResponse<CreateResponse>();
                 bool result = false;
-                var entity = await context.PathwayStatuses.FindAsync(model.PathwayStatusId);
+                var entity = await context.PathWayStatuses.FindAsync(model.PathwayStatusId);
                 if (entity == null)
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Record does not exist." }, IsSuccess = false };
@@ -130,7 +130,7 @@ namespace WorkOffice.Services
                         result = await context.SaveChangesAsync() > 0;
                         if (result)
                         {
-                            var details = $"Updated PathwayStatus: Code = {model.Code}, Name = {model.Name} ";
+                            var details = $"Updated PathWayStatus: Code = {model.Code}, Name = {model.Name} ";
                             await auditTrail.SaveAuditTrail(details, "App Type", "Update");
                             trans.Commit();
                         }
@@ -145,7 +145,7 @@ namespace WorkOffice.Services
                 var response = new CreateResponse
                 {
                     Status = result,
-                    Id = entity.PathwayStatusId,
+                    Id = entity.PathWayStatusId,
                     Message = "Record updated successfully"
                 };
 
@@ -174,7 +174,7 @@ namespace WorkOffice.Services
                 var apiResponse = new ApiResponse<SearchReply<PathwayStatusViewModels>>();
 
 
-                IQueryable<PathwayStatus> query = context.PathwayStatuses;
+                IQueryable<PathWayStatus> query = context.PathWayStatuses;
                 int offset = (pageNumber) * pageSize;
 
                 if (!string.IsNullOrEmpty(options.Parameter.SearchQuery))
@@ -261,7 +261,7 @@ namespace WorkOffice.Services
 
                 var apiResponse = new ApiResponse<GetResponse<PathwayStatusViewModels>>();
 
-                var result = await context.PathwayStatuses.FindAsync(pathwayStatusId);
+                var result = await context.PathWayStatuses.FindAsync(pathwayStatusId);
 
                 if (result == null)
                 {
@@ -298,7 +298,7 @@ namespace WorkOffice.Services
 
                 var apiResponse = new ApiResponse<DeleteReply>();
 
-                var result = await context.PathwayStatuses.FindAsync(pathwayStatusId);
+                var result = await context.PathWayStatuses.FindAsync(pathwayStatusId);
 
                 if (result == null)
                 {
@@ -341,7 +341,7 @@ namespace WorkOffice.Services
 
                 foreach (var item in model.targetIds)
                 {
-                    var data = await context.PathwayStatuses.FindAsync(item);
+                    var data = await context.PathWayStatuses.FindAsync(item);
                     if (data != null)
                     {
                         data.IsDeleted = true;
@@ -358,8 +358,8 @@ namespace WorkOffice.Services
                 apiResponse.IsSuccess = true;
                 apiResponse.ResponseType = response;
 
-                var details = $"Deleted Multiple PathwayStatus: with Ids {model.targetIds.ToArray()} ";
-                await auditTrail.SaveAuditTrail(details, "PathwayStatus", "Delete");
+                var details = $"Deleted Multiple PathWayStatus: with Ids {model.targetIds.ToArray()} ";
+                await auditTrail.SaveAuditTrail(details, "PathWayStatus", "Delete");
 
                 return apiResponse;
             }
@@ -378,7 +378,7 @@ namespace WorkOffice.Services
                 dt.Columns.Add("Name");
                 var apiResponse = new ApiResponse<GetResponse<byte[]>>();
 
-                var pathwayStatus = await (from a in context.PathwayStatuses
+                var pathwayStatus = await (from a in context.PathWayStatuses
                                            where a.IsDeleted == false
                                      select new PathwayStatusViewModels
                                      {
@@ -405,14 +405,14 @@ namespace WorkOffice.Services
                 {
                     using (ExcelPackage pck = new ExcelPackage())
                     {
-                        ExcelWorksheet ws = pck.Workbook.Worksheets.Add("PathwayStatus");
+                        ExcelWorksheet ws = pck.Workbook.Worksheets.Add("PathWayStatus");
                         ws.DefaultColWidth = 20;
                         ws.Cells["A1"].LoadFromDataTable(dt, true, OfficeOpenXml.Table.TableStyles.None);
                         fileBytes = pck.GetAsByteArray();
                     }
                 }
 
-                var details = $"Downloaded PathwayStatus: TotalCount {pathwayStatus.Count} ";
+                var details = $"Downloaded PathWayStatus: TotalCount {pathwayStatus.Count} ";
                 await auditTrail.SaveAuditTrail(details, "PathwayStatus", "Download");
 
                 var response = new GetResponse<byte[]>()
@@ -463,13 +463,13 @@ namespace WorkOffice.Services
                         });
                     }
                 }
-                List<PathwayStatus> pathwayStatuss = new List<PathwayStatus>();
+                List<PathWayStatus> pathwayStatuss = new List<PathWayStatus>();
                 if (uploadedRecord.Count > 0)
                 {
 
                     foreach (var item in uploadedRecord)
                     {
-                        var pathwayStatus = new PathwayStatus
+                        var pathwayStatus = new PathWayStatus
                         {
                             Code = item.Code,
                             Name = item.Name,
@@ -477,7 +477,7 @@ namespace WorkOffice.Services
                         };
                         pathwayStatuss.Add(pathwayStatus);
                     }
-                    context.PathwayStatuses.AddRange(pathwayStatuss);
+                    context.PathWayStatuses.AddRange(pathwayStatuss);
                 }
 
 
@@ -495,7 +495,7 @@ namespace WorkOffice.Services
                 apiResponse.ResponseType = response;
 
                 var details = $"Uploaded Apptype: TotalCount {pathwayStatuss.Count} ";
-                await auditTrail.SaveAuditTrail(details, "PathwayStatus", "Upload");
+                await auditTrail.SaveAuditTrail(details, "PathWayStatus", "Upload");
 
                 return apiResponse;
 

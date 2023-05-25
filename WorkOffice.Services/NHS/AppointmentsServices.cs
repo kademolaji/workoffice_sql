@@ -88,7 +88,7 @@ namespace WorkOffice.Services
                         {
                             AppTypeId = model.AppTypeId,
                             StatusId = model.StatusId,
-                            SpecialityId = model.SpecialityId,
+                            SpecialtyId = model.SpecialityId,
                             BookDate = model.BookDate,
                             AppDate = model.AppDate,
                             AppTime = model.AppTime,
@@ -210,7 +210,7 @@ namespace WorkOffice.Services
                     {
                         entity.AppTypeId = model.AppTypeId;
                         entity.StatusId = model.StatusId;
-                        entity.SpecialityId = model.SpecialityId;
+                        entity.SpecialtyId = model.SpecialityId;
                         entity.BookDate = model.BookDate;
                         entity.AppDate = model.AppDate;
                         entity.AppTime = model.AppTime;
@@ -283,7 +283,7 @@ namespace WorkOffice.Services
                                                                   AppointmentId = app.AppointmentId,
                                                                   AppTypeId = app.AppTypeId,
                                                                   StatusId = app.StatusId,
-                                                                  SpecialityId = app.SpecialityId,
+                                                                  SpecialityId = app.SpecialtyId,
                                                                   BookDate = app.BookDate,
                                                                   AppDate = app.AppDate,
                                                                   AppTime = app.AppTime,
@@ -298,7 +298,7 @@ namespace WorkOffice.Services
                                                                   CancellationReason = app.CancellationReason,
                                                                   PatientNumber = pat.DistrictNumber,
                                                                   PatientName = $"{pat.FirstName} {pat.MiddleName} {pat.LastName}",
-                                                                  Speciality = context.Specialties.FirstOrDefault(x => x.SpecialtyId == app.SpecialityId).Name,
+                                                                  Speciality = context.Specialties.FirstOrDefault(x => x.SpecialtyId == app.SpecialtyId).Name,
                                                                   PatientPathNumber = context.NHS_Patient_Validations.FirstOrDefault(x => x.PatientValidationId == app.PatientValidationId).PathWayNumber
                                                               }).AsQueryable();
 
@@ -367,7 +367,7 @@ namespace WorkOffice.Services
                                                                   AppointmentId = app.AppointmentId,
                                                                   AppTypeId = app.AppTypeId,
                                                                   StatusId = app.StatusId,
-                                                                  SpecialityId = app.SpecialityId,
+                                                                  SpecialityId = app.SpecialtyId,
                                                                   BookDate = app.BookDate,
                                                                   AppDate = app.AppDate,
                                                                   AppTime = app.AppTime,
@@ -382,7 +382,7 @@ namespace WorkOffice.Services
                                                                   CancellationReason = app.CancellationReason,
                                                                   PatientName = pat.FirstName + " " + pat.MiddleName + " " + pat.LastName,
                                                                   PatientNumber = pat.DistrictNumber,
-                                                                  Speciality = context.Specialties.FirstOrDefault(x => x.SpecialtyId == app.SpecialityId).Name,
+                                                                  Speciality = context.Specialties.FirstOrDefault(x => x.SpecialtyId == app.SpecialtyId).Name,
                                                                   PatientPathNumber = context.NHS_Patient_Validations.FirstOrDefault(x => x.PatientValidationId == app.PatientValidationId).PathWayNumber
                                                               }).AsQueryable();
 
@@ -448,7 +448,7 @@ namespace WorkOffice.Services
                                         AppointmentId = app.AppointmentId,
                                         AppTypeId = app.AppTypeId,
                                         StatusId = app.StatusId,
-                                        SpecialityId = app.SpecialityId,
+                                        SpecialityId = app.SpecialtyId,
                                         BookDate = app.BookDate,
                                         AppDate = app.AppDate,
                                         AppTime = app.AppTime,
@@ -462,7 +462,7 @@ namespace WorkOffice.Services
                                         AppointmentStatus = app.AppointmentStatus,
                                         CancellationReason = app.CancellationReason,
                                         PatientNumber = pat.DistrictNumber,
-                                        Speciality = context.Specialties.FirstOrDefault(x => x.SpecialtyId == app.SpecialityId).Name,
+                                        Speciality = context.Specialties.FirstOrDefault(x => x.SpecialtyId == app.SpecialtyId).Name,
                                         PatientName = pat.FirstName + " " + pat.MiddleName + " " + pat.LastName,
                                         PatientPathNumber = context.NHS_Patient_Validations.FirstOrDefault(x => x.PatientValidationId == app.PatientValidationId).PathWayNumber
                                     }).FirstOrDefaultAsync();

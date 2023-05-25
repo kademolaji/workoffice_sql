@@ -32,7 +32,7 @@ namespace WorkOffice.Domain.Entities
 
         public DateTime? DateUploaded { get; set; }
 
-        public int? SpecialityId { get; set; }
+        public int? SpecialtyId { get; set; }
 
         public bool? Active { get; set; }
 
