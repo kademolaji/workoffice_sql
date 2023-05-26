@@ -15,6 +15,7 @@ import { PathwayService } from '../pathway.service';
 import { CreatePathwayModel } from '../pathway.model';
 import { GeneralSettingsService } from 'src/app/core/service/general-settings.service';
 import { GeneralSettingsModel } from 'src/app/core/models/general-settings.model';
+import { catchError, debounceTime, distinctUntilChanged, filter, finalize, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-add-pathway',
@@ -39,6 +40,8 @@ export class AddPathwayComponent
   pathwayStatusList: GeneralSettingsModel[] = [];
   patientList: GeneralSettingsModel[] = [];
   rttList: GeneralSettingsModel[] = [];
+  minLengthTerm: any;
+  isLoading = false;
 
   constructor(
     private fb: UntypedFormBuilder,
@@ -114,7 +117,42 @@ export class AddPathwayComponent
           },
         });
     }
+
+    this.pathwayForm.get('patientId')?.valueChanges
+    .pipe(
+      filter(res => {
+        console.log("res", res)
+        return res !== null && res.length >= this.minLengthTerm
+      }),
+      distinctUntilChanged(),
+      debounceTime(1000),
+      tap(() => {
+        this.patientList = [];
+        this.isLoading = true;
+      }),
+      switchMap(value => this.generalSettingsService.getPatientList(value as string).pipe(catchError((err) => this.router.navigateByUrl('/')))
+        .pipe(
+          finalize(() => {
+            this.isLoading = false
+          }),
+        )
+      )
+    ) 
+    .subscribe((data: any) => {
+      if (data['entity'] == undefined) {
+        this.patientList = [];
+      } else {
+        this.patientList = data['entity'];
+      }
+    }
+    
+    );
   }
+
+  displayWith(value: any) {
+    return value?.label;
+  }
+  
   cancelForm() {
     this.router.navigate(['/nhs/all-pathway']);
   }

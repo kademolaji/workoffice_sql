@@ -492,7 +492,7 @@ namespace WorkOffice.Services
 
                 var apiResponse = new ApiResponse<GetResponse<List<GeneralSettingsModel>>>();
                 List<GeneralSettingsModel> result = new List<GeneralSettingsModel>();
-                if (!string.IsNullOrEmpty(search))
+                if (!string.IsNullOrEmpty(search) && search != "undefined")
                 {
                     result = await (from a in context.NHS_Patients
                                     where a.FirstName.Contains(search)
@@ -544,7 +544,7 @@ namespace WorkOffice.Services
 
                 var apiResponse = new ApiResponse<GetResponse<List<GeneralSettingsModel>>>();
                 List<GeneralSettingsModel> result = new List<GeneralSettingsModel>();
-                if (!string.IsNullOrEmpty(search))
+                if (!string.IsNullOrEmpty(search) && search != "undefined")
                 {
                     result = await (from a in context.NHS_Patient_Validations
                                     join b in context.NHS_Patients on a.PatientId equals b.PatientId

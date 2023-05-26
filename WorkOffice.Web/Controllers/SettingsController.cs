@@ -346,7 +346,7 @@ namespace WorkOffice.Web.Controllers
         {
             try
             {
-                var apiResponse = await service.GetPatientList(search);
+                var apiResponse = await service.GetPatientPathWayList(search);
                 if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
                 {
                     return BadRequest(apiResponse.ResponseType);

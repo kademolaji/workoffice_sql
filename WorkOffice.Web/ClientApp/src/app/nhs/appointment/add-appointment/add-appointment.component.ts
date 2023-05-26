@@ -112,6 +112,12 @@ export class AddAppointmentComponent
         this.wardList = response.entity;
       });
 
+      // this.subs.sink = this.generalSettingsService
+      // .getPatientList()
+      // .subscribe((response) => {
+      //   this.patientList = response.entity;
+      // });
+
       this.subs.sink = this.generalSettingsService
       .getPatientPathWayList()
       .subscribe((response) => {
@@ -137,7 +143,8 @@ export class AddAppointmentComponent
                 hospitalId: res.entity.hospitalId,
                 wardId: res.entity.wardId,
                 departmentId: res.entity.departmentId,
-                patientId: { label: "N/A", value: res.entity.patientId},
+               // patientId: { label: "N/A", value: res.entity.patientId},
+                patientId: res.entity.patientId,
                 patientValidationId: res.entity.patientValidationId,
                 comments: res.entity.comments,
               });
@@ -179,10 +186,6 @@ export class AddAppointmentComponent
   displayWith(value: any) {
     return value?.label;
   }
-
-  
-
-  
 
   cancelForm() {
     this.router.navigate(['/nhs/all-appointment/PartialBooked']);
