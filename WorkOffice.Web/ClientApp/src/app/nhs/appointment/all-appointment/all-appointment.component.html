@@ -70,20 +70,20 @@
                   <mat-cell *matCellDef="let row">{{row.patientName}}</mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="patientNumber">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header>Patient UniqueNumber</mat-header-cell>
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Patient UniqueNo</mat-header-cell>
                   <mat-cell *matCellDef="let row"> {{row.patientNumber}}</mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="patientPathNumber">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header>Pathway UniqueNumber</mat-header-cell>
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Pathway UniqueNo</mat-header-cell>
                   <mat-cell *matCellDef="let row"> {{row.patientPathNumber}}</mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="appointmentDate">
                   <mat-header-cell *matHeaderCellDef mat-sort-header>Appointment Date</mat-header-cell>
-                  <mat-cell *matCellDef="let row"> {{row.appDate}}</mat-cell>
+                  <mat-cell *matCellDef="let row"> {{row.appDate | date}}</mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="bookingDate">
                   <mat-header-cell *matHeaderCellDef mat-sort-header>Booking Date</mat-header-cell>
-                  <mat-cell *matCellDef="let row"> {{row.bookDate}}</mat-cell>
+                  <mat-cell *matCellDef="let row"> {{row.bookDate  | date}}</mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="speciality">
                   <mat-header-cell *matHeaderCellDef mat-sort-header>Speciality</mat-header-cell>
@@ -105,9 +105,9 @@
                       class="tbl-action-btn">
                       <app-feather-icons [icon]="'cancel'" [class]="'tbl-fav-edit'"></app-feather-icons>
                     </button> -->
-                    <button  class="btn-space" type="button" (click)="cancelItem(row)" mat-raised-button color="warn">
+                    <!-- <button  class="btn-space" type="button" (click)="cancelItem(row)" mat-raised-button color="warn">
                     Cancel
-                  </button>
+                  </button> -->
                   </mat-cell>
                 </ng-container>
                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
