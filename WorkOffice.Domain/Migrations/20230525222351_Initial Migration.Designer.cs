@@ -10,8 +10,8 @@ using WorkOffice.Domain.Helpers;
 namespace WorkOffice.Domain.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230525101038_init")]
-    partial class init
+    [Migration("20230525222351_Initial Migration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
