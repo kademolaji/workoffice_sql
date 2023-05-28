@@ -93,11 +93,11 @@ addNew() {
   this.router.navigate(['nhs', 'add-referral']);
 }
 
-editCall(row: { ReferralId: number }) {
+editCall(row: { referralId: number }) {
   this.router.navigate([
     'nhs',
     'edit-referral',
-    row.ReferralId,
+    row.referralId,
   ]);
 }
 

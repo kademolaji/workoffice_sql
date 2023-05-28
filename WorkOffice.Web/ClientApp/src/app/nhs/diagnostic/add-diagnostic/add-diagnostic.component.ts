@@ -120,7 +120,6 @@ export class AddDiagnosticComponent
     this.id = +this.route.snapshot.params['id'];
     this.isAddMode = !this.id;
     if (!this.isAddMode) {
-      this.searchQuery = this.id.toString();
       this.loadData(this.searchQuery, this.sortField, this.sortOrder);
       this.subs.sink = this.diagnosticService
         .getDiagnosticById(this.id)

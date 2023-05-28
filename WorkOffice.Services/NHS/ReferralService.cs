@@ -51,6 +51,8 @@ namespace WorkOffice.Services
                             ConsultantName = model.ConsultantName,
                             DocumentExtension = model.DocumentExtension,
                             DocumentFile = model.DocumentFile,
+                            DocumentName = model.DocumentName,
+                            ReferralDate = model.ReferralDate,
                             Active = true,
                             Deleted = false,
                             CreatedBy = model.CurrentUserName,
@@ -129,6 +131,8 @@ namespace WorkOffice.Services
                         entity.ConsultantName = model.ConsultantName;
                         entity.DocumentExtension = model.DocumentExtension;
                         entity.DocumentFile = model.DocumentFile;
+                        entity.DocumentName = model.DocumentName;
+                        entity.ReferralDate = model.ReferralDate;
                         entity.UpdatedBy = model.CurrentUserName;
                         entity.UpdatedOn = DateTime.UtcNow;
 
@@ -269,6 +273,7 @@ namespace WorkOffice.Services
                         DocumentExtension = result.DocumentExtension,
                         DocumentFile = result.DocumentFile,
                         DocumentName = result.DocumentName,
+                        ReferralDate = result.ReferralDate
                     },
                     Message = ""
                 };
@@ -297,7 +302,7 @@ namespace WorkOffice.Services
 
                 var apiResponse = new ApiResponse<DeleteReply>();
 
-                var result = context.NHS_Referrals.Find(ReferralId);
+                var result = context.NHS_Referrals.Where(x=> x.ReferralId == ReferralId).FirstOrDefault();
 
                 if (result == null)
                 {
@@ -340,7 +345,8 @@ namespace WorkOffice.Services
 
                 foreach (var item in model.targetIds)
                 {
-                    var data = await context.NHS_Referrals.FindAsync(item);
+                    var data = context.NHS_Referrals.Where(x => x.ReferralId == item).FirstOrDefault();
+
                     if (data != null)
                     {
                         data.Deleted = true;

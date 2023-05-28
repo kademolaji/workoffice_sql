@@ -89,6 +89,7 @@ namespace WorkOffice.Web.Controllers
                         PatientId = model.PatientId,
                         ConsultantName = model.ConsultantName,
                         DocumentExtension = model.File.ContentType,
+                        DocumentName = model.DocumentName,
                         DocumentFile = bytes,
                         ReferralDate = model.ReferralDate,
                         SpecialtyId = model.SpecialtyId,

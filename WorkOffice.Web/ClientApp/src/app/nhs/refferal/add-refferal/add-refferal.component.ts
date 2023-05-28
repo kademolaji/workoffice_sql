@@ -51,7 +51,7 @@ export class AddRefferalComponent
       consultantId: ['', [Validators.required]],
       consultantName: ['', [Validators.required]],
       documentName: ['', [Validators.required]],
-      referralDate: ['', [Validators.required]],
+      referralDate: [new Date(), [Validators.required]],
       uploadFile: [''],
     });
 
@@ -82,7 +82,9 @@ export class AddRefferalComponent
               specialtyId: res.entity.specialtyId,
               consultantId: res.entity.consultantId,
               documentName: res.entity.documentName,
+              consultantName:res.entity.consultantName,
               referralDate: res.entity.referralDate,
+              uploadFile: ""
             });
           }
         },

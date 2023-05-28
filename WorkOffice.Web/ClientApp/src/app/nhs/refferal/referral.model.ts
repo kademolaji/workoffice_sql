@@ -4,7 +4,7 @@ export interface ReferralDtoModel {
   specialtyId: number;
   consultantId: string;
   documentName: string;
-  referralDate:string;
+  referralDate:Date;
   }
 
   export interface ReferralModel {
@@ -13,7 +13,7 @@ export interface ReferralDtoModel {
     specialtyId: number;
     consultantId: string;
     documentName: string;
-    referralDate: string;
+    referralDate: Date;
     specialty: string;
     patientName: string;
     consultantName: string;

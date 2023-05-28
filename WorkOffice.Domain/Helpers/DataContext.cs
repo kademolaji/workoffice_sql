@@ -143,6 +143,16 @@ namespace WorkOffice.Domain.Helpers
             builder.Entity<WaitingType>().HasQueryFilter(p => !p.IsDeleted);
             builder.Entity<Ward>().HasQueryFilter(p => !p.IsDeleted);
 
+            builder.Entity<NHS_Appointment>().HasQueryFilter(p => !(bool)p.Deleted);
+            builder.Entity<NHS_Patient>().HasQueryFilter(p => !(bool)p.Deleted);
+            builder.Entity<NHS_Waitinglist>().HasQueryFilter(p => !(bool)p.Deleted);
+            builder.Entity<NHS_Patientdocument>().HasQueryFilter(p => !(bool)p.Deleted);
+            builder.Entity<NHS_Patient_Validation>().HasQueryFilter(p => !(bool)p.Deleted);
+            builder.Entity<NHS_Patient_Validation_Detail>().HasQueryFilter(p => !(bool)p.Deleted);
+            builder.Entity<NHS_Diagnostic>().HasQueryFilter(p => !(bool)p.Deleted);
+            builder.Entity<NHS_DiagnosticResult>().HasQueryFilter(p => !(bool)p.Deleted);
+            builder.Entity<NHS_Referral>().HasQueryFilter(p => !(bool)p.Deleted);
+
         }
     }
 }
