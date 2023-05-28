@@ -56,6 +56,7 @@ namespace WorkOffice.Services
                             WaitinglistDate = model.WaitinglistDate,
                             WaitinglistTime = model.WaitinglistTime,
                             PatientId = model.PatientId,
+                            patientValidationId = model.patientValidationId,
                             Condition = model.Condition,
                             WaitinglistStatus = model.WaitinglistStatus,
                             Active = true,
@@ -135,6 +136,7 @@ namespace WorkOffice.Services
                         entity.PatientId = model.PatientId;
                         entity.Condition = model.Condition;
                         entity.WaitinglistStatus = model.WaitinglistStatus;
+                        entity.patientValidationId = model.patientValidationId;
                         entity.UpdatedBy = model.CurrentUsername;
                         entity.UpdatedOn = DateTime.UtcNow;
 
@@ -222,7 +224,14 @@ namespace WorkOffice.Services
                         PatientId = model.PatientId,
                         Condition = model.Condition,
                         WaitinglistStatus = model.WaitinglistStatus,
-                        
+                        patientValidationId = model.patientValidationId,
+                        DistrictNumber = (from a in context.NHS_Patients where a.PatientId == model.PatientId select a.DistrictNumber).FirstOrDefault(),
+                        PathWayNumber = (from a in context.NHS_Patient_Validations
+                                         join b in context.NHS_Patients on a.PatientId equals b.PatientId
+                                         where a.PatientValidationId == model.patientValidationId
+                                         select a.PathWayNumber
+                                       ).FirstOrDefault()
+
                     }).ToList(),
                 };
 
@@ -270,9 +279,16 @@ namespace WorkOffice.Services
                         PatientId = result.PatientId,
                         Condition = result.Condition,
                         WaitinglistStatus = result.WaitinglistStatus,
-                    },
+                        patientValidationId = result.patientValidationId,
+                        DistrictNumber = (from a in context.NHS_Patients where a.PatientId == result.PatientId select a.DistrictNumber + " - " + a.FirstName + " " + a.MiddleName + " " + a.LastName).FirstOrDefault(),
+                        PathWayNumber = (from a in context.NHS_Patient_Validations join b in context.NHS_Patients on a.PatientId equals b.PatientId
+                                         where a.PatientValidationId == result.patientValidationId
+                                         select a.PathWayNumber + " - " + b.FirstName + " " + b.MiddleName + " " + b.LastName
+                                       ).FirstOrDefault()
+            },
                     Message = ""
                 };
+
 
                 apiResponse.StatusCode = System.Net.HttpStatusCode.OK;
                 apiResponse.IsSuccess = true;

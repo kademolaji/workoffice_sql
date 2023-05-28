@@ -69,19 +69,19 @@
                 </ng-container>
                 <ng-container matColumnDef="districtUniqueNumber">
                   <mat-header-cell *matHeaderCellDef mat-sort-header>District Unique Number</mat-header-cell>
-                  <mat-cell *matCellDef="let row"> {{row.districtUniqueNumber}}</mat-cell>
+                  <mat-cell *matCellDef="let row"> {{row.districtNumber}}</mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="pathwayUniqueNumber">
                   <mat-header-cell *matHeaderCellDef mat-sort-header>Pathway Unique Number</mat-header-cell>
-                  <mat-cell *matCellDef="let row"> {{row.pathwayUniqueNumber}}</mat-cell>
+                  <mat-cell *matCellDef="let row"> {{row.pathWayNumber}}</mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="waitinglistDate">
                   <mat-header-cell *matHeaderCellDef mat-sort-header>Waitinglist Date</mat-header-cell>
-                  <mat-cell *matCellDef="let row"> {{row.waitinglistDate}}</mat-cell>
+                  <mat-cell *matCellDef="let row"> {{row.waitinglistDate | date}}</mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="tciDate">
                   <mat-header-cell *matHeaderCellDef mat-sort-header>TCI Date</mat-header-cell>
-                  <mat-cell *matCellDef="let row"> {{row.tciDate}}</mat-cell>
+                  <mat-cell *matCellDef="let row"> {{row.tciDate | date}}</mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="status">
                   <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>

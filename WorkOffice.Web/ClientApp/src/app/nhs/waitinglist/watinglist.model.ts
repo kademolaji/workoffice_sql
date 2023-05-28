@@ -3,14 +3,14 @@ export interface WaitinglistModel {
   waitinglistId : number;
   waitTypeId: number;
   specialityId : number;
-  tciDate : string;
-  waitinglistDate : string;
+  tciDate : Date;
+  waitinglistDate : Date;
   waitinglistTime : string;
   patientId : number;
   patientValidationId: number;
   condition : string;
   waitinglistStatus: string;
-  districtUniqueNumber: string;
-  pathwayUniqueNumber: string;
+  districtNumber: string;
+  pathWayNumber: string;
 }
 

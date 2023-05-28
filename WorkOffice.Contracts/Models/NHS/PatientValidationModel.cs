@@ -36,6 +36,7 @@ namespace WorkOffice.Contracts.Models
         public string SpecialityName { get; set; }
         public string PathWayStatusCode { get; set; }
         public string PathWayStatusName { get; set; }
+        public string PatientName { get; set; }
         public List<PatientValidationDetailsModel> patientdetails { get; set; }
 
     }

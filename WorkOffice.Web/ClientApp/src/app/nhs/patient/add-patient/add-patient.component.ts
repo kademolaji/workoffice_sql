@@ -105,7 +105,6 @@ export class AddPatientComponent
     this.id = +this.route.snapshot.params['id'];
     this.isAddMode = !this.id;
     if (!this.isAddMode) {
-      this.searchQuery = this.id.toString();
       this.loadData(this.searchQuery, this.sortField, this.sortOrder);
       this.subs.sink = this.patientService.getPatientById(this.id).subscribe({
         next: (res) => {
@@ -257,7 +256,6 @@ export class AddPatientComponent
       direction: tempDirection,
     });
     this.subs.sink = dialogRef.afterClosed().subscribe((result) => {
-      console.log('result', result);
       this.refresh();
       this.showNotification(
         'snackbar-success',
@@ -363,6 +361,7 @@ export class AddPatientComponent
       sortOrder,
       parameter: {
         searchQuery,
+        id:  this.id
       },
     };
     this.patientService.getAllPatientDocument(options).subscribe((res) => {

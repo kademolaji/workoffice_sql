@@ -16,19 +16,6 @@
           <div class="body">
             <form class="m-4" [formGroup]="pathwayForm" (ngSubmit)="onSubmit()">
               <div class="row">
-                <!-- <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
-                  <mat-form-field class="example-full-width mb-3" appearance="outline">
-                    <mat-label>Patient District Number</mat-label>
-                    <mat-select formControlName="patientId" required>
-                      <mat-option  *ngFor="let patient of patientList" [value]="patient.value">
-                        {{patient.label}}
-                      </mat-option>
-                    </mat-select>
-                    <mat-error *ngIf="pathwayForm.get('patientId')?.hasError('required')">
-                      Patient District Number is required
-                    </mat-error>
-                  </mat-form-field>
-                </div> -->
                 <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
                   <mat-form-field
                     class="example-full-width mb-3"
@@ -38,10 +25,10 @@
                     <input
                       matInput
                       formControlName="patientId"
-                      [matAutocomplete]="auto"
+                      [matAutocomplete]="autoPathwayPatient"
                     />
                     <mat-autocomplete
-                      #auto="matAutocomplete"
+                      #autoPathwayPatient="matAutocomplete"
                       [displayWith]="displayWith"
                     >
                       <mat-option *ngIf="isLoading" class="is-loading"
@@ -98,7 +85,7 @@
                     <mat-label>Speciality</mat-label>
                     <mat-select formControlName="specialtyId" required>
                       <mat-option  *ngFor="let specialty of specialityList" [value]="specialty.value">
-                        {{specialty.label}} 
+                        {{specialty.label}}
                       </mat-option>
                     </mat-select>
                     <mat-error *ngIf="pathwayForm.get('specialtyId')?.hasError('required')">

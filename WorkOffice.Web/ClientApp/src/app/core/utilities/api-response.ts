@@ -38,4 +38,5 @@ export interface  GetResponse<T>{
 
 export interface SearchParameter {
   searchQuery: string;
+  id?: number;
 }

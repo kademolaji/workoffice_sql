@@ -40,7 +40,7 @@ export class AddPathwayComponent
   pathwayStatusList: GeneralSettingsModel[] = [];
   patientList: GeneralSettingsModel[] = [];
   rttList: GeneralSettingsModel[] = [];
-  minLengthTerm: any;
+  minLengthTerm=3;
   isLoading = false;
 
   constructor(
@@ -58,12 +58,12 @@ export class AddPathwayComponent
       pathWayNumber: [''],
       pathWayCondition: ['', [Validators.required]],
       specialtyId: [0, [Validators.required]],
-      pathWayStartDate: ['', [Validators.required]],
-      pathWayEndDate: [''],
+      pathWayStartDate: [new Date(), [Validators.required]],
+      pathWayEndDate: [new Date()],
       nhsNumber: [''],
       pathWayStatusId: ['', [Validators.required]],
-      rttId: [0],
-      patientId: [0, [Validators.required]],
+      rttId: [],
+      patientId: ['', [Validators.required]],
       rttWait: [''],
       specialityName:[''],
 
@@ -74,12 +74,12 @@ export class AddPathwayComponent
       .subscribe((response) => {
         this.specialityList = response.entity;
       });
-    this.subs.sink = this.generalSettingsService
-      .getPatientList()
-      .subscribe((response) => {
-        this.patientList = response.entity;
-      });
-      
+    // this.subs.sink = this.generalSettingsService
+    //   .getPatientList()
+    //   .subscribe((response) => {
+    //     this.patientList = response.entity;
+    //   });
+
 
     this.subs.sink = this.generalSettingsService
       .getPathwayStatus()
@@ -109,7 +109,7 @@ export class AddPathwayComponent
                 nhsNumber: res.entity.nhsNumber,
                 pathWayStatusId: res.entity.pathWayStatusId,
                 rttId: res.entity.rttId,
-                patientId: res.entity.patientId,
+                patientId: { label: res.entity.patientName, value: res.entity.patientId},
                 rttWait: res.entity.rttWait,
                 specialityName: res.entity.specialityName,
               });
@@ -121,7 +121,6 @@ export class AddPathwayComponent
     this.pathwayForm.get('patientId')?.valueChanges
     .pipe(
       filter(res => {
-        console.log("res", res)
         return res !== null && res.length >= this.minLengthTerm
       }),
       distinctUntilChanged(),
@@ -137,22 +136,20 @@ export class AddPathwayComponent
           }),
         )
       )
-    ) 
+    )
     .subscribe((data: any) => {
       if (data['entity'] == undefined) {
         this.patientList = [];
       } else {
         this.patientList = data['entity'];
       }
-    }
-    
-    );
+    });
   }
 
   displayWith(value: any) {
     return value?.label;
   }
-  
+
   cancelForm() {
     this.router.navigate(['/nhs/all-pathway']);
   }
@@ -179,7 +176,7 @@ export class AddPathwayComponent
         pathWayStartDate: this.pathwayForm.value.pathWayStartDate,
         pathWayEndDate: this.pathwayForm.value.pathWayEndDate,
         pathWayStatusId: +this.pathwayForm.value.pathWayStatusId,
-        patientId: +this.pathwayForm.value.patientId,
+        patientId: +this.pathwayForm.value.patientId.value,
         rttWait: this.pathwayForm.value.rttWait,
         districtNumber: '',
         nhsNumber: '',

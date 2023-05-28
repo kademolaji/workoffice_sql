@@ -239,7 +239,7 @@ namespace WorkOffice.Services
 
 
                 IQueryable<PatientDocumentModel> query = (from doc in context.NHS_Patientdocuments
-                                                          where doc.PatientId == int.Parse(options.Parameter.SearchQuery)
+                                                          where doc.PatientId == options.Parameter.Id
                                                           select new PatientDocumentModel
                                                           {
                                                               PatientDocumentId = doc.PatientDocumentId,
@@ -256,6 +256,14 @@ namespace WorkOffice.Services
                                                               ConsultantName = "",
 
                                                           }).AsQueryable();
+
+                if (!string.IsNullOrEmpty(options.Parameter.SearchQuery))
+                {
+                    query = query.Where(x => x.DocumentName.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())
+                    || x.PhysicalLocation.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())
+                    || x.Speciality.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())
+                   );
+                }
                 int offset = (pageNumber) * pageSize;
 
 

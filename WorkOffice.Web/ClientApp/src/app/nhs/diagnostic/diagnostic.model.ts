@@ -5,7 +5,7 @@ export interface DiagnosticModel {
   patientName: string
   specialtyId: number;
   specialty: string;
-  dtd: string;
+  dtd: Date;
   problem: string;
   status: string;
   consultantName: string;
@@ -19,8 +19,8 @@ export interface DiagnosticResultModel {
   documentName: string;
   documentExtension: string;
   documentFile: string;
-  testResultDate:string;
+  testResultDate:Date;
   specialityId: number;
-  dateUploaded: string;
+  dateUploaded: Date;
 }
 

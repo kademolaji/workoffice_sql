@@ -239,7 +239,7 @@ namespace WorkOffice.Services
 
 
                 IQueryable<DiagnosticResultModel> query = (from doc in context.NHS_DiagnosticResults
-                                                          where doc.DiagnosticId == int.Parse(options.Parameter.SearchQuery)
+                                                          where doc.DiagnosticId == options.Parameter.Id
                                                           select new DiagnosticResultModel
                                                           {
                                                               DiagnosticResultId = doc.DiagnosticResultId,
@@ -258,6 +258,12 @@ namespace WorkOffice.Services
                                                           }).AsQueryable();
                 int offset = (pageNumber) * pageSize;
 
+                if (!string.IsNullOrEmpty(options.Parameter.SearchQuery))
+                {
+                    query = query.Where(x => x.ConsultantName.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())
+                    || x.DocumentName.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())
+                    || x.Speciality.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower()));
+                }
 
                 switch (sortField)
                 {

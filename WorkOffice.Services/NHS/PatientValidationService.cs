@@ -31,11 +31,12 @@ namespace WorkOffice.Services
                 {
                     return await Update(model);
                 }
-                if (string.IsNullOrEmpty(model.PathWayNumber))
+                if (model.PatientValidationId <= 0)
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "PathWay Number is required." }, IsSuccess = false };
                 }
-                var patDetail = context.NHS_Patients.Where(a => a.PatientId == model.PatientId).FirstOrDefault();
+                var patientDetail = context.NHS_Patients.Where(a => a.PatientId == model.PatientId).FirstOrDefault();
+                var pathwayDetail = context.NHS_Patient_Validations.Where(a => a.PatientValidationId == model.PatientValidationId).FirstOrDefault();
                 var apiResponse = new ApiResponse<CreateResponse>();
                 bool result = false;
                 NHS_Patient_Validation entity = null;
@@ -45,17 +46,17 @@ namespace WorkOffice.Services
                     {
                         entity = new NHS_Patient_Validation
                         {
-                            DistrictNumber = patDetail.DistrictNumber,
+                            DistrictNumber = patientDetail.DistrictNumber,
                             PathWayCondition = model.PathWayCondition,
                             PathWayEndDate = model.PathWayEndDate,
-                            PathWayNumber = model.PathWayNumber,
+                            PathWayNumber = pathwayDetail.PathWayNumber,
                             PathWayStartDate = model.PathWayStartDate,
                             PathWayStatusId = model.PathWayStatusId,
                             PatientId = model.PatientId,
                             RTTId = model.RTTId,
                             SpecialtyId = model.SpecialtyId,
                             RTTWait = model.RTTWait,
-                            NHSNumber = patDetail.NHSNumber,
+                            NHSNumber = patientDetail.NHSNumber,
                             Active = true,
                             Deleted = false,
                             CreatedBy = model.CurrentUserName,
@@ -103,22 +104,30 @@ namespace WorkOffice.Services
             try
             {
 
-
-                if (string.IsNullOrEmpty(model.DistrictNumber))
-                {
-                    return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "District Number is required." }, IsSuccess = false };
-                }
-                if (string.IsNullOrEmpty(model.NHSNumber))
-                {
-                    return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "NHS Number is required." }, IsSuccess = false };
-                }
-
                 var existingNHSNumber = context.NHS_Patient_Validations.Any(x => x.PatientValidationId == model.PatientValidationId && x.PatientId != model.PatientId);
                 if (existingNHSNumber)
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Another Patient pathway already exists" }, IsSuccess = false };
                 }
 
+                var patientDetail = context.NHS_Patients.Where(a => a.PatientId == model.PatientId).FirstOrDefault();
+                var pathwayDetail = context.NHS_Patient_Validations.Where(a => a.PatientValidationId == model.PatientValidationId).FirstOrDefault();
+
+
+                if (string.IsNullOrEmpty(patientDetail.NHSNumber))
+                {
+                    return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "NHS Number is required." }, IsSuccess = false };
+                }
+
+                if (string.IsNullOrEmpty(patientDetail.DistrictNumber))
+                {
+                    return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "District Number is required." }, IsSuccess = false };
+                }
+
+                if (string.IsNullOrEmpty(pathwayDetail.PathWayNumber))
+                {
+                    return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Pathway Number is required." }, IsSuccess = false };
+                }
 
                 var apiResponse = new ApiResponse<CreateResponse>();
                 bool result = false;
@@ -127,28 +136,29 @@ namespace WorkOffice.Services
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Record does not exist." }, IsSuccess = false };
                 }
+
                 using (var trans = context.Database.BeginTransaction())
                 {
                     try
                     {
-                        entity.DistrictNumber = model.DistrictNumber;
+                        entity.DistrictNumber = patientDetail.DistrictNumber;
                         entity.PathWayCondition = model.PathWayCondition;
                         entity.PathWayEndDate = model.PathWayEndDate;
-                        entity.PathWayNumber = model.PathWayNumber;
+                        entity.PathWayNumber = pathwayDetail.PathWayNumber;
                         entity.PathWayStartDate = model.PathWayStartDate;
                         entity.PathWayStatusId = model.PathWayStatusId;
                         entity.PatientId = model.PatientId;
                         entity.RTTId = model.RTTId;
                         entity.SpecialtyId = model.SpecialtyId;
                         entity.RTTWait = model.RTTWait;
-                        entity.NHSNumber = model.NHSNumber;
+                        entity.NHSNumber = patientDetail.NHSNumber;
                         entity.UpdatedBy = model.CurrentUserName;
                         entity.UpdatedOn = DateTime.UtcNow;
 
                         result = await context.SaveChangesAsync() > 0;
                         if (result)
                         {
-                            var details = $"Updated Patient Pathway: DistrictNumber = {model.DistrictNumber} ";
+                            var details = $"Updated Patient Pathway: DistrictNumber = {patientDetail.DistrictNumber} ";
                             await auditTrail.SaveAuditTrail(details, "Patient Pathway", "Update");
                             trans.Commit();
                         }
@@ -197,26 +207,26 @@ namespace WorkOffice.Services
 
 
                 IQueryable<PatientValidationModel> query = (from x in context.NHS_Patient_Validations
-                                                              join y in context.Specialties on x.SpecialtyId equals y.SpecialtyId
-                                                            where x.Deleted == false 
+                                                            join y in context.Specialties on x.SpecialtyId equals y.SpecialtyId
+                                                            where x.Deleted == false
                                                             select new PatientValidationModel
-                                                              {
-                                                                  PatientId = x.PatientId,
-                                                                  DistrictNumber = x.DistrictNumber,
-                                                                  PathWayCondition = x.PathWayCondition,
-                                                                  PathWayEndDate = x.PathWayEndDate,
-                                                                  PathWayNumber = x.PathWayNumber,
-                                                                  PathWayStartDate = x.PathWayStartDate,
-                                                                  PathWayStatusId = x.PathWayStatusId,
-                                                                  RTTId = x.RTTId,
-                                                                  SpecialtyId = x.SpecialtyId,
-                                                                  RTTWait = x.RTTWait,
-                                                                  PathWayStatusCode = x.PathWayStatusId != null ? context.PathWayStatuses.Where(a => a.PathWayStatusId == a.PathWayStatusId).FirstOrDefault().Name : null,
-                                                                  PathWayStatusName = x.PathWayStatusId != null ? context.PathWayStatuses.Where(a => a.PathWayStatusId == a.PathWayStatusId).FirstOrDefault().Code : null,
-                                                                  SpecialityCode = y.Code,
-                                                                  SpecialityName = y.Name,
-                                                                  NHSNumber = x.NHSNumber,
-                                                                  PatientValidationId = x.PatientValidationId
+                                                            {
+                                                                PatientId = x.PatientId,
+                                                                DistrictNumber = x.DistrictNumber,
+                                                                PathWayCondition = x.PathWayCondition,
+                                                                PathWayEndDate = x.PathWayEndDate,
+                                                                PathWayNumber = x.PathWayNumber,
+                                                                PathWayStartDate = x.PathWayStartDate,
+                                                                PathWayStatusId = x.PathWayStatusId,
+                                                                RTTId = x.RTTId,
+                                                                SpecialtyId = x.SpecialtyId,
+                                                                RTTWait = x.RTTWait,
+                                                                PathWayStatusCode = x.PathWayStatusId != null ? context.PathWayStatuses.Where(a => a.PathWayStatusId == a.PathWayStatusId).FirstOrDefault().Name : null,
+                                                                PathWayStatusName = x.PathWayStatusId != null ? context.PathWayStatuses.Where(a => a.PathWayStatusId == a.PathWayStatusId).FirstOrDefault().Code : null,
+                                                                SpecialityCode = y.Code,
+                                                                SpecialityName = y.Name,
+                                                                NHSNumber = x.NHSNumber,
+                                                                PatientValidationId = x.PatientValidationId
                                                             }).AsQueryable();
                 int offset = (pageNumber) * pageSize;
 
@@ -276,33 +286,33 @@ namespace WorkOffice.Services
 
                 //var result = await context.NHS_Patient_Validations.FirstOrDefaultAsync(x => x.PatientId == PatientId);
 
-                var result = await(from x in context.NHS_Patient_Validations
-                                   join y in context.Specialties on x.SpecialtyId equals y.SpecialtyId
-                                   where x.PatientValidationId == PatientValidationId
-                                   select new PatientValidationModel
-                                                            {
-                                                                PatientId = x.PatientId,
-                                                                DistrictNumber = x.DistrictNumber,
-                                                                PathWayCondition = x.PathWayCondition,
-                                                                PathWayEndDate = x.PathWayEndDate,
-                                                                PathWayNumber = x.PathWayNumber,
-                                                                PathWayStartDate = x.PathWayStartDate,
-                                                                PathWayStatusId = x.PathWayStatusId,
-                                                                RTTId = x.RTTId,
-                                                                SpecialtyId = x.SpecialtyId,
-                                                                RTTWait = x.RTTWait,
-                                                                PathWayStatusCode = x.PathWayStatusId != null ? context.PathWayStatuses.Where(a => a.PathWayStatusId == a.PathWayStatusId).FirstOrDefault().Name : null,
-                                                                PathWayStatusName = x.PathWayStatusId != null ? context.PathWayStatuses.Where(a => a.PathWayStatusId == a.PathWayStatusId).FirstOrDefault().Code : null,
-                                                                SpecialityCode = y.Code,
-                                                                SpecialityName = y.Name,
-                                                                NHSNumber = x.NHSNumber,
-                                     }).FirstOrDefaultAsync();
+                var result = await (from x in context.NHS_Patient_Validations
+                                    join y in context.Specialties on x.SpecialtyId equals y.SpecialtyId
+                                    where x.PatientValidationId == PatientValidationId
+                                    select new PatientValidationModel
+                                    {
+                                        PatientId = x.PatientId,
+                                        DistrictNumber = x.DistrictNumber,
+                                        PathWayCondition = x.PathWayCondition,
+                                        PathWayEndDate = x.PathWayEndDate,
+                                        PathWayNumber = x.PathWayNumber,
+                                        PathWayStartDate = x.PathWayStartDate,
+                                        PathWayStatusId = x.PathWayStatusId,
+                                        RTTId = x.RTTId,
+                                        SpecialtyId = x.SpecialtyId,
+                                        RTTWait = x.RTTWait,
+                                        PathWayStatusCode = x.PathWayStatusId != null ? context.PathWayStatuses.Where(a => a.PathWayStatusId == a.PathWayStatusId).FirstOrDefault().Name : null,
+                                        PathWayStatusName = x.PathWayStatusId != null ? context.PathWayStatuses.Where(a => a.PathWayStatusId == a.PathWayStatusId).FirstOrDefault().Code : null,
+                                        SpecialityCode = y.Code,
+                                        SpecialityName = y.Name,
+                                        NHSNumber = x.NHSNumber,
+                                    }).FirstOrDefaultAsync();
 
                 if (result == null)
                 {
                     return new ApiResponse<GetResponse<PatientValidationModel>>() { StatusCode = System.Net.HttpStatusCode.NotFound, ResponseType = new GetResponse<PatientValidationModel>() { Status = false, Message = "No record found" }, IsSuccess = false };
                 }
-
+                result.PatientName = (from a in context.NHS_Patients where a.PatientId == result.PatientId select a.DistrictNumber + " - " + a.FirstName + " " + a.MiddleName + " " + a.LastName).FirstOrDefault();
                 var response = new GetResponse<PatientValidationModel>()
                 {
                     Status = true,
@@ -350,7 +360,7 @@ namespace WorkOffice.Services
 
                 var result = await (from x in context.NHS_Patient_Validations
                                     join y in context.Specialties on x.SpecialtyId equals y.SpecialtyId
-                                    where x.NHSNumber == distNumber.NHSNumber && x.Deleted==false
+                                    where x.NHSNumber == distNumber.NHSNumber && x.Deleted == false
                                     select new PatientValidationModel
                                     {
                                         PatientId = x.PatientId,

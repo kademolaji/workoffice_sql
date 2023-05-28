@@ -188,7 +188,7 @@
                         </ng-container>
                         <ng-container matColumnDef="testResultDate">
                           <mat-header-cell *matHeaderCellDef mat-sort-header>Test Result Date</mat-header-cell>
-                          <mat-cell *matCellDef="let row"> {{row.testResultDate}}</mat-cell>
+                          <mat-cell *matCellDef="let row"> {{row.testResultDate | date}}</mat-cell>
                         </ng-container>
                         <ng-container matColumnDef="speciality">
                           <mat-header-cell *matHeaderCellDef mat-sort-header>Speciality</mat-header-cell>
@@ -196,7 +196,7 @@
                         </ng-container>
                         <ng-container matColumnDef="dateUploaded">
                           <mat-header-cell *matHeaderCellDef mat-sort-header>Date Uploaded</mat-header-cell>
-                          <mat-cell *matCellDef="let row"> {{row.dateUploaded}}</mat-cell>
+                          <mat-cell *matCellDef="let row"> {{row.dateUploaded | date}}</mat-cell>
                         </ng-container>
                         <!-- actions -->
                         <ng-container matColumnDef="actions">

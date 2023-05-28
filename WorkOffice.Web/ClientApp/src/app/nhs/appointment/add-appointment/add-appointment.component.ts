@@ -43,6 +43,7 @@ export class AddAppointmentComponent
   wardList: GeneralSettingsModel[] = [];
 
   patientList: GeneralSettingsModel[] = [];
+  pathwayList: GeneralSettingsModel[] = [];
   isLoading = false;
   minLengthTerm = 3;
 
@@ -69,7 +70,7 @@ export class AddAppointmentComponent
       wardId: ['', [Validators.required]],
       departmentId: [''],
       patientId: ['', [Validators.required]],
-      patientValidationId: ['',[Validators.required]],
+      patientValidationId: [''],
       comments: ['', [Validators.required]],
     });
 
@@ -112,11 +113,6 @@ export class AddAppointmentComponent
         this.wardList = response.entity;
       });
 
-      // this.subs.sink = this.generalSettingsService
-      // .getPatientList()
-      // .subscribe((response) => {
-      //   this.patientList = response.entity;
-      // });
 
       this.subs.sink = this.generalSettingsService
       .getPatientPathWayList()
@@ -143,9 +139,8 @@ export class AddAppointmentComponent
                 hospitalId: res.entity.hospitalId,
                 wardId: res.entity.wardId,
                 departmentId: res.entity.departmentId,
-               // patientId: { label: "N/A", value: res.entity.patientId},
-                patientId: res.entity.patientId,
-                patientValidationId: res.entity.patientValidationId,
+                patientId: { label: res.entity.patientName, value: res.entity.patientId},
+                patientValidationId: { label: res.entity.patientPathNumber, value: res.entity.patientValidationId},
                 comments: res.entity.comments,
               });
             }
@@ -155,7 +150,6 @@ export class AddAppointmentComponent
     this.appointmentForm.get('patientId')?.valueChanges
     .pipe(
       filter(res => {
-        console.log("res", res)
         return res !== null && res.length >= this.minLengthTerm
       }),
       distinctUntilChanged(),
@@ -171,7 +165,7 @@ export class AddAppointmentComponent
           }),
         )
       )
-    ) 
+    )
     .subscribe((data: any) => {
       if (data['entity'] == undefined) {
         this.patientList = [];
@@ -179,11 +173,45 @@ export class AddAppointmentComponent
         this.patientList = data['entity'];
       }
     }
-    
+    );
+
+    this.appointmentForm.get('patientValidationId')?.valueChanges
+    .pipe(
+      filter(res => {
+        return res !== null && res.length >= this.minLengthTerm
+      }),
+      distinctUntilChanged(),
+      debounceTime(1000),
+      tap(() => {
+        this.pathwayList = [];
+        this.isLoading = true;
+      }),
+      switchMap(value => this.generalSettingsService.getPatientPathWayList(value as string).pipe(catchError((err) => this.router.navigateByUrl('/')))
+        .pipe(
+          finalize(() => {
+            this.isLoading = false
+          }),
+        )
+      )
+    )
+    .subscribe((data: any) => {
+      if (data['entity'] == undefined) {
+        this.pathwayList = [];
+      } else {
+        this.pathwayList = data['entity'];
+      }
+    }
     );
   }
 
-  displayWith(value: any) {
+
+
+
+  displayWithPatient(value: any) {
+    return value?.label;
+  }
+
+  displayWithPathway(value: any) {
     return value?.label;
   }
 
@@ -216,8 +244,8 @@ export class AddAppointmentComponent
         hospitalId: +this.appointmentForm.value.hospitalId,
         wardId: +this.appointmentForm.value.wardId,
         departmentId: +this.appointmentForm.value.departmentId,
-        patientId: this.appointmentForm.value.patientId.value,
-        patientValidationId: +this.appointmentForm.value.patientValidationId,
+        patientId: +this.appointmentForm.value.patientId.value,
+        patientValidationId: +this.appointmentForm.value.patientValidationId.value,
         comments: this.appointmentForm.value.comments,
         appointmentStatus: '',
         cancellationReason: '',
@@ -226,7 +254,6 @@ export class AddAppointmentComponent
         patientName:'',
         patientPathWayNumber: '',
       };
-      console.log("patient", patient)
       this.subs.sink = this.appointmentService
         .addAppointment(patient)
         .subscribe({

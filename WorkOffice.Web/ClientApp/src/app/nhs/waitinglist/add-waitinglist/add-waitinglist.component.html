@@ -34,39 +34,70 @@
                     class="example-full-width mb-3"
                     appearance="outline"
                   >
-                    <mat-label>Patient District Number</mat-label>
-                    <mat-select formControlName="patientId" required>
-                      <mat-option
-                        *ngFor="let patient of patientList"
-                        [value]="patient.value"
+                    <mat-label>Patient PathWay</mat-label>
+                    <input
+                      matInput
+                      formControlName="patientValidationId"
+                      [matAutocomplete]="autoPathway"
+                    />
+                    <mat-autocomplete
+                      #autoPathway="matAutocomplete"
+                      [displayWith]="displayWithPathway"
+                    >
+                      <mat-option *ngIf="isLoading" class="is-loading"
+                        >Loading...</mat-option
                       >
-                        {{ patient.label }}
-                      </mat-option>
-                    </mat-select>
+                      <ng-container *ngIf="!isLoading">
+                        <mat-option
+                          *ngFor="let pathway of pathwayList"
+                          [value]="pathway"
+                        >
+                          <span>{{ pathway.label }}</span>
+                        </mat-option>
+                      </ng-container>
+                    </mat-autocomplete>
                     <mat-error
                       *ngIf="
-                        waitinglistForm.get('patientId')?.hasError('required')
+                      waitinglistForm.get('patientValidationId')?.hasError('required')
                       "
                     >
-                      Patient District Number is required
+                    Pathway is required
                     </mat-error>
                   </mat-form-field>
                 </div>
-                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
+                <div  class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
                   <mat-form-field
                     class="example-full-width mb-3"
                     appearance="outline"
                   >
-                    <mat-label>Pathway Unique Number</mat-label>
-                    <input matInput formControlName="pathwayUniqueNumber" />
+                    <mat-label>Patient District Number</mat-label>
+                    <input
+                      matInput
+                      formControlName="patientId"
+                      [matAutocomplete]="autoPatient"
+                    />
+                    <mat-autocomplete
+                      #autoPatient="matAutocomplete"
+                      [displayWith]="displayWithPatient"
+                    >
+                      <mat-option *ngIf="isLoading" class="is-loading"
+                        >Loading...</mat-option
+                      >
+                      <ng-container *ngIf="!isLoading">
+                        <mat-option
+                          *ngFor="let patient of patientList"
+                          [value]="patient"
+                        >
+                          <span>{{ patient.label }}</span>
+                        </mat-option>
+                      </ng-container>
+                    </mat-autocomplete>
                     <mat-error
                       *ngIf="
-                        waitinglistForm
-                          .get('pathwayUniqueNumber')
-                          ?.hasError('required')
+                      waitinglistForm.get('patientId')?.hasError('required')
                       "
                     >
-                      Pathway Unique Number is required
+                      Patient District Number is required
                     </mat-error>
                   </mat-form-field>
                 </div>

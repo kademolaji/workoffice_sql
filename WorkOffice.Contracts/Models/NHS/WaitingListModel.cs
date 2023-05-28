@@ -26,19 +26,10 @@ namespace WorkOffice.Contracts.Models
         public string Condition { get; set; }
 
         public string WaitinglistStatus { get; set; }
+        public string DistrictNumber { get; set; }
+        public string PathWayNumber { get; set; }
+      
         [JsonIgnore]
         public string CurrentUsername { get; set; }
-
-        public bool? Active { get; set; }
-
-        public bool? Deleted { get; set; }
-
-        public string CreatedBy { get; set; }
-
-        public DateTime? CreatedOn { get; set; }
-
-        public string UpdatedBy { get; set; }
-
-        public DateTime? UpdatedOn { get; set; }
     }
 }

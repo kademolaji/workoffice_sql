@@ -82,6 +82,7 @@ namespace WorkOffice.Contracts.ServicesContracts
     public class SearchParameter
     {
         public string SearchQuery { get; set; }
+        public long Id { get; set; }
     }
     public class ProducesResponseStub
     {

@@ -249,9 +249,9 @@ export class AddDiagnosticComponent
       documentName: '',
       documentExtension: '',
       documentFile: '',
-      testResultDate: '',
+      testResultDate: new Date(),
       specialityId: 0,
-      dateUploaded: '',
+      dateUploaded: new Date(),
     };
     let tempDirection: Direction;
     if (localStorage.getItem('isRtl') === 'true') {
@@ -373,6 +373,7 @@ export class AddDiagnosticComponent
       sortOrder,
       parameter: {
         searchQuery,
+        id: this.id
       },
     };
     this.diagnosticService.getAllDiagnosticResult(options).subscribe((res) => {

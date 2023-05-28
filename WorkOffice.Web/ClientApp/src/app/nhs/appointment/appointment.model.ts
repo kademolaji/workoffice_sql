@@ -42,6 +42,6 @@ export interface AppointmentResponseModel {
   speciality: string;
   patientNumber: string;
   patientName: string;
-  patientPathWayNumber: string;
+  patientPathNumber: string;
 }
 

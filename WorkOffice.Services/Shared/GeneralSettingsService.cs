@@ -495,11 +495,11 @@ namespace WorkOffice.Services
                 if (!string.IsNullOrEmpty(search) && search != "undefined")
                 {
                     result = await (from a in context.NHS_Patients
-                                    where a.FirstName.Contains(search)
-                                    || a.LastName.Contains(search)
-                                     || a.MiddleName.Contains(search)
-                                      || a.DistrictNumber.Contains(search)
-                                        || a.PhoneNo.Contains(search)
+                                    where a.FirstName.ToLower().Trim().Contains(search.ToLower().Trim())
+                                    || a.LastName.ToLower().Trim().Contains(search.ToLower().Trim())
+                                     || a.MiddleName.ToLower().Trim().Contains(search.ToLower().Trim())
+                                      || a.DistrictNumber.ToLower().Trim().Contains(search.ToLower().Trim())
+                                        || a.PhoneNo.ToLower().Trim().Contains(search.ToLower().Trim())
                                     select new GeneralSettingsModel
                                     {
                                         Label = a.DistrictNumber + " - " + a.FirstName + " " + a.MiddleName + " " + a.LastName,
@@ -548,11 +548,11 @@ namespace WorkOffice.Services
                 {
                     result = await (from a in context.NHS_Patient_Validations
                                     join b in context.NHS_Patients on a.PatientId equals b.PatientId
-                                    where a.NHSNumber.Contains(search)
-                                    || a.PathWayNumber.Contains(search)
-                                    || b.LastName.Contains(search)
-                                    || b.MiddleName.Contains(search)
-                                    || b.FirstName.Contains(search)
+                                    where a.NHSNumber.ToLower().Trim().Contains(search.ToLower().Trim())
+                                    || a.PathWayNumber.ToLower().Trim().Contains(search.ToLower().Trim())
+                                    || b.LastName.ToLower().Trim().Contains(search.ToLower().Trim())
+                                    || b.MiddleName.ToLower().Trim().Contains(search.ToLower().Trim())
+                                    || b.FirstName.ToLower().Trim().Contains(search.ToLower().Trim())
 
                                     select new GeneralSettingsModel
                                     {
@@ -563,9 +563,10 @@ namespace WorkOffice.Services
                 else
                 {
                     result = await (from a in context.NHS_Patient_Validations
+                                    join b in context.NHS_Patients on a.PatientId equals b.PatientId
                                     select new GeneralSettingsModel
                                     {
-                                        Label = a.PathWayNumber,
+                                        Label = a.PathWayNumber + " - " + b.FirstName + " " + b.MiddleName + " " + b.LastName,
                                         Value = a.PatientValidationId
                                     }).ToListAsync();
                 }
