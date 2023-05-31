@@ -42,6 +42,12 @@ export class PathwayService extends UnsubscribeOnDestroyAdapter {
     );
   }
 
+  getPathwayByPatientId(patientId: number) {
+    return this.httpClient.get<GetResponse<PathwayResponseModel[]>>(
+      `api/patientValidation/GetPathwayByPatientId?patientId=${patientId}`
+    );
+  }
+
   addPathway(data: CreatePathwayModel) {
     this.dialogData = data;
     return this.httpClient.post<CreateResponse>(

@@ -1,0 +1,55 @@
+<div class="row clearfix">
+  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+    <div class="card">
+      <div class="header">
+        <h2><strong> Diagnostics</strong></h2>
+      </div>
+      <div class="body">
+        <div class="responsive_table">
+          <mat-table #table [dataSource]="dataSource" matSort class="mat-cell">
+            <ng-container matColumnDef="diagnosticId">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>DiagnosticId</mat-header-cell>
+              <mat-cell *matCellDef="let row">{{row.diagnosticId}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="patientName">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Patient Name</mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.patientName}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="consultantName">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Consultant Name</mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.consultantName}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="specialty">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Specialty</mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.specialty}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="problem">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Problem</mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.problem}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="status">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.status}}</mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"
+              [style.cursor]="'pointer'" matRipple>
+            </mat-row>
+          </mat-table>
+          <!-- Loading spinner -->
+          <div *ngIf="isTblLoading" class="tbl-spinner">
+            <mat-progress-spinner color="primary" [diameter]="40" mode="indeterminate">
+            </mat-progress-spinner>
+          </div>
+          <div *ngIf="!isTblLoading" class="no-results"
+            [style.display]="dataSource.data.length === 0 ? '' : 'none'">
+            No results
+          </div>
+          <mat-paginator #paginator [length]="totalRows" [pageIndex]="currentPage" [pageSize]="pageSize"
+          [pageSizeOptions]="pageSizeOptions" (page)="pageChanged($event)" aria-label="Select page">
+        </mat-paginator>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

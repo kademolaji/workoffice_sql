@@ -20,18 +20,40 @@
                   <ng-template matStepLabel>Diagnostic</ng-template>
                   <div class="row">
                     <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
-                      <mat-form-field class="example-full-width mb-3" appearance="outline">
+                      <mat-form-field
+                        class="example-full-width mb-3"
+                        appearance="outline"
+                      >
                         <mat-label>Patient District Number</mat-label>
-                        <mat-select formControlName="patientId" required>
-                          <mat-option  *ngFor="let patient of patientList" [value]="patient.value">
-                            {{patient.label}}
-                          </mat-option>
-                        </mat-select>
-                        <mat-error *ngIf="diagnosticForm.get('patientId')?.hasError('required')">
+                        <input
+                          matInput
+                          formControlName="patientId"
+                          [matAutocomplete]="autoPathwayPatient"
+                        />
+                        <mat-autocomplete
+                          #autoPathwayPatient="matAutocomplete"
+                          [displayWith]="displayWith"
+                        >
+                          <mat-option *ngIf="isLoading" class="is-loading"
+                            >Loading...</mat-option
+                          >
+                          <ng-container *ngIf="!isLoading">
+                            <mat-option
+                              *ngFor="let patient of patientList"
+                              [value]="patient"
+                            >
+                              <span>{{ patient.label }}</span>
+                            </mat-option>
+                          </ng-container>
+                        </mat-autocomplete>
+                        <mat-error
+                          *ngIf="
+                          diagnosticForm.get('patientId')?.hasError('required')
+                          "
+                        >
                           Patient District Number is required
                         </mat-error>
                       </mat-form-field>
-
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
                       <mat-form-field class="example-full-width mb-3" appearance="outline">

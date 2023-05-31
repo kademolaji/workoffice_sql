@@ -31,12 +31,11 @@ namespace WorkOffice.Services
                 {
                     return await Update(model);
                 }
-                if (model.PatientValidationId <= 0)
+                if (model.PatientId <= 0)
                 {
-                    return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "PathWay Number is required." }, IsSuccess = false };
+                    return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Patient is required." }, IsSuccess = false };
                 }
                 var patientDetail = context.NHS_Patients.Where(a => a.PatientId == model.PatientId).FirstOrDefault();
-                var pathwayDetail = context.NHS_Patient_Validations.Where(a => a.PatientValidationId == model.PatientValidationId).FirstOrDefault();
                 var apiResponse = new ApiResponse<CreateResponse>();
                 bool result = false;
                 NHS_Patient_Validation entity = null;
@@ -49,14 +48,14 @@ namespace WorkOffice.Services
                             DistrictNumber = patientDetail.DistrictNumber,
                             PathWayCondition = model.PathWayCondition,
                             PathWayEndDate = model.PathWayEndDate,
-                            PathWayNumber = pathwayDetail.PathWayNumber,
+                            PathWayNumber = model.PathWayNumber,
                             PathWayStartDate = model.PathWayStartDate,
                             PathWayStatusId = model.PathWayStatusId,
                             PatientId = model.PatientId,
                             RTTId = model.RTTId,
                             SpecialtyId = model.SpecialtyId,
                             RTTWait = model.RTTWait,
-                            NHSNumber = patientDetail.NHSNumber,
+                            NHSNumber = model.NHSNumber,
                             Active = true,
                             Deleted = false,
                             CreatedBy = model.CurrentUserName,
@@ -284,13 +283,14 @@ namespace WorkOffice.Services
 
                 var apiResponse = new ApiResponse<GetResponse<PatientValidationModel>>();
 
-                //var result = await context.NHS_Patient_Validations.FirstOrDefaultAsync(x => x.PatientId == PatientId);
 
                 var result = await (from x in context.NHS_Patient_Validations
+                                    join p in context.NHS_Patients on x.PatientId equals p.PatientId
                                     join y in context.Specialties on x.SpecialtyId equals y.SpecialtyId
                                     where x.PatientValidationId == PatientValidationId
                                     select new PatientValidationModel
                                     {
+                                        PatientValidationId = x.PatientValidationId,
                                         PatientId = x.PatientId,
                                         DistrictNumber = x.DistrictNumber,
                                         PathWayCondition = x.PathWayCondition,
@@ -306,13 +306,14 @@ namespace WorkOffice.Services
                                         SpecialityCode = y.Code,
                                         SpecialityName = y.Name,
                                         NHSNumber = x.NHSNumber,
+                                        PatientName = p.DistrictNumber + " - " + p.FirstName + " " + p.MiddleName + " " + p.LastName
                                     }).FirstOrDefaultAsync();
 
                 if (result == null)
                 {
                     return new ApiResponse<GetResponse<PatientValidationModel>>() { StatusCode = System.Net.HttpStatusCode.NotFound, ResponseType = new GetResponse<PatientValidationModel>() { Status = false, Message = "No record found" }, IsSuccess = false };
                 }
-                result.PatientName = (from a in context.NHS_Patients where a.PatientId == result.PatientId select a.DistrictNumber + " - " + a.FirstName + " " + a.MiddleName + " " + a.LastName).FirstOrDefault();
+
                 var response = new GetResponse<PatientValidationModel>()
                 {
                     Status = true,
@@ -329,6 +330,66 @@ namespace WorkOffice.Services
             catch (Exception ex)
             {
                 return new ApiResponse<GetResponse<PatientValidationModel>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new GetResponse<PatientValidationModel>() { Status = false, Message = $"Error encountered {ex.Message}" }, IsSuccess = false };
+            }
+        }
+
+        public async Task<ApiResponse<GetResponse<List<PatientValidationModel>>>> GetPathwayByPatientId(long patientId)
+        {
+            try
+            {
+                if (patientId <= 0)
+                {
+                    return new ApiResponse<GetResponse<List<PatientValidationModel>>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new GetResponse<List<PatientValidationModel>> { Status = false, Entity = null, Message = "Patient is required." }, IsSuccess = false };
+                }
+
+                var apiResponse = new ApiResponse<GetResponse<List<PatientValidationModel>>>();
+
+
+                var result = await (from x in context.NHS_Patient_Validations
+                                    join p in context.NHS_Patients on x.PatientId equals p.PatientId
+                                    join y in context.Specialties on x.SpecialtyId equals y.SpecialtyId
+                                    where x.PatientId == patientId
+                                    select new PatientValidationModel
+                                    {
+                                        PatientValidationId = x.PatientValidationId,
+                                        PatientId = x.PatientId,
+                                        DistrictNumber = x.DistrictNumber,
+                                        PathWayCondition = x.PathWayCondition,
+                                        PathWayEndDate = x.PathWayEndDate,
+                                        PathWayNumber = x.PathWayNumber,
+                                        PathWayStartDate = x.PathWayStartDate,
+                                        PathWayStatusId = x.PathWayStatusId,
+                                        RTTId = x.RTTId,
+                                        SpecialtyId = x.SpecialtyId,
+                                        RTTWait = x.RTTWait,
+                                        PathWayStatusCode = x.PathWayStatusId != null ? context.PathWayStatuses.Where(a => a.PathWayStatusId == a.PathWayStatusId).FirstOrDefault().Name : null,
+                                        PathWayStatusName = x.PathWayStatusId != null ? context.PathWayStatuses.Where(a => a.PathWayStatusId == a.PathWayStatusId).FirstOrDefault().Code : null,
+                                        SpecialityCode = y.Code,
+                                        SpecialityName = y.Name,
+                                        NHSNumber = x.NHSNumber,
+                                        PatientName = p.DistrictNumber + " - " + p.FirstName + " " + p.MiddleName + " " + p.LastName
+                                    }).ToListAsync();
+
+                if (!result.Any())
+                {
+                    return new ApiResponse<GetResponse<List<PatientValidationModel>>>() { StatusCode = System.Net.HttpStatusCode.NotFound, ResponseType = new GetResponse<List<PatientValidationModel>>() { Status = false, Message = "No record found" }, IsSuccess = false };
+                }
+                var response = new GetResponse<List<PatientValidationModel>>()
+                {
+                    Status = true,
+                    Entity = result,
+                    Message = ""
+                };
+
+                apiResponse.StatusCode = System.Net.HttpStatusCode.OK;
+                apiResponse.IsSuccess = true;
+                apiResponse.ResponseType = response;
+
+                return apiResponse;
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<GetResponse<List<PatientValidationModel>>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new GetResponse<List<PatientValidationModel>>() { Status = false, Message = $"Error encountered {ex.Message}" }, IsSuccess = false };
             }
         }
 

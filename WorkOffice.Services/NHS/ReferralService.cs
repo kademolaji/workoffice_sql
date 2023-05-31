@@ -200,6 +200,11 @@ namespace WorkOffice.Services
                                                      }).AsQueryable();
                 int offset = (pageNumber) * pageSize;
 
+                if (options.Parameter.Id > 0)
+                {
+                    query = query.Where(x => x.PatientId == options.Parameter.Id);
+                }
+
                 if (!string.IsNullOrEmpty(options.Parameter.SearchQuery))
                 {
                     query = query.Where(x => x.ConsultantName.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())

@@ -1,0 +1,60 @@
+<div class="row clearfix">
+  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+    <div class="card">
+      <div class="header">
+        <h2><strong> Appointments</strong></h2>
+      </div>
+      <div class="body">
+        <div class="responsive_table">
+          <mat-table #table [dataSource]="dataSource" matSort class="mat-cell">
+            <!-- ID Column -->
+            <ng-container matColumnDef="patientName">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Patient Name</mat-header-cell>
+              <mat-cell *matCellDef="let row">{{row.patientName}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="patientNumber">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Patient UniqueNo</mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.patientNumber}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="patientPathNumber">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Pathway UniqueNo</mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.patientPathNumber}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="appointmentDate">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Appointment Date</mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.appDate | date}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="bookingDate">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Booking Date</mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.bookDate  | date}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="speciality">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Speciality</mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.speciality}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="appointmentStatus">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Appt Status</mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.appointmentStatus}}</mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"
+              [style.cursor]="'pointer'" matRipple>
+            </mat-row>
+          </mat-table>
+          <!-- Loading spinner -->
+          <div *ngIf="isTblLoading" class="tbl-spinner">
+            <mat-progress-spinner color="primary" [diameter]="40" mode="indeterminate">
+            </mat-progress-spinner>
+          </div>
+          <div *ngIf="!isTblLoading" class="no-results"
+            [style.display]="dataSource.data.length === 0 ? '' : 'none'">
+            No results
+          </div>
+          <mat-paginator #paginator [length]="totalRows" [pageIndex]="currentPage" [pageSize]="pageSize"
+          [pageSizeOptions]="pageSizeOptions" (page)="pageChanged($event)" aria-label="Select page">
+        </mat-paginator>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

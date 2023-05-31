@@ -492,6 +492,20 @@
              <response code="404">If object of PatientValidation is null</response> 
              <response code="400">If an error occur or invalid request payload</response> 
         </member>
+        <member name="M:WorkOffice.Web.Controllers.PatientValidationController.GetPathwayByPatientId(System.Int64)">
+             <summary>
+             Get object of PatientValidation
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="patientId"></param>
+             <returns>Object of PatientValidation</returns>
+             <response code="200">Returns object of PatientValidation</response>
+             <response code="404">If object of PatientValidation is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
         <member name="M:WorkOffice.Web.Controllers.PatientValidationController.Delete(System.Int64)">
              <summary>
              Delete PatientValidation

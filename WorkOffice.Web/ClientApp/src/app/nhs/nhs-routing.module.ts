@@ -14,6 +14,8 @@ import { AllRefferalComponent } from "./refferal/all-refferal/all-refferal.compo
 import { AllDiagnosticComponent } from "./diagnostic/all-diagnostic/all-diagnostic.component";
 import { AddDiagnosticComponent } from "./diagnostic/add-diagnostic/add-diagnostic.component";
 import { AllPathwayComponent } from "./pathway/all-pathway/all-pathway.component";
+import { ValidateNowPathwaysComponent } from "./Validate/validate-now-pathways/validate-now-pathways.component";
+import { ValidatePatientComponent } from "./Validate/validate-patient/validate-patient.component";
 
 
 const routes: Routes = [
@@ -74,6 +76,15 @@ const routes: Routes = [
     path: "validate-now",
     component: ValidateNowComponent,
   },
+  {
+    path: "validate-now/:id",
+    component: ValidateNowPathwaysComponent,
+  },
+  {
+    path: ":patientId/validate-now/:id",
+    component: ValidatePatientComponent,
+  },
+
 
   {
     path: "all-diagnostic",

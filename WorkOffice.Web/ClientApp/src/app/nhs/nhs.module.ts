@@ -52,6 +52,13 @@ import { AllPathwayComponent } from './pathway/all-pathway/all-pathway.component
 import { PathwayService } from './pathway/pathway.service';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { CancelAppointmentDialogComponent } from './appointment/all-appointment/dialog/cancel/cancel.component';
+import { ValidateNowPathwaysComponent } from './Validate/validate-now-pathways/validate-now-pathways.component';
+import { ValidatePatientComponent } from './Validate/validate-patient/validate-patient.component';
+import { PatientAppointmentsComponent } from './Validate/component/patient-appointments/patient-appointments.component';
+import { PatientDiagnosticComponent } from './Validate/component/patient-diagnostic/patient-diagnostic.component';
+import { PatientReferralComponent } from './Validate/component/patient-referral/patient-referral.component';
+import { PatientWaitinglistComponent } from './Validate/component/patient-waitinglist/patient-waitinglist.component';
+import { PatientDocumentsComponent } from './Validate/component/patient-documents/patient-documents.component';
 
 @NgModule({
   imports: [
@@ -99,7 +106,6 @@ import { CancelAppointmentDialogComponent } from './appointment/all-appointment/
     AllPathwayComponent,
     AddPathwayComponent,
     DeletePathwayDialogComponent,
-    ValidateNowComponent,
 
     AllDiagnosticComponent,
     DeleteDiagnosticDialogComponent,
@@ -109,7 +115,17 @@ import { CancelAppointmentDialogComponent } from './appointment/all-appointment/
 
     AddRefferalComponent,
     AllRefferalComponent,
-    DeleteReferralDialogComponent
+    DeleteReferralDialogComponent,
+
+    ValidateNowComponent,
+    ValidateNowPathwaysComponent,
+    ValidatePatientComponent,
+
+    PatientAppointmentsComponent,
+    PatientDiagnosticComponent,
+    PatientReferralComponent,
+    PatientWaitinglistComponent,
+    PatientDocumentsComponent
   ],
   providers: [PatientService, AppointmentService, WaitinglistService, DiagnosticService, ReferralService, PathwayService],
 })

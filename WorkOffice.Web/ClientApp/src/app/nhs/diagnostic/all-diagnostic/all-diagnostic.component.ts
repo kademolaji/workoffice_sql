@@ -177,6 +177,7 @@ public loadData(searchQuery: string, sortField: string, sortOrder: string) {
     sortOrder,
     parameter: {
       searchQuery,
+      id: 0
     },
   };
   this.DiagnosticService

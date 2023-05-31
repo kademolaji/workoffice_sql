@@ -29,6 +29,7 @@ import { DeleteDiagnosticResultDialogComponent } from './dialog/delete/delete.co
 import { DiagnosticService } from '../diagnostic.service';
 import { GeneralSettingsModel } from 'src/app/core/models/general-settings.model';
 import { GeneralSettingsService } from 'src/app/core/service/general-settings.service';
+import { catchError, debounceTime, distinctUntilChanged, filter, finalize, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-add-diagnostic',
@@ -47,6 +48,7 @@ export class AddDiagnosticComponent
   isAddMode = true;
   id = 0;
   isLinear = false;
+  minLengthTerm=3;
 
   displayedColumns: string[] = [
     'select',
@@ -101,11 +103,6 @@ export class AddDiagnosticComponent
     });
 
     this.subs.sink = this.generalSettingsService
-      .getPatientList()
-      .subscribe((response) => {
-        this.patientList = response.entity;
-      });
-    this.subs.sink = this.generalSettingsService
       .getConsultant()
       .subscribe((response) => {
         this.consultantList = response.entity;
@@ -127,7 +124,7 @@ export class AddDiagnosticComponent
           next: (res) => {
             if (res.status) {
               this.diagnosticForm.setValue({
-                patientId: res.entity.patientId,
+                patientId: { label: res.entity.patientName, value: res.entity.patientId},
                 specialtyId: res.entity.specialtyId,
                 dtd: res.entity.dtd,
                 problem: res.entity.problem,
@@ -138,6 +135,36 @@ export class AddDiagnosticComponent
           },
         });
     }
+    this.diagnosticForm.get('patientId')?.valueChanges
+    .pipe(
+      filter(res => {
+        return res !== null && res.length >= this.minLengthTerm
+      }),
+      distinctUntilChanged(),
+      debounceTime(1000),
+      tap(() => {
+        this.patientList = [];
+        this.isLoading = true;
+      }),
+      switchMap(value => this.generalSettingsService.getPatientList(value as string).pipe(catchError((err) => this.router.navigateByUrl('/')))
+        .pipe(
+          finalize(() => {
+            this.isLoading = false
+          }),
+        )
+      )
+    )
+    .subscribe((data: any) => {
+      if (data['entity'] == undefined) {
+        this.patientList = [];
+      } else {
+        this.patientList = data['entity'];
+      }
+    });
+  }
+
+  displayWith(value: any) {
+    return value?.label;
   }
   cancelForm() {
     this.router.navigate(['/nhs/all-diagnostic']);
@@ -159,7 +186,7 @@ export class AddDiagnosticComponent
     } else {
       const diagnostic: DiagnosticModel = {
         diagnosticId: this.id ? this.id : 0,
-        patientId: +this.diagnosticForm.value.patientId,
+        patientId: +this.diagnosticForm.value.patientId.value,
         specialtyId: +this.diagnosticForm.value.specialtyId,
         dtd: this.diagnosticForm.value.dtd,
         problem: this.diagnosticForm.value.problem,

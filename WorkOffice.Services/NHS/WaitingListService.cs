@@ -191,6 +191,11 @@ namespace WorkOffice.Services
                 IQueryable<NHS_Waitinglist> query = context.NHS_Waitinglists;
                 int offset = (pageNumber) * pageSize;
 
+                if (options.Parameter.Id > 0)
+                {
+                    query = query.Where(x => x.PatientId == options.Parameter.Id);
+                }
+
                 if (!string.IsNullOrEmpty(options.Parameter.SearchQuery))
                 {
                     query = query.Where(x => x.Condition.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())

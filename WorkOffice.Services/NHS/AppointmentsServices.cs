@@ -310,6 +310,10 @@ namespace WorkOffice.Services
                 //    || x.Speciality.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())
                 //    || x.AppointmentStatus.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower()));
                 //}
+                if (options.Parameter.Id > 0)
+                {
+                    query = query.Where(x => x.PatientId == options.Parameter.Id);
+                }
                 switch (sortField)
                 {
                     case "patientNumber":

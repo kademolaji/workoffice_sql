@@ -1,0 +1,139 @@
+<section class="content">
+  <div class="content-block">
+    <div class="block-header">
+      <!-- breadcrumb -->
+      <app-breadcrumb [title]="'Validate Pathway'" [items]="['Pathway']" [active_item]="'Pathway'"></app-breadcrumb>
+    </div>
+    <div class="row clearfix">
+      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="card">
+          <div class="header">
+            <h2><strong> Validate Pathway</strong></h2>
+          </div>
+          <div class="body">
+            <form class="m-4" [formGroup]="pathwayForm">
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 ">
+                  <mat-form-field
+                    class="example-full-width "
+                    appearance="outline"
+                  >
+                    <mat-label>Patient District Number</mat-label>
+                    <input
+                      matInput
+                      formControlName="patientId"
+                      [matAutocomplete]="autoPathwayPatient"
+                    />
+                    <mat-autocomplete
+                      #autoPathwayPatient="matAutocomplete"
+                      [displayWith]="displayWith"
+                    >
+                      <mat-option *ngIf="isLoading" class="is-loading"
+                        >Loading...</mat-option
+                      >
+                      <ng-container *ngIf="!isLoading">
+                        <mat-option
+                          *ngFor="let patient of patientList"
+                          [value]="patient"
+                        >
+                          <span>{{ patient.label }}</span>
+                        </mat-option>
+                      </ng-container>
+                    </mat-autocomplete>
+                    <mat-error
+                      *ngIf="
+                      pathwayForm.get('patientId')?.hasError('required')
+                      "
+                    >
+                      Patient District Number is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 ">
+                  <mat-form-field class="example-full-width " appearance="outline">
+                    <mat-label>RTT</mat-label>
+                    <mat-select formControlName="rttId" required>
+                      <mat-option  *ngFor="let rtt of rttList" [value]="rtt.value">
+                        {{rtt.label}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 ">
+                  <mat-form-field class="example-full-width " appearance="outline">
+                    <mat-label>Status</mat-label>
+                    <mat-select formControlName="pathWayStatusId" required>
+                      <mat-option  *ngFor="let pathwayStatus of pathwayStatusList" [value]="pathwayStatus.value">
+                        {{pathwayStatus.label}}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="pathwayForm.get('pathWayStatusId')?.hasError('required')">
+                      Status is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 ">
+                  <mat-form-field class="example-full-width " appearance="outline">
+                    <mat-label>Speciality</mat-label>
+                    <mat-select formControlName="specialtyId" required>
+                      <mat-option  *ngFor="let specialty of specialityList" [value]="specialty.value">
+                        {{specialty.label}}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="pathwayForm.get('specialtyId')?.hasError('required')">
+                      Speciality is required
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 ">
+                  <mat-form-field class="example-full-width " appearance="outline">
+                    <mat-label>Pathway StartDate</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="pathWayStartDate" required>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error *ngIf="pathwayForm.get('pathWayStartDate')?.hasError('required')">
+                      Please select pathway start date
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 ">
+                  <mat-form-field class="example-full-width " appearance="outline">
+                    <mat-label>Pathway EndDate</mat-label>
+                    <input matInput [matDatepicker]="picker1" formControlName="pathWayEndDate" required>
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 ">
+                  <mat-form-field class="example-full-width " appearance="outline">
+                    <mat-label>PathWay Number</mat-label>
+                    <input matInput formControlName="pathWayNumber" required>
+
+                  </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 ">
+                  <mat-form-field class="example-full-width " appearance="outline">
+                    <mat-label>PathWay Condition</mat-label>
+                    <input matInput formControlName="pathWayCondition" required>
+                  </mat-form-field>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+      <!-- appointments -->
+    <app-patient-appointments [patientId]="patientId"></app-patient-appointments>
+    <app-patient-diagnostic [patientId]="patientId"></app-patient-diagnostic>
+    <app-patient-referral  [patientId]="patientId"></app-patient-referral>
+    <app-patient-waitinglist [patientId]="patientId"></app-patient-waitinglist>
+    <app-patient-documents [patientId]="patientId"></app-patient-documents>
+  </div>
+</section>

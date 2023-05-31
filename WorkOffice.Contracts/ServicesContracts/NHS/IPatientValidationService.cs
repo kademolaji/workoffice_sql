@@ -16,6 +16,7 @@ namespace WorkOffice.Contracts.ServicesContracts
         Task<ApiResponse<DeleteReply>> Delete(long PatientValidationId);
         Task<ApiResponse<DeleteReply>> MultipleDelete(MultipleDeleteModel model);
         Task<ApiResponse<DeleteReply>> PatientDetailsValidation(long PatientValidationDetailsId);
+        Task<ApiResponse<GetResponse<List<PatientValidationModel>>>> GetPathwayByPatientId(long patientId);
 
     }
 }

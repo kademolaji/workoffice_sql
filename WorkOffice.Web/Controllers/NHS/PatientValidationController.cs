@@ -162,21 +162,63 @@ public class PatientValidationController : ControllerBase
     }
 
 
+        // GET api/PatientValidation/Get
+        /// <summary>
+        /// Get object of PatientValidation
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        /// </remarks>
+        /// <param name="patientId"></param>
+        /// <returns>Object of PatientValidation</returns>
+        /// <response code="200">Returns object of PatientValidation</response>
+        /// <response code="404">If object of PatientValidation is null</response> 
+        /// <response code="400">If an error occur or invalid request payload</response> 
+        [HttpGet]
+        [Route("GetPathwayByPatientId")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetResponse<PatientValidationModel>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(GetResponse<ProducesResponseStub>))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(GetResponse<ProducesResponseStub>))]
+        public async Task<IActionResult> GetPathwayByPatientId(long patientId)
+        {
+            try
+            {
+                var clientId = httpAccessorService.GetCurrentClientId();
+                var apiResponse = await service.GetPathwayByPatientId(patientId);
+                if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    return BadRequest(apiResponse.ResponseType);
+                }
 
-    // GET api/PatientValidation/Get
-    /// <summary>
-    /// Delete PatientValidation
-    /// </summary>
-    /// <remarks>
-    /// Sample request:
-    ///
-    /// </remarks>
-    /// <param name="patientId"></param>
-    /// <returns>Object of PatientValidation</returns>
-    /// <response code="200">Returns object of PatientValidation</response>
-    /// <response code="404">If object of PatientValidation is null</response> 
-    /// <response code="400">If an error occur or invalid request payload</response> 
-    [HttpDelete]
+                if (apiResponse.StatusCode == System.Net.HttpStatusCode.NotFound)
+                {
+                    return NotFound(apiResponse.ResponseType);
+                }
+
+                return Ok(apiResponse.ResponseType);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"{ex.Message}");
+            }
+        }
+
+
+        // GET api/PatientValidation/Get
+        /// <summary>
+        /// Delete PatientValidation
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        /// </remarks>
+        /// <param name="patientId"></param>
+        /// <returns>Object of PatientValidation</returns>
+        /// <response code="200">Returns object of PatientValidation</response>
+        /// <response code="404">If object of PatientValidation is null</response> 
+        /// <response code="400">If an error occur or invalid request payload</response> 
+        [HttpDelete]
     [Route("Delete")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DeleteReply))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(DeleteReply))]

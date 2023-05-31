@@ -14,6 +14,7 @@ import { UnsubscribeOnDestroyAdapter } from 'src/app/shared/UnsubscribeOnDestroy
 import { ReferralService } from '../referral.service';
 import { GeneralSettingsService } from 'src/app/core/service/general-settings.service';
 import { GeneralSettingsModel } from 'src/app/core/models/general-settings.model';
+import { catchError, debounceTime, distinctUntilChanged, filter, finalize, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-add-refferal',
@@ -29,6 +30,8 @@ export class AddRefferalComponent
   loading = false;
   isAddMode = true;
   id = 0;
+  minLengthTerm=3;
+  isLoading = false;
 
   patientList: GeneralSettingsModel[] = [];
   specialityList: GeneralSettingsModel[] = [];
@@ -55,11 +58,6 @@ export class AddRefferalComponent
       uploadFile: [''],
     });
 
-    this.subs.sink = this.generalSettingsService
-    .getPatientList()
-    .subscribe((response) => {
-      this.patientList = response.entity;
-    });
   this.subs.sink = this.generalSettingsService
     .getConsultant()
     .subscribe((response) => {
@@ -78,7 +76,7 @@ export class AddRefferalComponent
         next: (res) => {
           if (res.status) {
             this.referralForm.setValue({
-              patientId: res.entity.patientId,
+              patientId: { label: res.entity.patientName, value: res.entity.patientId},
               specialtyId: res.entity.specialtyId,
               consultantId: res.entity.consultantId,
               documentName: res.entity.documentName,
@@ -90,6 +88,36 @@ export class AddRefferalComponent
         },
       });
     }
+    this.referralForm.get('patientId')?.valueChanges
+    .pipe(
+      filter(res => {
+        return res !== null && res.length >= this.minLengthTerm
+      }),
+      distinctUntilChanged(),
+      debounceTime(1000),
+      tap(() => {
+        this.patientList = [];
+        this.isLoading = true;
+      }),
+      switchMap(value => this.generalSettingsService.getPatientList(value as string).pipe(catchError((err) => this.router.navigateByUrl('/')))
+        .pipe(
+          finalize(() => {
+            this.isLoading = false
+          }),
+        )
+      )
+    )
+    .subscribe((data: any) => {
+      if (data['entity'] == undefined) {
+        this.patientList = [];
+      } else {
+        this.patientList = data['entity'];
+      }
+    });
+  }
+
+  displayWith(value: any) {
+    return value?.label;
   }
   cancelForm() {
     this.router.navigate(['/nhs/all-referral']);
@@ -111,7 +139,7 @@ export class AddRefferalComponent
       const formData = new FormData();
 
       formData.append('referralId', this.id ? this.id.toString() : '0');
-      formData.append('patientId', this.referralForm.value.patientId);
+      formData.append('patientId', this.referralForm.value.patientId.value);
       formData.append('specialtyId', this.referralForm.value.specialtyId);
       formData.append('consultantId', this.referralForm.value.consultantId);
       formData.append('documentName', this.referralForm.value.documentName);

@@ -61,7 +61,7 @@ namespace WorkOffice.Web.Controllers
                 var userId = httpAccessorService.GetCurrentUserId();
                 var clientId = httpAccessorService.GetCurrentClientId();
 
-                if (model.File.Length == 0)
+                if (model.File == null || model.File.Length == 0)
                 {
                     return Ok(new { Status = false, ProjectImage = "", Message = $"Please select image file" });
                 }

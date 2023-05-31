@@ -196,6 +196,10 @@ namespace WorkOffice.Services
                                                                   Specialty = context.Specialties.FirstOrDefault(x => x.SpecialtyId == app.SpecialtyId).Name
                                                               }).AsQueryable();
                 int offset = (pageNumber) * pageSize;
+                if (options.Parameter.Id > 0)
+                {
+                    query = query.Where(x => x.PatientId == options.Parameter.Id);
+                }
 
                 if (!string.IsNullOrEmpty(options.Parameter.SearchQuery))
                 {

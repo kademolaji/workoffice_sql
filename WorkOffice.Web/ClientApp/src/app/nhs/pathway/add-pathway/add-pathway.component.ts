@@ -74,12 +74,6 @@ export class AddPathwayComponent
       .subscribe((response) => {
         this.specialityList = response.entity;
       });
-    // this.subs.sink = this.generalSettingsService
-    //   .getPatientList()
-    //   .subscribe((response) => {
-    //     this.patientList = response.entity;
-    //   });
-
 
     this.subs.sink = this.generalSettingsService
       .getPathwayStatus()
