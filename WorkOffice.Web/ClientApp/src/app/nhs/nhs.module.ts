@@ -59,6 +59,11 @@ import { PatientDiagnosticComponent } from './Validate/component/patient-diagnos
 import { PatientReferralComponent } from './Validate/component/patient-referral/patient-referral.component';
 import { PatientWaitinglistComponent } from './Validate/component/patient-waitinglist/patient-waitinglist.component';
 import { PatientDocumentsComponent } from './Validate/component/patient-documents/patient-documents.component';
+import { PathwayAdhocComponent } from './Validate/component/pathway-adhoc/pathway-adhoc.component';
+import { PathwayAdhocDialogComponent } from './Validate/component/pathway-adhoc/dialog/pathway-adhoc-dialog/pathway-adhoc-dialog.component';
+import { DeletePatientValidationDetailsDialogComponent } from './Validate/component/pathway-adhoc/dialog/delete/delete.component';
+import { ValidateNowService } from './Validate/validate.service';
+import { PathwayMergeDialogComponent } from './Validate/component/pathway-adhoc/dialog/pathway-merge-dialog/pathway-merge-dialog.component';
 
 @NgModule({
   imports: [
@@ -125,8 +130,12 @@ import { PatientDocumentsComponent } from './Validate/component/patient-document
     PatientDiagnosticComponent,
     PatientReferralComponent,
     PatientWaitinglistComponent,
-    PatientDocumentsComponent
+    PatientDocumentsComponent,
+    PathwayAdhocDialogComponent,
+    PathwayAdhocComponent,
+    DeletePatientValidationDetailsDialogComponent,
+    PathwayMergeDialogComponent
   ],
-  providers: [PatientService, AppointmentService, WaitinglistService, DiagnosticService, ReferralService, PathwayService],
+  providers: [PatientService, AppointmentService, WaitinglistService, DiagnosticService, ReferralService, PathwayService, ValidateNowService],
 })
 export class NhsModule {}

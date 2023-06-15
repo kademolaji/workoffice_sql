@@ -65,8 +65,8 @@ export class ValidatePatientComponent
       pathWayNumber: [''],
       pathWayCondition: ['', [Validators.required]],
       specialtyId: [0, [Validators.required]],
-      pathWayStartDate: [new Date(), [Validators.required]],
-      pathWayEndDate: [new Date()],
+      pathWayStartDate: ['', [Validators.required]],
+      pathWayEndDate: [''],
       nhsNumber: [''],
       pathWayStatusId: ['', [Validators.required]],
       rttId: [],
@@ -93,8 +93,12 @@ export class ValidatePatientComponent
       });
 
     this.id = +this.route.snapshot.params['id'];
-    this.patientId= +this.route.snapshot.params['patientId'];
-    this.subs.sink = this.pathwayService.getPathwayById(this.id).subscribe({
+    this.patientId = +this.route.snapshot.params['patientId'];
+    this.loadPathway(this.id);
+  }
+
+  loadPathway(id: number) {
+    this.subs.sink = this.pathwayService.getPathwayById(id).subscribe({
       next: (res) => {
         if (res.status) {
           this.pathwayForm.setValue({
@@ -102,7 +106,7 @@ export class ValidatePatientComponent
             pathWayCondition: res.entity.pathWayCondition,
             specialtyId: res.entity.specialtyId,
             pathWayStartDate: res.entity.pathWayStartDate,
-            pathWayEndDate: res.entity.pathWayEndDate,
+            pathWayEndDate: res.entity.pathWayEndDate ? new Date(res.entity.pathWayEndDate) : '',
             nhsNumber: res.entity.nhsNumber,
             pathWayStatusId: res.entity.pathWayStatusId,
             rttId: res.entity.rttId,
@@ -116,11 +120,16 @@ export class ValidatePatientComponent
         }
       },
     });
-
   }
 
   displayWith(value: any) {
     return value?.label;
   }
-
+  cancelForm(){
+  this.router.navigate(['nhs', 'validate-now', this.patientId]);
+  }
+  refreshLoadPathway(evt: any) {
+console.log("Fire Fire", evt)
+    this.loadPathway(this.id);
+  }
 }

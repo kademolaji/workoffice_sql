@@ -103,7 +103,7 @@
                 <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 ">
                   <mat-form-field class="example-full-width " appearance="outline">
                     <mat-label>Pathway EndDate</mat-label>
-                    <input matInput [matDatepicker]="picker1" formControlName="pathWayEndDate" required>
+                    <input matInput [matDatepicker]="picker1" formControlName="pathWayEndDate">
                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                     <mat-datepicker #picker1></mat-datepicker>
                   </mat-form-field>
@@ -124,12 +124,20 @@
                   </mat-form-field>
                 </div>
               </div>
+              <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-3">
+                  <!-- <button class="btn-space" [class.auth-spinner]="loading" [disabled]="loading" [disabled]="!pathwayForm.valid " mat-raised-button
+                    color="primary">Submit</button> -->
+                  <button type="button" (click)="cancelForm()" mat-raised-button color="warn">Back</button>
+                </div>
+              </div>
             </form>
           </div>
         </div>
       </div>
     </div>
       <!-- appointments -->
+    <app-pathway-adhoc [patientValidationId]="id" [patientId]="patientId" (refreshPathwayData)="refreshLoadPathway($event)"></app-pathway-adhoc>
     <app-patient-appointments [patientId]="patientId"></app-patient-appointments>
     <app-patient-diagnostic [patientId]="patientId"></app-patient-diagnostic>
     <app-patient-referral  [patientId]="patientId"></app-patient-referral>

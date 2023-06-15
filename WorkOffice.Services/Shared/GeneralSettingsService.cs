@@ -590,6 +590,61 @@ namespace WorkOffice.Services
                 return new ApiResponse<GetResponse<List<GeneralSettingsModel>>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new GetResponse<List<GeneralSettingsModel>>() { Status = false, Message = $"Error encountered {ex.Message}" }, IsSuccess = false };
             }
         }
+
+        public async Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetPathWayListByPatientId(long patientId, string search)
+        {
+            try
+            {
+
+                var apiResponse = new ApiResponse<GetResponse<List<GeneralSettingsModel>>>();
+                List<GeneralSettingsModel> result = new List<GeneralSettingsModel>();
+                if (!string.IsNullOrEmpty(search) && search != "undefined")
+                {
+                    result = await (from a in context.NHS_Patient_Validations
+                                    join b in context.NHS_Patients on a.PatientId equals b.PatientId
+                                    where a.PatientId == patientId && a.NHSNumber.ToLower().Trim().Contains(search.ToLower().Trim())
+                                    || a.PathWayNumber.ToLower().Trim().Contains(search.ToLower().Trim())
+                                    || b.LastName.ToLower().Trim().Contains(search.ToLower().Trim())
+                                    || b.MiddleName.ToLower().Trim().Contains(search.ToLower().Trim())
+                                    || b.FirstName.ToLower().Trim().Contains(search.ToLower().Trim())
+
+                                    select new GeneralSettingsModel
+                                    {
+                                        Label = a.PathWayNumber + " - " + b.FirstName + " " + b.MiddleName + " " + b.LastName,
+                                        Value = a.PatientValidationId
+                                    }).ToListAsync();
+                }
+                else
+                {
+                    result = await (from a in context.NHS_Patient_Validations
+                                    join b in context.NHS_Patients on a.PatientId equals b.PatientId
+                                    where a.PatientId == patientId
+                                    select new GeneralSettingsModel
+                                    {
+                                        Label = a.PathWayNumber + " - " + b.FirstName + " " + b.MiddleName + " " + b.LastName,
+                                        Value = a.PatientValidationId
+                                    }).ToListAsync();
+                }
+
+
+                var response = new GetResponse<List<GeneralSettingsModel>>()
+                {
+                    Status = true,
+                    Entity = result,
+                    Message = ""
+                };
+
+                apiResponse.StatusCode = System.Net.HttpStatusCode.OK;
+                apiResponse.IsSuccess = true;
+                apiResponse.ResponseType = response;
+
+                return apiResponse;
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<GetResponse<List<GeneralSettingsModel>>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new GetResponse<List<GeneralSettingsModel>>() { Status = false, Message = $"Error encountered {ex.Message}" }, IsSuccess = false };
+            }
+        }
         public async Task<ApiResponse<GetResponse<List<GeneralSettingsModel>>>> GetDepartmentList()
         {
             try

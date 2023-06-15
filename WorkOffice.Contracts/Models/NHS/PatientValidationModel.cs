@@ -19,7 +19,7 @@ namespace WorkOffice.Contracts.Models
         public int? PathWayStatusId { get; set; }
         public string PathWayStatusIdCode { get; set; }
         public DateTime PathWayStartDate { get; set; }
-        public DateTime? PathWayEndDate { get; set; }
+        public string PathWayEndDate { get; set; }
         public int PatientId { get; set; }
         public int SpecialtyId { get; set; }
         public int RTTId { get; set; }
@@ -49,26 +49,28 @@ namespace WorkOffice.Contracts.Models
         public int? SpecialityId { get; set; }
         public DateTime Date { get; set; }
         public int? ConsultantId { get; set; }
-        public DateTime? EndDate { get; set; }
+        public string EndDate { get; set; }
         public int? PatientId { get; set; }
         public string Activity { get; set; }
         public bool? Active { get; set; }
-        public string FullName { get; set; }
         [JsonIgnore]
         public string CurrentUserName { get; set; }
-        public string RTTCode { get; set; }
-        public string RTTName { get; set; }
         public string SpecialityCode { get; set; }
         public string SpecialityName { get; set; }
         public string PathWayStatusCode { get; set; }
         public string PathWayStatusName { get; set; }
         public string ConsultantCode { get; set; }
         public string ConsultantName { get; set; }
-        public string WardCode { get; set; }
-        public string WardName { get; set; }
-        public string HospitalCode { get; set; }
-        public string HospitalName { get; set; }
-        public string ActivityCode { get; set; }
-        public string ActivityName { get; set; }
+
+    }
+
+    public class MergePathwayModel
+    {
+        public int PatientValidationDetailsId { get; set; }
+        public int PatientValidationId { get; set; }
+      
+        [JsonIgnore]
+        public string CurrentUserName { get; set; }
+
     }
 }

@@ -1,0 +1,136 @@
+<div class="row clearfix">
+  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+    <div class="card">
+      <div class="header d-flex justify-content-between align-items-center">
+        <h2><strong> List of pathway validation details</strong></h2>
+        <button
+          class="btn-space"
+          mat-raised-button
+          color="primary"
+          (click)="addNew()"
+        >
+          Add Adhoc
+        </button>
+      </div>
+      <div class="body">
+        <div class="responsive_table">
+          <mat-table #table [dataSource]="dataSource" matSort class="mat-cell">
+            <ng-container matColumnDef="patientValidationDetailsId">
+              <mat-header-cell *matHeaderCellDef mat-sort-header
+                >PatientValidationDetailsId</mat-header-cell
+              >
+              <mat-cell *matCellDef="let row">{{
+                row.patientValidationDetailsId
+              }}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="activity">
+              <mat-header-cell *matHeaderCellDef mat-sort-header
+                >Activity</mat-header-cell
+              >
+              <mat-cell *matCellDef="let row"> {{ row.activity }}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="startDate">
+              <mat-header-cell *matHeaderCellDef mat-sort-header
+                >Start Date</mat-header-cell
+              >
+              <mat-cell *matCellDef="let row"> {{ row.date | date }}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="specialty">
+              <mat-header-cell *matHeaderCellDef mat-sort-header
+                >Specialty</mat-header-cell
+              >
+              <mat-cell *matCellDef="let row">
+                {{ row.specialityName }}</mat-cell
+              >
+            </ng-container>
+            <ng-container matColumnDef="status">
+              <mat-header-cell *matHeaderCellDef mat-sort-header
+                >Status</mat-header-cell
+              >
+              <mat-cell *matCellDef="let row">
+                {{ row.pathWayStatusName }}</mat-cell
+              >
+            </ng-container>
+            <ng-container matColumnDef="consultant">
+              <mat-header-cell *matHeaderCellDef mat-sort-header
+                >Consultant</mat-header-cell
+              >
+              <mat-cell *matCellDef="let row">
+                {{ row.consultantName }}</mat-cell
+              >
+            </ng-container>
+            <ng-container matColumnDef="endDate">
+              <mat-header-cell *matHeaderCellDef mat-sort-header
+                >End Date</mat-header-cell
+              >
+              <mat-cell *matCellDef="let row">
+                {{ row.endDate | date }}</mat-cell
+              >
+            </ng-container>
+            <!-- actions -->
+            <ng-container matColumnDef="actions">
+              <mat-header-cell class="pr-0" *matHeaderCellDef
+                >Actions</mat-header-cell
+              >
+              <mat-cell *matCellDef="let row; let i = index" class="pr-0">
+                <button
+                  (click)="$event.stopPropagation()"
+                  (click)="mergeCall(row)"
+                  mat-stroked-button
+                  color="primary"
+                  class="mr-1"
+                >
+                  Merge
+                </button>
+                <button
+                  (click)="$event.stopPropagation()"
+                  (click)="deleteItem(row)"
+                  mat-stroked-button
+                  color="warn"
+                >
+                  Remove
+                </button>
+              </mat-cell>
+            </ng-container>
+            <mat-header-row
+              *matHeaderRowDef="displayedColumns"
+            ></mat-header-row>
+            <mat-row
+              *matRowDef="let row; columns: displayedColumns"
+              [style.cursor]="'pointer'"
+              matRipple
+              (click)="editCall(row)"
+            >
+            </mat-row>
+          </mat-table>
+          <!-- Loading spinner -->
+          <div *ngIf="isTblLoading" class="tbl-spinner">
+            <mat-progress-spinner
+              color="primary"
+              [diameter]="40"
+              mode="indeterminate"
+            >
+            </mat-progress-spinner>
+          </div>
+          <div
+            *ngIf="!isTblLoading"
+            class="no-results"
+            [style.display]="dataSource.data.length === 0 ? '' : 'none'"
+          >
+            No results
+          </div>
+          <mat-paginator
+            #paginator
+            [length]="totalRows"
+            [pageIndex]="currentPage"
+            [pageSize]="pageSize"
+            [pageSizeOptions]="pageSizeOptions"
+            (page)="pageChanged($event)"
+            aria-label="Select page"
+          >
+          </mat-paginator>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

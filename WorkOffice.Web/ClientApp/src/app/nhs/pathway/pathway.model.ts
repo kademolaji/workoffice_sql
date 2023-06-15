@@ -7,8 +7,8 @@ export interface CreatePathwayModel {
   rttId: number;
   districtNumber : string;
   specialtyId : number;
-  pathWayStartDate : Date;
-  pathWayEndDate : Date;
+  pathWayStartDate : string;
+  pathWayEndDate : string;
   nhsNumber : string;
   patientId : number;
   patientNumber: string;
@@ -24,8 +24,8 @@ export interface PathwayResponseModel {
   rttId: number;
   districtNumber : string;
   specialtyId : number;
-  pathWayStartDate : Date;
-  pathWayEndDate : Date;
+  pathWayStartDate : string;
+  pathWayEndDate : string;
   nhsNumber : string;
   patientId : number;
   patientNumber: string;

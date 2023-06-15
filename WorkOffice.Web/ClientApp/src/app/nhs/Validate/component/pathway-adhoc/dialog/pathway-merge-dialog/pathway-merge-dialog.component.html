@@ -1,0 +1,89 @@
+<div class="addContainer">
+  <div class="modalHeader">
+    <div class="editRowModal">
+      <div class="modalHeader clearfix">
+        <div class="modal-about">Merge Pathway</div>
+      </div>
+    </div>
+    <button
+      mat-icon-button
+      (click)="dialogRef.close()"
+      class="modal-close-button"
+      aria-label="Close dialog"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <div mat-dialog-content>
+    <form
+      class="register-form m-4"
+      [formGroup]="mergePatwayForm"
+      (ngSubmit)="onSubmit()"
+    >
+      <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-3">
+          <mat-form-field
+            class="example-full-width mb-3"
+            appearance="outline"
+          >
+            <mat-label>Patient Pathway</mat-label>
+            <input
+              matInput
+              formControlName="patientValidationId"
+              [matAutocomplete]="autoPathwayPatient"
+            />
+            <mat-autocomplete
+              #autoPathwayPatient="matAutocomplete"
+              [displayWith]="displayWith"
+            >
+              <mat-option *ngIf="isLoading" class="is-loading"
+                >Loading...</mat-option
+              >
+              <ng-container *ngIf="!isLoading">
+                <mat-option
+                  *ngFor="let pathway of pathwayList"
+                  [value]="pathway"
+                >
+                  <span>{{ pathway.label }}</span>
+                </mat-option>
+              </ng-container>
+            </mat-autocomplete>
+            <mat-error
+              *ngIf="
+              mergePatwayForm.get('patientValidationId')?.hasError('required')
+              "
+            >
+              Patient Pathway is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+          <div class="example-button-row">
+            <button
+              class="btn-space"
+              [class.auth-spinner]="loading"
+              [disabled]="loading"
+              [disabled]="!mergePatwayForm.valid"
+              mat-raised-button
+              color="primary"
+            >
+              Submit
+            </button>
+
+            <button
+              mat-raised-button
+              color="warn"
+              (click)="onNoClick()"
+              tabindex="-1"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

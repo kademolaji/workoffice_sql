@@ -99,7 +99,7 @@ export class AddPathwayComponent
                 pathWayCondition: res.entity.pathWayCondition,
                 specialtyId: res.entity.specialtyId,
                 pathWayStartDate: res.entity.pathWayStartDate,
-                pathWayEndDate: res.entity.pathWayEndDate,
+                pathWayEndDate: res.entity.pathWayEndDate ? new Date(res.entity.pathWayEndDate) : '',
                 nhsNumber: res.entity.nhsNumber,
                 pathWayStatusId: res.entity.pathWayStatusId,
                 rttId: res.entity.rttId,

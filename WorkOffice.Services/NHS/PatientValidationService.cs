@@ -39,6 +39,11 @@ namespace WorkOffice.Services
                 var apiResponse = new ApiResponse<CreateResponse>();
                 bool result = false;
                 NHS_Patient_Validation entity = null;
+                DateTime? pathWayEndDate = null;
+                if (!string.IsNullOrEmpty(model.PathWayEndDate))
+                {
+                    pathWayEndDate = Convert.ToDateTime(model.PathWayEndDate);
+                }
                 using (var trans = context.Database.BeginTransaction())
                 {
                     try
@@ -47,7 +52,7 @@ namespace WorkOffice.Services
                         {
                             DistrictNumber = patientDetail.DistrictNumber,
                             PathWayCondition = model.PathWayCondition,
-                            PathWayEndDate = model.PathWayEndDate,
+                            PathWayEndDate = pathWayEndDate,
                             PathWayNumber = model.PathWayNumber,
                             PathWayStartDate = model.PathWayStartDate,
                             PathWayStatusId = model.PathWayStatusId,
@@ -135,14 +140,18 @@ namespace WorkOffice.Services
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Record does not exist." }, IsSuccess = false };
                 }
-
+                DateTime? pathWayEndDate = null;
+                if (!string.IsNullOrEmpty(model.PathWayEndDate))
+                {
+                    pathWayEndDate = Convert.ToDateTime(model.PathWayEndDate);
+                }
                 using (var trans = context.Database.BeginTransaction())
                 {
                     try
                     {
                         entity.DistrictNumber = patientDetail.DistrictNumber;
                         entity.PathWayCondition = model.PathWayCondition;
-                        entity.PathWayEndDate = model.PathWayEndDate;
+                        entity.PathWayEndDate = pathWayEndDate;
                         entity.PathWayNumber = pathwayDetail.PathWayNumber;
                         entity.PathWayStartDate = model.PathWayStartDate;
                         entity.PathWayStatusId = model.PathWayStatusId;
@@ -213,15 +222,15 @@ namespace WorkOffice.Services
                                                                 PatientId = x.PatientId,
                                                                 DistrictNumber = x.DistrictNumber,
                                                                 PathWayCondition = x.PathWayCondition,
-                                                                PathWayEndDate = x.PathWayEndDate,
+                                                                PathWayEndDate = x.PathWayEndDate.ToString(),
                                                                 PathWayNumber = x.PathWayNumber,
                                                                 PathWayStartDate = x.PathWayStartDate,
                                                                 PathWayStatusId = x.PathWayStatusId,
                                                                 RTTId = x.RTTId,
                                                                 SpecialtyId = x.SpecialtyId,
                                                                 RTTWait = x.RTTWait,
-                                                                PathWayStatusCode = x.PathWayStatusId != null ? context.PathWayStatuses.Where(a => a.PathWayStatusId == a.PathWayStatusId).FirstOrDefault().Name : null,
-                                                                PathWayStatusName = x.PathWayStatusId != null ? context.PathWayStatuses.Where(a => a.PathWayStatusId == a.PathWayStatusId).FirstOrDefault().Code : null,
+                                                                PathWayStatusCode = x.PathWayStatusId != null ? context.PathWayStatuses.Where(a => a.PathWayStatusId == x.PathWayStatusId).FirstOrDefault().Name : null,
+                                                                PathWayStatusName = x.PathWayStatusId != null ? context.PathWayStatuses.Where(a => a.PathWayStatusId == x.PathWayStatusId).FirstOrDefault().Code : null,
                                                                 SpecialityCode = y.Code,
                                                                 SpecialityName = y.Name,
                                                                 NHSNumber = x.NHSNumber,
@@ -294,15 +303,15 @@ namespace WorkOffice.Services
                                         PatientId = x.PatientId,
                                         DistrictNumber = x.DistrictNumber,
                                         PathWayCondition = x.PathWayCondition,
-                                        PathWayEndDate = x.PathWayEndDate,
+                                        PathWayEndDate = x.PathWayEndDate.ToString(),
                                         PathWayNumber = x.PathWayNumber,
                                         PathWayStartDate = x.PathWayStartDate,
                                         PathWayStatusId = x.PathWayStatusId,
                                         RTTId = x.RTTId,
                                         SpecialtyId = x.SpecialtyId,
                                         RTTWait = x.RTTWait,
-                                        PathWayStatusCode = x.PathWayStatusId != null ? context.PathWayStatuses.Where(a => a.PathWayStatusId == a.PathWayStatusId).FirstOrDefault().Name : null,
-                                        PathWayStatusName = x.PathWayStatusId != null ? context.PathWayStatuses.Where(a => a.PathWayStatusId == a.PathWayStatusId).FirstOrDefault().Code : null,
+                                        PathWayStatusCode = x.PathWayStatusId != null ? context.PathWayStatuses.Where(a => a.PathWayStatusId == x.PathWayStatusId).FirstOrDefault().Name : null,
+                                        PathWayStatusName = x.PathWayStatusId != null ? context.PathWayStatuses.Where(a => a.PathWayStatusId == x.PathWayStatusId).FirstOrDefault().Code : null,
                                         SpecialityCode = y.Code,
                                         SpecialityName = y.Name,
                                         NHSNumber = x.NHSNumber,
@@ -355,15 +364,15 @@ namespace WorkOffice.Services
                                         PatientId = x.PatientId,
                                         DistrictNumber = x.DistrictNumber,
                                         PathWayCondition = x.PathWayCondition,
-                                        PathWayEndDate = x.PathWayEndDate,
+                                        PathWayEndDate = x.PathWayEndDate.ToString(),
                                         PathWayNumber = x.PathWayNumber,
                                         PathWayStartDate = x.PathWayStartDate,
                                         PathWayStatusId = x.PathWayStatusId,
                                         RTTId = x.RTTId,
                                         SpecialtyId = x.SpecialtyId,
                                         RTTWait = x.RTTWait,
-                                        PathWayStatusCode = x.PathWayStatusId != null ? context.PathWayStatuses.Where(a => a.PathWayStatusId == a.PathWayStatusId).FirstOrDefault().Name : null,
-                                        PathWayStatusName = x.PathWayStatusId != null ? context.PathWayStatuses.Where(a => a.PathWayStatusId == a.PathWayStatusId).FirstOrDefault().Code : null,
+                                        PathWayStatusCode = x.PathWayStatusId != null ? context.PathWayStatuses.Where(a => a.PathWayStatusId == x.PathWayStatusId).FirstOrDefault().Name : null,
+                                        PathWayStatusName = x.PathWayStatusId != null ? context.PathWayStatuses.Where(a => a.PathWayStatusId == x.PathWayStatusId).FirstOrDefault().Code : null,
                                         SpecialityCode = y.Code,
                                         SpecialityName = y.Name,
                                         NHSNumber = x.NHSNumber,
@@ -427,15 +436,15 @@ namespace WorkOffice.Services
                                         PatientId = x.PatientId,
                                         DistrictNumber = x.DistrictNumber,
                                         PathWayCondition = x.PathWayCondition,
-                                        PathWayEndDate = x.PathWayEndDate,
+                                        PathWayEndDate = x.PathWayEndDate.ToString(),
                                         PathWayNumber = x.PathWayNumber,
                                         PathWayStartDate = x.PathWayStartDate,
                                         PathWayStatusId = x.PathWayStatusId,
                                         RTTId = x.RTTId,
                                         SpecialtyId = x.SpecialtyId,
                                         RTTWait = x.RTTWait,
-                                        PathWayStatusCode = x.PathWayStatusId != null ? context.PathWayStatuses.Where(a => a.PathWayStatusId == a.PathWayStatusId).FirstOrDefault().Name : null,
-                                        PathWayStatusName = x.PathWayStatusId != null ? context.PathWayStatuses.Where(a => a.PathWayStatusId == a.PathWayStatusId).FirstOrDefault().Code : null,
+                                        PathWayStatusCode = x.PathWayStatusId != null ? context.PathWayStatuses.Where(a => a.PathWayStatusId == x.PathWayStatusId).FirstOrDefault().Name : null,
+                                        PathWayStatusName = x.PathWayStatusId != null ? context.PathWayStatuses.Where(a => a.PathWayStatusId == x.PathWayStatusId).FirstOrDefault().Code : null,
                                         SpecialityCode = y.Code,
                                         SpecialityName = y.Name,
                                         NHSNumber = x.NHSNumber,

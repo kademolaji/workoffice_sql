@@ -359,6 +359,27 @@ namespace WorkOffice.Web.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("GetPathWayListByPatientId")]
+        [ProducesResponseType(201, Type = typeof(CreateResponse))]
+        [ProducesResponseType(400, Type = typeof(CreateResponse))]
+        public async Task<IActionResult> GetPathWayListByPatientId(long patientId, string search)
+        {
+            try
+            {
+                var apiResponse = await service.GetPathWayListByPatientId(patientId, search);
+                if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    return BadRequest(apiResponse.ResponseType);
+                }
+                return Ok(apiResponse.ResponseType);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Server Error {ex.Message}");
+            }
+        }
+
 
         [HttpGet]
         [Route("GetDepartmentList")]

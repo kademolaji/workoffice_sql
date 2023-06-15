@@ -534,6 +534,86 @@
              <response code="404">If object of PatientValidation is null</response> 
              <response code="400">If an error occur or invalid request payload</response> 
         </member>
+        <member name="M:WorkOffice.Web.Controllers.PatientValidationDetailsController.Create(WorkOffice.Contracts.Models.PatientValidationDetailsModel)">
+             <summary>
+             Create PatientValidationDetails
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 POST /api/PatientValidationDetails/Create
+                 {
+                   "revenueId": 10,
+                   "customerId": 210
+                     }
+            
+             </remarks>
+             <param name="model"></param>
+             <returns>Created success message </returns>
+             <response code="201">PatientValidationDetails Created Successfully</response>
+             <response code="400">If an error occur or invalid request payload</response>
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.PatientValidationDetailsController.Merge(WorkOffice.Contracts.Models.MergePathwayModel)">
+             <summary>
+             Create PatientValidationDetails
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 POST /api/PatientValidationDetails/Merge
+                 {
+                   "revenueId": 10,
+                   "customerId": 210
+                     }
+            
+             </remarks>
+             <param name="model"></param>
+             <returns>Created success message </returns>
+             <response code="201">PatientValidationDetails Merge Successfully</response>
+             <response code="400">If an error occur or invalid request payload</response>
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.PatientValidationDetailsController.GetList(WorkOffice.Contracts.ServicesContracts.SearchCall{WorkOffice.Contracts.ServicesContracts.SearchParameter})">
+             <summary>
+             Get list of PatientValidationDetails
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="options"></param>
+             <returns>List of PatientValidationDetails</returns>
+             <response code="200">Returns list of PatientValidationDetails</response>
+             <response code="404">If list of PatientValidationDetails is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.PatientValidationDetailsController.Get(System.Int64)">
+             <summary>
+             Get object of PatientValidationDetails
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="patientValidationDetailsId"></param>
+             <returns>Object of PatientValidationDetails</returns>
+             <response code="200">Returns object of PatientValidationDetails</response>
+             <response code="404">If object of PatientValidationDetails is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
+        <member name="M:WorkOffice.Web.Controllers.PatientValidationDetailsController.Delete(System.Int64)">
+             <summary>
+             Delete PatientValidationDetails
+             </summary>
+             <remarks>
+             Sample request:
+            
+             </remarks>
+             <param name="patientValidationDetailsId"></param>
+             <returns>Object of PatientValidationDetails</returns>
+             <response code="200">Returns object of PatientValidationDetails</response>
+             <response code="404">If object of PatientValidationDetails is null</response> 
+             <response code="400">If an error occur or invalid request payload</response> 
+        </member>
         <member name="M:WorkOffice.Web.Controllers.ReferralController.Create(WorkOffice.Web.Dtos.ReferralDto)">
              <summary>
              Create Referral

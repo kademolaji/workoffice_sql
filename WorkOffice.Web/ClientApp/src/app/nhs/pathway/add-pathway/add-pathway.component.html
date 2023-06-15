@@ -109,7 +109,7 @@
                 <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
                   <mat-form-field class="example-full-width mb-3" appearance="outline">
                     <mat-label>Pathway EndDate</mat-label>
-                    <input matInput [matDatepicker]="picker1" formControlName="pathWayEndDate" required>
+                    <input matInput [matDatepicker]="picker1" formControlName="pathWayEndDate">
                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                     <mat-datepicker #picker1></mat-datepicker>
                     <!-- <mat-error *ngIf="pathwayForm.get('pathWayEndDate')?.hasError('required')">

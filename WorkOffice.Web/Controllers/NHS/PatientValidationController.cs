@@ -298,7 +298,7 @@ public class PatientValidationController : ControllerBase
             else
             {
                 return BadRequest(
-                   new { Status = false, Message = $"You do not have enough right to delete structure definition" });
+                   new { Status = false, Message = $"You do not have enough right to delete patient validation details" });
             }
         }
         catch (Exception ex)

@@ -37,7 +37,7 @@ namespace WorkOffice.Services
                  new JObject {
                  {"From", new JObject {
                   {"Email", "info@skilledally.org"},
-                  {"Name", "SkilledAlly"}
+                  {"Name", "RTT Trainer"}
                   }},
                  {"To", new JArray {
                   new JObject {
@@ -47,7 +47,7 @@ namespace WorkOffice.Services
                   }},
                  {"TemplateID", 4580213},
                  {"TemplateLanguage", true},
-                 {"Subject", "SkilledAlly Account Verification"},
+                 {"Subject", "RTT Account Verification"},
                  {"Variables", new JObject {
                   {"firstName", account.FirstName},
                   {"verifyurl", verifyUrl}
@@ -76,7 +76,7 @@ namespace WorkOffice.Services
                  new JObject {
                  {"From", new JObject {
                   {"Email", "info@skilledally.org"},
-                  {"Name", "Skilledally"}
+                  {"Name", "RTT Trainer"}
                   }},
                  {"To", new JArray {
                   new JObject {
@@ -115,7 +115,7 @@ namespace WorkOffice.Services
                  new JObject {
                  {"From", new JObject {
                   {"Email", "info@skilledally.org"},
-                  {"Name", "SkilledAlly"}
+                  {"Name", "RTT Trainer"}
                   }},
                  {"To", new JArray {
                   new JObject {
@@ -125,7 +125,7 @@ namespace WorkOffice.Services
                   }},
                  {"TemplateID", 4580228},
                  {"TemplateLanguage", true},
-                 {"Subject", "Account Verified. Welcome to SkilledAlly"},
+                 {"Subject", "Account Verified. Welcome to RTT Trainer"},
                  {"Variables", new JObject {
                   {"firstName", account.FirstName},
                   {"login_url", loginUrl}

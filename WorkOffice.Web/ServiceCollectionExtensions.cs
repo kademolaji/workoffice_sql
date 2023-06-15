@@ -61,7 +61,8 @@ namespace WorkOffice.Web
             services.AddScoped<IDiagnosticResultService, DiagnosticResultService>();
             services.AddScoped<IReferralService, ReferralService>();
             services.AddScoped<IPatientValidationService, PatientValidationService>();
-
+            services.AddScoped<IPatientValidationDetailsService, PatientValidationDetailsService>();
+            
             services.AddScoped<DataContext>();
 
             return services;
