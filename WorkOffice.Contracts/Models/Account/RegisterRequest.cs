@@ -32,16 +32,15 @@ namespace WorkOffice.Contracts.Models
 
         [Range(typeof(bool), "true", "true")]
         public bool AcceptTerms { get; set; }
-
         public List<UserAdditionalActivityModel> AdditionalActivities { get; set; }
         public long[] UserAccessIds { get; set; }
         public long[] UserRoleIds { get; set; }
         public long ClientId { get; set; }
-
         public string SecurityQuestion { get; set; }
         public string SecurityAnswer { get; set; }
         public string PhoneNumber { get; set; }
         public int? Accesslevel { get; set; }
+        public string LastLogin { get; set; }
 
     }
 }

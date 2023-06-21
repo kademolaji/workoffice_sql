@@ -32,12 +32,14 @@ import { UserRoleService } from './user-roles/user-role.service';
 import { AddUserRoleComponent } from './user-roles/add-user-role/add-user-role.component';
 import { AllUserRolesComponent } from './user-roles/all-user-roles/all-user-roles.component';
 import { DeleteUserRoleDialogComponent } from './user-roles/all-user-roles/dialog/delete/delete.component';
+import { EditUserComponent } from './edit-user/edit-user.component';
 
 @NgModule({
   declarations: [
     AllUsersComponent,
     DeleteDialogComponent,
     AddUserComponent,
+    EditUserComponent,
 
     AddUserRoleComponent,
     AllUserRolesComponent,

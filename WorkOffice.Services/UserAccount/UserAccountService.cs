@@ -60,10 +60,15 @@ namespace WorkOffice.Services
                     return new ApiResponse<GetResponse<AuthenticationResponse>>() { StatusCode = System.Net.HttpStatusCode.NotFound, ResponseType = new GetResponse<AuthenticationResponse>() { Status = false, Message = "Invalid login credentials" }, IsSuccess = false };
                 }
 
-                //if (!user.Verified.HasValue)
-                //{
-                //    return new ApiResponse<GetResponse<AuthenticationResponse>>() { StatusCode = System.Net.HttpStatusCode.NotFound, ResponseType = new GetResponse<AuthenticationResponse>() { Status = false, Message = "Your account is yet to be verified. Check your email to verify your account." }, IsSuccess = false };
-                //}
+                if (!user.Verified.HasValue)
+                {
+                    return new ApiResponse<GetResponse<AuthenticationResponse>>() { StatusCode = System.Net.HttpStatusCode.NotFound, ResponseType = new GetResponse<AuthenticationResponse>() { Status = false, Message = "Your account is yet to be verified. Check your email to verify your account." }, IsSuccess = false };
+                }
+
+                if (user.LastLogin.HasValue && user.LastLogin.Value < DateTimeOffset.Now)
+                {
+                    return new ApiResponse<GetResponse<AuthenticationResponse>>() { StatusCode = System.Net.HttpStatusCode.NotFound, ResponseType = new GetResponse<AuthenticationResponse>() { Status = false, Message = "Your account has expired. Please contact administrator." }, IsSuccess = false };
+                }
 
                 if (!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
                 {
@@ -190,25 +195,11 @@ namespace WorkOffice.Services
                 List<UserAccess> userAccess = new List<UserAccess>();
                 List<UserAccountRole> userAccountRole = new List<UserAccountRole>();
                 List<UserAccountAdditionalActivity> userActivities = new List<UserAccountAdditionalActivity>();
-
-                //if (model.AdditionalActivities.Any())
-                //{
-                //    foreach (var item in model.AdditionalActivities)
-                //    {
-                //        var userActivity = new UserAccountAdditionalActivity()
-                //        {
-                //            UserActivityId = item.UserActivityId,
-                //            CanAdd = item.CanAdd,
-                //            CanEdit = item.CanEdit,
-                //            CanApprove = item.CanApprove,
-                //            CanView = item.CanView,
-                //            CanDelete = item.CanDelete,
-                //            ClientId = model.ClientId
-                //        };
-
-                //        userActivities.Add(userActivity);
-                //    }
-                //}
+                DateTime? lastLogin = null;
+                if (!string.IsNullOrEmpty(model.LastLogin))
+                {
+                    lastLogin = Convert.ToDateTime(model.LastLogin);
+                }
 
                 if (model.UserAccessIds.Any())
                 {
@@ -263,6 +254,7 @@ namespace WorkOffice.Services
                             SecurityQuestion = model.SecurityQuestion,
                             SecurityAnswer = model.SecurityAnswer,
                             NextPasswordChangeDate = DateTime.Now.AddDays(30),
+                            LastLogin = lastLogin,
                             ClientId = model.ClientId,
                             CanChangePassword = true,
                             Accesslevel = model.Accesslevel,
@@ -340,7 +332,27 @@ namespace WorkOffice.Services
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Last Name is required." }, IsSuccess = false };
                 }
                 var apiResponse = new ApiResponse<CreateResponse>();
+                 List<UserAccountRole> userAccountRole = new List<UserAccountRole>();
+
                 bool result = false;
+
+                if (model.UserRoleIds.Any())
+                {
+                    foreach (var item in model.UserRoleIds)
+                    {
+                        var access = new UserAccountRole()
+                        {
+                            UserRoleDefinitionId = item,
+                            ClientId = 1
+                        };
+                        userAccountRole.Add(access);
+                    }
+                }
+                DateTime? lastLogin = null;
+                if (!string.IsNullOrEmpty(model.LastLogin))
+                {
+                    lastLogin = Convert.ToDateTime(model.LastLogin);
+                }
                 UserAccount entity = null;
                 using (var trans = _context.Database.BeginTransaction())
                 {
@@ -354,16 +366,18 @@ namespace WorkOffice.Services
                                 entity.FirstName = model.LastName;
                                 entity.LastName = model.FirstName;
                                 entity.Country = model.Country;
-                                entity.Biography = model.Biography;
-                                entity.LockoutEnabled = true;
-                                entity.AccessFailedCount = 0;
+                                entity.PhoneNumber = model.PhoneNumber;
+                                entity.SecurityQuestion = model.SecurityQuestion;
+                                entity.SecurityAnswer = model.SecurityAnswer;
+                                entity.LastLogin = lastLogin;
+                                entity.UserAccountRole = userAccountRole;
                             }
                         }
 
                         result = await _context.SaveChangesAsync() > 0;
                         if (result)
                         {
-                            var details = $"Update  User: Name = {model.FirstName} {model.LastName}, Biography = {model.Biography}, Country = {model.Country}";
+                            var details = $"Update  User: Name = {model.FirstName} {model.LastName}, Country = {model.Country}";
                             await _auditTrail.SaveAuditTrail(details, "User", "Update");
                             trans.Commit();
                         }
@@ -424,6 +438,11 @@ namespace WorkOffice.Services
                 var apiResponse = new ApiResponse<CreateResponse>();
                 bool result = false;
                 UserAccount entity = null;
+                DateTime? lastLogin = null;
+                if (!string.IsNullOrEmpty(model.LastLogin))
+                {
+                    lastLogin = Convert.ToDateTime(model.LastLogin);
+                }
                 using (var trans = _context.Database.BeginTransaction())
                 {
                     try
@@ -443,7 +462,8 @@ namespace WorkOffice.Services
                             AccessFailedCount = 0,
                             VerificationToken = randomTokenString(),
                             AcceptTerms = true,
-                            Disabled = false
+                            Disabled = false,
+                            LastLogin = lastLogin
                         };
                         _context.UserAccounts.Add(entity);
                         result = await _context.SaveChangesAsync() > 0;
@@ -795,16 +815,20 @@ namespace WorkOffice.Services
                     UserId = u.UserId,
                     FirstName = u.FirstName,
                     LastName = u.LastName,
-                    ProfilePicture = u.ProfilePicture,
+                    Email = u.Email,
                     Country = u.Country,
-                    Biography = u.Biography
+                    UserRoleId = _context.UserAccountRoles.FirstOrDefault(x => x.UserAccountId == userId).UserAccountRoleId,
+                    PhoneNumber = u.PhoneNumber,
+                    SecurityQuestion = u.SecurityQuestion,
+                    SecurityAnswer = u.SecurityAnswer,
+                    LastLogin = u.LastLogin.ToString(),
                 }).FirstOrDefaultAsync();
 
                 var response = new GetResponse<UserAccountResponse>()
                 {
                     Status = true,
                     Entity = user,
-                    Message = "User logged in successfully"
+                    Message = ""
                 };
 
                 apiResponse.StatusCode = System.Net.HttpStatusCode.OK;
@@ -988,11 +1012,11 @@ namespace WorkOffice.Services
             try
             {
                 var user = _context.UserAccounts.SingleOrDefault(x => x.UserId == userId);
-                if(user != null)
+                if (user != null)
                 {
                     user.LastActive = DateTime.Now;
                     await _context.SaveChangesAsync();
-                }     
+                }
             }
             catch (Exception ex)
             {
@@ -1006,13 +1030,13 @@ namespace WorkOffice.Services
         {
             try
             {
-              
-                if (userId > 0)
+
+                if (userId <= 0)
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "User Id is required." }, IsSuccess = false };
                 }
-             
-                if (loggedInUserId > 0)
+
+                if (loggedInUserId <= 0)
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Logged in user cannot disable/enable his/her self." }, IsSuccess = false };
                 }

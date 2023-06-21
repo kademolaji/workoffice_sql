@@ -1,13 +1,9 @@
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Component, Inject } from '@angular/core';
 import { UsersService } from '../../users.service';
+import { UserListModel } from '../../users.model';
 
-export interface DialogData {
-  id: number;
-  name: string;
-  designation: string;
-  mobile: string;
-}
+
 
 @Component({
   selector: 'app-delete',
@@ -17,13 +13,17 @@ export interface DialogData {
 export class DeleteDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<DeleteDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    @Inject(MAT_DIALOG_DATA) public data: UserListModel,
     public usersService: UsersService
   ) {}
   onNoClick(): void {
     this.dialogRef.close();
   }
   confirmDelete(): void {
-    this.usersService.deleteUser(this.data.id);
-  }
+    this.usersService.activateDeactivateUser(this.data.userId).subscribe((data)=>{
+        if(data.status){
+          this.dialogRef.close();
+        }
+      });
+    }
 }

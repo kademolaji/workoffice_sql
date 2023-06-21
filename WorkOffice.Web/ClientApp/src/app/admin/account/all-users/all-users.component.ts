@@ -97,16 +97,16 @@ export class AllUsersComponent
     this.router.navigate(['admin', 'users', 'add-user']);
   }
 
-  editCall(row: { structureDefinitionId: number }) {
+  editCall(row: { userId: number }) {
     this.router.navigate([
       'admin',
       'users',
       'edit-user',
-      row.structureDefinitionId,
+      row.userId,
     ]);
   }
 
-  deleteItem(row: UserListModel) {
+  activateDeactivateUser(row: UserListModel) {
     let tempDirection: Direction;
     if (localStorage.getItem('isRtl') === 'true') {
       tempDirection = 'rtl';
@@ -124,7 +124,7 @@ export class AllUsersComponent
         this.refresh();
         this.showNotification(
           'snackbar-success',
-          'Delete Record Successfully...!!!',
+          'Record Updated Successfully...!!!',
           'top',
           'right'
         );

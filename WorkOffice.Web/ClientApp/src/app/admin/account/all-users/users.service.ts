@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { UnsubscribeOnDestroyAdapter } from 'src/app/shared/UnsubscribeOnDestroyAdapter';
-import { AddEditUserModel,  UserListModel } from './users.model';
+import { AddEditUserModel,  UpdateUserModel,  UserListModel } from './users.model';
 import { CreateResponse, DeleteReply, GetResponse, SearchCall, SearchParameter, SearchReply } from 'src/app/core/utilities/api-response';
 
   @Injectable()
@@ -32,7 +32,7 @@ export class UsersService extends UnsubscribeOnDestroyAdapter {
 
   getUserById(id: number) {
     return this.httpClient.get<GetResponse<UserListModel>>(
-      `api/useraccount/Get?userId=${id}`
+      `api/useraccount/${id}/user-details`
     );
   }
 
@@ -44,11 +44,25 @@ export class UsersService extends UnsubscribeOnDestroyAdapter {
     );
   }
 
+  updateUser(data: UpdateUserModel) {
+    return this.httpClient.post<CreateResponse>(
+      `api/useraccount/update-user`,
+      data
+    );
+  }
+
   deleteUser(id: number) {
     return this.httpClient.delete<DeleteReply>(
       `api/useraccount/Delete?userId=${id}`
     );
   }
+
+  activateDeactivateUser(id: number) {
+    return this.httpClient.delete<DeleteReply>(
+      `api/useraccount/${id}/disable-enable`
+    );
+  }
+
 
   deleteMultipleUser(targetIds: number[]) {
     return this.httpClient.post<DeleteReply>(

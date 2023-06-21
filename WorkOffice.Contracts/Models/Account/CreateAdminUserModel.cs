@@ -18,5 +18,7 @@ namespace WorkOffice.Contracts.Models
         public string Email { get; set; }
         [Required]
         public string Country { get; set; }
+
+        public string LastLogin { get; set; }
     }
 }

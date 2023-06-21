@@ -1,41 +1,41 @@
 import { Component, OnInit } from '@angular/core';
 import {
-  UntypedFormBuilder,
   UntypedFormGroup,
+  UntypedFormBuilder,
   Validators,
 } from '@angular/forms';
 import {
   MatSnackBar,
-  MatSnackBarHorizontalPosition,
   MatSnackBarVerticalPosition,
+  MatSnackBarHorizontalPosition,
 } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { GeneralSettingsModel } from 'src/app/core/models/general-settings.model';
 import { GeneralSettingsService } from 'src/app/core/service/general-settings.service';
-import { MustMatch } from 'src/app/core/utilities/must-match.validator';
 import { UnsubscribeOnDestroyAdapter } from 'src/app/shared/UnsubscribeOnDestroyAdapter';
-import { AddEditUserModel } from '../all-users/users.model';
 import { UsersService } from '../all-users/users.service';
+import { UpdateUserModel } from '../all-users/users.model';
+
 @Component({
-  selector: 'app-add-user',
-  templateUrl: './add-user.component.html',
-  styleUrls: ['./add-user.component.sass'],
+  selector: 'app-edit-user',
+  templateUrl: './edit-user.component.html',
+  styleUrls: ['./edit-user.component.css'],
 })
-export class AddUserComponent
+export class EditUserComponent
   extends UnsubscribeOnDestroyAdapter
   implements OnInit
 {
-  addUserForm!: UntypedFormGroup;
-  hide3 = true;
-  agree3 = false;
+  editUserForm!: UntypedFormGroup;
   submitted = false;
   loading = false;
   countryList: GeneralSettingsModel[] = [];
   userRoleList: GeneralSettingsModel[] = [];
+  id = 0;
 
   constructor(
     private fb: UntypedFormBuilder,
     private router: Router,
+    private route: ActivatedRoute,
     private usersService: UsersService,
     private snackBar: MatSnackBar,
     private generalSettingsService: GeneralSettingsService
@@ -53,27 +53,38 @@ export class AddUserComponent
       .subscribe((response) => {
         this.userRoleList = response.entity;
       });
-    this.addUserForm = this.fb.group(
-      {
-        firstName: ['', [Validators.required, Validators.pattern('[a-zA-Z]+')]],
-        lastName: ['', [Validators.required, Validators.pattern('[a-zA-Z]+')]],
-        password: ['', [Validators.required, Validators.minLength(6)]],
-        confirmPassword: ['', [Validators.required]],
-        email: [
-          '',
-          [Validators.required, Validators.email, Validators.minLength(5)],
-        ],
-        country: ['', [Validators.required]],
-        userRoleId: ['', [Validators.required]],
-        phoneNumber: ['', [Validators.required]],
-        securityQuestion: ['', [Validators.required]],
-        securityAnswer: ['', [Validators.required]],
-        lastLogin: [''],
+    this.editUserForm = this.fb.group({
+      firstName: ['', [Validators.required, Validators.pattern('[a-zA-Z]+')]],
+      lastName: ['', [Validators.required, Validators.pattern('[a-zA-Z]+')]],
+      email: [
+        '',
+        [Validators.required, Validators.email, Validators.minLength(5)],
+      ],
+      country: ['', [Validators.required]],
+      userRoleId: ['', [Validators.required]],
+      phoneNumber: ['', [Validators.required]],
+      securityQuestion: ['', [Validators.required]],
+      securityAnswer: ['', [Validators.required]],
+      lastLogin: [''],
+    });
+    this.id = +this.route.snapshot.params['id'];
+    this.subs.sink = this.usersService.getUserById(this.id).subscribe({
+      next: (res) => {
+        if (res.status) {
+          this.editUserForm.setValue({
+            firstName: res.entity.firstName,
+            lastName: res.entity.lastName,
+            email: res.entity.email,
+            country: res.entity.country,
+            userRoleId: res.entity.userRoleId,
+            phoneNumber: res.entity.phoneNumber || '',
+            securityQuestion: res.entity.securityQuestion || '',
+            securityAnswer: res.entity.securityAnswer || '',
+            lastLogin:  res.entity.lastLogin ? new Date(res.entity.lastLogin) : '',
+          });
+        }
       },
-      {
-        validator: MustMatch('password', 'confirmPassword'),
-      }
-    );
+    });
   }
 
   cancelForm() {
@@ -84,7 +95,7 @@ export class AddUserComponent
     this.submitted = true;
     this.loading = true;
     // stop here if form is invalid
-    if (this.addUserForm.invalid) {
+    if (this.editUserForm.invalid) {
       this.showNotification(
         'snackbar-danger',
         'Add new user failed...!!!',
@@ -94,31 +105,26 @@ export class AddUserComponent
       return;
     } else {
       const userRoles: number[] = [];
-      userRoles.push(+this.addUserForm.value.userRoleId);
-      const user: AddEditUserModel = {
-        firstName: this.addUserForm.value.firstName,
-        lastName: this.addUserForm.value.lastName,
-        password: this.addUserForm.value.password,
-        confirmPassword: this.addUserForm.value.confirmPassword,
-        email: this.addUserForm.value.email,
-        country: this.addUserForm.value.country,
-        lastLogin: this.addUserForm.value.lastLogin,
-        userRoleId: +this.addUserForm.value.userRoleId,
-        acceptTerms: true,
-        phoneNumber: this.addUserForm.value.phoneNumber,
-        accesslevel: 1,
-        securityQuestion: this.addUserForm.value.securityQuestion,
-        securityAnswer: this.addUserForm.value.securityAnswer,
-        userAccessIds: [],
+      userRoles.push(+this.editUserForm.value.userRoleId);
+      const user: UpdateUserModel = {
+        userId: this.id,
+        firstName: this.editUserForm.value.firstName,
+        lastName: this.editUserForm.value.lastName,
+        email: this.editUserForm.value.email,
+        country: this.editUserForm.value.country,
+        lastLogin: this.editUserForm.value.lastLogin,
+        phoneNumber: this.editUserForm.value.phoneNumber,
+        securityQuestion: this.editUserForm.value.securityQuestion,
+        securityAnswer: this.editUserForm.value.securityAnswer,
         userRoleIds: userRoles,
       };
-      this.subs.sink = this.usersService.addUser(user).subscribe({
+      this.subs.sink = this.usersService.updateUser(user).subscribe({
         next: (res) => {
           if (res.status) {
             this.loading = false;
             this.showNotification(
               'snackbar-success',
-              'User added successfully...!!!',
+              'User updated successfully...!!!',
               'top',
               'right'
             );
@@ -126,7 +132,7 @@ export class AddUserComponent
           } else {
             this.showNotification(
               'snackbar-danger',
-              'Add new user failed...!!!',
+              'Edit user failed...!!!',
               'top',
               'right'
             );

@@ -1,23 +1,22 @@
 <div class="container">
-  <h3 mat-dialog-title>Are you sure?</h3>
+  <h3 *ngIf="data.status === 'Active'" mat-dialog-title>Are you sure, you want to deactivate user?</h3>
+  <h3 *ngIf="data.status === 'Inactive'" mat-dialog-title>Are you sure, you want to activate user?</h3>
   <div mat-dialog-content>
     <ul class="clearfix">
       <li>
-        <p><span class="font-weight-bold"> Name: </span>{{data.name}}</p>
+        <p><span class="font-weight-bold"> First Name: </span>{{data.firstName}}</p>
       </li>
       <li>
-        <p><span class="font-weight-bold"> Designation: </span>{{ data.designation }}</p>
-      </li>
-      <li>
-        <p>
-          <span class="font-weight-bold">Mobile: </span>{{data.mobile}}
-        </p>
+        <p><span class="font-weight-bold"> Last Name: </span>{{data.lastName}}</p>
       </li>
     </ul>
   </div>
   <div mat-dialog-actions class="mb-1">
-    <button mat-flat-button color="warn" [mat-dialog-close]="1" (click)="confirmDelete()">
-      Delete
+    <button *ngIf="data.status === 'Inactive'" mat-flat-button color="warn"  (click)="confirmDelete()">
+      Activate
+    </button>
+    <button *ngIf="data.status === 'Active'" mat-flat-button color="warn" (click)="confirmDelete()">
+      Deactivate
     </button>
     <button mat-flat-button (click)="onNoClick()" tabindex="-1">Cancel</button>
   </div>

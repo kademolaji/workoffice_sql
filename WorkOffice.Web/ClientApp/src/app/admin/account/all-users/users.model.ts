@@ -13,6 +13,7 @@ export interface AddEditUserModel {
   securityAnswer: string;
   userAccessIds: number[];
   userRoleIds: number[];
+  lastLogin: string;
 }
 
 export interface UserListModel {
@@ -25,6 +26,11 @@ export interface UserListModel {
   userRole: string;
   status: string;
   profilePicture: string;
+  phoneNumber: string;
+  securityQuestion: string;
+  securityAnswer: string;
+  userRoleId: number[];
+  lastLogin: string;
 }
 
 export interface SearchUserListOptions {
@@ -36,4 +42,17 @@ export interface SearchUserListOptions {
 export interface SearchUserList {
   searchQuery: string;
   userRole: string;
+}
+
+export interface UpdateUserModel {
+  userId: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  country: string;
+  phoneNumber: string;
+  securityQuestion: string;
+  securityAnswer: string;
+  userRoleIds: number[];
+  lastLogin: string;
 }

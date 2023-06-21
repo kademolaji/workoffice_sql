@@ -107,9 +107,10 @@
                       class="tbl-action-btn">
                       <app-feather-icons [icon]="'edit'" [class]="'tbl-fav-edit'"></app-feather-icons>
                     </button>
-                    <button mat-icon-button (click)="$event.stopPropagation()" (click)="deleteItem(row)"
+                    <button mat-icon-button (click)="$event.stopPropagation()" (click)="activateDeactivateUser(row)"
                       class="tbl-action-btn">
-                      <app-feather-icons [icon]="'trash-2'" [class]="'tbl-fav-delete'"></app-feather-icons>
+                      <app-feather-icons *ngIf="row.status === 'Active'" [icon]="'x-square'" [class]="'tbl-fav-delete'"></app-feather-icons>
+                      <app-feather-icons *ngIf="row.status === 'Inactive'" [icon]="'check-square'" [class]="'tbl-fav-delete'"></app-feather-icons>
                     </button>
                   </mat-cell>
                 </ng-container>
