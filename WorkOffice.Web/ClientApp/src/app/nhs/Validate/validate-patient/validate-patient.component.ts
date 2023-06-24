@@ -10,15 +10,7 @@ import {
   MatSnackBarHorizontalPosition,
 } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import {
-  filter,
-  distinctUntilChanged,
-  debounceTime,
-  tap,
-  switchMap,
-  catchError,
-  finalize,
-} from 'rxjs';
+
 import { GeneralSettingsModel } from 'src/app/core/models/general-settings.model';
 import { GeneralSettingsService } from 'src/app/core/service/general-settings.service';
 import { UnsubscribeOnDestroyAdapter } from 'src/app/shared/UnsubscribeOnDestroyAdapter';
@@ -129,7 +121,87 @@ export class ValidatePatientComponent
   this.router.navigate(['nhs', 'validate-now', this.patientId]);
   }
   refreshLoadPathway(evt: any) {
-console.log("Fire Fire", evt)
     this.loadPathway(this.id);
+  }
+
+  onSubmit() {
+    this.submitted = true;
+    this.loading = true;
+    // stop here if form is invalid
+    if (this.pathwayForm.invalid) {
+      this.showNotification(
+        'snackbar-danger',
+        'Add new pathway failed...!!!',
+        'top',
+        'right'
+      );
+      return;
+    } else {
+      const patient: CreatePathwayModel = {
+        patientValidationId: this.id ? +this.id : 0,
+        pathWayNumber: this.pathwayForm.value.pathWayNumber,
+        pathWayCondition: this.pathwayForm.value.pathWayCondition,
+        specialtyId: +this.pathwayForm.value.specialtyId,
+        rttId: +this.pathwayForm.value.rttId,
+        pathWayStartDate: this.pathwayForm.value.pathWayStartDate,
+        pathWayEndDate: this.pathwayForm.value.pathWayEndDate,
+        pathWayStatusId: +this.pathwayForm.value.pathWayStatusId,
+        patientId: +this.pathwayForm.value.patientId.value,
+        rttWait: this.pathwayForm.value.rttWait,
+        districtNumber: '',
+        nhsNumber: '',
+        patientNumber: '',
+        specialityName: ''
+      };
+      this.subs.sink = this.pathwayService
+        .addPathway(patient)
+        .subscribe({
+          next: (res) => {
+            if (res.status) {
+              this.loading = false;
+              this.showNotification(
+                'snackbar-success',
+                res.message,
+                'top',
+                'right'
+              );
+            } else {
+              this.showNotification(
+                'snackbar-danger',
+                res.message,
+                'top',
+                'right'
+              );
+            }
+          },
+          error: (error) => {
+            this.showNotification('snackbar-danger', error, 'top', 'right');
+            this.submitted = false;
+            this.loading = false;
+          },
+        });
+    }
+  }
+
+  onStatusSelectionChanged(e: any){
+    if(e.value > 5){
+      this.pathwayForm.patchValue({rttId: 1})
+    } else {
+      this.pathwayForm.patchValue({rttId: 2})
+    }
+   }
+
+  showNotification(
+    colorName: string,
+    text: string,
+    placementFrom: MatSnackBarVerticalPosition,
+    placementAlign: MatSnackBarHorizontalPosition
+  ) {
+    this.snackBar.open(text, '', {
+      duration: 2000,
+      verticalPosition: placementFrom,
+      horizontalPosition: placementAlign,
+      panelClass: colorName,
+    });
   }
 }

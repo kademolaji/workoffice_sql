@@ -181,11 +181,11 @@ namespace WorkOffice.Services
                     return new ApiResponse<GetResponse<AuthenticationResponse>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new GetResponse<AuthenticationResponse> { Status = false, Entity = null, Message = "Email already exist." }, IsSuccess = false };
                 }
 
-                if (!ValidatePassword(model.Password))
-                {
-                    return new ApiResponse<GetResponse<AuthenticationResponse>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new GetResponse<AuthenticationResponse> { Status = false, Entity = null, Message = @"Your password most contain, at least one lower case letter,
-                            one upper case letter, special character, one number, and not less than 8 characters length" }, IsSuccess = false };
-                }
+                //if (!ValidatePassword(model.Password))
+                //{
+                //    return new ApiResponse<GetResponse<AuthenticationResponse>>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new GetResponse<AuthenticationResponse> { Status = false, Entity = null, Message = @"Your password most contain, at least one lower case letter,
+                //            one upper case letter, special character, one number, and not less than 8 characters length" }, IsSuccess = false };
+                //}
 
                 var apiResponse = new ApiResponse<GetResponse<AuthenticationResponse>>();
                 bool result = false;
@@ -279,7 +279,7 @@ namespace WorkOffice.Services
                             _context.SaveChanges();
                             try
                             {
-                                await sendVerificationEmail(entity, origin);
+                                await sendVerificationEmail(entity, password, origin);
                             }
                             catch (Exception)
                             {
@@ -1176,13 +1176,14 @@ namespace WorkOffice.Services
             return BitConverter.ToString(randomBytes).Replace("-", "");
         }
 
-        private async Task sendVerificationEmail(UserAccount account, string origin)
+        private async Task sendVerificationEmail(UserAccount account, string password, string origin)
         {
             var admin = _context.UserAccounts.Where(x => x.Email.ToLower().Contains("workoffice")).FirstOrDefault();
             var verifyUrl = $"{origin}/account/verify-email?token={account.VerificationToken}";
             var messageParams = new Dictionary<string, string>(){
                 {"firstName", account.FirstName},
                 {"verifyURL", verifyUrl},
+                 {"password", password},
             };
 
             var mailTitle = $"Account Verification";
@@ -1190,7 +1191,7 @@ namespace WorkOffice.Services
             var notification = new SaveNotificationModel { SenderId = admin.UserId, ReceiverId = account.UserId, Title = mailTitle, Body = messageParams.ToString() };
             saveNotifications.Add(notification);
             await _auditTrail.SaveNotification(saveNotifications);
-            await _emailService.VerificationEmail(account, verifyUrl);
+            await _emailService.VerificationEmail(account, password, verifyUrl);
 
         }
 

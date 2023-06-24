@@ -12,7 +12,6 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { UnsubscribeOnDestroyAdapter } from 'src/app/shared/UnsubscribeOnDestroyAdapter';
 import { PathwayStatusModel } from '../pathwaystatus.model';
-// import { PathwayStatusModel } from '../pathwaystatus.model';
 import { PathwayStatusService } from '../pathwaystatus.service';
 
 @Component({
@@ -45,6 +44,7 @@ export class AddPathwayStatusComponent
     this.pathwayStatusForm = this.fb.group({
       code: ['', [Validators.required]],
       name: ['', [Validators.required]],
+      allowClosed: [false],
     });
     this.id = +this.route.snapshot.params['id'];
     this.isAddMode = !this.id;
@@ -57,6 +57,7 @@ export class AddPathwayStatusComponent
             this.pathwayStatusForm.setValue({
               code: res.entity.code,
               name: res.entity.name,
+              allowClosed: res.entity.name,
             });
           }
           }
@@ -88,7 +89,7 @@ export class AddPathwayStatusComponent
         pathwayStatusId: this.id ? + this.id : 0,
         code: this.pathwayStatusForm.value.code,
         name: this.pathwayStatusForm.value.name,
-
+        allowClosed: this.pathwayStatusForm.value.allowClosed
       };
       this.subs.sink = this.PathwayStatusService
         .addPathwayStatus(pathwayStatus)

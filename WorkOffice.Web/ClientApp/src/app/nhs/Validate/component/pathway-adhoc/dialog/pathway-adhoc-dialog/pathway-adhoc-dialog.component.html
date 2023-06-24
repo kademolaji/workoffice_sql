@@ -91,7 +91,14 @@
         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
           <mat-form-field class="example-full-width" appearance="outline">
             <mat-label>Activity</mat-label>
-            <input matInput formControlName="activity" required />
+            <mat-select formControlName="activity">
+              <mat-option
+                *ngFor="let activity of activitiesList"
+                [value]="activity.label"
+              >
+                {{ activity.label }}
+              </mat-option>
+            </mat-select>
             <mat-error
               *ngIf="
                 patientValidationDetailsForm
@@ -99,7 +106,7 @@
                   ?.hasError('required')
               "
             >
-              Activity is required
+            Activity is required
             </mat-error>
           </mat-form-field>
         </div>

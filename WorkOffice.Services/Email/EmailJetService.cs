@@ -8,7 +8,7 @@ namespace WorkOffice.Services
 {
     public interface IEmailJetService
     {
-        Task VerificationEmail(UserAccount account, string verifyUrl);
+        Task VerificationEmail(UserAccount account, string password, string verifyUrl);
         Task ResetPasswordEmail(UserAccount account, string resetUrl);
         Task VolunterVerifiedEmail(UserAccount account, string loginUrl);
        
@@ -27,7 +27,7 @@ namespace WorkOffice.Services
 
         }
 
-        public async Task VerificationEmail(UserAccount account, string verifyUrl)
+        public async Task VerificationEmail(UserAccount account, string password, string verifyUrl)
         {
             MailjetRequest request = new MailjetRequest
             {
@@ -50,7 +50,8 @@ namespace WorkOffice.Services
                  {"Subject", "RTT Account Verification"},
                  {"Variables", new JObject {
                   {"firstName", account.FirstName},
-                  {"verifyurl", verifyUrl}
+                  {"password", password},
+                  {"verifyurl", verifyUrl}    
                   }}
                  }
                     });

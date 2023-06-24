@@ -60,29 +60,6 @@
               <div class="row">
                 <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
                   <mat-form-field class="example-full-width mb-3" appearance="outline">
-                    <mat-label>Password</mat-label>
-                    <input matInput formControlName="password" type="password" required>
-                    <mat-error *ngIf="addUserForm.get('password')?.hasError('required')">
-                      password is required
-                    </mat-error>
-                  </mat-form-field>
-                </div>
-                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
-                  <mat-form-field class="example-full-width mb-3" appearance="outline">
-                    <mat-label>Re-Enter Password</mat-label>
-                    <input matInput formControlName="confirmPassword" type="password" required>
-                    <mat-error *ngIf="addUserForm.get('confirmPassword')?.hasError('required')">
-                      Re-Enter password is required
-                    </mat-error>
-                    <mat-error *ngIf="addUserForm.get('confirmPassword')?.hasError('mustMatch')">
-                      Passwords must match
-                    </mat-error>
-                  </mat-form-field>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
-                  <mat-form-field class="example-full-width mb-3" appearance="outline">
                     <mat-label>Phone Number</mat-label>
                     <input matInput formControlName="phoneNumber" required>
                     <mat-error *ngIf="addUserForm.get('phoneNumber')?.hasError('required')">

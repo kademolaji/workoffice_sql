@@ -16,6 +16,9 @@ import { AddDiagnosticComponent } from "./diagnostic/add-diagnostic/add-diagnost
 import { AllPathwayComponent } from "./pathway/all-pathway/all-pathway.component";
 import { ValidateNowPathwaysComponent } from "./Validate/validate-now-pathways/validate-now-pathways.component";
 import { ValidatePatientComponent } from "./Validate/validate-patient/validate-patient.component";
+import { AdhocNowComponent } from "./adhoc/adhoc-now/adhoc-now.component";
+import { AdhocPathwayComponent } from "./adhoc/adhoc-pathway/adhoc-pathway.component";
+import { AdhocPatientComponent } from "./adhoc/adhoc-patient/adhoc-patient.component";
 
 
 const routes: Routes = [
@@ -85,6 +88,18 @@ const routes: Routes = [
     component: ValidatePatientComponent,
   },
 
+  {
+    path: "adhoc",
+    component: AdhocNowComponent,
+  },
+  {
+    path: "adhoc/:id",
+    component: AdhocPathwayComponent,
+  },
+  {
+    path: ":patientId/adhoc/:id",
+    component: AdhocPatientComponent,
+  },
 
   {
     path: "all-diagnostic",

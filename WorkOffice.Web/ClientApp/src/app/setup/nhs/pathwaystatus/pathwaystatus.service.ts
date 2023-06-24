@@ -38,7 +38,7 @@ export class PathwayStatusService extends UnsubscribeOnDestroyAdapter {
 
   getPathwayStatusById(id: number) {
     return this.httpClient.get<GetResponse<PathwayStatusModel>>(
-      `api/pathwayStatus/Get?appTypeId=${id}`
+      `api/pathwayStatus/Get?pathwayStatusId=${id}`
     );
   }
 
@@ -52,7 +52,7 @@ export class PathwayStatusService extends UnsubscribeOnDestroyAdapter {
 
   deletePathwayStatus(id: number) {
     return this.httpClient.delete<DeleteReply>(
-      `api/pathwayStatus/Delete?appTypeId=${id}`
+      `api/pathwayStatus/Delete?pathwayStatusId=${id}`
     );
   }
   deleteMultiplePathwayStatus(targetIds: number[]) {

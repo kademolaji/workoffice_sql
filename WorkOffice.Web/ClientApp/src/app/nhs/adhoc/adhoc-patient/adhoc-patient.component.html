@@ -2,13 +2,13 @@
   <div class="content-block">
     <div class="block-header">
       <!-- breadcrumb -->
-      <app-breadcrumb [title]="'Validate Pathway'" [items]="['Pathway']" [active_item]="'Pathway'"></app-breadcrumb>
+      <app-breadcrumb [title]="'Adhoc Validate Pathway'" [items]="['Pathway']" [active_item]="'Pathway'"></app-breadcrumb>
     </div>
     <div class="row clearfix">
       <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
         <div class="card">
           <div class="header">
-            <h2><strong> Validate Pathway</strong></h2>
+            <h2><strong>Adhoc Validate Pathway</strong></h2>
           </div>
           <div class="body">
             <form class="m-4" [formGroup]="pathwayForm" (ngSubmit)="onSubmit()">
@@ -136,12 +136,6 @@
         </div>
       </div>
     </div>
-      <!-- appointments -->
     <app-pathway-adhoc [patientValidationId]="id" [patientId]="patientId" (refreshPathwayData)="refreshLoadPathway($event)"></app-pathway-adhoc>
-    <app-patient-appointments [patientId]="patientId"></app-patient-appointments>
-    <app-patient-diagnostic [patientId]="patientId"></app-patient-diagnostic>
-    <app-patient-referral  [patientId]="patientId"></app-patient-referral>
-    <app-patient-waitinglist [patientId]="patientId"></app-patient-waitinglist>
-    <app-patient-documents [patientId]="patientId"></app-patient-documents>
   </div>
 </section>

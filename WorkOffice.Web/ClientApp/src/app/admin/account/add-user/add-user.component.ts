@@ -12,7 +12,6 @@ import {
 import { Router } from '@angular/router';
 import { GeneralSettingsModel } from 'src/app/core/models/general-settings.model';
 import { GeneralSettingsService } from 'src/app/core/service/general-settings.service';
-import { MustMatch } from 'src/app/core/utilities/must-match.validator';
 import { UnsubscribeOnDestroyAdapter } from 'src/app/shared/UnsubscribeOnDestroyAdapter';
 import { AddEditUserModel } from '../all-users/users.model';
 import { UsersService } from '../all-users/users.service';
@@ -57,8 +56,6 @@ export class AddUserComponent
       {
         firstName: ['', [Validators.required, Validators.pattern('[a-zA-Z]+')]],
         lastName: ['', [Validators.required, Validators.pattern('[a-zA-Z]+')]],
-        password: ['', [Validators.required, Validators.minLength(6)]],
-        confirmPassword: ['', [Validators.required]],
         email: [
           '',
           [Validators.required, Validators.email, Validators.minLength(5)],
@@ -69,9 +66,6 @@ export class AddUserComponent
         securityQuestion: ['', [Validators.required]],
         securityAnswer: ['', [Validators.required]],
         lastLogin: [''],
-      },
-      {
-        validator: MustMatch('password', 'confirmPassword'),
       }
     );
   }
@@ -98,8 +92,6 @@ export class AddUserComponent
       const user: AddEditUserModel = {
         firstName: this.addUserForm.value.firstName,
         lastName: this.addUserForm.value.lastName,
-        password: this.addUserForm.value.password,
-        confirmPassword: this.addUserForm.value.confirmPassword,
         email: this.addUserForm.value.email,
         country: this.addUserForm.value.country,
         lastLogin: this.addUserForm.value.lastLogin,

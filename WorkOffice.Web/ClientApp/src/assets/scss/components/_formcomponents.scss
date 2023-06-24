@@ -58,3 +58,11 @@
 .mat-form-field-suffix {
   color: rgba(0, 0, 0, 0.54);
 }
+
+.readonly-wrapper {
+  cursor: not-allowed;
+}
+
+.readonly-wrapper .readonly-block {
+  pointer-events: none;
+}

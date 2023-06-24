@@ -331,7 +331,7 @@ namespace WorkOffice.Services
                                     where a.IsDeleted == false
                                     select new GeneralSettingsModel
                                     {
-                                        Label = a.Name,
+                                        Label = $"{a.Name} - {a.Code}",
                                         Value = a.PathWayStatusId
                                     }).ToListAsync();
 

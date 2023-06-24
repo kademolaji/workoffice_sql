@@ -208,6 +208,14 @@ export class AddPathwayComponent
     }
   }
 
+  onStatusSelectionChanged(e: any){
+    if(e.value > 5){
+      this.pathwayForm.patchValue({rttId: 1})
+    } else {
+      this.pathwayForm.patchValue({rttId: 2})
+    }
+   }
+
   showNotification(
     colorName: string,
     text: string,

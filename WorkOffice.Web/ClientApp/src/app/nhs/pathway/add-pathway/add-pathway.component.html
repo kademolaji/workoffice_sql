@@ -53,9 +53,9 @@
                   </mat-form-field>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
-                  <mat-form-field class="example-full-width mb-3" appearance="outline">
+                  <mat-form-field class="example-full-width readonly-wrapper mb-3" appearance="outline">
                     <mat-label>RTT</mat-label>
-                    <mat-select formControlName="rttId" required>
+                    <mat-select class="readonly-block" formControlName="rttId" [ariaReadOnly]="" required>
                       <mat-option  *ngFor="let rtt of rttList" [value]="rtt.value">
                         {{rtt.label}}
                       </mat-option>
@@ -70,7 +70,7 @@
                 <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-3">
                   <mat-form-field class="example-full-width mb-3" appearance="outline">
                     <mat-label>Status</mat-label>
-                    <mat-select formControlName="pathWayStatusId" required>
+                    <mat-select (selectionChange)="onStatusSelectionChanged($event)" formControlName="pathWayStatusId"  required>
                       <mat-option  *ngFor="let pathwayStatus of pathwayStatusList" [value]="pathwayStatus.value">
                         {{pathwayStatus.label}}
                       </mat-option>

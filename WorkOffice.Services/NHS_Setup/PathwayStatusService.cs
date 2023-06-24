@@ -126,6 +126,7 @@ namespace WorkOffice.Services
                     {
                         entity.Code = model.Code;
                         entity.Name = model.Name;
+                        entity.AllowClosed = model.AllowClosed;
                         entity.CreatedOn = DateTime.UtcNow;
                         result = await context.SaveChangesAsync() > 0;
                         if (result)
@@ -261,7 +262,7 @@ namespace WorkOffice.Services
 
                 var apiResponse = new ApiResponse<GetResponse<PathwayStatusViewModels>>();
 
-                var result = await context.PathWayStatuses.FindAsync(pathwayStatusId);
+                var result = await context.PathWayStatuses.Where(x=> x.PathWayStatusId == pathwayStatusId).FirstOrDefaultAsync();
 
                 if (result == null)
                 {

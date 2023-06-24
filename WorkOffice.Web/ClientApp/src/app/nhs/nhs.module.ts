@@ -64,6 +64,9 @@ import { PathwayAdhocDialogComponent } from './Validate/component/pathway-adhoc/
 import { DeletePatientValidationDetailsDialogComponent } from './Validate/component/pathway-adhoc/dialog/delete/delete.component';
 import { ValidateNowService } from './Validate/validate.service';
 import { PathwayMergeDialogComponent } from './Validate/component/pathway-adhoc/dialog/pathway-merge-dialog/pathway-merge-dialog.component';
+import { AdhocNowComponent } from './adhoc/adhoc-now/adhoc-now.component';
+import { AdhocPathwayComponent } from './adhoc/adhoc-pathway/adhoc-pathway.component';
+import { AdhocPatientComponent } from './adhoc/adhoc-patient/adhoc-patient.component';
 
 @NgModule({
   imports: [
@@ -134,7 +137,12 @@ import { PathwayMergeDialogComponent } from './Validate/component/pathway-adhoc/
     PathwayAdhocDialogComponent,
     PathwayAdhocComponent,
     DeletePatientValidationDetailsDialogComponent,
-    PathwayMergeDialogComponent
+    PathwayMergeDialogComponent,
+
+    AdhocNowComponent,
+    AdhocPathwayComponent,
+    AdhocPatientComponent,
+
   ],
   providers: [PatientService, AppointmentService, WaitinglistService, DiagnosticService, ReferralService, PathwayService, ValidateNowService],
 })

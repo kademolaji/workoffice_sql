@@ -50,7 +50,8 @@ namespace WorkOffice.Web.DataSeeder
 
             AddNewData(new UserActivity { UserActivityId = (long)UserActivitiesEnum.Patient_Appointment, UserActivityName = Enum.GetName(typeof(UserActivitiesEnum), UserActivitiesEnum.Patient_Appointment).Replace("_", " "), UserActivityParentId = (long)UserActivityParentEnum.View_Appointment, ClientId = 1 });
             AddNewData(new UserActivity { UserActivityId = (long)UserActivitiesEnum.View_Booked_Appointment, UserActivityName = Enum.GetName(typeof(UserActivitiesEnum), UserActivitiesEnum.View_Booked_Appointment).Replace("_", " "), UserActivityParentId = (long)UserActivityParentEnum.View_Appointment, ClientId = 1 });
-            AddNewData(new UserActivity { UserActivityId = (long)UserActivitiesEnum.Cancelled_Appointment, UserActivityName = Enum.GetName(typeof(UserActivitiesEnum), UserActivitiesEnum.Cancelled_Appointment).Replace("_", " "), UserActivityParentId = (long)UserActivityParentEnum.View_Appointment, ClientId = 1 });
+            AddNewData(new UserActivity { UserActivityId = (long)UserActivitiesEnum.Cancelled_Appointment, UserActivityName = Enum.GetName(typeof(UserActivitiesEnum), UserActivitiesEnum.Cancelled_Appointment).Replace("_", " "), UserActivityParentId = (long)UserActivityParentEnum.View_Appointment, ClientId = 1 }); 
+            AddNewData(new UserActivity { UserActivityId = (long)UserActivitiesEnum.Adhoc, UserActivityName = Enum.GetName(typeof(UserActivitiesEnum), UserActivitiesEnum.Adhoc).Replace("_", " "), UserActivityParentId = (long)UserActivityParentEnum.NHS, ClientId = 1 }); 
 
             _context.SaveChanges();
         }

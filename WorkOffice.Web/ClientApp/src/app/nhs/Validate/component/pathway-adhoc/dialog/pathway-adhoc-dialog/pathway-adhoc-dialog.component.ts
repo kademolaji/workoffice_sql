@@ -29,6 +29,7 @@ export class PathwayAdhocDialogComponent
   specialityList: GeneralSettingsModel[] = [];
   pathwayStatusList: GeneralSettingsModel[] = [];
   consultantList: GeneralSettingsModel[] = [];
+  activitiesList: GeneralSettingsModel[] = [];
 
   constructor(
     public dialogRef: MatDialogRef<PathwayAdhocDialogComponent>,
@@ -47,7 +48,7 @@ export class PathwayAdhocDialogComponent
       date: ['', [Validators.required]],
       consultantId: ['', [Validators.required]],
       endDate: [''],
-      activity: ['', [Validators.required]],
+      activity: [''],
     });
     if (this.data.patientValidationDetailsId > 0) {
       this.patientValidationDetailsForm.setValue({
@@ -73,6 +74,12 @@ export class PathwayAdhocDialogComponent
       .getConsultant()
       .subscribe((response) => {
         this.consultantList = response.entity;
+      });
+
+      this.subs.sink = this.generalSettingsService
+      .getNHSActivity()
+      .subscribe((response) => {
+        this.activitiesList = response.entity;
       });
   }
 

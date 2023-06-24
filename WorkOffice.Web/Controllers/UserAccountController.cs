@@ -85,8 +85,8 @@ namespace WorkOffice.Web.Controllers
             try
             {
                 model.ClientId = _httpAccessorService.GetCurrentClientId();
-
-                var apiResponse = await _userAccountService.Register(model, model.Password, Request.Headers["origin"], ipAddress());
+                var password = RandomString(15);
+                var apiResponse = await _userAccountService.Register(model, password, Request.Headers["origin"], ipAddress());
                 if (apiResponse.ResponseType.Entity != null)
                 {
                     setTokenCookie(apiResponse.ResponseType.Entity.RefreshToken);
@@ -391,6 +391,14 @@ namespace WorkOffice.Web.Controllers
                 return Request.Headers["X-Forwarded-For"];
             else
                 return HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
+        }
+        private static Random random = new Random();
+
+        public static string RandomString(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+                .Select(s => s[random.Next(s.Length)]).ToArray());
         }
     }
 }

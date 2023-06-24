@@ -16,6 +16,7 @@ namespace WorkOffice.Contracts.Mappings
                 PathwayStatusId = entity.PathWayStatusId,
                 Code = entity.Code,
                 Name = entity.Name,
+                AllowClosed = entity.AllowClosed
 
             };
         }
@@ -27,7 +28,8 @@ namespace WorkOffice.Contracts.Mappings
                 PathWayStatusId = entity.PathwayStatusId,
                 Code = entity.Code,
                 Name = entity.Name,
- 
+                AllowClosed = entity.AllowClosed
+
             };
         }
     }
