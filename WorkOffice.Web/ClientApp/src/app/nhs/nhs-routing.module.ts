@@ -19,18 +19,17 @@ import { ValidatePatientComponent } from "./Validate/validate-patient/validate-p
 import { AdhocNowComponent } from "./adhoc/adhoc-now/adhoc-now.component";
 import { AdhocPathwayComponent } from "./adhoc/adhoc-pathway/adhoc-pathway.component";
 import { AdhocPatientComponent } from "./adhoc/adhoc-patient/adhoc-patient.component";
+import { InpatientWaitinglistComponent } from "./waitinglist/inpatient-waitinglist/inpatient-waitinglist.component";
+import { OutpatientWaitinglistComponent } from "./waitinglist/outpatient-waitinglist/outpatient-waitinglist.component";
+import { BookedAppointmentComponent } from "./appointment/booked-appointment/booked-appointment.component";
+import { PartialAppointmentComponent } from "./appointment/partial-appointment/partial-appointment.component";
 
 
 const routes: Routes = [
   {
-    path: "all-appointment/:status",
+    path: "all-appointment",
     component: AllAppointmentComponent,
   },
-
-  // {
-  //   path: "all-cancelappointment",
-  //   component: AllCancelAppointmentComponent,
-  // },
   {
     path: "add-appointment",
     component: AddAppointmentComponent,
@@ -38,6 +37,14 @@ const routes: Routes = [
   {
     path: "edit-appointment/:id",
     component: AddAppointmentComponent,
+  },
+  {
+    path: "booked-appointment",
+    component: BookedAppointmentComponent,
+  },
+  {
+    path: "partial-appointment",
+    component: PartialAppointmentComponent,
   },
   {
     path: "all-patient",
@@ -62,6 +69,14 @@ const routes: Routes = [
   {
     path: "edit-waitinglist/:id",
     component: AddWaitinglistComponent,
+  },
+  {
+    path: "outpatient-waitinglist",
+    component: OutpatientWaitinglistComponent,
+  },
+  {
+    path: "inpatient-waitinglist",
+    component: InpatientWaitinglistComponent,
   },
   {
     path: "all-pathway",

@@ -48,7 +48,6 @@ searchQuery = '';
 sortOrder = '';
 sortField = '';
 isTblLoading = false;
-status = 'PartialBooked';
 
 constructor(
   public httpClient: HttpClient,
@@ -67,8 +66,6 @@ paginator!: MatPaginator;
 sort!: MatSort;
 
 ngOnInit() {
-  this.status = this.route.snapshot.params['status'];
-  this.searchQuery =  this.status;
   this.loadData(this.searchQuery, this.sortField, this.sortOrder);
 }
 
@@ -210,19 +207,9 @@ public loadData(searchQuery: string, sortField: string, sortOrder: string) {
     sortOrder,
     parameter: {
       searchQuery,
-      id: 0
+      id: 0,
     },
   };
-  // if(searchQuery == "CancelledAppointment") {
-  //   this.appointmentService
-  //   .getAllCancelAppointment(options)
-  //   .subscribe((res) => {
-  //     this.isTblLoading = false;
-  //     this.dataSource.data = res.result;
-  //     this.totalRows = res.totalCount;
-  //   });
-  // }
-  // else{
     this.appointmentService
     .getAllAppointment(options)
     .subscribe((res) => {

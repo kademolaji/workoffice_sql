@@ -13,9 +13,9 @@ namespace WorkOffice.Contracts.Models
 
         public int SpecialityId { get; set; }
 
-        public DateTime? TCIDate { get; set; }
+        public string TCIDate { get; set; }
 
-        public DateTime WaitinglistDate { get; set; }
+        public string WaitinglistDate { get; set; }
 
         public string WaitinglistTime { get; set; }
 

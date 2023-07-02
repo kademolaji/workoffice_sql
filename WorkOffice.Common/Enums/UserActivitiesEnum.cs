@@ -37,5 +37,9 @@ namespace WorkOffice.Common
         DiagnosticResult_Document = 29,
         Add_PatientValidation = 30,
         Adhoc = 31,
+        Partial_Appointment = 32,
+        Booked_Appointment = 33,
+        Outpatient_Waitinglist = 34,
+        Inpatient_Waitinglist = 35
     }
 }

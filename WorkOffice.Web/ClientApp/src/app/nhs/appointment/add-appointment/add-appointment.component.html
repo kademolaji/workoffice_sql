@@ -211,7 +211,6 @@
                       matInput
                       [matDatepicker]="picker"
                       formControlName="appDate"
-                      required
                     />
                     <mat-datepicker-toggle
                       matSuffix
@@ -237,7 +236,7 @@
                       matInput
                       [matDatepicker]="picker1"
                       formControlName="bookDate"
-                      required
+
                     />
                     <mat-datepicker-toggle
                       matSuffix
@@ -261,7 +260,7 @@
                     appearance="outline"
                   >
                     <mat-label>Time</mat-label>
-                    <input matInput formControlName="appTime" required />
+                    <input matInput formControlName="appTime"  />
                     <mat-error
                       *ngIf="
                         appointmentForm.get('appTime')?.hasError('required')

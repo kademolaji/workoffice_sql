@@ -54,9 +54,9 @@ export class AddWaitinglistComponent
     this.waitinglistForm = this.fb.group({
       waitTypeId: ['', [Validators.required]],
       specialityId: ['', [Validators.required]],
-      tciDate: [new Date(), [Validators.required]],
-      waitinglistDate: [new Date(), [Validators.required]],
-      waitinglistTime: ['', [Validators.required]],
+      tciDate: [''],
+      waitinglistDate: [''],
+      waitinglistTime: [''],
       condition: ['', [Validators.required]],
       waitinglistStatus: ['', [Validators.required]],
       patientValidationId: [''],
@@ -95,8 +95,8 @@ export class AddWaitinglistComponent
               this.waitinglistForm.setValue({
                 waitTypeId: res.entity.waitTypeId,
                 specialityId: res.entity.specialityId,
-                tciDate: res.entity.tciDate,
-                waitinglistDate: res.entity.waitinglistDate,
+                tciDate: res.entity.tciDate ? new Date(res.entity.tciDate) : '',
+                waitinglistDate: res.entity.waitinglistDate ? new Date(res.entity.waitinglistDate) : '',
                 waitinglistTime: res.entity.waitinglistTime,
                 condition: res.entity.condition,
                 waitinglistStatus: res.entity.waitinglistStatus,

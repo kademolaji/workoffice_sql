@@ -16,9 +16,9 @@ namespace WorkOffice.Domain.Entities
 
         public int? SpecialtyId { get; set; }
 
-        public DateTime BookDate { get; set; }
+        public DateTime? BookDate { get; set; }
 
-        public DateTime AppDate { get; set; }
+        public DateTime? AppDate { get; set; }
 
         [StringLength(50)]
         public string AppTime { get; set; }

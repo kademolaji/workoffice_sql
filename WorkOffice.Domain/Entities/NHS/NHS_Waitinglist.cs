@@ -16,7 +16,7 @@ namespace WorkOffice.Domain.Entities
 
         public DateTime? TCIDate { get; set; }
 
-        public DateTime WaitinglistDate { get; set; }
+        public DateTime? WaitinglistDate { get; set; }
 
         [StringLength(50)]
         public string WaitinglistTime { get; set; }

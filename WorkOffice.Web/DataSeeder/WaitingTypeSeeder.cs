@@ -17,10 +17,8 @@ namespace WorkOffice.Web.DataSeeder
 
         public void SeedData()
         {
-            AddNewData(new WaitingType { WaitingTypeId = 1, Code = "Active", Name = "Active",  ClientId = 1 });
-            AddNewData(new WaitingType { WaitingTypeId = 2, Code = "Planned", Name = "Planned",  ClientId = 1 });
-            AddNewData(new WaitingType { WaitingTypeId = 3, Code = "Cancel", Name = "Cancel",  ClientId = 1 });
-            AddNewData(new WaitingType { WaitingTypeId = 4, Code = "Remove", Name = "Remove",  ClientId = 1 });
+            AddNewData(new WaitingType { WaitingTypeId = 1, Code = "Active", Name = "Outpatient Waiting List",  ClientId = 1 });
+            AddNewData(new WaitingType { WaitingTypeId = 2, Code = "Planned", Name = "Inpatient Waiting List",  ClientId = 1 });
             _context.SaveChanges();
         }
 

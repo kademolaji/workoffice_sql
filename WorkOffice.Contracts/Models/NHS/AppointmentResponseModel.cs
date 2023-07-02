@@ -16,9 +16,9 @@ namespace WorkOffice.Contracts.Models
 
         public string Speciality { get; set; }
 
-        public DateTime BookDate { get; set; }
+        public DateTime? BookDate { get; set; }
 
-        public DateTime AppDate { get; set; }
+        public DateTime? AppDate { get; set; }
         public string AppTime { get; set; }
 
         public int? ConsultantId { get; set; }

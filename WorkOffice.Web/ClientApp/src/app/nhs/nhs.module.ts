@@ -67,6 +67,10 @@ import { PathwayMergeDialogComponent } from './Validate/component/pathway-adhoc/
 import { AdhocNowComponent } from './adhoc/adhoc-now/adhoc-now.component';
 import { AdhocPathwayComponent } from './adhoc/adhoc-pathway/adhoc-pathway.component';
 import { AdhocPatientComponent } from './adhoc/adhoc-patient/adhoc-patient.component';
+import { BookedAppointmentComponent } from './appointment/booked-appointment/booked-appointment.component';
+import { PartialAppointmentComponent } from './appointment/partial-appointment/partial-appointment.component';
+import { InpatientWaitinglistComponent } from './waitinglist/inpatient-waitinglist/inpatient-waitinglist.component';
+import { OutpatientWaitinglistComponent } from './waitinglist/outpatient-waitinglist/outpatient-waitinglist.component';
 
 @NgModule({
   imports: [
@@ -100,6 +104,8 @@ import { AdhocPatientComponent } from './adhoc/adhoc-patient/adhoc-patient.compo
     AddAppointmentComponent,
     DeleteAppointmentDialogComponent,
     CancelAppointmentDialogComponent,
+    BookedAppointmentComponent,
+    PartialAppointmentComponent,
 
     AllPatientComponent,
     AddPatientComponent,
@@ -110,6 +116,8 @@ import { AdhocPatientComponent } from './adhoc/adhoc-patient/adhoc-patient.compo
     AllWaitinglistComponent,
     AddWaitinglistComponent,
     DeleteWaitinglistDialogComponent,
+    OutpatientWaitinglistComponent,
+    InpatientWaitinglistComponent,
 
     AllPathwayComponent,
     AddPathwayComponent,

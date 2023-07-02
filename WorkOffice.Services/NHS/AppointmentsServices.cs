@@ -71,6 +71,10 @@ namespace WorkOffice.Services
                 {
                     model.AppointmentStatus = "CANCELLED BY HOSPITAL";
                 }
+                else if (model.StatusId == 5)
+                {
+                    model.AppointmentStatus = "FUTURE";
+                }
                 else
                 {
                     model.AppointmentStatus = "DO NOT ATTEND";
@@ -80,6 +84,16 @@ namespace WorkOffice.Services
                 var apiResponse = new ApiResponse<CreateResponse>();
                 bool result = false;
                 NHS_Appointment entity = null;
+                DateTime? appDate = null;
+                if (!string.IsNullOrEmpty(model.AppDate))
+                {
+                    appDate = Convert.ToDateTime(model.AppDate);
+                }
+                DateTime? bookDate = null;
+                if (!string.IsNullOrEmpty(model.BookDate))
+                {
+                    bookDate = Convert.ToDateTime(model.BookDate);
+                }
                 using (var trans = context.Database.BeginTransaction())
                 {
                     try
@@ -89,8 +103,8 @@ namespace WorkOffice.Services
                             AppTypeId = model.AppTypeId,
                             StatusId = model.StatusId,
                             SpecialtyId = model.SpecialityId,
-                            BookDate = model.BookDate,
-                            AppDate = model.AppDate,
+                            BookDate = bookDate,
+                            AppDate = appDate,
                             AppTime = model.AppTime,
                             ConsultantId = model.ConsultantId,
                             HospitalId = model.HospitalId,
@@ -198,8 +212,16 @@ namespace WorkOffice.Services
                 var apiResponse = new ApiResponse<CreateResponse>();
                 bool result = false;
                 var entity = await context.NHS_Appointments.FindAsync(model.AppointmentId);
-                //var entity = await context.NHS_Appointments.Where(x=> x.AppointmentId == model.AppointmentId);
-                //var entity = await context.NHS_Appointments.FirstOrDefaultAsync(x => x.AppointmentId == model.AppointmentId);
+                DateTime? appDate = null;
+                if (!string.IsNullOrEmpty(model.AppDate))
+                {
+                    appDate = Convert.ToDateTime(model.AppDate);
+                }
+                DateTime? bookDate = null;
+                if (!string.IsNullOrEmpty(model.BookDate))
+                {
+                    bookDate = Convert.ToDateTime(model.BookDate);
+                }
                 if (entity == null)
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Record does not exist." }, IsSuccess = false };
@@ -211,8 +233,8 @@ namespace WorkOffice.Services
                         entity.AppTypeId = model.AppTypeId;
                         entity.StatusId = model.StatusId;
                         entity.SpecialtyId = model.SpecialityId;
-                        entity.BookDate = model.BookDate;
-                        entity.AppDate = model.AppDate;
+                        entity.BookDate = bookDate;
+                        entity.AppDate = appDate;
                         entity.AppTime = model.AppTime;
                         entity.ConsultantId = model.ConsultantId;
                         entity.HospitalId = model.HospitalId;
@@ -304,12 +326,17 @@ namespace WorkOffice.Services
 
                 int offset = (pageNumber) * pageSize;
 
-                //if (!string.IsNullOrEmpty(options.Parameter.SearchQuery))
-                //{
-                //    query = query.Where(x => x.PatientNumber.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())
-                //    || x.Speciality.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())
-                //    || x.AppointmentStatus.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower()));
-                //}
+                if (!string.IsNullOrEmpty(options.Parameter.Status))
+                {
+                    if(options.Parameter.Status == "BOOKED")
+                    {
+                        query = query.Where(x => x.DepartmentId != 1);
+                    }
+                    if (options.Parameter.Status == "PARTIAL")
+                    {
+                        query = query.Where(x => x.DepartmentId == 1);
+                    }
+                }
                 if (options.Parameter.Id > 0)
                 {
                     query = query.Where(x => x.PatientId == options.Parameter.Id);

@@ -62,9 +62,9 @@ export class AddAppointmentComponent
       appTypeId: ['', [Validators.required]],
       statusId: ['', [Validators.required]],
       specialityId: ['', [Validators.required]],
-      bookDate: ['', [Validators.required]],
-      appDate: ['', [Validators.required]],
-      appTime: ['', [Validators.required]],
+      bookDate: [''],
+      appDate: [''],
+      appTime: [''],
       consultantId: ['', [Validators.required]],
       hospitalId: ['', [Validators.required]],
       wardId: ['', [Validators.required]],
@@ -132,8 +132,8 @@ export class AddAppointmentComponent
                 appTypeId: res.entity.appTypeId,
                 statusId: res.entity.statusId,
                 specialityId: res.entity.specialityId,
-                bookDate: res.entity.bookDate,
-                appDate: res.entity.appDate,
+                bookDate: res.entity.bookDate ? new Date(res.entity.bookDate) : '',
+                appDate: res.entity.appDate ? new Date(res.entity.appDate) : '',
                 appTime: res.entity.appTime,
                 consultantId: res.entity.consultantId,
                 hospitalId: res.entity.hospitalId,
@@ -216,7 +216,7 @@ export class AddAppointmentComponent
   }
 
   cancelForm() {
-    this.router.navigate(['/nhs/all-appointment/PartialBooked']);
+    this.router.navigate(['/nhs/all-appointment']);
   }
 
   onSubmit() {
@@ -266,7 +266,7 @@ export class AddAppointmentComponent
                 'top',
                 'right'
               );
-              this.router.navigate(['/nhs/all-appointment/PartialBooked']);
+              this.router.navigate(['/nhs/all-appointment']);
             } else {
               this.showNotification(
                 'snackbar-danger',
