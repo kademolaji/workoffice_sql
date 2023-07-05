@@ -17,5 +17,6 @@ namespace WorkOffice.Domain.Entities
         public string Company { get; set; }
         public string Separator { get; set; }
         public string Activity { get; set; }
+        public long LastDigit { get; set; }
     }
 }

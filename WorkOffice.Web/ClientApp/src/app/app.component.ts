@@ -16,7 +16,7 @@ import { Keepalive } from '@ng-idle/keepalive';
 })
 export class AppComponent {
   currentUrl!: string;
-  numberOfSeconds = 60;
+  numberOfSeconds = 300;
   lastPing?: Date;
 
   constructor(

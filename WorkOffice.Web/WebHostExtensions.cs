@@ -19,22 +19,22 @@ namespace WorkOffice.Web
                 context.Database.Migrate();
 
                 // now that the database is up to date. Let's seed
-                new AppTypeSeeder(context).SeedData();
-                new ConsultantSeeder(context).SeedData();
-                new HospitalSeeder(context).SeedData();
-                new NHSActivitySeeder(context).SeedData();
-                new PathWayStatusSeeder(context).SeedData();
-                new RTTSeeder(context).SeedData();
-                new SpecialtySeeder(context).SeedData();
-                new WaitingTypeSeeder(context).SeedData();
-                new WardSeeder(context).SeedData();
-                new UserActivityParentSeeder(context).SeedData();
-                new UserActivitiesSeeder(context).SeedData();
-                new CountrySeeder(context).SeedData();
-                new UserRoleDefinitionSeeder(context).SeedData();
-                new UserAccountSeeder(context).SeedData();
-                new UserRoleSeeder(context).SeedData();
-
+                //new AppTypeSeeder(context).SeedData();
+                //new ConsultantSeeder(context).SeedData();
+                //new HospitalSeeder(context).SeedData();
+                //new NHSActivitySeeder(context).SeedData();
+                //new PathWayStatusSeeder(context).SeedData();
+                //new RTTSeeder(context).SeedData();
+                //new SpecialtySeeder(context).SeedData();
+                //new WaitingTypeSeeder(context).SeedData();
+                //new WardSeeder(context).SeedData();
+                //new UserActivityParentSeeder(context).SeedData();
+                //new UserActivitiesSeeder(context).SeedData();
+                //new CountrySeeder(context).SeedData();
+                //new UserRoleDefinitionSeeder(context).SeedData();
+                //new UserAccountSeeder(context).SeedData();
+                //new UserRoleSeeder(context).SeedData();
+                new CustomSettingsSeeder(context).SeedData();
             }
 
             return host;

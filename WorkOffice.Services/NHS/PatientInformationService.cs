@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WorkOffice.Common;
 using WorkOffice.Contracts.Models;
 using WorkOffice.Contracts.ServicesContracts;
 using WorkOffice.Domain.Entities;
@@ -39,17 +40,31 @@ namespace WorkOffice.Services
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Last Name is required." }, IsSuccess = false };
                 }
+                var activity = Enum.GetName(typeof(UserActivitiesEnum), UserActivitiesEnum.Patient_Information).Replace("_", " ");
+                var districtNumber = GenerateSerialNumber(activity);
+                if (string.IsNullOrEmpty(districtNumber))
+                {
+                    return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "District Number cannot be generated, contact admin for setup." }, IsSuccess = false };
+                }
+
+                var activityNHS = Enum.GetName(typeof(UserActivitiesEnum), UserActivitiesEnum.Patient_Document).Replace("_", " ");
+                var nhsNumber = GenerateSerialNumber(activityNHS);
+                if (string.IsNullOrEmpty(nhsNumber))
+                {
+                    return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "NHS Number cannot be generated, contact admin for setup." }, IsSuccess = false };
+                }
 
                 var apiResponse = new ApiResponse<CreateResponse>();
                 bool result = false;
                 NHS_Patient entity = null;
+
                 using (var trans = context.Database.BeginTransaction())
                 {
                     try
                     {
                         entity = new NHS_Patient
                         {
-                            DistrictNumber = model.DistrictNumber,
+                            DistrictNumber = districtNumber,
                             FirstName = model.FirstName,
                             LastName = model.LastName,
                             MiddleName = model.MiddleName,
@@ -60,7 +75,7 @@ namespace WorkOffice.Services
                             Email = model.Email,
                             Sex = model.Sex,
                             PostalCode = model.PostalCode,
-                            NHSNumber = model.NHSNumber,
+                            NHSNumber = nhsNumber,
                             Active = true,
                             Deleted = false,
                             CreatedBy = model.CurrentUserName,
@@ -136,7 +151,6 @@ namespace WorkOffice.Services
                 {
                     try
                     {
-                        entity.DistrictNumber = model.DistrictNumber;
                         entity.FirstName = model.FirstName;
                         entity.LastName = model.LastName;
                         entity.MiddleName = model.MiddleName;
@@ -147,7 +161,6 @@ namespace WorkOffice.Services
                         entity.Email = model.Email;
                         entity.Sex = model.Sex;
                         entity.PostalCode = model.PostalCode;
-                        entity.NHSNumber = model.NHSNumber;
                         entity.UpdatedBy = model.CurrentUserName;
                         entity.UpdatedOn = DateTime.UtcNow;
 
@@ -219,7 +232,7 @@ namespace WorkOffice.Services
                     case "email":
                         query = sortOrder == "asc" ? query.OrderBy(s => s.Email) : query.OrderByDescending(s => s.Email);
                         break;
-                  
+
                     default:
                         query = query.OrderBy(s => s.FirstName);
                         break;
@@ -231,7 +244,8 @@ namespace WorkOffice.Services
                 var response = new SearchReply<PatientInformationModel>()
                 {
                     TotalCount = count,
-                    Result = items.Select(x => new PatientInformationModel {
+                    Result = items.Select(x => new PatientInformationModel
+                    {
                         PatientId = x.PatientId,
                         DistrictNumber = x.DistrictNumber,
                         FirstName = x.FirstName,
@@ -282,7 +296,8 @@ namespace WorkOffice.Services
                 var response = new GetResponse<PatientInformationModel>()
                 {
                     Status = true,
-                    Entity =  new PatientInformationModel {
+                    Entity = new PatientInformationModel
+                    {
                         PatientId = result.PatientId,
                         DistrictNumber = result.DistrictNumber,
                         FirstName = result.FirstName,
@@ -396,5 +411,25 @@ namespace WorkOffice.Services
             }
         }
 
+
+
+        public string GenerateSerialNumber(string activity)
+        {
+            int randomNumber = 0;
+
+            var customSettings = context.CustomIdentityFormatSettings.FirstOrDefault(x => x.Activity.ToLower().Trim() == activity.ToLower().Trim());
+            if (customSettings != null)
+            {
+                long lastDigit = customSettings.LastDigit + 1;
+
+                string generatedNumber = randomNumber.ToString().PadLeft(customSettings.Digits - 1, '0');
+                string serialNumber = customSettings.Prefix + customSettings.Separator + generatedNumber + lastDigit + customSettings.Separator + customSettings.Suffix;
+                customSettings.LastDigit = lastDigit;
+                context.SaveChanges();
+                return serialNumber;
+            }
+            return null;
+        }
     }
+
 }

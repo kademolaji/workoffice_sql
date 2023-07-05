@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WorkOffice.Common;
 using WorkOffice.Contracts.Models;
 using WorkOffice.Contracts.ServicesContracts;
 using WorkOffice.Domain.Entities;
@@ -35,6 +36,13 @@ namespace WorkOffice.Services
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Patient is required." }, IsSuccess = false };
                 }
+                var activity = Enum.GetName(typeof(UserActivitiesEnum), UserActivitiesEnum.Add_PatientValidation).Replace("_", " ");
+                var pathwayNumber = GenerateSerialNumber(activity);
+                if (string.IsNullOrEmpty(pathwayNumber))
+                {
+                    return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Pathway Number cannot be generated, contact admin for setup." }, IsSuccess = false };
+                }
+               
                 var patientDetail = context.NHS_Patients.Where(a => a.PatientId == model.PatientId).FirstOrDefault();
                 var apiResponse = new ApiResponse<CreateResponse>();
                 bool result = false;
@@ -53,7 +61,7 @@ namespace WorkOffice.Services
                             DistrictNumber = patientDetail.DistrictNumber,
                             PathWayCondition = model.PathWayCondition,
                             PathWayEndDate = pathWayEndDate,
-                            PathWayNumber = model.PathWayNumber,
+                            PathWayNumber = pathwayNumber,
                             PathWayStartDate = model.PathWayStartDate,
                             PathWayStatusId = model.PathWayStatusId,
                             PatientId = model.PatientId,
@@ -152,14 +160,13 @@ namespace WorkOffice.Services
                         entity.DistrictNumber = patientDetail.DistrictNumber;
                         entity.PathWayCondition = model.PathWayCondition;
                         entity.PathWayEndDate = pathWayEndDate;
-                        entity.PathWayNumber = pathwayDetail.PathWayNumber;
                         entity.PathWayStartDate = model.PathWayStartDate;
                         entity.PathWayStatusId = model.PathWayStatusId;
+                        entity.NHSNumber = model.NHSNumber;
                         entity.PatientId = model.PatientId;
                         entity.RTTId = model.RTTId;
                         entity.SpecialtyId = model.SpecialtyId;
                         entity.RTTWait = model.RTTWait;
-                        entity.NHSNumber = patientDetail.NHSNumber;
                         entity.UpdatedBy = model.CurrentUserName;
                         entity.UpdatedOn = DateTime.UtcNow;
 
@@ -606,6 +613,24 @@ namespace WorkOffice.Services
             {
                 return new ApiResponse<DeleteReply>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new DeleteReply() { Status = false, Message = $"Error encountered {ex.Message}" }, IsSuccess = false };
             }
+        }
+
+        public string GenerateSerialNumber(string activity)
+        {
+            int randomNumber = 0;
+
+            var customSettings = context.CustomIdentityFormatSettings.FirstOrDefault(x => x.Activity.ToLower().Trim() == activity.ToLower().Trim());
+            if (customSettings != null)
+            {
+                long lastDigit = customSettings.LastDigit + 1;
+
+                string generatedNumber = randomNumber.ToString().PadLeft(customSettings.Digits - 1, '0');
+                string serialNumber = customSettings.Prefix + customSettings.Separator +  generatedNumber + lastDigit + customSettings.Separator + customSettings.Suffix;
+                customSettings.LastDigit = lastDigit;
+                context.SaveChanges();
+                return serialNumber;
+            }
+            return null;
         }
     }
 }

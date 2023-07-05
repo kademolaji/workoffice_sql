@@ -27,6 +27,7 @@ import { AddPatientDocumentDialogComponent } from './dialog/add-patient-document
 import { DeletePatientDocumentDialogComponent } from './dialog/delete/delete.component';
 import Swal from 'sweetalert2';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-add-patient',
@@ -86,7 +87,7 @@ export class AddPatientComponent
   }
   ngOnInit() {
     this.patientInformationForm = this.fb.group({
-      districtNumber: ['', [Validators.required]],
+      districtNumber: [''],
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
       middleName: ['', [Validators.required]],
@@ -97,7 +98,7 @@ export class AddPatientComponent
       email: ['', [Validators.required]],
       sex: ['', [Validators.required]],
       postalCode: ['', [Validators.required]],
-      nhsNumber: ['', [Validators.required]],
+      nhsNumber: [''],
     });
 
     this.patientDocumentForm = this.fb.group({});
@@ -393,6 +394,19 @@ export class AddPatientComponent
         return 'DISCHARGED SUMMARY LETTER';
       default:
         return 'CLINICAL LETTER';
+    }
+  }
+
+  updateAgeWithDOB(e:MatDatepickerInputEvent<Date>){
+
+    if(e.value){
+      const dob = new Date(e.value)
+      const ageTilNowInMilliseconds = Date.now() - dob.getTime();
+      const ageDate = new Date(ageTilNowInMilliseconds);
+
+       this.patientInformationForm.patchValue({
+        age:  Math.abs(ageDate.getUTCFullYear() - 1970),
+      });
     }
   }
 }
