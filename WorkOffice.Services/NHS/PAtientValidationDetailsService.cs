@@ -339,7 +339,7 @@ namespace WorkOffice.Services
                         break;
 
                     default:
-                        query = query.OrderBy(s => s.PatientValidationDetailsId);
+                        query = query.OrderBy(s => s.Date).ThenBy(d => d.PathWayStatusCode);
                         break;
                 }
                 count = query.Count();

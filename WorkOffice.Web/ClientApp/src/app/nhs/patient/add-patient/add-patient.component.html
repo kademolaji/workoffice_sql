@@ -233,7 +233,7 @@
                         </ng-container>
                         <ng-container matColumnDef="clinicDate">
                           <mat-header-cell *matHeaderCellDef mat-sort-header>Clinic Date</mat-header-cell>
-                          <mat-cell *matCellDef="let row"> {{row.clinicDate  | date}}</mat-cell>
+                          <mat-cell *matCellDef="let row"> {{row.clinicDate  | date: 'dd/MM/yyyy'}}</mat-cell>
                         </ng-container>
                         <ng-container matColumnDef="speciality">
                           <mat-header-cell *matHeaderCellDef mat-sort-header>Speciality</mat-header-cell>
@@ -241,7 +241,7 @@
                         </ng-container>
                         <ng-container matColumnDef="dateUploaded">
                           <mat-header-cell *matHeaderCellDef mat-sort-header>Date Uploaded</mat-header-cell>
-                          <mat-cell *matCellDef="let row"> {{row.dateUploaded | date}}</mat-cell>
+                          <mat-cell *matCellDef="let row"> {{row.dateUploaded | date: 'dd/MM/yyyy'}}</mat-cell>
                         </ng-container>
                         <!-- actions -->
                         <ng-container matColumnDef="actions">

@@ -63,11 +63,11 @@
                 </ng-container>
                 <ng-container matColumnDef="waitinglistDate">
                   <mat-header-cell *matHeaderCellDef mat-sort-header>Waitinglist Date</mat-header-cell>
-                  <mat-cell *matCellDef="let row"> {{row.waitinglistDate | date}}</mat-cell>
+                  <mat-cell *matCellDef="let row"> {{row.waitinglistDate | date: 'dd/MM/yyyy'}}</mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="tciDate">
                   <mat-header-cell *matHeaderCellDef mat-sort-header>TCI Date</mat-header-cell>
-                  <mat-cell *matCellDef="let row"> {{row.tciDate | date}}</mat-cell>
+                  <mat-cell *matCellDef="let row"> {{row.tciDate | date: 'dd/MM/yyyy'}}</mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="status">
                   <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>

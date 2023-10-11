@@ -30,12 +30,7 @@ export class AllConsultantComponent
   extends UnsubscribeOnDestroyAdapter
   implements OnInit
 {
-  displayedColumns: string[] = [
-    'select',
-    'code',
-    'name',
-    'actions',
-  ];
+  displayedColumns: string[] = ['select', 'code', 'name', 'actions'];
   selection = new SelectionModel<ConsultantModel>(true, []);
   ELEMENT_DATA: ConsultantService[] = [];
   isLoading = false;
@@ -43,8 +38,7 @@ export class AllConsultantComponent
   pageSize = 10;
   currentPage = 0;
   pageSizeOptions: number[] = [5, 10, 25, 100];
-  dataSource: MatTableDataSource<ConsultantModel> =
-    new MatTableDataSource();
+  dataSource: MatTableDataSource<ConsultantModel> = new MatTableDataSource();
   searchQuery = '';
   sortOrder = '';
   sortField = '';
@@ -71,6 +65,7 @@ export class AllConsultantComponent
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.searchQuery = filterValue.trim();
+    this.currentPage = 0;
     this.loadData(this.searchQuery, this.sortField, this.sortOrder);
   }
 
@@ -113,13 +108,10 @@ export class AllConsultantComponent
     } else {
       tempDirection = 'ltr';
     }
-    const dialogRef = this.dialog.open(
-      DeleteConsultantDialogComponent,
-      {
-        data: row,
-        direction: tempDirection,
-      }
-    );
+    const dialogRef = this.dialog.open(DeleteConsultantDialogComponent, {
+      data: row,
+      direction: tempDirection,
+    });
     this.subs.sink = dialogRef.afterClosed().subscribe((result) => {
       if (result === 1) {
         this.refresh();
@@ -148,31 +140,26 @@ export class AllConsultantComponent
   }
   removeSelectedRows() {
     const totalSelect = this.selection.selected.length;
-    const targetIds = this.selection.selected.map(
-      (data) => data.consultantId
-    );
-    this.subs.sink = this.ConsultantService
-      .deleteMultipleConsultant(targetIds)
-      .subscribe({
-        next: (res) => {
-          if (res.status) {
-            this.refresh();
-            this.selection = new SelectionModel<ConsultantModel>(
-              true,
-              []
-            );
-            this.showNotification(
-              'snackbar-success',
-              totalSelect + ' Record Delete Successfully...!!!',
-              'top',
-              'right'
-            );
-          }
-        },
-        error: (error) => {
-          this.showNotification('snackbar-danger', error, 'top', 'right');
-        },
-      });
+    const targetIds = this.selection.selected.map((data) => data.consultantId);
+    this.subs.sink = this.ConsultantService.deleteMultipleConsultant(
+      targetIds
+    ).subscribe({
+      next: (res) => {
+        if (res.status) {
+          this.refresh();
+          this.selection = new SelectionModel<ConsultantModel>(true, []);
+          this.showNotification(
+            'snackbar-success',
+            totalSelect + ' Record Delete Successfully...!!!',
+            'top',
+            'right'
+          );
+        }
+      },
+      error: (error) => {
+        this.showNotification('snackbar-danger', error, 'top', 'right');
+      },
+    });
   }
   public loadData(searchQuery: string, sortField: string, sortOrder: string) {
     this.isTblLoading = true;
@@ -185,13 +172,11 @@ export class AllConsultantComponent
         searchQuery,
       },
     };
-    this.ConsultantService
-      .getAllConsultant(options)
-      .subscribe((res) => {
-        this.isTblLoading = false;
-        this.dataSource.data = res.result;
-        this.totalRows = res.totalCount;
-      });
+    this.ConsultantService.getAllConsultant(options).subscribe((res) => {
+      this.isTblLoading = false;
+      this.dataSource.data = res.result;
+      this.totalRows = res.totalCount;
+    });
   }
 
   showNotification(

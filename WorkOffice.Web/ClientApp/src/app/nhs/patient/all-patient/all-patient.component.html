@@ -90,7 +90,7 @@
                 </ng-container>
                 <ng-container matColumnDef="dob">
                   <mat-header-cell *matHeaderCellDef mat-sort-header>Date of Birth</mat-header-cell>
-                  <mat-cell *matCellDef="let row"> {{row.dob  | date}}</mat-cell>
+                  <mat-cell *matCellDef="let row"> {{row.dob  | date: 'dd/MM/yyyy'}}</mat-cell>
                 </ng-container>
                 <!-- actions -->
                 <ng-container matColumnDef="actions">

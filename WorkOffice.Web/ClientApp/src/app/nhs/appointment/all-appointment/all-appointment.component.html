@@ -77,11 +77,11 @@
                 </ng-container>
                 <ng-container matColumnDef="appointmentDate">
                   <mat-header-cell *matHeaderCellDef mat-sort-header>Appointment Date</mat-header-cell>
-                  <mat-cell *matCellDef="let row"> {{row.appDate | date}}</mat-cell>
+                  <mat-cell *matCellDef="let row"> {{row.appDate | date: 'dd/MM/yyyy'}}</mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="bookingDate">
                   <mat-header-cell *matHeaderCellDef mat-sort-header>Booking Date</mat-header-cell>
-                  <mat-cell *matCellDef="let row"> {{row.bookDate  | date}}</mat-cell>
+                  <mat-cell *matCellDef="let row"> {{row.bookDate  | date: 'dd/MM/yyyy'}}</mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="speciality">
                   <mat-header-cell *matHeaderCellDef mat-sort-header>Speciality</mat-header-cell>

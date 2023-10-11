@@ -12,10 +12,13 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { UnsubscribeOnDestroyAdapter } from 'src/app/shared/UnsubscribeOnDestroyAdapter';
 import { Direction } from '@angular/cdk/bidi';
 import { UsersService } from './users.service';
-import {  UserListModel } from './users.model';
+import { UserListModel } from './users.model';
 import { Router } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table';
-import { SearchCall, SearchParameter } from 'src/app/core/utilities/api-response';
+import {
+  SearchCall,
+  SearchParameter,
+} from 'src/app/core/utilities/api-response';
 import { DeleteDialogComponent } from './dialog/delete/delete.component';
 @Component({
   selector: 'app-all-users',
@@ -43,8 +46,7 @@ export class AllUsersComponent
   pageSize = 10;
   currentPage = 0;
   pageSizeOptions: number[] = [5, 10, 25, 100];
-  dataSource: MatTableDataSource<UserListModel> =
-    new MatTableDataSource();
+  dataSource: MatTableDataSource<UserListModel> = new MatTableDataSource();
   searchQuery = '';
   sortOrder = '';
   sortField = '';
@@ -70,6 +72,7 @@ export class AllUsersComponent
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
+    this.currentPage = 0;
     this.searchQuery = filterValue.trim();
     this.loadData(this.searchQuery, this.sortField, this.sortOrder);
   }
@@ -98,12 +101,7 @@ export class AllUsersComponent
   }
 
   editCall(row: { userId: number }) {
-    this.router.navigate([
-      'admin',
-      'users',
-      'edit-user',
-      row.userId,
-    ]);
+    this.router.navigate(['admin', 'users', 'edit-user', row.userId]);
   }
 
   activateDeactivateUser(row: UserListModel) {
@@ -113,21 +111,18 @@ export class AllUsersComponent
     } else {
       tempDirection = 'ltr';
     }
-    const dialogRef = this.dialog.open(
-      DeleteDialogComponent,
-      {
-        data: row,
-        direction: tempDirection,
-      }
-    );
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {
+      data: row,
+      direction: tempDirection,
+    });
     this.subs.sink = dialogRef.afterClosed().subscribe((result) => {
-        this.refresh();
-        this.showNotification(
-          'snackbar-success',
-          'Record Updated Successfully...!!!',
-          'top',
-          'right'
-        );
+      this.refresh();
+      this.showNotification(
+        'snackbar-success',
+        'Record Updated Successfully...!!!',
+        'top',
+        'right'
+      );
     });
   }
 
@@ -146,31 +141,24 @@ export class AllUsersComponent
   }
   removeSelectedRows() {
     const totalSelect = this.selection.selected.length;
-    const targetIds = this.selection.selected.map(
-      (data) => data.userId
-    );
-    this.subs.sink = this.usersService
-      .deleteMultipleUser(targetIds)
-      .subscribe({
-        next: (res) => {
-          if (res.status) {
-            this.refresh();
-            this.selection = new SelectionModel<UserListModel>(
-              true,
-              []
-            );
-            this.showNotification(
-              'snackbar-success',
-              totalSelect + ' Record Delete Successfully...!!!',
-              'top',
-              'right'
-            );
-          }
-        },
-        error: (error) => {
-          this.showNotification('snackbar-danger', error, 'top', 'right');
-        },
-      });
+    const targetIds = this.selection.selected.map((data) => data.userId);
+    this.subs.sink = this.usersService.deleteMultipleUser(targetIds).subscribe({
+      next: (res) => {
+        if (res.status) {
+          this.refresh();
+          this.selection = new SelectionModel<UserListModel>(true, []);
+          this.showNotification(
+            'snackbar-success',
+            totalSelect + ' Record Delete Successfully...!!!',
+            'top',
+            'right'
+          );
+        }
+      },
+      error: (error) => {
+        this.showNotification('snackbar-danger', error, 'top', 'right');
+      },
+    });
   }
   public loadData(searchQuery: string, sortField: string, sortOrder: string) {
     this.isTblLoading = true;
@@ -183,13 +171,11 @@ export class AllUsersComponent
         searchQuery,
       },
     };
-    this.usersService
-      .getAllUser(options)
-      .subscribe((res) => {
-        this.isTblLoading = false;
-        this.dataSource.data = res.result;
-        this.totalRows = res.totalCount;
-      });
+    this.usersService.getAllUser(options).subscribe((res) => {
+      this.isTblLoading = false;
+      this.dataSource.data = res.result;
+      this.totalRows = res.totalCount;
+    });
   }
 
   showNotification(

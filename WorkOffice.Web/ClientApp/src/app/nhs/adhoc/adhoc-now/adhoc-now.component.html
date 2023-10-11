@@ -60,7 +60,7 @@
                 </ng-container>
                 <ng-container matColumnDef="dob">
                   <mat-header-cell *matHeaderCellDef mat-sort-header>Date of Birth</mat-header-cell>
-                  <mat-cell *matCellDef="let row"> {{row.dob  | date}}</mat-cell>
+                  <mat-cell *matCellDef="let row"> {{row.dob  | date: 'dd/MM/yyyy'}}</mat-cell>
                 </ng-container>
                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                 <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectCall(row)"

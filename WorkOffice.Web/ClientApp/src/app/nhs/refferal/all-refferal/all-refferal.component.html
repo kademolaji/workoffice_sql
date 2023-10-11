@@ -85,7 +85,7 @@
                 </ng-container>
                 <ng-container matColumnDef="referralDate">
                   <mat-header-cell *matHeaderCellDef mat-sort-header>Referral Date</mat-header-cell>
-                  <mat-cell *matCellDef="let row"> {{row.referralDate | date}}</mat-cell>
+                  <mat-cell *matCellDef="let row"> {{row.referralDate | date: 'dd/MM/yyyy'}}</mat-cell>
                 </ng-container>
                 <!-- actions -->
                 <ng-container matColumnDef="actions">

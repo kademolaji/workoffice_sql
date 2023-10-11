@@ -10,6 +10,9 @@ using Microsoft.AspNetCore.Http;
 using WorkOffice.Domain.Helpers;
 using WorkOffice.Services;
 using WorkOffice.Web.Filters;
+using Microsoft.AspNetCore.Localization;
+using System.Collections.Generic;
+using System.Globalization;
 
 namespace WorkOffice.Web
 {
@@ -98,6 +101,14 @@ namespace WorkOffice.Web
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            RequestLocalizationOptions localizationOptions = new RequestLocalizationOptions
+            {
+                SupportedCultures = new List<CultureInfo> { new CultureInfo("en-GB") },
+                SupportedUICultures = new List<CultureInfo> { new CultureInfo("en-GB") },
+                DefaultRequestCulture = new RequestCulture("en-GB")
+            };
+
+            app.UseRequestLocalization(localizationOptions);
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

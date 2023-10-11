@@ -3,7 +3,7 @@
   <div mat-dialog-content>
     <ul class="clearfix">
       <li>
-        <p><span class="font-weight-bold"> Booking Date: </span>{{data.bookDate}}</p>
+        <p><span class="font-weight-bold"> Booking Date: </span>{{data.bookDate | date: 'dd/MM/yyyy'}}</p>
       </li>
       <li>
         <p><span class="font-weight-bold"> Appointment Date: </span>{{ data.appTime }}</p>

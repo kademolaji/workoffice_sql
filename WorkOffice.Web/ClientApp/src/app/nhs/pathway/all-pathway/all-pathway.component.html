@@ -77,11 +77,11 @@
                 </ng-container>
                 <ng-container matColumnDef="pathWayStartDate">
                   <mat-header-cell *matHeaderCellDef mat-sort-header>Pathway StartDate</mat-header-cell>
-                  <mat-cell *matCellDef="let row"> {{row.pathWayStartDate | date}}</mat-cell>
+                  <mat-cell *matCellDef="let row"> {{row.pathWayStartDate | date: 'dd/MM/yyyy'}}</mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="pathWayEndDate">
                   <mat-header-cell *matHeaderCellDef mat-sort-header>Pathway EndDate</mat-header-cell>
-                  <mat-cell *matCellDef="let row"> {{row.pathWayEndDate | date}}</mat-cell>
+                  <mat-cell *matCellDef="let row"> {{row.pathWayEndDate | date: 'dd/MM/yyyy'}}</mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="specialityName">
                   <mat-header-cell *matHeaderCellDef mat-sort-header>Specialty</mat-header-cell>

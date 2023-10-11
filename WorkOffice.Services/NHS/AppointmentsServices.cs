@@ -55,15 +55,15 @@ namespace WorkOffice.Services
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Ward is required." }, IsSuccess = false };
                 }
-                //if (model.DepartmentId <= 0)
-                //{
-                //    return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Department is required." }, IsSuccess = false };
-                //}
-               if(model.StatusId == 1)
+                if (model.StatusId != 5 && (string.IsNullOrEmpty(model.BookDate) || string.IsNullOrEmpty(model.AppDate)))
+                {
+                    return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Booking date and appointment date is required." }, IsSuccess = false };
+                }
+                if (model.StatusId == 1)
                 {
                     model.AppointmentStatus = "ATTEND";
                 }
-               else if (model.StatusId == 2)
+                else if (model.StatusId == 2)
                 {
                     model.AppointmentStatus = "CANCELLED BY PATIENT";
                 }
@@ -187,10 +187,10 @@ namespace WorkOffice.Services
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Ward is required." }, IsSuccess = false };
                 }
-                //if (model.DepartmentId <= 0)
-                //{
-                //    return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Department is required." }, IsSuccess = false };
-                //}
+                if (model.StatusId != 5 && (string.IsNullOrEmpty(model.BookDate) || string.IsNullOrEmpty(model.AppDate)))
+                {
+                    return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Booking date and appointment date is required." }, IsSuccess = false };
+                }
                 if (model.StatusId == 1)
                 {
                     model.AppointmentStatus = "ATTEND";
@@ -203,10 +203,15 @@ namespace WorkOffice.Services
                 {
                     model.AppointmentStatus = "CANCELLED BY HOSPITAL";
                 }
+                else if (model.StatusId == 5)
+                {
+                    model.AppointmentStatus = "FUTURE";
+                }
                 else
                 {
                     model.AppointmentStatus = "DO NOT ATTEND";
                 }
+
 
 
                 var apiResponse = new ApiResponse<CreateResponse>();
@@ -298,7 +303,6 @@ namespace WorkOffice.Services
 
                 IQueryable<AppointmentResponseModel> query = (from app in context.NHS_Appointments
                                                               join pat in context.NHS_Patients on app.PatientId equals pat.PatientId
-                                                              //where app.AppointmentStatus == "PartialBooked" && app.Deleted==false
                                                               where app.Deleted == false
                                                               select new AppointmentResponseModel
                                                               {
@@ -326,15 +330,23 @@ namespace WorkOffice.Services
 
                 int offset = (pageNumber) * pageSize;
 
+                if (!string.IsNullOrEmpty(options.Parameter.SearchQuery))
+               {
+                    query = query.Where(x => x.PatientName.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())
+                    || x.Speciality.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())
+                     || x.PatientPathNumber.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())
+                     || x.PatientNumber.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower()));
+                }
+
                 if (!string.IsNullOrEmpty(options.Parameter.Status))
                 {
-                    if(options.Parameter.Status == "BOOKED")
+                    if (options.Parameter.Status == "BOOKED")
                     {
-                        query = query.Where(x => x.DepartmentId != 1);
+                        query = query.Where(x => x.AppointmentStatus != "FUTURE" || x.BookDate.HasValue || x.AppDate.HasValue);
                     }
                     if (options.Parameter.Status == "PARTIAL")
                     {
-                        query = query.Where(x => x.DepartmentId == 1);
+                        query = query.Where(x => x.AppointmentStatus == "FUTURE" || !x.BookDate.HasValue || !x.AppDate.HasValue);
                     }
                 }
                 if (options.Parameter.Id > 0)

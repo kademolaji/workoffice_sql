@@ -876,44 +876,58 @@ namespace WorkOffice.Services
         public async Task<ApiResponse<SearchReply<UserAccountModel>>> GetAllUserAccounts(SearchCall<SearchUserList> options)
         {
             int count = 0;
-            int pageNumber = options.From > 0 ? options.From : 1;
+            int pageNumber = options.From > 0 ? options.From : 0;
             int pageSize = options.PageSize > 0 ? options.PageSize : 10;
+            string sortOrder = string.IsNullOrEmpty(options.SortOrder) ? "asc" : options.SortOrder;
+            string sortField = string.IsNullOrEmpty(options.SortField) ? "firstName" : options.SortField;
             try
             {
                 var apiResponse = new ApiResponse<SearchReply<UserAccountModel>>();
-                var query = _context.UserAccounts.Select(u => new UserAccountModel
+
+                IQueryable<UserAccount> query = _context.UserAccounts;
+                int offset = (pageNumber) * pageSize;
+
+
+                if (!string.IsNullOrEmpty(options.Parameter.SearchQuery))
                 {
-                    UserId = u.UserId,
-                    CustomUserCode = u.CustomUserCode,
-                    FirstName = u.FirstName,
-                    LastName = u.LastName,
-                    Email = u.Email,
-                    ProfilePicture = u.ProfilePicture,
-                    Country = u.Country,
-                    Biography = u.Biography,
-                    Status = u.Disabled ? "Inactive" : "Active"
+                    query = query.Where(x => x.FirstName.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())
+                    || x.LastName.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())
+                     || x.Email.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower()));
+                }
 
-                });
+                switch (sortField)
+                {
+                    case "firstName":
+                        query = sortOrder == "asc" ? query.OrderBy(s => s.FirstName) : query.OrderByDescending(s => s.FirstName);
+                        break;
+                    case "lastName":
+                        query = sortOrder == "asc" ? query.OrderBy(s => s.LastName) : query.OrderByDescending(s => s.LastName);
+                        break;
+                    default:
+                        query = query.OrderBy(s => s.Email);
+                        break;
+                }
 
-                //if (!string.IsNullOrEmpty(options.Parameter.SearchQuery))
-                //{
-                //    query = query.Where(x => x.FirstName.Contains(options.Parameter.SearchQuery)
-                //    || x.LastName.Contains(options.Parameter.SearchQuery)
-                //     || x.Email.Contains(options.Parameter.SearchQuery));
-                //}
-                //if (options.Parameter.UserRole.HasValue)
-                //{
-                //    query = query.Where(x => x.UserRole.Equals(options.Parameter.UserRole));
-                //}
-                int offset = (pageNumber - 1) * pageSize;
                 count = query.Count();
-                var result = await query.OrderBy(x => x.Email).ThenBy(x => x.CustomUserCode).Take(pageSize).Skip(offset).ToListAsync();
+
+                var result = await query.Skip(offset).Take(pageSize).ToListAsync();
 
 
                 var response = new SearchReply<UserAccountModel>()
                 {
                     TotalCount = count,
-                    Result = result,
+                    Result = result.Select(u => new UserAccountModel
+                    {
+                        UserId = u.UserId,
+                        CustomUserCode = u.CustomUserCode,
+                        FirstName = u.FirstName,
+                        LastName = u.LastName,
+                        Email = u.Email,
+                        Country = u.Country,
+                        Biography = u.Biography,
+                        Status = u.Disabled ? "Inactive" : "Active"
+
+                    }).ToList(),
                     Errors = null
                 };
 

@@ -64,7 +64,7 @@
                 >End Date</mat-header-cell
               >
               <mat-cell *matCellDef="let row">
-                {{ row.endDate | date }}</mat-cell
+                {{ row.endDate | date: 'dd/MM/yyyy' }}</mat-cell
               >
             </ng-container>
             <!-- actions -->
