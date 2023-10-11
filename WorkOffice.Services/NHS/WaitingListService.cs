@@ -222,17 +222,17 @@ namespace WorkOffice.Services
                     query = query.Where(x => x.Condition.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())
                    );
                 }
-                if (!string.IsNullOrEmpty(options.Parameter.Status))
-                {
-                    if(options.Parameter.Status == "OUTPATIENT")
-                    {
-                        query = query.Where(x => x.WaitTypeId == 1);
-                    }
-                    if (options.Parameter.Status == "INPATIENT")
-                    {
-                        query = query.Where(x => x.WaitTypeId == 2);
-                    }
-                }
+                //if (!string.IsNullOrEmpty(options.Parameter.Status))
+                //{
+                //    if(options.Parameter.Status == "OUTPATIENT")
+                //    {
+                //        query = query.Where(x => x.WaitTypeId == 1);
+                //    }
+                //    if (options.Parameter.Status == "INPATIENT")
+                //    {
+                //        query = query.Where(x => x.WaitTypeId == 2);
+                //    }
+                //}
                 switch (sortField)
                 {
                     case "condition":
