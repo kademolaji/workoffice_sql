@@ -16,7 +16,15 @@ import { AppointmentService } from '../appointment.service';
 import { CreateAppointmentModel } from '../appointment.model';
 import { GeneralSettingsService } from 'src/app/core/service/general-settings.service';
 import { GeneralSettingsModel } from 'src/app/core/models/general-settings.model';
-import { catchError, debounceTime, distinctUntilChanged, filter, finalize, switchMap, tap } from 'rxjs';
+import {
+  catchError,
+  debounceTime,
+  distinctUntilChanged,
+  filter,
+  finalize,
+  switchMap,
+  tap,
+} from 'rxjs';
 
 @Component({
   selector: 'app-add-appointment',
@@ -32,7 +40,7 @@ export class AddAppointmentComponent
   loading = false;
   isAddMode = true;
   id = 0;
-
+  disableDepartment = true;
   departmentList: GeneralSettingsModel[] = [];
   consultantList: GeneralSettingsModel[] = [];
   appTypeList: GeneralSettingsModel[] = [];
@@ -60,18 +68,18 @@ export class AddAppointmentComponent
   ngOnInit() {
     this.appointmentForm = this.fb.group({
       appTypeId: ['', [Validators.required]],
-      statusId: ['', [Validators.required]],
       specialityId: ['', [Validators.required]],
+      patientId: ['', [Validators.required]],
       bookDate: [''],
       appDate: [''],
       appTime: [''],
-      consultantId: ['', [Validators.required]],
-      hospitalId: ['', [Validators.required]],
-      wardId: ['', [Validators.required]],
-      departmentId: [''],
-      patientId: ['', [Validators.required]],
+      consultantId: [''],
+      hospitalId: [''],
+      wardId: [''],
+      comments: [''],
+      statusId: [''],
+      departmentId: [1],
       patientValidationId: [''],
-      comments: ['', [Validators.required]],
     });
 
     this.subs.sink = this.generalSettingsService
@@ -96,7 +104,6 @@ export class AddAppointmentComponent
         this.hospitalList = response.entity;
       });
 
-
     this.subs.sink = this.generalSettingsService
       .getPathwayStatus()
       .subscribe((response) => {
@@ -113,8 +120,7 @@ export class AddAppointmentComponent
         this.wardList = response.entity;
       });
 
-
-      this.subs.sink = this.generalSettingsService
+    this.subs.sink = this.generalSettingsService
       .getPatientPathWayList()
       .subscribe((response) => {
         this.patientPathWayList = response.entity;
@@ -132,80 +138,136 @@ export class AddAppointmentComponent
                 appTypeId: res.entity.appTypeId,
                 statusId: res.entity.statusId,
                 specialityId: res.entity.specialityId,
-                bookDate: res.entity.bookDate ? new Date(res.entity.bookDate) : '',
+                bookDate: res.entity.bookDate
+                  ? new Date(res.entity.bookDate)
+                  : '',
                 appDate: res.entity.appDate ? new Date(res.entity.appDate) : '',
                 appTime: res.entity.appTime,
                 consultantId: res.entity.consultantId,
                 hospitalId: res.entity.hospitalId,
                 wardId: res.entity.wardId,
                 departmentId: res.entity.departmentId,
-                patientId: { label: res.entity.patientName, value: res.entity.patientId},
-                patientValidationId: { label: res.entity.patientPathNumber, value: res.entity.patientValidationId},
+                patientId: {
+                  label: res.entity.patientName,
+                  value: res.entity.patientId,
+                },
+                patientValidationId: {
+                  label: res.entity.patientPathNumber,
+                  value: res.entity.patientValidationId,
+                },
                 comments: res.entity.comments,
               });
             }
           },
         });
     }
-    this.appointmentForm.get('patientId')?.valueChanges
-    .pipe(
-      filter(res => {
-        return res !== null && res.length >= this.minLengthTerm
-      }),
-      distinctUntilChanged(),
-      debounceTime(1000),
-      tap(() => {
-        this.patientList = [];
-        this.isLoading = true;
-      }),
-      switchMap(value => this.generalSettingsService.getPatientList(value as string).pipe(catchError((err) => this.router.navigateByUrl('/')))
-        .pipe(
-          finalize(() => {
-            this.isLoading = false
-          }),
+    this.appointmentForm
+      .get('patientId')
+      ?.valueChanges.pipe(
+        filter((res) => {
+          return res !== null && res.length >= this.minLengthTerm;
+        }),
+        distinctUntilChanged(),
+        debounceTime(1000),
+        tap(() => {
+          this.patientList = [];
+          this.isLoading = true;
+        }),
+        switchMap((value) =>
+          this.generalSettingsService
+            .getPatientList(value as string)
+            .pipe(catchError((err) => this.router.navigateByUrl('/')))
+            .pipe(
+              finalize(() => {
+                this.isLoading = false;
+              })
+            )
         )
       )
-    )
-    .subscribe((data: any) => {
-      if (data['entity'] == undefined) {
-        this.patientList = [];
-      } else {
-        this.patientList = data['entity'];
-      }
-    }
-    );
+      .subscribe((data: any) => {
+        if (data['entity'] == undefined) {
+          this.patientList = [];
+        } else {
+          this.patientList = data['entity'];
+        }
+      });
 
-    this.appointmentForm.get('patientValidationId')?.valueChanges
-    .pipe(
-      filter(res => {
-        return res !== null && res.length >= this.minLengthTerm
-      }),
-      distinctUntilChanged(),
-      debounceTime(1000),
-      tap(() => {
-        this.pathwayList = [];
-        this.isLoading = true;
-      }),
-      switchMap(value => this.generalSettingsService.getPatientPathWayList(value as string).pipe(catchError((err) => this.router.navigateByUrl('/')))
-        .pipe(
-          finalize(() => {
-            this.isLoading = false
-          }),
+    this.appointmentForm
+      .get('patientValidationId')
+      ?.valueChanges.pipe(
+        filter((res) => {
+          return res !== null && res.length >= this.minLengthTerm;
+        }),
+        distinctUntilChanged(),
+        debounceTime(1000),
+        tap(() => {
+          this.pathwayList = [];
+          this.isLoading = true;
+        }),
+        switchMap((value) =>
+          this.generalSettingsService
+            .getPatientPathWayList(value as string)
+            .pipe(catchError((err) => this.router.navigateByUrl('/')))
+            .pipe(
+              finalize(() => {
+                this.isLoading = false;
+              })
+            )
         )
       )
-    )
-    .subscribe((data: any) => {
-      if (data['entity'] == undefined) {
-        this.pathwayList = [];
+      .subscribe((data: any) => {
+        if (data['entity'] == undefined) {
+          this.pathwayList = [];
+        } else {
+          this.pathwayList = data['entity'];
+        }
+      });
+
+    this.appointmentForm.get('appTypeId')?.valueChanges.subscribe((value) => {
+      if (value !== 3) {
+        this.appointmentForm
+          .get('consultantId')
+          ?.setValidators(Validators.required);
+        this.appointmentForm
+          .get('hospitalId')
+          ?.setValidators(Validators.required);
+        this.appointmentForm.get('wardId')?.setValidators(Validators.required);
+        this.appointmentForm
+          .get('comments')
+          ?.setValidators(Validators.required);
+        this.appointmentForm
+          .get('bookDate')
+          ?.setValidators(Validators.required);
+        this.appointmentForm.get('appDate')?.setValidators(Validators.required);
+        this.appointmentForm.get('appTime')?.setValidators(Validators.required);
+        this.appointmentForm
+          .get('statusId')
+          ?.setValidators(Validators.required);
+        this.appointmentForm
+          .get('departmentId')
+          ?.setValidators(Validators.required);
       } else {
-        this.pathwayList = data['entity'];
+        this.appointmentForm.get('consultantId')?.clearValidators();
+        this.appointmentForm.get('hospitalId')?.clearValidators();
+        this.appointmentForm.get('wardId')?.clearValidators();
+        this.appointmentForm.get('comments')?.clearValidators();
+        this.appointmentForm.get('bookDate')?.clearValidators();
+        this.appointmentForm.get('appDate')?.clearValidators();
+        this.appointmentForm.get('appTime')?.clearValidators();
+        this.appointmentForm.get('statusId')?.clearValidators();
+        this.appointmentForm.get('departmentId')?.clearValidators();
       }
-    }
-    );
+      this.appointmentForm.get('consultantId')?.updateValueAndValidity();
+      this.appointmentForm.get('hospitalId')?.updateValueAndValidity();
+      this.appointmentForm.get('wardId')?.updateValueAndValidity();
+      this.appointmentForm.get('comments')?.updateValueAndValidity();
+      this.appointmentForm.get('bookDate')?.updateValueAndValidity();
+      this.appointmentForm.get('appDate')?.updateValueAndValidity();
+      this.appointmentForm.get('appTime')?.updateValueAndValidity();
+      this.appointmentForm.get('statusId')?.updateValueAndValidity();
+      this.appointmentForm.get('departmentId')?.updateValueAndValidity();
+    });
   }
-
-
-
 
   displayWithPatient(value: any) {
     return value?.label;
@@ -245,13 +307,14 @@ export class AddAppointmentComponent
         wardId: +this.appointmentForm.value.wardId,
         departmentId: +this.appointmentForm.value.departmentId,
         patientId: +this.appointmentForm.value.patientId.value,
-        patientValidationId: +this.appointmentForm.value.patientValidationId.value,
+        patientValidationId:
+          +this.appointmentForm.value.patientValidationId.value,
         comments: this.appointmentForm.value.comments,
         appointmentStatus: '',
         cancellationReason: '',
         speciality: '',
-        patientNumber:'',
-        patientName:'',
+        patientNumber: '',
+        patientName: '',
         patientPathWayNumber: '',
       };
       this.subs.sink = this.appointmentService

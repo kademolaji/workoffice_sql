@@ -39,7 +39,7 @@ namespace WorkOffice.Services
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Appointment Type is required." }, IsSuccess = false };
                 }
-                if (model.StatusId <= 0)
+                if (model.AppTypeId != 3 && model.StatusId <= 0)
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Status is required." }, IsSuccess = false };
                 }
@@ -47,15 +47,15 @@ namespace WorkOffice.Services
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Speciality is required." }, IsSuccess = false };
                 }
-                if (model.ConsultantId <= 0)
+                if (model.AppTypeId != 3 && model.ConsultantId <= 0)
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Consultant is required." }, IsSuccess = false };
                 }
-                if (model.WardId <= 0)
+                if (model.AppTypeId != 3 && model.WardId <= 0)
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Ward is required." }, IsSuccess = false };
                 }
-                if (model.StatusId != 5 && (string.IsNullOrEmpty(model.BookDate) || string.IsNullOrEmpty(model.AppDate)))
+                if (model.AppTypeId != 3 && (string.IsNullOrEmpty(model.BookDate) || string.IsNullOrEmpty(model.AppDate)))
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Booking date and appointment date is required." }, IsSuccess = false };
                 }
@@ -171,7 +171,7 @@ namespace WorkOffice.Services
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Appointment Type is required." }, IsSuccess = false };
                 }
-                if (model.StatusId <= 0)
+                if (model.AppTypeId != 3 && model.StatusId <= 0)
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Status is required." }, IsSuccess = false };
                 }
@@ -179,15 +179,15 @@ namespace WorkOffice.Services
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Speciality is required." }, IsSuccess = false };
                 }
-                if (model.ConsultantId <= 0)
+                if (model.AppTypeId != 3 && model.ConsultantId <= 0)
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Consultant is required." }, IsSuccess = false };
                 }
-                if (model.WardId <= 0)
+                if (model.AppTypeId != 3 && model.WardId <= 0)
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Ward is required." }, IsSuccess = false };
                 }
-                if (model.StatusId != 5 && (string.IsNullOrEmpty(model.BookDate) || string.IsNullOrEmpty(model.AppDate)))
+                if (model.AppTypeId != 3 && (string.IsNullOrEmpty(model.BookDate) || string.IsNullOrEmpty(model.AppDate)))
                 {
                     return new ApiResponse<CreateResponse>() { StatusCode = System.Net.HttpStatusCode.BadRequest, ResponseType = new CreateResponse() { Status = false, Id = "", Message = "Booking date and appointment date is required." }, IsSuccess = false };
                 }
@@ -330,23 +330,15 @@ namespace WorkOffice.Services
 
                 int offset = (pageNumber) * pageSize;
 
-                if (!string.IsNullOrEmpty(options.Parameter.SearchQuery))
-               {
-                    query = query.Where(x => x.PatientName.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())
-                    || x.Speciality.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())
-                     || x.PatientPathNumber.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())
-                     || x.PatientNumber.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower()));
-                }
-
                 if (!string.IsNullOrEmpty(options.Parameter.Status))
                 {
                     if (options.Parameter.Status == "BOOKED")
                     {
-                        query = query.Where(x => x.AppointmentStatus != "FUTURE" || x.BookDate.HasValue || x.AppDate.HasValue);
+                        query = query.Where(x => x.AppTypeId != 3 || x.BookDate.HasValue || x.AppDate.HasValue);
                     }
                     if (options.Parameter.Status == "PARTIAL")
                     {
-                        query = query.Where(x => x.AppointmentStatus == "FUTURE" || !x.BookDate.HasValue || !x.AppDate.HasValue);
+                        query = query.Where(x => x.AppTypeId == 3 || !x.BookDate.HasValue || !x.AppDate.HasValue);
                     }
                 }
                 if (options.Parameter.Id > 0)
@@ -355,13 +347,28 @@ namespace WorkOffice.Services
                 }
                 switch (sortField)
                 {
+                    case "patientName":
+                        query = sortOrder == "asc" ? query.OrderBy(s => s.PatientName) : query.OrderByDescending(s => s.PatientName);
+                        break;
                     case "patientNumber":
                         query = sortOrder == "asc" ? query.OrderBy(s => s.PatientNumber) : query.OrderByDescending(s => s.PatientNumber);
+                        break;
+                    case "patientPathNumber":
+                        query = sortOrder == "asc" ? query.OrderBy(s => s.PatientPathNumber) : query.OrderByDescending(s => s.PatientPathNumber);
+                        break;
+                    case "appointmentDate":
+                        query = sortOrder == "asc" ? query.OrderBy(s => s.AppDate) : query.OrderByDescending(s => s.AppDate);
+                        break;
+                    case "bookingDate":
+                        query = sortOrder == "asc" ? query.OrderBy(s => s.BookDate) : query.OrderByDescending(s => s.BookDate);
                         break;
                     case "speciality":
                         query = sortOrder == "asc" ? query.OrderBy(s => s.Speciality) : query.OrderByDescending(s => s.Speciality);
                         break;
-
+                    case "appointmentStatus":
+                        query = sortOrder == "asc" ? query.OrderBy(s => s.AppointmentStatus) : query.OrderByDescending(s => s.AppointmentStatus);
+                        break;
+                      
                     default:
                         query = query.OrderBy(s => s.PatientNumber);
                         break;
@@ -369,11 +376,18 @@ namespace WorkOffice.Services
                 count = query.Count();
                 var items = await query.Skip(offset).Take(pageSize).ToListAsync();
 
+                if (!string.IsNullOrEmpty(options.Parameter.SearchQuery))
+                {
+                    items = items.Where(x => x.PatientName.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())
+                    || x.Speciality.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())
+                     || x.PatientPathNumber.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())
+                     || x.PatientNumber.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())).ToList();
+                }
 
                 var response = new SearchReply<AppointmentResponseModel>()
                 {
                     TotalCount = count,
-                    Result = items.ToList(),
+                    Result = items.OrderBy(x=>x.Speciality).ToList(),
                 };
 
                 apiResponse.StatusCode = System.Net.HttpStatusCode.OK;
@@ -403,7 +417,6 @@ namespace WorkOffice.Services
 
                 IQueryable<AppointmentResponseModel> query = (from app in context.NHS_Appointments
                                                               join pat in context.NHS_Patients on app.PatientId equals pat.PatientId
-                                                              //where app.AppointmentStatus == "Cancelled" && app.Deleted == false
                                                               where app.Deleted == false
                                                               select new AppointmentResponseModel
                                                               {

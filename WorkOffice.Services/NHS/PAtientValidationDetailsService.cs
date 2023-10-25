@@ -349,7 +349,7 @@ namespace WorkOffice.Services
                 var response = new SearchReply<PatientValidationDetailsModel>()
                 {
                     TotalCount = count,
-                    Result = items.ToList(),
+                    Result = items.OrderBy(x=>x.SpecialityName).ToList(),
                 };
 
                 apiResponse.StatusCode = System.Net.HttpStatusCode.OK;

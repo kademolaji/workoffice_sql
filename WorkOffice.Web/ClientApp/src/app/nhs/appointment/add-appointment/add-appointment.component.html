@@ -301,8 +301,8 @@
                     appearance="outline"
                   >
                     <mat-label>Department</mat-label>
-                    <mat-select formControlName="departmentId" required>
-                      <mat-option [value]="1"> OUTPATIENT </mat-option>
+                    <mat-select formControlName="departmentId"  [disabled]="disableDepartment" required>
+                      <mat-option [value]="1" > OUTPATIENT </mat-option>
                       <!-- <mat-option [value]="2"> INPATIENT </mat-option> -->
                     </mat-select>
                     <mat-error
