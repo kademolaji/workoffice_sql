@@ -376,13 +376,13 @@ namespace WorkOffice.Services
                 count = query.Count();
                 var items = await query.Skip(offset).Take(pageSize).ToListAsync();
 
-                if (!string.IsNullOrEmpty(options.Parameter.SearchQuery))
-                {
-                    items = items.Where(x => x.PatientName.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())
-                    || x.Speciality.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())
-                     || x.PatientPathNumber.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())
-                     || x.PatientNumber.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())).ToList();
-                }
+                //if (!string.IsNullOrEmpty(options.Parameter.SearchQuery))
+                //{
+                //    items = items.Where(x => x.PatientName.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())
+                //    || x.Speciality.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())
+                //     || x.PatientPathNumber.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())
+                //     || x.PatientNumber.Trim().ToLower().Contains(options.Parameter.SearchQuery.Trim().ToLower())).ToList();
+                //}
 
                 var response = new SearchReply<AppointmentResponseModel>()
                 {
