@@ -110,7 +110,7 @@ namespace WorkOffice.Web
 
             app.UseRequestLocalization(localizationOptions);
 
-            app.UseHttpsRedirection();
+           // app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
             app.UseCors(x => x

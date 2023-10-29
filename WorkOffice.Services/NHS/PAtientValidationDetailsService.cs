@@ -292,7 +292,7 @@ namespace WorkOffice.Services
             int pageNumber = options.From > 0 ? options.From : 0;
             int pageSize = options.PageSize > 0 ? options.PageSize : 10;
             string sortOrder = string.IsNullOrEmpty(options.SortOrder) ? "asc" : options.SortOrder;
-            string sortField = string.IsNullOrEmpty(options.SortField) ? "activity" : options.SortField;
+            string sortField = string.IsNullOrEmpty(options.SortField) ? "startDate" : options.SortField;
 
             try
             {
@@ -349,7 +349,7 @@ namespace WorkOffice.Services
                 var response = new SearchReply<PatientValidationDetailsModel>()
                 {
                     TotalCount = count,
-                    Result = items.OrderBy(x=>x.SpecialityName).ToList(),
+                    Result = items.OrderBy(x=>x.Date).ThenBy(y=>y.SpecialityName).ToList(),
                 };
 
                 apiResponse.StatusCode = System.Net.HttpStatusCode.OK;

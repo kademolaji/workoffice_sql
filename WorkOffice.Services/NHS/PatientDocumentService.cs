@@ -287,7 +287,7 @@ namespace WorkOffice.Services
                 var response = new SearchReply<PatientDocumentModel>()
                 {
                     TotalCount = count,
-                    Result = items.ToList(),
+                    Result = items.OrderBy(o=>o.Speciality).ThenBy(cd=>cd.ClinicDate).ToList(),
                 };
 
                 apiResponse.StatusCode = System.Net.HttpStatusCode.OK;
